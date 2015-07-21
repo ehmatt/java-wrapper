@@ -3,6 +3,7 @@ package com.onepagecrm.api.models;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ContactListTest extends TestCase {
@@ -31,40 +32,49 @@ public class ContactListTest extends TestCase {
 
         allContacts = new ContactList(new ArrayList<Contact>());
 
-        ArrayList<Phone> tigersPhones = new ArrayList<>();
+        List<Phone> tigersPhones = new ArrayList<>();
         tigersPhones.add(0, new Phone("work", "0862524363"));
-        tigerWoods = new Contact("55804f6b1787fa72b400002e", "556cb8b61787fa02e000047e",
-                "Tiger", "Woods", tigersPhones, "Myles Inc.");
+        tigerWoods = new Contact();
+        tigerWoods.setId("55804f6b1787fa72b400002e");
+        tigerWoods.setOwnerId("556cb8b61787fa02e000047e");
+        tigerWoods.setFirstName("Tiger");
+        tigerWoods.setLastName("Woods");
+        tigerWoods.setPhones(tigersPhones);
+        tigerWoods.setCompanyName("Myles Inc.");
         allContacts.add(0, tigerWoods);
-
-        ArrayList<Phone> cilliansPhones = new ArrayList<>();
-        cilliansPhones.add(0, new Phone("work", "6178187423"));
-        cillianMyles = new Contact("558037511787fa21ba000148", "556cb8b61787fa02e000047e",
-                "Cillian", "Myles", cilliansPhones, "Myles Inc.");
-        allContacts.add(1, cillianMyles);
-
-        ArrayList<Phone> janesPhones = new ArrayList<>();
-        janesPhones.add(0, new Phone("work", "312 34 4491223"));
-        janeDoe = new Contact("556cb8c91787fa0e24000017", "556cb8b61787fa02e000047e",
-                "Jane", "Doe", janesPhones, "Big Company Inc.");
-        allContacts.add(2, janeDoe);
-
-        ArrayList<Phone> joesPhones = new ArrayList<>();
-        joesPhones.add(0, new Phone("work", "+1 23 978234"));
-        joesPhones.add(1, new Phone("mobile", "+1 213 555 1307"));
-        joesPhones.add(2, new Phone("work", "+353 85 8187777"));
-        joesPhones.add(3, new Phone("mobile", "+1 284 3827 111"));
-        joeBloggs = new Contact("556cb8c91787fa0e2400002a", "556cb8b61787fa02e000047e",
-                "Joe", "Bloggs", joesPhones, "Acme Inc.");
-        allContacts.add(3, joeBloggs);
-
-        johnSmith = new Contact("556cb8c91787fa0e240fff17", "556cb8b61787fa02e000047e",
-                "John", "Smith", new ArrayList<Phone>(), "Big Company Inc.");
-        allContacts.add(4, johnSmith);
-
-        maryDempsey = new Contact("556cb8c91787fa0e24efff17", "556cb8b61787fa02e000047e",
-                "Mary", "Dempsey", new ArrayList<Phone>(), "Big Company Inc.");
-        allContacts.add(5, maryDempsey);
+        
+//        tigerWoods = new Contact("55804f6b1787fa72b400002e", "556cb8b61787fa02e000047e",
+//                "Tiger", "Woods", tigersPhones, "Myles Inc.");
+//        allContacts.add(0, tigerWoods);
+//
+//        List<Phone> cilliansPhones = new ArrayList<>();
+//        cilliansPhones.add(0, new Phone("work", "6178187423"));
+//        cillianMyles = new Contact("558037511787fa21ba000148", "556cb8b61787fa02e000047e",
+//                "Cillian", "Myles", cilliansPhones, "Myles Inc.");
+//        allContacts.add(1, cillianMyles);
+//
+//        ArrayList<Phone> janesPhones = new ArrayList<>();
+//        janesPhones.add(0, new Phone("work", "312 34 4491223"));
+//        janeDoe = new Contact("556cb8c91787fa0e24000017", "556cb8b61787fa02e000047e",
+//                "Jane", "Doe", janesPhones, "Big Company Inc.");
+//        allContacts.add(2, janeDoe);
+//
+//        ArrayList<Phone> joesPhones = new ArrayList<>();
+//        joesPhones.add(0, new Phone("work", "+1 23 978234"));
+//        joesPhones.add(1, new Phone("mobile", "+1 213 555 1307"));
+//        joesPhones.add(2, new Phone("work", "+353 85 8187777"));
+//        joesPhones.add(3, new Phone("mobile", "+1 284 3827 111"));
+//        joeBloggs = new Contact("556cb8c91787fa0e2400002a", "556cb8b61787fa02e000047e",
+//                "Joe", "Bloggs", joesPhones, "Acme Inc.");
+//        allContacts.add(3, joeBloggs);
+//
+//        johnSmith = new Contact("556cb8c91787fa0e240fff17", "556cb8b61787fa02e000047e",
+//                "John", "Smith", new ArrayList<Phone>(), "Big Company Inc.");
+//        allContacts.add(4, johnSmith);
+//
+//        maryDempsey = new Contact("556cb8c91787fa0e24efff17", "556cb8b61787fa02e000047e",
+//                "Mary", "Dempsey", new ArrayList<Phone>(), "Big Company Inc.");
+//        allContacts.add(5, maryDempsey);
     }
 
     /**
