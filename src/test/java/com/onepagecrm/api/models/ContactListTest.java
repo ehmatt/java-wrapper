@@ -1,7 +1,5 @@
 package com.onepagecrm.api.models;
 
-import android.test.suitebuilder.annotation.SmallTest;
-
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
@@ -75,7 +73,7 @@ public class ContactListTest extends TestCase {
      * Given list of Contacts, some with / some without.
      * Answer should be subset of Contacts which do have numbers.
      */
-    @SmallTest
+//  @SmallTest
     public void testGetPhoneableContacts_SomeContactsHavePhones() {
         ContactList someContactsWithPhones = new ContactList();
         someContactsWithPhones.add(tigerWoods);
@@ -101,7 +99,7 @@ public class ContactListTest extends TestCase {
      * Given list of Contacts, all of which have phone numbers.
      * Answer should be the entire list of Contacts which was sent.
      */
-    @SmallTest
+//    @SmallTest
     public void testGetPhoneableContacts_AllContactsHavePhones() {
         ContactList allContactsWithPhones = new ContactList();
         allContactsWithPhones.add(tigerWoods);
@@ -118,7 +116,7 @@ public class ContactListTest extends TestCase {
      * Given list of Contacts, none of which have phone numbers.
      * Answer should be empty list of Contacts.
      */
-    @SmallTest
+//    @SmallTest
     public void testGetPhoneableContacts_NoContactsHavePhones() {
         ContactList allContactsWithoutPhones = new ContactList();
         allContactsWithoutPhones.add(johnSmith);
@@ -129,7 +127,7 @@ public class ContactListTest extends TestCase {
     /**
      * Searching through Contacts for number which does not exist.
      */
-    @SmallTest
+//    @SmallTest
     public void testInActionStream_False() {
         // Number is not belong to any Contacts in AS.
         assertEquals(null, allContacts.inActionStream("0858187423").getId());
@@ -141,7 +139,7 @@ public class ContactListTest extends TestCase {
      *
      * In app, this would generate a notification.
      */
-    @SmallTest
+//    @SmallTest
     public void testInActionStream_True() {
         // Number is belong to Tiger Woods from AS.
         assertEquals(tigerWoods, allContacts.inActionStream("0862524363"));
@@ -152,7 +150,7 @@ public class ContactListTest extends TestCase {
      *
      * Will move through the list and jump to start if reaches the end.
      */
-    @SmallTest
+//    @SmallTest
     public void testGetNextContact_CorrectAnswer() {
         assertEquals(cillianMyles, allContacts.getNextContact(0));
         assertEquals(janeDoe, allContacts.getNextContact(1));
@@ -167,7 +165,7 @@ public class ContactListTest extends TestCase {
      *
      * Will move backwards through the list and jump to end if positioned at the start.
      */
-    @SmallTest
+//    @SmallTest
     public void testGetPreviousContact_CorrectAnswer() {
         assertEquals(johnSmith, allContacts.getPreviousContact(5));
         assertEquals(joeBloggs, allContacts.getPreviousContact(4));
@@ -180,7 +178,7 @@ public class ContactListTest extends TestCase {
     /**
      * Verifying correct operation of getArrayPosition method.
      */
-    @SmallTest
+//    @SmallTest
     public void testGetArrayPosition_CorrectAnswers() {
         assertEquals(0, allContacts.getArrayPosition(tigerWoods));
         assertEquals(1, allContacts.getArrayPosition(cillianMyles));

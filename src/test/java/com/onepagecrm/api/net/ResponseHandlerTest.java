@@ -1,7 +1,5 @@
 package com.onepagecrm.api.net;
 
-import android.test.suitebuilder.annotation.SmallTest;
-
 import com.onepagecrm.api.models.User;
 
 import junit.framework.TestCase;
@@ -25,7 +23,7 @@ public class ResponseHandlerTest extends TestCase {
      *
      * successResponse and loggedInUser directly map to each other.
      */
-    @SmallTest
+//    @SmallTest
     public void testParseLoginResponse_Successful() {
         // Set up fabricated User.
         User loggedInUser = new User("556cb8b61787fa02e000047e",
@@ -80,7 +78,7 @@ public class ResponseHandlerTest extends TestCase {
      *
      * This means no fields will be set for this object, check for ID.
      */
-    @SmallTest
+//    @SmallTest
     public void testParseLoginResponse_Expired() {
         String expiredResponse = "{\"error_name\":\"expired\",\"status\":400,\"message\":" +
                 "\"Expired\",\"error_message\":\"Could not find more helpful message, sorry.\"," +
@@ -96,7 +94,7 @@ public class ResponseHandlerTest extends TestCase {
      *
      * This means no fields will be set for this object, check for ID.
      */
-    @SmallTest
+//    @SmallTest
     public void testParseLoginResponse_NoAuth() {
         String noAuthResponse = "{\"error_name\":\"authorization_data_not_found\"," +
                 "\"status\":401,\"message\":\"Authorization data not found\"," +
@@ -113,7 +111,7 @@ public class ResponseHandlerTest extends TestCase {
      * Response containing details of only one Contact should only result in
      * the construction of one Contact object.
      */
-    @SmallTest
+//    @SmallTest
     public void testParseGetContactsResponse_CreatesContact() {
         String oneContactResponse = "{\"status\":0,\"message\":\"OK\",\"timestamp\":1436172718," +
                 "\"data\":{\"contacts\":[{\"contact\":{\"id\":\"55804f6b1787fa72b400002e\"," +
@@ -150,7 +148,7 @@ public class ResponseHandlerTest extends TestCase {
      * Response containing details of two Contacts should only result in
      * the construction two Contact objects.
      */
-    @SmallTest
+//    @SmallTest
     public void testParseGetContactsResponse_CreatesContacts() {
         String twoContactsResponse = "{\"status\":0,\"message\":\"OK\",\"timestamp\":1436172718," +
                 "\"data\":{\"contacts\":[{\"contact\":{\"id\":\"55804f6b1787fa72b400002e\"," +
@@ -207,7 +205,7 @@ public class ResponseHandlerTest extends TestCase {
      * Response containing details of no Contacts should not result in
      * the construction of any Contact objects.
      */
-    @SmallTest
+//    @SmallTest
     public void testParseGetContactsResponse_NoContacts() {
         String noContactResponse = "{\"status\":0,\"message\":\"OK\",\"timestamp\":1436172718," +
                 "\"data\":{\"contacts\":[]}}";
@@ -224,7 +222,7 @@ public class ResponseHandlerTest extends TestCase {
      *
      * Responses are boolean, successful = true.
      */
-    @SmallTest
+//    @SmallTest
     public void testParseCreateResourceResponse_Successful() {
         String createdResourceResponse = "{\"status\":0,\"message\":\"Created\"," +
                 "\"timestamp\":1435929035,\"data\":{\"call\":{\"id\":" +
@@ -243,7 +241,7 @@ public class ResponseHandlerTest extends TestCase {
      *
      * Responses are boolean, expired message means unsuccessful.
      */
-    @SmallTest
+//    @SmallTest
     public void testParseCreateResourceResponse_Expired() {
         String expiredResponse = "{\"error_name\":\"expired\",\"status\":400,\"message\":" +
                 "\"Expired\",\"error_message\":\"Could not find more helpful message, sorry.\"," +
@@ -258,7 +256,7 @@ public class ResponseHandlerTest extends TestCase {
      *
      * Responses are boolean, no auth message means unsuccessful.
      */
-    @SmallTest
+//    @SmallTest
     public void testParseCreateResourceResponse_NoAuth() {
         String noAuthResponse = "{\"error_name\":\"authorization_data_not_found\"," +
                 "\"status\":401,\"message\":\"Authorization data not found\"," +

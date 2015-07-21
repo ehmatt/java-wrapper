@@ -1,12 +1,11 @@
 package com.onepagecrm.api.net;
 
-import android.test.AndroidTestCase;
-import android.test.suitebuilder.annotation.SmallTest;
+import junit.framework.TestCase;
 
 import com.onepagecrm.api.models.User;
 
 
-public class AuthenticationTest extends AndroidTestCase {
+public class AuthenticationTest extends TestCase {
 
     private User loggedInUser;
 
@@ -34,7 +33,7 @@ public class AuthenticationTest extends AndroidTestCase {
     /**
      * Should be no Authentication Signature generated for login request.
      */
-    @SmallTest
+//    @SmallTest
     public void testCalculateSignature_Login() {
         Authentication loginAuthSig = new Authentication("POST", ApiClient.POST_LOGIN_URL, "");
         assertNull("Login signature incorrectly constructed", loginAuthSig.getSignature());
@@ -43,7 +42,7 @@ public class AuthenticationTest extends AndroidTestCase {
     /**
      * Verify Authentication Signature generated matches correct answer for Action Stream.
      */
-    @SmallTest
+//    @SmallTest
     public void testCalculateSignature_ActionStream() {
         Authentication actionStreamAuthSig = new Authentication(loggedInUser, 1435850641,
                 "GET", ApiClient.GET_ACTION_STREAM_URL, "");
@@ -55,7 +54,7 @@ public class AuthenticationTest extends AndroidTestCase {
     /**
      * Verify Authentication Signature generated matches correct answer for Calls.
      */
-    @SmallTest
+//    @SmallTest
     public void testCalculateSignature_Calls() {
         String postCallUrl =
                 "https://app.onepagecrm.com/api/v3/calls.json?contact_id=55804f6b1787fa72b400002e";

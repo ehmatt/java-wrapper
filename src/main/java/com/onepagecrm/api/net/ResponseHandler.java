@@ -221,10 +221,10 @@ public class ResponseHandler {
             JSONObject responseObject = new JSONObject(responseBody);
 //            Log.d(TAG, "responseObject=" + responseObject);
 
-            String status = responseObject.getString(STATUS_TAG);
+            int status = responseObject.getInt(STATUS_TAG);
             String message = responseObject.getString(MESSAGE_TAG);
 
-            if (status.equals("0") && message.equalsIgnoreCase("Created")) {
+            if (status == 0 && message.equalsIgnoreCase("created")) {
                 createdSuccessfully = true;
 //                Log.d(TAG, "Created resource successfully");
             }

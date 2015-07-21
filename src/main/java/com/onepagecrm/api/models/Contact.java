@@ -2,6 +2,7 @@ package com.onepagecrm.api.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Contact implements Serializable {
@@ -10,9 +11,36 @@ public class Contact implements Serializable {
     private String ownerId;
     private String firstName;
     private String lastName;
-    private String companyName;
+    private String photoUrl;
+    private String jobTitle;
+    private String background;
+    private List<URL> photoUrls;
+    private List<Phone> phones;
+    private List<Email> emails;
+    private String status;
+    private String statusId;
+    private boolean starred;
+    
+    private String leadSourceId;
+//    private LeadSource leadSource;
 
-    private ArrayList<Phone> phones;
+    private boolean pendingDeal;
+    private String type;
+    private String companyName;
+    private String companyId;
+    
+    // "sale_slosed_for": [ ]
+    
+    private List<Tag> tags;
+    private List<CustomField> customFields;
+    private String createdAt;
+    private String modifiedAt;
+    
+    private List<String> addressLines;
+//    private Address address;
+    
+
+//    private ArrayList<Phone> phones;
 
     private int notificationId;
     public static int nextNotificationId = 1;
@@ -87,11 +115,11 @@ public class Contact implements Serializable {
         this.lastName = lastName;
     }
 
-    public ArrayList<Phone> getPhones() {
+    public List<Phone> getPhones() {
         return phones;
     }
 
-    public void setPhones(ArrayList<Phone> phones) {
+    public void setPhones(List<Phone> phones) {
         this.phones = phones;
     }
 
