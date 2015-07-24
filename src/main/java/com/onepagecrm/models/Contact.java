@@ -130,6 +130,10 @@ public class Contact extends ApiResource implements Serializable {
 		this.modifiedAt = modifiedAt;
 		this.addressLines = addressLines;
 	}
+	
+	public boolean isValid() {
+		return this.id != null && !this.id.equals("");
+	}
 
 	public int getIntId() {
 		return intId;

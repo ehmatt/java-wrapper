@@ -8,7 +8,8 @@ public class Driver {
 
 	public static void main(String[] args) {
 
-		User loggedInUser = OnePageCRM.login("cillian.college@gmail.com", "qwerty");
+		User loggedInUser = User.login("cillian.college@gmail.com", "qwerty");
+//		User loggedInUser = OnePageCRM.login("cillian.college@gmail.com", "qwerty");
 		
 		ApiClient client = new ApiClient(loggedInUser.isValid());
 		

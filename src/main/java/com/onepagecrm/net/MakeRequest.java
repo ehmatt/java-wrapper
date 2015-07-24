@@ -8,18 +8,26 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
+import java.util.logging.Logger;
+import java.util.logging.FileHandler;
+
+import com.onepagecrm.models.ContactList;
 
 
 public class MakeRequest {
 
-    private static final String TAG = MakeRequest.class.getSimpleName();
+//    private static final String TAG = MakeRequest.class.getSimpleName();
+    protected static final Logger LOG = Logger.getLogger(ContactList.class.getName());
 
-    private static final String USER_AGENT = "Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; " +
-            "LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+    private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) "
+    		+ "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36";
 
-    private static final String X_UID = "x-onepagecrm-uid";
-    private static final String X_TS = "x-onepagecrm-ts";
-    private static final String X_AUTH = "x-onepagecrm-auth";
+    private static final String X_UID = "X-OnePageCRM-UID";
+    private static final String X_TS = "X-OnePageCRM-TS";
+    private static final String X_AUTH = "X-OnePageCRM-AUTH";
+    private static final String X_SOURCE = "X-OnePageCRM-SOURCE";
+    
+    private static final String SOURCE = "java-client";
 
     private Response response;
     private int responseCode = 0;
@@ -34,8 +42,8 @@ public class MakeRequest {
         try {
             requestUrl = new URL(authSignature.getUrl());
         } catch (MalformedURLException e) {
-//            Log.e(TAG, "Error forming URL for GET request");
-            e.printStackTrace();
+            LOG.severe("Error forming URL for GET request");
+            LOG.severe(e.toString());
         }
         response = null;
 
@@ -46,19 +54,21 @@ public class MakeRequest {
             conn.setRequestProperty("Accept", "application/json");
             conn.setRequestProperty("User-Agent", USER_AGENT);
 
-//            Log.i(TAG, "*************************************");
-//            Log.i(TAG, "--- REQUEST ---");
-//            Log.i(TAG, "Type: " + authSignature.getType());
-//            Log.i(TAG, "URL: " + requestUrl.toString());
-//            Log.i(TAG, "Body: " + authSignature.getRequestBody());
+            LOG.info("*************************************");
+            LOG.info("--- REQUEST ---");
+            LOG.info("Type: " + authSignature.getType());
+            LOG.info("URL: " + requestUrl.toString());
+            LOG.info("Body: " + authSignature.getRequestBody());
 
             if (authSignature.getUserId() != null) {
                 conn.setRequestProperty(X_UID, authSignature.getUserId());
-//                Log.i(TAG, "X_UID=" + authSignature.getUserId());
+                LOG.info("X_UID=" + authSignature.getUserId());
                 conn.setRequestProperty(X_TS, Integer.toString(authSignature.getUnixTime()));
-//                Log.i(TAG, "X_TS=" + Integer.toString(Utils.getUnixTime()));
+                LOG.info("X_TS=" + Integer.toString(authSignature.getUnixTime()));
                 conn.setRequestProperty(X_AUTH, authSignature.getSignature());
-//                Log.i(TAG, "X_AUTH=" + authSignature.getSignature());
+                LOG.info("X_AUTH=" + authSignature.getSignature());
+                conn.setRequestProperty(X_SOURCE, SOURCE);
+                LOG.info("X_SOURCE=" + SOURCE);
             }
 
             responseCode = conn.getResponseCode();
@@ -78,19 +88,17 @@ public class MakeRequest {
 
             response = new Response(responseCode, responseMessage, responseBody);
 
-            System.out.println(responseBody);
-
-//            Log.i(TAG, "--- RESPONSE ---");
-//            Log.i(TAG, "Code: " + responseCode);
-//            Log.i(TAG, "Message: " + responseMessage);
-//            Log.i(TAG, "Body: " + responseBody);
-//            Log.i(TAG, "*************************************");
+            LOG.info("--- RESPONSE ---");
+            LOG.info("Code: " + responseCode);
+            LOG.info("Message: " + responseMessage);
+            LOG.info("Body: " + responseBody);
+            LOG.info("*************************************");
 
             conn.disconnect();
 
         } catch (IOException e) {
-            e.printStackTrace();
-//            Log.e(TAG, "GET request failed");
+            LOG.severe("GET request failed");
+            LOG.severe(e.toString());
         }
 
         return response;
@@ -114,19 +122,21 @@ public class MakeRequest {
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestProperty("User-Agent", USER_AGENT);
 
-//            Log.i(TAG, "*************************************");
-//            Log.i(TAG, "--- REQUEST ---");
-//            Log.i(TAG, "Type: " + authSignature.getType());
-//            Log.i(TAG, "URL: " + requestUrl.toString());
-//            Log.i(TAG, "Body: " + authSignature.getRequestBody());
+            LOG.info("*************************************");
+            LOG.info("--- REQUEST ---");
+            LOG.info("Type: " + authSignature.getType());
+            LOG.info("URL: " + requestUrl.toString());
+            LOG.info("Body: " + authSignature.getRequestBody());
 
             if (authSignature.getUserId() != null) {
                 conn.setRequestProperty(X_UID, authSignature.getUserId());
-//                Log.i(TAG, "X_UID=" + authSignature.getUserId());
+                LOG.info("X_UID=" + authSignature.getUserId());
                 conn.setRequestProperty(X_TS, Integer.toString(authSignature.getUnixTime()));
-//                Log.i(TAG, "X_TS=" + Integer.toString(Utils.getUnixTime()));
+                LOG.info("X_TS=" + Integer.toString(authSignature.getUnixTime()));
                 conn.setRequestProperty(X_AUTH, authSignature.getSignature());
-//                Log.i(TAG, "X_AUTH=" + authSignature.getSignature());
+                LOG.info("X_AUTH=" + authSignature.getSignature());
+                conn.setRequestProperty(X_SOURCE, SOURCE);
+                LOG.info("X_SOURCE=" + SOURCE);
             }
 
             OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
@@ -153,19 +163,17 @@ public class MakeRequest {
 
             response = new Response(responseCode, responseMessage, responseBody);
             
-            System.out.println(responseBody);
-
-//            Log.i(TAG, "--- RESPONSE ---");
-//            Log.i(TAG, "Code: " + responseCode);
-//            Log.i(TAG, "Message: " + responseMessage);
-//            Log.i(TAG, "Body: " + responseBody);
-//            Log.i(TAG, "*************************************");
+            LOG.info("--- RESPONSE ---");
+            LOG.info("Code: " + responseCode);
+            LOG.info("Message: " + responseMessage);
+            LOG.info("Body: " + responseBody);
+            LOG.info("*************************************");
 
             conn.disconnect();
 
         } catch (IOException e) {
-//            Log.e(TAG, "POST request failed");
-            e.printStackTrace();
+            LOG.severe("GET request failed");
+            LOG.severe(e.toString());
         }
 
         return response;

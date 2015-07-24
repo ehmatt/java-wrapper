@@ -189,7 +189,13 @@ public class ContactListTest extends TestCase {
      */
     public void testInActionStream_False() {
         // Number is not belong to any Contacts in AS.
-        assertEquals(null, allContacts.inActionStream("0858187423").getId());
+    	Contact contact = allContacts.inActionStream("0858187423");
+    	
+    	// Should be a new (empty) contact.
+        assertNotNull(contact);
+        
+        // With no id
+        assertFalse(contact.isValid());
     }
 
     /**

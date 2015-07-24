@@ -1,6 +1,6 @@
 package com.onepagecrm.models;
 
-//import android.util.Log;
+import java.util.logging.Logger;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,6 +10,7 @@ import java.util.List;
 public class ContactList extends ArrayList<Contact> implements Serializable {
 
     private static final String TAG = ContactList.class.getSimpleName();
+    private static final Logger LOG = Logger.getLogger(ContactList.class.getName());
 
     private List<Contact> contacts;
 
@@ -84,7 +85,8 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
      */
     public Contact inActionStream(String incomingNumber) {
         for (int i = 0; i < contacts.size(); i++) {
-            if (!contacts.get(i).getPhones().isEmpty()) {
+        	List<Phone> phones = contacts.get(i).getPhones();
+            if (phones != null && !phones.isEmpty()) {
                 for (int j = 0; j < contacts.get(i).getPhones().size(); j++) {
                     if (incomingNumber.equals(contacts.get(i).getPhones().get(j).getNumber())) {
                         return contacts.get(i);

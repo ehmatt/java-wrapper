@@ -12,28 +12,35 @@ public class Response {
         this.setResponseMessage(responseMessage);
         this.setResponseBody(responseBody);
     }
+    
+    public Response() {
+    	
+    }
 
     public String getResponseMessage() throws NullPointerException {
         return responseMessage;
     }
 
-    public void setResponseMessage(String responseMessage) {
+    public Response setResponseMessage(String responseMessage) {
         this.responseMessage = responseMessage;
+        return this;
     }
 
     public String getResponseBody() throws NullPointerException {
         return responseBody;
     }
 
-    public void setResponseBody(String responseBody) {
+    public Response setResponseBody(String responseBody) {
         this.responseBody = responseBody;
+        return this;
     }
 
     public int getResponseCode() throws NullPointerException {
         return responseCode;
     }
 
-    public void setResponseCode(int responseCode) {
+    public Response setResponseCode(int responseCode) {
         this.responseCode = responseCode;
+        return this;
     }
 }

@@ -2,6 +2,13 @@ package com.onepagecrm.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
+import com.onepagecrm.net.request.Request;
+import com.onepagecrm.models.serializer.UserSerializer;
+import com.onepagecrm.net.ApiClient;
+import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.LoginRequest;
 
 
 public class User implements Serializable {
@@ -9,14 +16,29 @@ public class User implements Serializable {
     private String id;
     private String authKey;
     private String accountType;
+    
+    private List<CustomField> customFields;
+    
+    private List<CallResult> callResults;
+    private List<User> team;
+    private List<Tag> tags;
+    
     private String firstName;
     private String lastName;
     private String email;
     private String company;
     private String photoUrl;
     private String bccEmail;
+    
+    
+    public static User login(String username, String password) {
+    	Request request = new LoginRequest(username, password);
+    	Response response = request.send();
+    	User user = UserSerializer.fromString(response.getResponseBody());
+    	return user;
+    }
 
-    private ArrayList<CallResult> callResults;
+//    private ArrayList<CallResult> callResults;
 
     /**
      * Constructor for User object.
@@ -53,7 +75,7 @@ public class User implements Serializable {
     	return id != null && !id.equals("");
     }
 
-    public ArrayList<CallResult> getCallResults() {
+    public List<CallResult> getCallResults() {
         return callResults;
     }
 
