@@ -1,15 +1,13 @@
 package com.onepagecrm;
 
-import java.util.List;
-
+import com.onepagecrm.models.Account;
 import com.onepagecrm.models.User;
 import com.onepagecrm.net.ApiClient;
 
 
 public final class OnePageCRM {
 	
-	private List<User> users;
-	private User currentUser;
+	public static Account account;
 
     private OnePageCRM() {
 

@@ -2,10 +2,11 @@ package com.onepagecrm.models;
 
 import java.io.Serializable;
 
-
 public class CallResult implements Serializable {
 
-    private int intId;
+	private static final long serialVersionUID = -3981577783870512717L;
+	
+	private int intId;
     private String stringId;
     private String result;
 
@@ -16,30 +17,33 @@ public class CallResult implements Serializable {
     }
 
     public String toString() {
-        return stringId + "='" + result + "'";
+        return stringId + "=\'" + result + "\'";
     }
 
     public int getintId() {
         return intId;
     }
 
-    public void setIntId(int intId) {
+    public CallResult setIntId(int intId) {
         this.intId = intId;
+        return this;
     }
 
     public String getStringId() {
         return stringId;
     }
 
-    public void setStringId(String stringId) {
+    public CallResult setStringId(String stringId) {
         this.stringId = stringId;
+        return this;
     }
 
     public String getResult() {
         return result;
     }
 
-    public void setResult(String result) {
+    public CallResult setResult(String result) {
         this.result = result;
+        return this;
     }
 }

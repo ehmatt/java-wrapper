@@ -68,68 +68,6 @@ public class Contact extends ApiResource implements Serializable {
 		this.intId = nextIntId;
 		nextIntId++;
 	}
-
-	/**
-	 * Constructor which accepts every attribute.
-	 * 
-	 * @param id
-	 * @param ownerId
-	 * @param firstName
-	 * @param lastName
-	 * @param photoUrl
-	 * @param jobTitle
-	 * @param background
-	 * @param photoUrls
-	 * @param phones
-	 * @param emails
-	 * @param status
-	 * @param statusId
-	 * @param starred
-	 * @param leadSourceId
-	 * @param pendingDeal
-	 * @param type
-	 * @param companyName
-	 * @param companyId
-	 * @param tags
-	 * @param customFields
-	 * @param createdAt
-	 * @param modifiedAt
-	 * @param addressLines
-	 * @param notificationId
-	 */
-	public Contact(String id, String ownerId, String firstName, String lastName, String photoUrl, String jobTitle,
-			String background, List<URL> urls, List<Phone> phones, List<Email> emails, String status,
-			String statusId, boolean starred, String leadSourceId, boolean pendingDeal, String type, String companyName,
-			String companyId, List<Tag> tags, List<CustomField> customFields, String createdAt, String modifiedAt,
-			List<String> addressLines, int notificationId) {
-
-		this.id = id;
-		this.intId = nextIntId;
-		nextIntId++;
-
-		this.ownerId = ownerId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.photoUrl = photoUrl;
-		this.jobTitle = jobTitle;
-		this.background = background;
-		this.urls = urls;
-		this.phones = phones;
-		this.emails = emails;
-		this.status = status;
-		this.statusId = statusId;
-		this.starred = starred;
-		this.leadSourceId = leadSourceId;
-		this.pendingDeal = pendingDeal;
-		this.type = type;
-		this.companyName = companyName;
-		this.companyId = companyId;
-		this.tags = tags;
-		this.customFields = customFields;
-		this.createdAt = createdAt;
-		this.modifiedAt = modifiedAt;
-		this.addressLines = addressLines;
-	}
 	
 	public boolean isValid() {
 		return this.id != null && !this.id.equals("");
@@ -349,16 +287,16 @@ public class Contact extends ApiResource implements Serializable {
 	@Override
 	public String toString() {
 
-		String retString = "Contact{" + "id=" + id + ", ownerId='" + ownerId + '\'' + ", firstName='" + firstName + '\''
-				+ ", lastName='" + lastName + '\'' + ", companyName='" + companyName + '\'';
+		String retString = "Contact{" + "id=\'" + id + "\', ownerId=\'" + ownerId + "\'" + ", firstName=\'" + firstName + "\'"
+				+ ", lastName=\'" + lastName + "\'" + ", companyName=\'" + companyName + "\'";
 
 		if (phones != null && !phones.isEmpty()) {
-			retString += ", phones{";
+			retString += ", Phones{";
 			for (int i = 0; i < phones.size(); i++) {
 				if (i == (phones.size() - 1)) {
-					retString += phones.get(i).getType() + "='" + phones.get(i).getNumber() + "'";
+					retString += phones.get(i).getType() + "=\'" + phones.get(i).getNumber() + "\'";
 				} else {
-					retString += phones.get(i).getType() + "='" + phones.get(i).getNumber() + "', ";
+					retString += phones.get(i).getType() + "=\'" + phones.get(i).getNumber() + "\', ";
 				}
 			}
 			retString += "}";

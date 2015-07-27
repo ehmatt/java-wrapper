@@ -24,10 +24,17 @@ public class AuthenticationTest extends TestCase {
         super.setUp();
 
         // Set up fabricated User.
-        loggedInUser = new User("556cb8b61787fa02e000047e",
-                "WqLLs1n/Y3SvOpGg5CNOpdKy74GkGI6lnhwSfYmgNl4=", "trial",
-                "Cillian", "Myles", "cillian.college@gmail.com", "Myles Inc.",
-                "", "556cb8b61787fa02e000047d@users.onepagecrm.com", null);
+        loggedInUser = new User()
+        		.setId("556cb8b61787fa02e000047e")
+        		.setAuthKey("WqLLs1n/Y3SvOpGg5CNOpdKy74GkGI6lnhwSfYmgNl4=")
+        		.setFirstName("Cillian")
+        		.setLastName("Myles");
+        		
+        		
+//        		("556cb8b61787fa02e000047e",
+//                "WqLLs1n/Y3SvOpGg5CNOpdKy74GkGI6lnhwSfYmgNl4=", "trial",
+//                "Cillian", "Myles", "cillian.college@gmail.com", "Myles Inc.",
+//                "", "556cb8b61787fa02e000047d@users.onepagecrm.com", null);
     }
 
     /**

@@ -115,8 +115,14 @@ public class ResponseHandler {
             String photoUrl = userObject.getString(PHOTO_URL_TAG);
             String bccEmail = userObject.getString(BCC_EMAIL_TAG);
 
-            user = new User(userId, authKey, accountType, firstName, lastName, email,
-                    companyName, photoUrl, bccEmail, callResults);
+            user = new User()
+            		.setId(userId)
+            		.setAuthKey(authKey);
+            		
+            		
+            		
+//            		(userId, authKey, accountType, firstName, lastName, email,
+//                    companyName, photoUrl, bccEmail, callResults);
 //            Log.d(TAG, "Parsed login details to User object successfully");
 
         } catch (JSONException e) {

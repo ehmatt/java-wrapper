@@ -1,173 +1,160 @@
 package com.onepagecrm.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.onepagecrm.net.request.Request;
+import com.onepagecrm.models.internal.Sales;
+import com.onepagecrm.models.serializer.LoginSerializer;
 import com.onepagecrm.models.serializer.UserSerializer;
-import com.onepagecrm.net.ApiClient;
+import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.LoginRequest;
+import com.onepagecrm.net.request.Request;
 
+public class User extends ApiResource implements Serializable {
 
-public class User implements Serializable {
-
-    private String id;
+	private static final long serialVersionUID = 1383622287570201668L;
+	
+	private String id;
     private String authKey;
-    private String accountType;
-    
-    private List<CustomField> customFields;
-    
-    private List<CallResult> callResults;
-    private List<User> team;
-    private List<Tag> tags;
-    
+    private String accountType;    
+    private String bccEmail;
+    private String companyName;
+    private String email;
     private String firstName;
     private String lastName;
-    private String email;
-    private String company;
     private String photoUrl;
-    private String bccEmail;
     
-    
+    private Sales sales;
+    private Account account;
+
     public static User login(String username, String password) {
     	Request request = new LoginRequest(username, password);
     	Response response = request.send();
-    	User user = UserSerializer.fromString(response.getResponseBody());
+    	User user = LoginSerializer.parseLogin(response.getResponseBody());
+//    	User user = UserSerializer.fromString(response.getResponseBody());
     	return user;
     }
 
-//    private ArrayList<CallResult> callResults;
-
-    /**
-     * Constructor for User object.
-     *
-     * @param id
-     * @param authKey
-     * @param accountType
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param company
-     * @param photoUrl
-     * @param bccEmail
-     */
-    public User(String id, String authKey, String accountType, String firstName,
-                String lastName, String email, String company, String photoUrl,
-                String bccEmail, ArrayList<CallResult> callResults) {
-
-        this.setId(id);
-        this.setAuthKey(authKey);
-        this.setAccountType(accountType);
-        this.setFirstName(firstName);
-        this.setLastName(lastName);
-        this.setEmail(email);
-        this.setCompany(company);
-        this.setPhotoUrl(photoUrl);
-        this.setBccEmail(bccEmail);
-        this.setCallResults(callResults);
+    public User() {
+    	
     }
-
-    public User() {}
     
     public boolean isValid() {
     	return id != null && !id.equals("");
     }
 
-    public List<CallResult> getCallResults() {
-        return callResults;
-    }
-
-    public void setCallResults(ArrayList<CallResult> callResults) {
-        this.callResults = callResults;
-    }
-
     public String getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public User setId(String id) {
+		this.id = id;
+		return this;
+	}
 
-    public String getAuthKey() {
-        return authKey;
-    }
+	public String getAuthKey() {
+		return authKey;
+	}
 
-    public void setAuthKey(String authKey) {
-        this.authKey = authKey;
-    }
+	public User setAuthKey(String authKey) {
+		this.authKey = authKey;
+		return this;
+	}
 
-    public String getAccountType() {
-        return accountType;
-    }
+	public String getAccountType() {
+		return accountType;
+	}
 
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
-    }
+	public User setAccountType(String accountType) {
+		this.accountType = accountType;
+		return this;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public String getBccEmail() {
+		return bccEmail;
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public User setBccEmail(String bccEmail) {
+		this.bccEmail = bccEmail;
+		return this;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public String getCompanyName() {
+		return companyName;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public User setCompanyName(String companyName) {
+		this.companyName = companyName;
+		return this;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public User setEmail(String email) {
+		this.email = email;
+		return this;
+	}
 
-    public String getCompany() {
-        return company;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
+	public User setFirstName(String firstName) {
+		this.firstName = firstName;
+		return this;
+	}
 
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
+	public User setLastName(String lastName) {
+		this.lastName = lastName;
+		return this;
+	}
 
-    public String getBccEmail() {
-        return bccEmail;
-    }
+	public String getPhotoUrl() {
+		return photoUrl;
+	}
 
-    public void setBccEmail(String bccEmail) {
-        this.bccEmail = bccEmail;
-    }
+	public User setPhotoUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
+		return this;
+	}
 
-    @Override
+	public Sales getSales() {
+		return sales;
+	}
+
+	public User setSales(Sales sales) {
+		this.sales = sales;
+		return this;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public User setAccount(Account account) {
+		this.account = account;
+		return this;
+	}
+
+	@Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", authKey='" + authKey + '\'' +
-                ", accountType='" + accountType + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", company='" + company + '\'' +
-                ", photoUrl='" + photoUrl + '\'' +
-                ", bccEmail='" + bccEmail + '\'' +
-                ", callRsults='" + callResults + '\'' +
+                ", authKey=\'" + authKey + "\'" +
+                ", accountType=\'" + accountType + "\'" +
+                ", firstName=\'" + firstName + "\'" +
+                ", lastName=\'" + lastName + "\'" +
+                ", email=\'" + email + "\'" +
+                ", companyName=\'" + companyName + "\'" +
+                ", photoUrl=\'" + photoUrl + "\'" +
+                ", bccEmail=\'" + bccEmail + "\'" +
+                ", callResults=\'" + account.callResults + "\'" +
                 '}';
     }
 }

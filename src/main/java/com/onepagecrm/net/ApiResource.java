@@ -5,7 +5,6 @@ import java.net.URLEncoder;
 
 import com.onepagecrm.models.BaseResource;
 
-
 public abstract class ApiResource extends BaseResource {
 	
 	public static final String CHARSET = "UTF-8";
@@ -17,7 +16,7 @@ public abstract class ApiResource extends BaseResource {
 	public abstract String getId();
 	
 	public enum RequestMethod {
-		GET, POST, DELETE
+		GET, POST, DELETE, PUT, PATCH
 	}
 
 	public enum RequestType {
@@ -36,22 +35,4 @@ public abstract class ApiResource extends BaseResource {
 	private static String className(Class<?> clazz) {
 		return clazz.getSimpleName().toLowerCase().replace("$", " ");
 	}
-	
-//	protected static <T> T multipartRequest(ApiResource.RequestMethod method,
-//			String url, Map<String, Object> params, Class<T> clazz,
-//			RequestOptions options) throws AuthenticationException,
-//			InvalidRequestException, APIConnectionException, CardException,
-//			APIException {
-//		return APIResource.stripeResponseGetter.request(method, url, params, clazz,
-//				APIResource.RequestType.MULTIPART, options);
-//	}
-//
-//	protected static <T> T request(ApiResource.RequestMethod method,
-//			String url, Map<String, Object> params, Class<T> clazz,
-//			RequestOptions options) throws AuthenticationException,
-//			InvalidRequestException, APIConnectionException, CardException,
-//			APIException {
-//		return APIResource.stripeResponseGetter.request(method, url, params, clazz,
-//				APIResource.RequestType.NORMAL, options);
-//	}
 }
