@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import com.onepagecrm.models.internal.Sales;
 import com.onepagecrm.models.serializer.LoginSerializer;
-import com.onepagecrm.models.serializer.UserSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.LoginRequest;
@@ -13,37 +12,37 @@ import com.onepagecrm.net.request.Request;
 public class User extends ApiResource implements Serializable {
 
 	private static final long serialVersionUID = 1383622287570201668L;
-	
+
 	private String id;
-    private String authKey;
-    private String accountType;    
-    private String bccEmail;
-    private String companyName;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String photoUrl;
-    
-    private Sales sales;
-    private Account account;
+	private String authKey;
+	private String accountType;
+	private String bccEmail;
+	private String companyName;
+	private String email;
+	private String firstName;
+	private String lastName;
+	private String photoUrl;
 
-    public static User login(String username, String password) {
-    	Request request = new LoginRequest(username, password);
-    	Response response = request.send();
-    	User user = LoginSerializer.parseLogin(response.getResponseBody());
-//    	User user = UserSerializer.fromString(response.getResponseBody());
-    	return user;
-    }
+	private Sales sales;
+	private Account account;
 
-    public User() {
-    	
-    }
-    
-    public boolean isValid() {
-    	return id != null && !id.equals("");
-    }
+	public static User login(String username, String password) {
+		Request request = new LoginRequest(username, password);
+		Response response = request.send();
+		User user = LoginSerializer.parseLogin(response.getResponseBody());
+		// User user = UserSerializer.fromString(response.getResponseBody());
+		return user;
+	}
 
-    public String getId() {
+	public User() {
+
+	}
+
+	public boolean isValid() {
+		return id != null && !id.equals("");
+	}
+
+	public String getId() {
 		return id;
 	}
 
@@ -143,18 +142,10 @@ public class User extends ApiResource implements Serializable {
 	}
 
 	@Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", authKey=\'" + authKey + "\'" +
-                ", accountType=\'" + accountType + "\'" +
-                ", firstName=\'" + firstName + "\'" +
-                ", lastName=\'" + lastName + "\'" +
-                ", email=\'" + email + "\'" +
-                ", companyName=\'" + companyName + "\'" +
-                ", photoUrl=\'" + photoUrl + "\'" +
-                ", bccEmail=\'" + bccEmail + "\'" +
-                ", callResults=\'" + account.callResults + "\'" +
-                '}';
-    }
+	public String toString() {
+		return "User{" + "id=" + id + ", authKey=\'" + authKey + "\'" + ", accountType=\'" + accountType + "\'"
+				+ ", firstName=\'" + firstName + "\'" + ", lastName=\'" + lastName + "\'" + ", email=\'" + email + "\'"
+				+ ", companyName=\'" + companyName + "\'" + ", photoUrl=\'" + photoUrl + "\'" + ", bccEmail=\'"
+				+ bccEmail + "\'" + ", callResults=\'" + account.callResults + "\'" + '}';
+	}
 }
