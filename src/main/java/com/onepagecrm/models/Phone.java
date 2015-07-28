@@ -2,10 +2,11 @@ package com.onepagecrm.models;
 
 import java.io.Serializable;
 
-
 public class Phone implements Serializable {
 
-    private String type;
+	static final long serialVersionUID = 3927723378236473122L;
+	
+	private String type;
     private String number;
 
     public Phone(String type, String number) {
@@ -31,6 +32,6 @@ public class Phone implements Serializable {
 
     @Override
     public String toString() {
-        return type + ": '" + number + "'";
+        return type + ": \'" + number + "\'";
     }
 }

@@ -1,17 +1,13 @@
 package com.onepagecrm.models;
 
-import java.util.logging.Logger;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ContactList extends ArrayList<Contact> implements Serializable {
 
-    private static final String TAG = ContactList.class.getSimpleName();
-    private static final Logger LOG = Logger.getLogger(ContactList.class.getName());
-
+	private static final long serialVersionUID = 8185938052776557364L;
+	
     private List<Contact> contacts;
 
     public ContactList(List<Contact> contacts) {
@@ -106,7 +102,6 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
      * @return
      */
     public Contact getNextContact(int position) {
-        Contact contact = null;
         if (contacts != null && !contacts.isEmpty()) {
             int length = contacts.size();
             int newPosition;
@@ -115,12 +110,10 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
             } else {
                 newPosition = 0;
             }
-            contact = contacts.get(newPosition);
-//            Log.d(TAG, "currentIndex=" + position + ", nextIndex=" + newPosition);
+            return contacts.get(newPosition);
         } else {
-//            Log.e(TAG, "Contacts array not populated");
+            return new Contact();
         }
-        return contact;
     }
 
     /**
@@ -132,7 +125,6 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
      * @return
      */
     public Contact getPreviousContact(int position) {
-        Contact contact = null;
         if (contacts != null && !contacts.isEmpty()) {
             int length = contacts.size();
             int newPosition;
@@ -141,12 +133,10 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
             } else {
                 newPosition = length - 1;
             }
-            contact = contacts.get(newPosition);
-//            Log.d(TAG, "currentIndex=" + position + ", previousIndex=" + newPosition);
+            return contacts.get(newPosition);
         } else {
-//            Log.e(TAG, "Contacts array not populated");
+            return new Contact();
         }
-        return contact;
     }
 
     /**

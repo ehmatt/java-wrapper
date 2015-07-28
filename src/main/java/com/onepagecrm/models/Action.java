@@ -22,7 +22,5 @@ public class Action extends ApiResource {
 	public String getId() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	
-	
+	}	
 }
