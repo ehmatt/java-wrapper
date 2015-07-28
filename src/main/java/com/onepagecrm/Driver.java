@@ -17,7 +17,7 @@ public class Driver {
 		
 		Properties prop = new Properties();
 		InputStream input = null;
-	 
+				
 		try {
 			input = new FileInputStream("config.properties");
 	 
