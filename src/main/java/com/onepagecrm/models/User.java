@@ -29,9 +29,7 @@ public class User extends ApiResource implements Serializable {
 	public static User login(String username, String password) {
 		Request request = new LoginRequest(username, password);
 		Response response = request.send();
-		User user = LoginSerializer.parseLogin(response.getResponseBody());
-		// User user = UserSerializer.fromString(response.getResponseBody());
-		return user;
+		return LoginSerializer.parseLogin(response.getResponseBody());
 	}
 
 	public User() {
@@ -143,7 +141,7 @@ public class User extends ApiResource implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User{" + "id=" + id + ", authKey=\'" + authKey + "\'" + ", accountType=\'" + accountType + "\'"
+		return "User{" + "id=\'" + id + "\', authKey=\'" + authKey + "\'" + ", accountType=\'" + accountType + "\'"
 				+ ", firstName=\'" + firstName + "\'" + ", lastName=\'" + lastName + "\'" + ", email=\'" + email + "\'"
 				+ ", companyName=\'" + companyName + "\'" + ", photoUrl=\'" + photoUrl + "\'" + ", bccEmail=\'"
 				+ bccEmail + "\'" + ", callResults=\'" + account.callResults + "\'" + '}';

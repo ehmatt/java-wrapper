@@ -16,6 +16,6 @@ public class PatchRequest extends SignedRequest {
 	
 	@Override
 	public void setType() {
-		this.type = type.PATCH;
+		this.type = Type.PATCH;
 	}
 }

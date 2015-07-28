@@ -16,6 +16,6 @@ public class PutRequest extends SignedRequest {
 	
 	@Override
 	public void setType() {
-		this.type = type.PUT;
+		this.type = Type.PUT;
 	}
 }

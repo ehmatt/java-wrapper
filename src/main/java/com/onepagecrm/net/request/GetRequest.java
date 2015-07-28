@@ -16,6 +16,6 @@ public class GetRequest extends SignedRequest {
 
 	@Override
 	public void setType() {
-		this.type = type.GET;
+		this.type = Type.GET;
 	}
 }

@@ -9,24 +9,27 @@ import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
 
 public class UserSerializer extends BaseSerializer {
-	
+
 	private static final Logger LOG = Logger.getLogger(ContactList.class.getName());
 
 	public static User fromString(String userString) {
 		JSONObject responseObject = new JSONObject(userString);
 		JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
-		
+
 		String userId = dataObject.getString(USER_ID_TAG);
 		String authKey = dataObject.getString(AUTH_KEY_TAG);
+		String accountType = dataObject.getString(ACCOUNT_TYPE_TAG);
+
 		User user = new User()
 				.setId(userId)
-				.setAuthKey(authKey);
-		
+				.setAuthKey(authKey)
+				.setAccountType(accountType);
+
 		JSONObject outsideUserObject = dataObject.getJSONObject(USER_TAG);
 		JSONObject userObject = outsideUserObject.getJSONObject(USER_TAG);
 		return fromJson(userObject, user);
 	}
-	
+
 	public static User fromJson(JSONObject userObject, User user) {
 		try {
 			user.setFirstName(userObject.getString(FIRST_NAME_TAG))
@@ -38,7 +41,7 @@ public class UserSerializer extends BaseSerializer {
 			return user;
 		} catch (JSONException e) {
 			LOG.severe("Error parsing user JSON object");
-            LOG.severe(e.toString());
+			LOG.severe(e.toString());
 			return new User();
 		}
 	}

@@ -1,6 +1,7 @@
 package com.onepagecrm.net;
 
 import com.onepagecrm.models.User;
+import com.onepagecrm.models.serializer.LoginSerializer;
 
 import junit.framework.TestCase;
 
@@ -24,12 +25,8 @@ public class ResponseHandlerTest extends TestCase {
      * successResponse and loggedInUser directly map to each other.
      */
     public void testParseLoginResponse_Successful() {
-        // Set up fabricated User.
-//        User loggedInUser = new User("556cb8b61787fa02e000047e",
-//                "WqLLs1n/Y3SvOpGg5CNOpdKy74GkGI6lnhwSfYmgNl4=", "trial",
-//                "Cillian", "Myles", "cillian.college@gmail.com", "Myles Inc.",
-//                "", "556cb8b61787fa02e000047d@users.onepagecrm.com", null);
         
+    	// Set up fabricated User.        
         User loggedInUser = new User()
         		.setId("556cb8b61787fa02e000047e")
         		.setAuthKey("WqLLs1n/Y3SvOpGg5CNOpdKy74GkGI6lnhwSfYmgNl4=")
@@ -40,6 +37,7 @@ public class ResponseHandlerTest extends TestCase {
         		.setCompanyName("Myles Inc.")
         		.setBccEmail("556cb8b61787fa02e000047d@users.onepagecrm.com");
 
+        // Set up the fabricated JSON success response
         String successResponse = "{\"status\":0,\"message\":\"OK\",\"timestamp\":1435940522," +
                 "\"data\":{\"user_id\":\"556cb8b61787fa02e000047e\",\"auth_key\":" +
                 "\"WqLLs1n/Y3SvOpGg5CNOpdKy74GkGI6lnhwSfYmgNl4=\",\"account_type\":" +
@@ -62,15 +60,15 @@ public class ResponseHandlerTest extends TestCase {
                 "\"556cb8b61787fa02e000047d@users.onepagecrm.com\",\"account_rights\":[" +
                 "\"account_owner\",\"admin\"]}}}}";
 
-        User parsedUser = responseHandler.parseLoginResponse(successResponse);
+        User parsedUser = LoginSerializer.parseLogin(successResponse);
         assertNotNull("User object being set is null", parsedUser);
 
         assertEquals("User ID not set correctly", loggedInUser.getId(),
                 parsedUser.getId());
         assertEquals("AuthKey not set correctly", loggedInUser.getAuthKey(),
                 parsedUser.getAuthKey());
-//        assertEquals("AccountType not set correctly", loggedInUser.getAccountType(),
-//                parsedUser.getAccountType());
+        assertEquals("AccountType not set correctly", loggedInUser.getAccountType(),
+                parsedUser.getAccountType());
         assertEquals("FirstName not set correctly", loggedInUser.getFirstName(),
                 parsedUser.getFirstName());
         assertEquals("LastName not set correctly", loggedInUser.getLastName(),

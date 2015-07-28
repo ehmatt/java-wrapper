@@ -16,6 +16,6 @@ public class PostRequest extends SignedRequest {
 	
 	@Override
 	public void setType() {
-		this.type = type.POST;
+		this.type = Type.POST;
 	}
 }

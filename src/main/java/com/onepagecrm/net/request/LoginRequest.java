@@ -24,6 +24,6 @@ public class LoginRequest extends Request {
 
 	@Override
 	public void setType() {
-		this.type = type.POST;
+		this.type = Type.POST;
 	}
 }

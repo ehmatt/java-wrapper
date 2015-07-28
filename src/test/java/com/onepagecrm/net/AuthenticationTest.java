@@ -4,7 +4,6 @@ import junit.framework.TestCase;
 
 import com.onepagecrm.models.User;
 
-
 public class AuthenticationTest extends TestCase {
 
     private User loggedInUser;
@@ -29,12 +28,6 @@ public class AuthenticationTest extends TestCase {
         		.setAuthKey("WqLLs1n/Y3SvOpGg5CNOpdKy74GkGI6lnhwSfYmgNl4=")
         		.setFirstName("Cillian")
         		.setLastName("Myles");
-        		
-        		
-//        		("556cb8b61787fa02e000047e",
-//                "WqLLs1n/Y3SvOpGg5CNOpdKy74GkGI6lnhwSfYmgNl4=", "trial",
-//                "Cillian", "Myles", "cillian.college@gmail.com", "Myles Inc.",
-//                "", "556cb8b61787fa02e000047d@users.onepagecrm.com", null);
     }
 
     /**
