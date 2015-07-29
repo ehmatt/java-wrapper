@@ -44,9 +44,9 @@ public abstract class Request {
 	protected Response response;
 
 	private static final String ACCECPTS_TAG = "Accepts";
-	protected static final String ACCECPTS = "application/json";
+	private static final String ACCECPTS = "application/json";
 	private static final String USER_AGENT_TAG = "User-Agent";
-	protected static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) "
+	private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) "
 			+ "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36";
 
 	protected static final String X_UID = "X-OnePageCRM-UID";
@@ -58,9 +58,17 @@ public abstract class Request {
 
 	protected HttpsURLConnection connection;
 
-	public abstract void setEndpointUrl(String endpoint);
 	public abstract void setType();
+	
+	public void setEndpointUrl(String enpoint) {
+		endpointUrl = baseUrl + enpoint + format;
+	}
 
+	/** 
+	 * Method require to send HTTP request.
+	 * 
+	 * @return
+	 */
 	public Response send() {
 		setupAndConnect();
 		setRequestMethod();
@@ -72,7 +80,7 @@ public abstract class Request {
 		return response;
 	}
 
-	/** 
+	/**
 	 * Connect to URL using HttpsURLConnection class.
 	 */
 	private void setupAndConnect() {
@@ -87,7 +95,7 @@ public abstract class Request {
 		}
 	}
 
-	/** 
+	/**
 	 * Convert String to URL object.
 	 * 
 	 * @param url
@@ -104,7 +112,7 @@ public abstract class Request {
 		return requestUrl;
 	}
 
-	/** 
+	/**
 	 * Set HTTP request method e.g. GET, POST etc.
 	 */
 	private void setRequestMethod() {
@@ -154,8 +162,8 @@ public abstract class Request {
 	}
 
 	/**
-	 * Define the headers for the request. 
-	 * This method will be overriden in SignedRequest to include auth headers.
+	 * Define the headers for the request. This method will be overriden in
+	 * SignedRequest to include auth headers.
 	 */
 	public void setRequestHeaders() {
 		connection.setRequestProperty(ACCECPTS_TAG, ACCECPTS);
@@ -167,11 +175,11 @@ public abstract class Request {
 		LOG.info("URL: " + connection.getURL());
 		LOG.info("Body: " + "");
 	}
-	
+
 	protected void setRequestBody() {
 		this.requestBody = encodeParams(params);
 	}
-	
+
 	/**
 	 * Encode request parameters.
 	 *
@@ -199,6 +207,9 @@ public abstract class Request {
 		return "";
 	}
 
+	/**
+	 * Actually write the request body using the OutputStreamWriter.
+	 */
 	private void writeRequestBody() {
 		if (requestBody != null && !requestBody.equals("")) {
 			OutputStreamWriter out = null;
@@ -223,6 +234,9 @@ public abstract class Request {
 		}
 	}
 
+	/**
+	 * Acquire the HTTP response code, message and body.
+	 */
 	private void getResponse() {
 		response = new Response();
 

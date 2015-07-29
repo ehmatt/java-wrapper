@@ -7,7 +7,6 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 import com.onepagecrm.models.User;
-import com.onepagecrm.net.ApiClient;
 
 public class Driver {
 

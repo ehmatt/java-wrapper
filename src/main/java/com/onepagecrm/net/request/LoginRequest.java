@@ -8,18 +8,13 @@ public class LoginRequest extends Request {
 		params = new HashMap<String, String>();
 		params.put("login", username);
 		params.put("password", password);
-		initialize();
-	}
-
-	private void initialize() {
-		setEndpointUrl(null);
 		setType();
-		setRequestBody();
+		setEndpointUrl("login");
 	}
 
 	@Override
-	public void setEndpointUrl(String url) {
-		endpointUrl = baseUrl + "login" + format;
+	public void setEndpointUrl(String endpoint) {
+		endpointUrl = baseUrl + endpoint + format;
 	}
 
 	@Override

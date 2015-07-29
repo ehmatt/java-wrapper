@@ -12,16 +12,6 @@ public class GetRequest extends SignedRequest {
 	}
 
 	@Override
-	public void setAuthData(Authentication authData) {
-		this.authData = authData;
-	}
-	
-	@Override
-	public void setEndpointUrl(String endpoint) {
-		endpointUrl = baseUrl + endpoint + format;
-	}
-
-	@Override
 	public void setType() {
 		this.type = Type.GET;
 	}
