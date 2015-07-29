@@ -33,7 +33,6 @@ public class ContactSerializer extends BaseSerializer {
 
 			for (int i = 0; i < contactsArray.length(); i++) {
 				JSONObject contactObject = contactsArray.getJSONObject(i);
-//				LOG.info("Contact Info : " + fromJson(contactObject.getJSONObject(CONTACT_TAG)));
 				contacts.add(fromJson(contactObject.getJSONObject(CONTACT_TAG)));
 			}
 

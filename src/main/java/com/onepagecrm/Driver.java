@@ -6,6 +6,9 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+import com.onepagecrm.models.Call;
+import com.onepagecrm.models.Contact;
+import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
 
 public class Driver {
@@ -40,8 +43,18 @@ public class Driver {
 		User loggedInUser = User.login(
 				prop.getProperty("username"), 
 				prop.getProperty("password"));
+
+//		loggedInUser.contacts();
+
+		ContactList contacts = loggedInUser.actionStream();
+		LOG.info("Contacts : " + contacts);
+		Contact contact = contacts.get(0);
+		LOG.info("Contact : " + contact);
 		
-		loggedInUser.actionStream();
-		loggedInUser.contacts();
+		Call newCall = new Call()
+				.setCallResult("interested")
+				.setNote("JAVA_CLIENT");
+		
+		newCall.save(contact);
 	}
 }

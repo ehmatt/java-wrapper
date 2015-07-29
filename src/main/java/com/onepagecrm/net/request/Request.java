@@ -188,7 +188,7 @@ public abstract class Request {
 	 */
 	private String encodeParams(Map<String, String> params) {
 		if (params != null && !params.isEmpty()) {
-			String[] entries = new String[] { null, null, null, null, null, null };
+			String[] entries = new String[params.size()];
 			int i = 0;
 			for (Map.Entry<String, String> param : params.entrySet()) {
 				try {
