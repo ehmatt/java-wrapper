@@ -13,21 +13,29 @@ public class UserSerializer extends BaseSerializer {
 	private static final Logger LOG = Logger.getLogger(ContactList.class.getName());
 
 	public static User fromString(String userString) {
-		JSONObject responseObject = new JSONObject(userString);
-		JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+		try {
+			JSONObject responseObject = new JSONObject(userString);
+			JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
 
-		String userId = dataObject.getString(USER_ID_TAG);
-		String authKey = dataObject.getString(AUTH_KEY_TAG);
-		String accountType = dataObject.getString(ACCOUNT_TYPE_TAG);
+			String userId = dataObject.getString(USER_ID_TAG);
+			String authKey = dataObject.getString(AUTH_KEY_TAG);
+			String accountType = dataObject.getString(ACCOUNT_TYPE_TAG);
 
-		User user = new User()
-				.setId(userId)
-				.setAuthKey(authKey)
-				.setAccountType(accountType);
+			User user = new User()
+					.setId(userId)
+					.setAuthKey(authKey)
+					.setAccountType(accountType);
 
-		JSONObject outsideUserObject = dataObject.getJSONObject(USER_TAG);
-		JSONObject userObject = outsideUserObject.getJSONObject(USER_TAG);
-		return fromJson(userObject, user);
+			JSONObject outsideUserObject = dataObject.getJSONObject(USER_TAG);
+			JSONObject userObject = outsideUserObject.getJSONObject(USER_TAG);
+			return fromJson(userObject, user);
+
+		} catch (JSONException e) {
+			
+			LOG.severe("Error parsing user response");
+			LOG.severe(e.toString());
+			return new User();
+		}
 	}
 
 	public static User fromJson(JSONObject userObject, User user) {

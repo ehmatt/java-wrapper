@@ -3,6 +3,7 @@ package com.onepagecrm.models;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.onepagecrm.models.serializer.BaseSerializer;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.PostRequest;
 
@@ -18,13 +19,13 @@ public class Call {
         this.note = note;
     }
     
-    public Response save(Contact contact) {
+    public boolean save(Contact contact) {
     	Map<String, String> params = new HashMap<>();
         params.put("call_result", callResult);
         params.put("text", note);
-    	PostRequest saveRequest = new PostRequest("calls", params, "?contact_id=" + contact.getId());
+    	PostRequest saveRequest = new PostRequest("calls", "?contact_id=" + contact.getId(), params);
     	Response response = saveRequest.send();
-    	return response;
+    	return BaseSerializer.createResourceFromString(response.getResponseBody());
     }
 
     public String getCallResult() {

@@ -1,6 +1,7 @@
 package com.onepagecrm.net;
 
 import com.onepagecrm.models.User;
+import com.onepagecrm.models.serializer.BaseSerializer;
 import com.onepagecrm.models.serializer.ContactSerializer;
 import com.onepagecrm.models.serializer.LoginSerializer;
 
@@ -9,12 +10,9 @@ import junit.framework.TestCase;
 
 public class ResponseHandlerTest extends TestCase {
 
-    private ResponseHandler responseHandler;
-
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        responseHandler = new ResponseHandler();
     }
 
     /**
@@ -237,7 +235,7 @@ public class ResponseHandlerTest extends TestCase {
                 "\"contact_id\":\"55804f6b1787fa72b400002e\",\"attachments\":[]}}}";
 
         assertEquals("Success message misinterpreted",
-                true, responseHandler.parseCreateResourceResponse(createdResourceResponse));
+                true, BaseSerializer.createResourceFromString(createdResourceResponse));
     }
 
     /**
@@ -251,7 +249,7 @@ public class ResponseHandlerTest extends TestCase {
                 "\"errors\":{}}";
 
         assertEquals("Expired token response misinterpreted",
-                false, responseHandler.parseCreateResourceResponse(expiredResponse));
+                false, BaseSerializer.createResourceFromString(expiredResponse));
     }
 
     /**
@@ -266,7 +264,7 @@ public class ResponseHandlerTest extends TestCase {
                 "\"errors\":{}}";
 
         assertEquals("No auth token response misinterpreted",
-                false, responseHandler.parseCreateResourceResponse(noAuthResponse));
+                false, BaseSerializer.createResourceFromString(noAuthResponse));
     }
 
     @Override

@@ -7,7 +7,7 @@ import com.onepagecrm.net.Authentication;
 
 public class PostRequest extends SignedRequest {
 
-	public PostRequest(String endpoint, Map<String, String> params, String query) {
+	public PostRequest(String endpoint, String query, Map<String, String> params) {
 		this.params = params;
 		setType();
 		setEndpointUrl(endpoint);

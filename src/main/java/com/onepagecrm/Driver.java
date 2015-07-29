@@ -48,13 +48,13 @@ public class Driver {
 
 		ContactList contacts = loggedInUser.actionStream();
 		LOG.info("Contacts : " + contacts);
-		Contact contact = contacts.get(0);
+		Contact contact = contacts.get(1);
 		LOG.info("Contact : " + contact);
 		
 		Call newCall = new Call()
 				.setCallResult("interested")
 				.setNote("JAVA_CLIENT");
 		
-		newCall.save(contact);
+		LOG.info("SAVED : "+newCall.save(contact));
 	}
 }
