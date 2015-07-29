@@ -1,6 +1,7 @@
 package com.onepagecrm.net;
 
 import com.onepagecrm.models.User;
+import com.onepagecrm.models.serializer.ContactSerializer;
 import com.onepagecrm.models.serializer.LoginSerializer;
 
 import junit.framework.TestCase;
@@ -92,8 +93,8 @@ public class ResponseHandlerTest extends TestCase {
                 "\"Expired\",\"error_message\":\"Could not find more helpful message, sorry.\"," +
                 "\"errors\":{}}";
 
-        assertNull("Expired token response misinterpreted",
-                responseHandler.parseLoginResponse(expiredResponse).getId());
+        assertFalse("Expired token response misinterpreted",
+        		LoginSerializer.parseLogin(expiredResponse).isValid());
     }
 
     /**
@@ -108,8 +109,8 @@ public class ResponseHandlerTest extends TestCase {
                 "\"error_message\":\"Could not find more helpful message, sorry.\"," +
                 "\"errors\":{}}";
 
-        assertNull("No auth token response misinterpreted",
-                responseHandler.parseLoginResponse(noAuthResponse).getId());
+        assertFalse("No auth token response misinterpreted",
+        		LoginSerializer.parseLogin(noAuthResponse).isValid());
     }
 
     /**
@@ -142,10 +143,10 @@ public class ResponseHandlerTest extends TestCase {
                 "\"modified_at\":\"2015-06-16T16:31:40.088Z\",\"status\":\"asap\",\"date\":null}}]}}";
 
         assertNotNull("Contact array object mis-constructed / not constructed",
-                responseHandler.parseGetContactsResponse(oneContactResponse));
+                ContactSerializer.fromString(oneContactResponse));
 
         assertEquals("Wrong number of Contacts constructed",
-                1, responseHandler.parseGetContactsResponse(oneContactResponse).size());
+                1, ContactSerializer.fromString(oneContactResponse).size());
     }
 
     /**
@@ -198,10 +199,10 @@ public class ResponseHandlerTest extends TestCase {
                 "\"2015-06-16T14:48:49.723Z\",\"status\":\"asap\",\"date\":null}}]}}";
 
         assertNotNull("Contact array object mis-constructed / not constructed",
-                responseHandler.parseGetContactsResponse(twoContactsResponse));
+        		ContactSerializer.fromString(twoContactsResponse));
 
         assertEquals("Wrong number of Contacts constructed",
-                2, responseHandler.parseGetContactsResponse(twoContactsResponse).size());
+                2, ContactSerializer.fromString(twoContactsResponse).size());
     }
 
     /**
@@ -215,10 +216,10 @@ public class ResponseHandlerTest extends TestCase {
                 "\"data\":{\"contacts\":[]}}";
 
         assertNotNull("Contact array object mis-constructed / not constructed",
-                responseHandler.parseGetContactsResponse(noContactResponse));
+        		ContactSerializer.fromString(noContactResponse));
 
         assertEquals("Wrong number of Contacts constructed",
-                0, responseHandler.parseGetContactsResponse(noContactResponse).size());
+                0, ContactSerializer.fromString(noContactResponse).size());
     }
 
     /**
