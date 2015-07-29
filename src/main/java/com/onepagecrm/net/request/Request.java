@@ -33,11 +33,11 @@ public abstract class Request {
 
 	protected Type type = Type.GET; // default type GET
 
-	private static final String GET = "GET";
-	private static final String POST = "POST";
-	private static final String PUT = "PUT";
-	private static final String DELETE = "DELETE";
-	private static final String PATCH = "PATCH";
+	protected static final String GET = "GET";
+	protected static final String POST = "POST";
+	protected static final String PUT = "PUT";
+	protected static final String DELETE = "DELETE";
+	protected static final String PATCH = "PATCH";
 
 	protected String requestBody;
 	protected Map<String, String> params;
@@ -72,33 +72,9 @@ public abstract class Request {
 		return response;
 	}
 
-	/**
-	 * Encode request parameters.
-	 *
-	 * @param params
-	 * @return
+	/** 
+	 * Connect to URL using HttpsURLConnection class.
 	 */
-	public String encodeParams(Map<String, String> params) {
-		if (params != null && !params.isEmpty()) {
-			String[] entries = new String[] { null, null, null, null, null, null };
-			int i = 0;
-			for (Map.Entry<String, String> param : params.entrySet()) {
-				try {
-					entries[i] = (String.format("%s=%s", 
-							URLEncoder.encode(param.getKey(), "UTF-8"),
-							URLEncoder.encode(param.getValue(), "UTF-8")));
-				} catch (UnsupportedEncodingException e) {
-					LOG.severe("Error encoding url params : " + params.toString());
-					LOG.severe(e.toString());
-				} finally {
-					i++;
-				}
-			}
-			return Arrays.stream(entries).collect(Collectors.joining("&"));
-		}
-		return "";
-	}
-
 	private void setupAndConnect() {
 		URL url = getUrl(this.endpointUrl);
 		connection = null;
@@ -111,6 +87,12 @@ public abstract class Request {
 		}
 	}
 
+	/** 
+	 * Convert String to URL object.
+	 * 
+	 * @param url
+	 * @return
+	 */
 	private URL getUrl(String url) {
 		URL requestUrl = null;
 		try {
@@ -122,6 +104,9 @@ public abstract class Request {
 		return requestUrl;
 	}
 
+	/** 
+	 * Set HTTP request method e.g. GET, POST etc.
+	 */
 	private void setRequestMethod() {
 		switch (type) {
 		case GET:
@@ -168,6 +153,10 @@ public abstract class Request {
 		}
 	}
 
+	/**
+	 * Define the headers for the request. 
+	 * This method will be overriden in SignedRequest to include auth headers.
+	 */
 	public void setRequestHeaders() {
 		connection.setRequestProperty(ACCECPTS_TAG, ACCECPTS);
 		connection.setRequestProperty(USER_AGENT_TAG, USER_AGENT);
@@ -179,11 +168,38 @@ public abstract class Request {
 		LOG.info("Body: " + "");
 	}
 	
-	public void setRequestBody() {
+	protected void setRequestBody() {
 		this.requestBody = encodeParams(params);
 	}
+	
+	/**
+	 * Encode request parameters.
+	 *
+	 * @param params
+	 * @return
+	 */
+	private String encodeParams(Map<String, String> params) {
+		if (params != null && !params.isEmpty()) {
+			String[] entries = new String[] { null, null, null, null, null, null };
+			int i = 0;
+			for (Map.Entry<String, String> param : params.entrySet()) {
+				try {
+					entries[i] = (String.format("%s=%s", 
+							URLEncoder.encode(param.getKey(), "UTF-8"),
+							URLEncoder.encode(param.getValue(), "UTF-8")));
+				} catch (UnsupportedEncodingException e) {
+					LOG.severe("Error encoding url params : " + params.toString());
+					LOG.severe(e.toString());
+				} finally {
+					i++;
+				}
+			}
+			return Arrays.stream(entries).collect(Collectors.joining("&"));
+		}
+		return "";
+	}
 
-	public void writeRequestBody() {
+	private void writeRequestBody() {
 		if (requestBody != null && !requestBody.equals("")) {
 			OutputStreamWriter out = null;
 			try {

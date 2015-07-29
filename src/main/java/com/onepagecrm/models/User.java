@@ -3,9 +3,11 @@ package com.onepagecrm.models;
 import java.io.Serializable;
 
 import com.onepagecrm.models.internal.Sales;
+import com.onepagecrm.models.serializer.ContactSerializer;
 import com.onepagecrm.models.serializer.LoginSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.LoginRequest;
 import com.onepagecrm.net.request.Request;
 
@@ -30,6 +32,18 @@ public class User extends ApiResource implements Serializable {
 		Request request = new LoginRequest(username, password);
 		Response response = request.send();
 		return LoginSerializer.parseLogin(response.getResponseBody());
+	}
+	
+	public ContactList actionStream() {
+		Request request = new GetRequest("action_stream");
+		Response response = request.send();
+		return ContactSerializer.fromString(response.getResponseBody());
+	}
+	
+	public ContactList contacts() {
+		Request request = new GetRequest("contacts");
+		Response response = request.send();
+		return ContactSerializer.fromString(response.getResponseBody());
 	}
 
 	public User() {

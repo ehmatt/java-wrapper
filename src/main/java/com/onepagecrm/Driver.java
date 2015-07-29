@@ -42,9 +42,7 @@ public class Driver {
 				prop.getProperty("username"), 
 				prop.getProperty("password"));
 		
-		ApiClient client = new ApiClient(true);
-		
-		client.getActionStream(loggedInUser, "");
-		client.getContacts(loggedInUser, "");
+		loggedInUser.actionStream();
+		loggedInUser.contacts();
 	}
 }
