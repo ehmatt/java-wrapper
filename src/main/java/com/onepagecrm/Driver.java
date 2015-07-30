@@ -55,6 +55,6 @@ public class Driver {
 				.setCallResult("interested")
 				.setNote("JAVA_CLIENT");
 		
-		LOG.info("SAVED : "+newCall.save(contact));
+		LOG.info("SAVED : " + newCall.save(contact));
 	}
 }
