@@ -38,5 +38,3 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
-# Begin untracking from now on
-config.properties
