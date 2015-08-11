@@ -1,5 +1,6 @@
 package com.onepagecrm.models;
 
+import java.util.List;
 import java.io.Serializable;
 
 import com.onepagecrm.models.internal.Sales;
@@ -27,6 +28,8 @@ public class User extends ApiResource implements Serializable {
 
 	private Sales sales;
 	private Account account;
+	
+	private List<CallResult> callResults;
 
 	public static User login(String username, String password) {
 		Request request = new LoginRequest(username, password);
@@ -153,11 +156,20 @@ public class User extends ApiResource implements Serializable {
 		return this;
 	}
 
+	public List<CallResult> getCallResults() {
+	    return callResults;
+	}
+
+	public User setCallResults(List<CallResult> callResults) {
+	    this.callResults = callResults;
+	    return this;
+	}
+
 	@Override
 	public String toString() {
 		return "User{" + "id=\'" + id + "\', authKey=\'" + authKey + "\'" + ", accountType=\'" + accountType + "\'"
 				+ ", firstName=\'" + firstName + "\'" + ", lastName=\'" + lastName + "\'" + ", email=\'" + email + "\'"
 				+ ", companyName=\'" + companyName + "\'" + ", photoUrl=\'" + photoUrl + "\'" + ", bccEmail=\'"
-				+ bccEmail + "\'" + ", callResults=\'" + account.callResults + "\'" + '}';
+				+ bccEmail + "\'";
 	}
 }
