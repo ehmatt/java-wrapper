@@ -14,7 +14,7 @@ public class Contact extends ApiResource implements Serializable {
 	private String id;
 
 	private int intId;
-	private static int nextIntId = 0;
+	public static int nextIntId = 1;
 
 	private String ownerId;
 	private String firstName;
