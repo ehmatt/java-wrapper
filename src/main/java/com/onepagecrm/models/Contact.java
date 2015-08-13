@@ -6,303 +6,310 @@ import java.util.List;
 
 import com.onepagecrm.net.ApiResource;
 
-
 public class Contact extends ApiResource implements Serializable {
 
-	private static final long serialVersionUID = -6073805195226829625L;
+    private static final long serialVersionUID = -6073805195226829625L;
 
-	private String id;
+    private String id;
 
-	private int intId;
-	public static int nextIntId = 1;
+    private int intId;
+    public static int nextIntId = 1;
 
-	private String ownerId;
-	private String firstName;
-	private String lastName;
-	private String photoUrl;
-	private String jobTitle;
-	private String background;
-	private List<URL> urls;
-	private List<Phone> phones;
-	private List<Email> emails;
-	private String status;
-	private String statusId;
-	private boolean starred;
+    private String ownerId;
+    private String firstName;
+    private String lastName;
+    private String photoUrl;
+    private String jobTitle;
+    private String background;
+    private List<URL> urls;
+    private List<Phone> phones;
+    private List<Email> emails;
+    private String status;
+    private String statusId;
+    private boolean starred;
 
-	private String leadSourceId;
-	// private LeadSource leadSource;
+    private String leadSourceId;
+    // private LeadSource leadSource;
 
-	private boolean pendingDeal;
-	private String type;
-	private String companyName;
-	private String companyId;
+    private boolean pendingDeal;
+    private String type;
+    private String companyName;
+    private String companyId;
 
-	// "sale_closed_for": [ ]
+    // "sale_closed_for": [ ]
 
-	private List<Tag> tags;
-	private List<CustomField> customFields;
-	private String createdAt;
-	private String modifiedAt;
+    private List<Tag> tags;
+    private List<CustomField> customFields;
+    private String createdAt;
+    private String modifiedAt;
 
-	private List<String> addressLines;
-	// private Address address;
+    private List<String> addressLines;
 
-	public Contact(String id, String ownerId, String firstName, String lastName, ArrayList<Phone> phones,
-			String companyName) {
+    // private Address address;
 
-		this.id = id;
-		this.intId = nextIntId;
-		nextIntId++;
+    public Contact(String id, String ownerId, String firstName, String lastName,
+	    ArrayList<Phone> phones, String companyName) {
 
-		this.ownerId = ownerId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phones = phones;
-		this.companyName = companyName;
-	}
+	this.id = id;
+	this.intId = nextIntId;
+	nextIntId++;
 
-	/**
-	 * Default blank constructor.
-	 */
-	public Contact() {
-		this.intId = nextIntId;
-		nextIntId++;
-	}
-	
-	public boolean isValid() {
-		return this.id != null && !this.id.equals("");
-	}
+	this.ownerId = ownerId;
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.phones = phones;
+	this.companyName = companyName;
+    }
 
-	public int getIntId() {
-		return intId;
-	}
+    /**
+     * Default blank constructor.
+     */
+    public Contact() {
+	this.intId = nextIntId;
+	nextIntId++;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public boolean isValid() {
+	return this.id != null && !this.id.equals("");
+    }
+    
+    public Contact setIntId(int intId) {
+	this.intId = intId;
+	return this;
+    }
 
-	public Contact setId(String id) {
-		this.id = id;
-		return this;
-	}
+    public int getIntId() {
+	return intId;
+    }
 
-	public String getOwnerId() {
-		return ownerId;
-	}
+    public String getId() {
+	return id;
+    }
 
-	public Contact setOwnerId(String ownerId) {
-		this.ownerId = ownerId;
-		return this;
-	}
+    public Contact setId(String id) {
+	this.id = id;
+	return this;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getOwnerId() {
+	return ownerId;
+    }
 
-	public Contact setFirstName(String firstName) {
-		this.firstName = firstName;
-		return this;
-	}
+    public Contact setOwnerId(String ownerId) {
+	this.ownerId = ownerId;
+	return this;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getFirstName() {
+	return firstName;
+    }
 
-	public Contact setLastName(String lastName) {
-		this.lastName = lastName;
-		return this;
-	}
+    public Contact setFirstName(String firstName) {
+	this.firstName = firstName;
+	return this;
+    }
 
-	public String getPhotoUrl() {
-		return photoUrl;
-	}
+    public String getLastName() {
+	return lastName;
+    }
 
-	public Contact setPhotoUrl(String photoUrl) {
-		this.photoUrl = photoUrl;
-		return this;
-	}
+    public Contact setLastName(String lastName) {
+	this.lastName = lastName;
+	return this;
+    }
 
-	public String getJobTitle() {
-		return jobTitle;
-	}
+    public String getPhotoUrl() {
+	return photoUrl;
+    }
 
-	public Contact setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
-		return this;
-	}
+    public Contact setPhotoUrl(String photoUrl) {
+	this.photoUrl = photoUrl;
+	return this;
+    }
 
-	public String getBackground() {
-		return background;
-	}
+    public String getJobTitle() {
+	return jobTitle;
+    }
 
-	public Contact setBackground(String background) {
-		this.background = background;
-		return this;
-	}
+    public Contact setJobTitle(String jobTitle) {
+	this.jobTitle = jobTitle;
+	return this;
+    }
 
-	public List<URL> getUrls() {
-		return urls;
-	}
+    public String getBackground() {
+	return background;
+    }
 
-	public Contact setUrls(List<URL> urls) {
-		this.urls = urls;
-		return this;
-	}
+    public Contact setBackground(String background) {
+	this.background = background;
+	return this;
+    }
 
-	public List<Phone> getPhones() {
-		return phones;
-	}
+    public List<URL> getUrls() {
+	return urls;
+    }
 
-	public Contact setPhones(List<Phone> phones) {
-		this.phones = phones;
-		return this;
-	}
+    public Contact setUrls(List<URL> urls) {
+	this.urls = urls;
+	return this;
+    }
 
-	public List<Email> getEmails() {
-		return emails;
-	}
+    public List<Phone> getPhones() {
+	return phones;
+    }
 
-	public Contact setEmails(List<Email> emails) {
-		this.emails = emails;
-		return this;
-	}
+    public Contact setPhones(List<Phone> phones) {
+	this.phones = phones;
+	return this;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public List<Email> getEmails() {
+	return emails;
+    }
 
-	public Contact setStatus(String status) {
-		this.status = status;
-		return this;
-	}
+    public Contact setEmails(List<Email> emails) {
+	this.emails = emails;
+	return this;
+    }
 
-	public String getStatusId() {
-		return statusId;
-	}
+    public String getStatus() {
+	return status;
+    }
 
-	public Contact setStatusId(String statusId) {
-		this.statusId = statusId;
-		return this;
-	}
+    public Contact setStatus(String status) {
+	this.status = status;
+	return this;
+    }
 
-	public boolean isStarred() {
-		return starred;
-	}
+    public String getStatusId() {
+	return statusId;
+    }
 
-	public Contact setStarred(boolean starred) {
-		this.starred = starred;
-		return this;
-	}
+    public Contact setStatusId(String statusId) {
+	this.statusId = statusId;
+	return this;
+    }
 
-	public String getLeadSourceId() {
-		return leadSourceId;
-	}
+    public boolean isStarred() {
+	return starred;
+    }
 
-	public Contact setLeadSourceId(String leadSourceId) {
-		this.leadSourceId = leadSourceId;
-		return this;
-	}
+    public Contact setStarred(boolean starred) {
+	this.starred = starred;
+	return this;
+    }
 
-	public boolean isPendingDeal() {
-		return pendingDeal;
-	}
+    public String getLeadSourceId() {
+	return leadSourceId;
+    }
 
-	public Contact setPendingDeal(boolean pendingDeal) {
-		this.pendingDeal = pendingDeal;
-		return this;
-	}
+    public Contact setLeadSourceId(String leadSourceId) {
+	this.leadSourceId = leadSourceId;
+	return this;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public boolean isPendingDeal() {
+	return pendingDeal;
+    }
 
-	public Contact setType(String type) {
-		this.type = type;
-		return this;
-	}
+    public Contact setPendingDeal(boolean pendingDeal) {
+	this.pendingDeal = pendingDeal;
+	return this;
+    }
 
-	public String getCompanyName() {
-		return companyName;
-	}
+    public String getType() {
+	return type;
+    }
 
-	public Contact setCompanyName(String companyName) {
-		this.companyName = companyName;
-		return this;
-	}
+    public Contact setType(String type) {
+	this.type = type;
+	return this;
+    }
 
-	public String getCompanyId() {
-		return companyId;
-	}
+    public String getCompanyName() {
+	return companyName;
+    }
 
-	public Contact setCompanyId(String companyId) {
-		this.companyId = companyId;
-		return this;
-	}
+    public Contact setCompanyName(String companyName) {
+	this.companyName = companyName;
+	return this;
+    }
 
-	public List<Tag> getTags() {
-		return tags;
-	}
+    public String getCompanyId() {
+	return companyId;
+    }
 
-	public Contact setTags(List<Tag> tags) {
-		this.tags = tags;
-		return this;
-	}
+    public Contact setCompanyId(String companyId) {
+	this.companyId = companyId;
+	return this;
+    }
 
-	public List<CustomField> getCustomFields() {
-		return customFields;
-	}
+    public List<Tag> getTags() {
+	return tags;
+    }
 
-	public Contact setCustomFields(List<CustomField> customFields) {
-		this.customFields = customFields;
-		return this;
-	}
+    public Contact setTags(List<Tag> tags) {
+	this.tags = tags;
+	return this;
+    }
 
-	public String getCreatedAt() {
-		return createdAt;
-	}
+    public List<CustomField> getCustomFields() {
+	return customFields;
+    }
 
-	public Contact setCreatedAt(String createdAt) {
-		this.createdAt = createdAt;
-		return this;
-	}
+    public Contact setCustomFields(List<CustomField> customFields) {
+	this.customFields = customFields;
+	return this;
+    }
 
-	public String getModifiedAt() {
-		return modifiedAt;
-	}
+    public String getCreatedAt() {
+	return createdAt;
+    }
 
-	public Contact setModifiedAt(String modifiedAt) {
-		this.modifiedAt = modifiedAt;
-		return this;
-	}
+    public Contact setCreatedAt(String createdAt) {
+	this.createdAt = createdAt;
+	return this;
+    }
 
-	public List<String> getAddressLines() {
-		return addressLines;
-	}
+    public String getModifiedAt() {
+	return modifiedAt;
+    }
 
-	public Contact setAddressLines(List<String> addressLines) {
-		this.addressLines = addressLines;
-		return this;
-	}
+    public Contact setModifiedAt(String modifiedAt) {
+	this.modifiedAt = modifiedAt;
+	return this;
+    }
 
-	@Override
-	public String toString() {
+    public List<String> getAddressLines() {
+	return addressLines;
+    }
 
-		String retString = "Contact{" + "id=\'" + id + "\', ownerId=\'" + ownerId + "\'" + ", firstName=\'" + firstName + "\'"
-				+ ", lastName=\'" + lastName + "\'" + ", companyName=\'" + companyName + "\'";
+    public Contact setAddressLines(List<String> addressLines) {
+	this.addressLines = addressLines;
+	return this;
+    }
 
-		if (phones != null && !phones.isEmpty()) {
-			retString += ", Phones{";
-			for (int i = 0; i < phones.size(); i++) {
-				if (i == (phones.size() - 1)) {
-					retString += phones.get(i).getType() + "=\'" + phones.get(i).getNumber() + "\'";
-				} else {
-					retString += phones.get(i).getType() + "=\'" + phones.get(i).getNumber() + "\', ";
-				}
-			}
-			retString += "}";
+    @Override
+    public String toString() {
+
+	String retString = "Contact{" + "id=\'" + id + "\', ownerId=\'" + ownerId + "\'"
+		+ ", firstName=\'" + firstName + "\'" + ", lastName=\'" + lastName + "\'"
+		+ ", companyName=\'" + companyName + "\'";
+
+	if (phones != null && !phones.isEmpty()) {
+	    retString += ", Phones{";
+	    for (int i = 0; i < phones.size(); i++) {
+		if (i == (phones.size() - 1)) {
+		    retString += phones.get(i).getType() + "=\'" + phones.get(i).getNumber() + "\'";
+		} else {
+		    retString += phones.get(i).getType() + "=\'" + phones.get(i).getNumber()
+			    + "\', ";
 		}
-		retString += "}";
-
-		return retString;
+	    }
+	    retString += "}";
 	}
+	retString += "}";
+
+	return retString;
+    }
 }

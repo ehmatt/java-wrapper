@@ -11,6 +11,7 @@ public class Account {
 	public static List<User> team;
 	public static User loggedInUser;
 	public static Settings settings;
+	public static String loginResponse;
 
 	public List<CustomField> customFields;
 	public List<CallResult> callResults;
@@ -20,6 +21,7 @@ public class Account {
 
 	public TeamStream teamStream;
 	public ContactsCount contactsCount;
+	
 
 	// public static User switchUser(login, password) {
 	
@@ -51,6 +53,15 @@ public class Account {
 
 	public Account setSettings(Settings settings) {
 	    Account.settings = settings;
+	    return this;
+	}
+
+	public static String getLoginResponse() {
+	    return loginResponse;
+	}
+
+	public Account setLoginResponse(String loginResponse) {
+	    Account.loginResponse = loginResponse;
 	    return this;
 	}
 
