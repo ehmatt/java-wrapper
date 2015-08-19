@@ -16,6 +16,10 @@ public class Action extends ApiResource implements Serializable {
     private Date modifiedAt;
     private String status;
     private Date date;
+    
+//    private boolean hasDate;
+//    private boolean isAsap;
+//    private boolean 
 
     public Action() {
 

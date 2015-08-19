@@ -9,16 +9,20 @@ public class DateSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(DateSerializer.class.getName());
 
-    public static Date fromFormattedString(String dateStr) {
-	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat(
+	    "yyyy-MM-dd'T'HH:mm:ss.SSS");
+    public static SimpleDateFormat friendlyDateFormat = new SimpleDateFormat("MMM dd");
+    
+    private static final String TODAY = "TODAY";
 
+    public static Date fromFormattedString(String dateStr) {
 	if (dateStr != null) {
 	    try {
-		return formatter.parse(dateStr);
+		return dateTimeFormat.parse(dateStr);
 	    } catch (ParseException e) {
 		try {
-		    formatter = new SimpleDateFormat("yyyy-MM-dd");
-		    return formatter.parse(dateStr);
+		    return dateFormat.parse(dateStr);
 		} catch (ParseException ex) {
 		    LOG.severe("Error parsing date string to date object");
 		    LOG.severe(e.toString());
@@ -27,5 +31,14 @@ public class DateSerializer extends BaseSerializer {
 	    }
 	}
 	return null;
+    }
+
+    public static String toFriendlyDateString(Date date) {
+	Date today = new Date();
+	if (dateFormat.format(date).equals(dateFormat.format(today))) {
+	    return TODAY;
+	} else {
+	    return friendlyDateFormat.format(date);
+	}
     }
 }
