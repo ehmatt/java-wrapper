@@ -3,13 +3,16 @@ package com.onepagecrm;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+import com.onepagecrm.models.Action;
 import com.onepagecrm.models.Call;
 import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
+import com.onepagecrm.net.request.Request;
 
 public class Driver {
 
@@ -39,6 +42,8 @@ public class Driver {
 		}
 	    }
 	}
+	
+	Request.isProdApp = true;
 
 	User loggedInUser = User.login(
 		prop.getProperty("username"), 
@@ -48,13 +53,24 @@ public class Driver {
 
 	ContactList contacts = loggedInUser.actionStream();
 	LOG.info("Contacts : " + contacts);
+	
+//	contacts = loggedInUser.contacts();
+//	LOG.info("Contacts : " + contacts);
+	
 	Contact contact = contacts.get(0);
 	LOG.info("Contact : " + contact);
+	
+	List<Action> actions = contact.getActions();
+	LOG.info("Actions : " + actions);
+	
+	Action nextAction = contact.getNextAction();
+	LOG.info("NextAction : " + nextAction);
 
-	Call newCall = new Call()
-		.setCallResult("interested")
-		.setNote("JAVA_CLIENT");
 
-	LOG.info("SAVED : " + newCall.save(contact));
+//	Call newCall = new Call()
+//		.setCallResult("interested")
+//		.setNote("JAVA_CLIENT");
+//
+//	LOG.info("SAVED : " + newCall.save(contact));
     }
 }

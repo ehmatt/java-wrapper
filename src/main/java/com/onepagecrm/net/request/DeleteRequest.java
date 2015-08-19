@@ -5,14 +5,14 @@ import com.onepagecrm.net.Authentication;
 
 public class DeleteRequest extends SignedRequest {
 
-	public DeleteRequest(String endpoint) {
-		setType();
-		setEndpointUrl(endpoint);
-		authData = new Authentication(Account.loggedInUser, Request.DELETE, endpointUrl, "");
-	}
+    public DeleteRequest(String endpoint) {
+	setType();
+	setEndpointUrl(endpoint);
+	authData = new Authentication(Account.loggedInUser, Request.DELETE, endpointUrl, "");
+    }
 
-	@Override
-	public void setType() {
-		this.type = Type.DELETE;
-	}
+    @Override
+    public void setType() {
+	this.type = Type.DELETE;
+    }
 }

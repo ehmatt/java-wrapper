@@ -2,6 +2,7 @@ package com.onepagecrm.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.onepagecrm.net.ApiResource;
@@ -40,30 +41,16 @@ public class Contact extends ApiResource implements Serializable {
 
     private List<Tag> tags;
     private List<CustomField> customFields;
-    private String createdAt;
-    private String modifiedAt;
+    private Date createdAt;
+    private Date modifiedAt;
 
     private List<String> addressLines;
 
+    private List<Action> actions;
+    private Action nextAction;
+
     // private Address address;
 
-    public Contact(String id, String ownerId, String firstName, String lastName,
-	    ArrayList<Phone> phones, String companyName) {
-
-	this.id = id;
-	this.intId = nextIntId;
-	nextIntId++;
-
-	this.ownerId = ownerId;
-	this.firstName = firstName;
-	this.lastName = lastName;
-	this.phones = phones;
-	this.companyName = companyName;
-    }
-
-    /**
-     * Default blank constructor.
-     */
     public Contact() {
 	this.intId = nextIntId;
 	nextIntId++;
@@ -72,7 +59,7 @@ public class Contact extends ApiResource implements Serializable {
     public boolean isValid() {
 	return this.id != null && !this.id.equals("");
     }
-    
+
     public Contact setIntId(int intId) {
 	this.intId = intId;
 	return this;
@@ -262,20 +249,20 @@ public class Contact extends ApiResource implements Serializable {
 	return this;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
 	return createdAt;
     }
 
-    public Contact setCreatedAt(String createdAt) {
+    public Contact setCreatedAt(Date createdAt) {
 	this.createdAt = createdAt;
 	return this;
     }
 
-    public String getModifiedAt() {
+    public Date getModifiedAt() {
 	return modifiedAt;
     }
 
-    public Contact setModifiedAt(String modifiedAt) {
+    public Contact setModifiedAt(Date modifiedAt) {
 	this.modifiedAt = modifiedAt;
 	return this;
     }
@@ -286,6 +273,24 @@ public class Contact extends ApiResource implements Serializable {
 
     public Contact setAddressLines(List<String> addressLines) {
 	this.addressLines = addressLines;
+	return this;
+    }
+
+    public List<Action> getActions() {
+	return actions;
+    }
+
+    public Contact setActions(List<Action> actions) {
+	this.actions = actions;
+	return this;
+    }
+
+    public Action getNextAction() {
+	return nextAction;
+    }
+
+    public Contact setNextAction(Action nextAction) {
+	this.nextAction = nextAction;
 	return this;
     }
 

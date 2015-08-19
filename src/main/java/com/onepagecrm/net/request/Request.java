@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
@@ -13,15 +14,16 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-import javax.net.ssl.HttpsURLConnection;
-
 import com.onepagecrm.net.Response;
 
 public abstract class Request {
 
     protected static final Logger LOG = Logger.getLogger(Request.class.getName());
 
+    public static boolean isProdApp = false;
+
     protected static final String baseUrl = "https://app.onepagecrm.com/api/v3/";
+    protected static final String baseDevUrl = "http://staging.onepagecrm.com/api/v3/";
     protected static final String format = ".json";
     protected String endpointUrl;
 
@@ -37,7 +39,7 @@ public abstract class Request {
     protected static final String DELETE = "DELETE";
     protected static final String PATCH = "PATCH";
 
-    protected String requestBody;
+    protected String requestBody = "";
     protected Map<String, String> params;
     protected Response response;
 
@@ -52,14 +54,18 @@ public abstract class Request {
     protected static final String X_AUTH = "X-OnePageCRM-AUTH";
     protected static final String X_SOURCE = "X-OnePageCRM-SOURCE";
 
-    protected static final String SOURCE = "java-client";
+    public static String SOURCE = "java-client";
 
-    protected HttpsURLConnection connection;
+    protected HttpURLConnection connection;
 
     public abstract void setType();
 
     public void setEndpointUrl(String enpoint) {
-	endpointUrl = baseUrl + enpoint + format;
+	if (isProdApp) {
+	    endpointUrl = baseUrl + enpoint + format;
+	} else {
+	    endpointUrl = baseDevUrl + enpoint + format;
+	}
     }
 
     /**
@@ -79,14 +85,14 @@ public abstract class Request {
     }
 
     /**
-     * Connect to URL using HttpsURLConnection class.
+     * Connect to URL using HttpURLConnection class.
      */
     private void setupAndConnect() {
 	URL url = getUrl(this.endpointUrl);
 	connection = null;
 	try {
-	    connection = (HttpsURLConnection) url.openConnection();
-	    HttpsURLConnection.setFollowRedirects(true);
+	    connection = (HttpURLConnection) url.openConnection();
+	    HttpURLConnection.setFollowRedirects(true);
 	} catch (IOException e) {
 	    LOG.severe("Error connecting to URL : " + url);
 	    LOG.severe(e.toString());

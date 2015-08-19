@@ -4,21 +4,16 @@ import java.util.HashMap;
 
 public class LoginRequest extends Request {
 
-	public LoginRequest(String username, String password) {
-		params = new HashMap<String, String>();
-		params.put("login", username);
-		params.put("password", password);
-		setType();
-		setEndpointUrl("login");
-	}
+    public LoginRequest(String username, String password) {
+	params = new HashMap<String, String>();
+	params.put("login", username);
+	params.put("password", password);
+	setType();
+	setEndpointUrl("login");
+    }
 
-	@Override
-	public void setEndpointUrl(String endpoint) {
-		endpointUrl = baseUrl + endpoint + format;
-	}
-
-	@Override
-	public void setType() {
-		this.type = Type.POST;
-	}
+    @Override
+    public void setType() {
+	this.type = Type.POST;
+    }
 }
