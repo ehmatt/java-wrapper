@@ -48,16 +48,16 @@ public class Driver {
 	User loggedInUser = User.login(
 		prop.getProperty("username"), 
 		prop.getProperty("password"));
+//		prop.getProperty("peteruser"), 
+//		prop.getProperty("peterpass"));
 
-	// loggedInUser.contacts();
-
-	ContactList contacts = loggedInUser.actionStream();
+	ContactList stream = loggedInUser.actionStream();
+	LOG.info("Contacts : " + stream);
+	
+	ContactList contacts = loggedInUser.contacts();
 	LOG.info("Contacts : " + contacts);
 	
-//	contacts = loggedInUser.contacts();
-//	LOG.info("Contacts : " + contacts);
-	
-	Contact contact = contacts.get(0);
+	Contact contact = stream.get(0);
 	LOG.info("Contact : " + contact);
 	
 	List<Action> actions = contact.getActions();
@@ -66,11 +66,10 @@ public class Driver {
 	Action nextAction = contact.getNextAction();
 	LOG.info("NextAction : " + nextAction);
 
+	Call newCall = new Call()
+		.setCallResult("interested")
+		.setNote("JAVA_CLIENT");
 
-//	Call newCall = new Call()
-//		.setCallResult("interested")
-//		.setNote("JAVA_CLIENT");
-//
-//	LOG.info("SAVED : " + newCall.save(contact));
+	LOG.info("SAVED : " + newCall.save(contact));
     }
 }

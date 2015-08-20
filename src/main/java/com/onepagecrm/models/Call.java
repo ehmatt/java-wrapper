@@ -9,7 +9,7 @@ import com.onepagecrm.net.request.PostRequest;
 
 public class Call {
     
-    private static final String ENDPOINT = "calls";
+    private static final String CALLS_ENDPOINT = "calls";
 
     private String callResult;
     private String note; // field name = 'text'
@@ -25,7 +25,11 @@ public class Call {
     	Map<String, String> params = new HashMap<>();
         params.put("call_result", callResult);
         params.put("text", note);
-    	PostRequest saveRequest = new PostRequest(ENDPOINT, saveQueryString(contact.getId()), params);
+    	PostRequest saveRequest = new PostRequest(
+    		CALLS_ENDPOINT, 
+    		saveQueryString(contact.getId()), 
+    		params
+    	);
     	Response response = saveRequest.send();
     	return BaseSerializer.createResourceFromString(response.getResponseBody());
     }

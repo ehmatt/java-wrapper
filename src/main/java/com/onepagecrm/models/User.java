@@ -15,6 +15,9 @@ import com.onepagecrm.net.request.Request;
 public class User extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = 1383622287570201668L;
+    
+    private static final String ACTION_STREAM_ENDPOINT = "action_stream";
+    private static final String CONTACTS_ENDPOINT = "contacts";
 
     private String id;
     private String authKey;
@@ -38,19 +41,19 @@ public class User extends ApiResource implements Serializable {
     }
 
     public ContactList actionStream() {
-	Request request = new GetRequest("action_stream");
-//	Request request = new GetRequest("action_stream", "?per_page=100", null);
-//	Request request = new GetRequest("action_stream", "?has_actions=false", null);
+	Request request = new GetRequest(ACTION_STREAM_ENDPOINT, perPageQueryString(100), null);
 	Response response = request.send();
 	return ContactSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList contacts() {
-	Request request = new GetRequest("contacts");
-//	Request request = new GetRequest("contacts", "?per_page=100", null);
-//	Request request = new GetRequest("contacts", "?has_actions=false", null);
+	Request request = new GetRequest(CONTACTS_ENDPOINT, perPageQueryString(100), null);
 	Response response = request.send();
 	return ContactSerializer.fromString(response.getResponseBody());
+    }
+    
+    private String perPageQueryString(int number) {
+	return "?per_page=" + number; 
     }
 
     public User() {
