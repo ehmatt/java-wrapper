@@ -68,7 +68,7 @@ public class Driver {
 
 	Call newCall = new Call()
 		.setCallResult("interested")
-		.setNote("JAVA_CLIENT");
+		.setNote("");
 
 	LOG.info("SAVED : " + newCall.save(contact));
     }

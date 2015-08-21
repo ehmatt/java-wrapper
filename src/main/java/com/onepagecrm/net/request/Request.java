@@ -177,7 +177,7 @@ public abstract class Request {
 	LOG.info("--- REQUEST ---");
 	LOG.info("Type: " + connection.getRequestMethod());
 	LOG.info("URL: " + connection.getURL());
-	LOG.info("Body: " + "");
+	LOG.info("Body: " + requestBody);
     }
 
     protected void setRequestBody() {

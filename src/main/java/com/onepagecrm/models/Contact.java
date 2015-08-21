@@ -1,7 +1,6 @@
 package com.onepagecrm.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +53,28 @@ public class Contact extends ApiResource implements Serializable {
     public Contact() {
 	this.intId = nextIntId;
 	nextIntId++;
+    }
+
+    public String getFullName() {
+	if (lastName != null && !lastName.equals("")) {
+	    if (firstName != null && !firstName.equals("")) {
+		return firstName + " " + lastName;
+	    } else {
+		return lastName;
+	    }
+	}
+	return null;
+    }
+
+    public String getFullAlphaName() {
+	if (lastName != null && !lastName.equals("")) {
+	    if (firstName != null && !firstName.equals("")) {
+		return lastName + ", " + firstName;
+	    } else {
+		return lastName;
+	    }
+	}
+	return null;
     }
 
     public boolean isValid() {
