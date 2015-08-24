@@ -17,6 +17,7 @@ public class ActionSerializer extends BaseSerializer {
     public static Action fromJSONObject(JSONObject actionObject) {
 
 	Action action = new Action();
+	Date date = null;
 	
 	try {
 	    String id = actionObject.getString(ID_TAG);
@@ -28,22 +29,13 @@ public class ActionSerializer extends BaseSerializer {
 	    String status = actionObject.getString(STATUS_TAG);
 	    
 	    if (actionObject.has(DATE_TAG)) {
-//		Object dateObj = actionObject.get(DATE_TAG);
 		if (!actionObject.isNull(DATE_TAG)) {
-		    Date date = DateSerializer.fromFormattedString(actionObject.getString(DATE_TAG));
+		    date = DateSerializer.fromFormattedString(actionObject.getString(DATE_TAG));
 		    action.setDate(date);
 		} 
 	    }
 	    
-//	    if (actionObject.has(DATE_TAG)) {
-//		Object dateObj = actionObject.get(DATE_TAG);
-//		if (dateObj instanceof String) {
-//		    Date date = DateSerializer.fromFormattedString((String) dateObj);
-//		} 
-//	    }
-	    
-//	    String dateStr = actionObject.getString(DATE_TAG);
-//	    Date date = DateSerializer.fromFormattedString(dateStr);
+	    int dateColor = DateSerializer.getDateColour(date, status);
 
 	    return action
 	    	.setId(id)
@@ -51,7 +43,8 @@ public class ActionSerializer extends BaseSerializer {
 	    	.setText(text)
 	    	.setAssigneeId(assigneeId)
 	    	.setModifiedAt(modifiedAt)
-	    	.setStatus(status);
+	    	.setStatus(status)
+	    	.setDateColor(dateColor);
 	    
 	} catch (JSONException e) {
 	    LOG.severe("Error parsing contact object");

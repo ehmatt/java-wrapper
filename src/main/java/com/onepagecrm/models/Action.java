@@ -16,10 +16,7 @@ public class Action extends ApiResource implements Serializable {
     private Date modifiedAt;
     private String status;
     private Date date;
-    
-//    private boolean hasDate;
-//    private boolean isAsap;
-//    private boolean 
+    private int dateColor;
 
     public Action() {
 
@@ -88,10 +85,19 @@ public class Action extends ApiResource implements Serializable {
 	return this;
     }
 
+    public int getDateColor() {
+	return dateColor;
+    }
+
+    public Action setDateColor(int dateColor) {
+	this.dateColor = dateColor;
+	return this;
+    }
+
     @Override
     public String toString() {
-	return "Action{id=\'" + id + "\', assigneeId=\'" + assigneeId + "\', contactId=\'" + contactId
-		+ "\', text=\'" + text + "\', modifiedAt=\'" + modifiedAt + "\', status=\'" + status
-		+ "\', date=\'" + date + "\'}";
+	return "Action{id=\'" + id + "\', assigneeId=\'" + assigneeId + "\', contactId=\'"
+		+ contactId + "\', text=\'" + text + "\', modifiedAt=\'" + modifiedAt
+		+ "\', status=\'" + status + "\', date=\'" + date + "\'}";
     }
 }
