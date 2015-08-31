@@ -3,6 +3,7 @@ package com.onepagecrm.models;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.onepagecrm.models.serializer.DateSerializer;
 import com.onepagecrm.net.ApiResource;
 
 public class Action extends ApiResource implements Serializable {
@@ -16,6 +17,7 @@ public class Action extends ApiResource implements Serializable {
     private Date modifiedAt;
     private String status;
     private Date date;
+    private String friendlyDateString;
     private int dateColor;
 
     public Action() {
@@ -74,6 +76,19 @@ public class Action extends ApiResource implements Serializable {
     public Action setDate(Date date) {
 	this.date = date;
 	return this;
+    }
+
+    public String getFriendlyDateString() {
+	if (this.date == null) {
+	    return this.status.toUpperCase();
+	} else {
+	    return DateSerializer.toFriendlyDateString(this.date).toUpperCase();
+	}
+    }
+
+    public Action setFriendlyDateString(String friendlyDateString) {
+        this.friendlyDateString = friendlyDateString;
+        return this;
     }
 
     public String getId() {
