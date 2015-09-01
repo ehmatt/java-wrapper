@@ -35,25 +35,25 @@ public class User extends ApiResource implements Serializable {
     private List<CallResult> callResults;
 
     public static User login(String username, String password) {
-	Request request = new LoginRequest(username, password);
-	Response response = request.send();
-	return LoginSerializer.parseLogin(response.getResponseBody());
+        Request request = new LoginRequest(username, password);
+        Response response = request.send();
+        return LoginSerializer.parseLogin(response.getResponseBody());
     }
 
     public ContactList actionStream() {
-	Request request = new GetRequest(ACTION_STREAM_ENDPOINT, perPageQueryString(100), null);
-	Response response = request.send();
-	return ContactSerializer.fromString(response.getResponseBody());
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, perPageQueryString(100), null);
+        Response response = request.send();
+        return ContactSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList contacts() {
-	Request request = new GetRequest(CONTACTS_ENDPOINT, perPageQueryString(100), null);
-	Response response = request.send();
-	return ContactSerializer.fromString(response.getResponseBody());
+        Request request = new GetRequest(CONTACTS_ENDPOINT, perPageQueryString(100), null);
+        Response response = request.send();
+        return ContactSerializer.fromString(response.getResponseBody());
     }
 
     private String perPageQueryString(int number) {
-	return "?per_page=" + number;
+        return "?per_page=" + number;
     }
 
     public User() {
@@ -61,144 +61,144 @@ public class User extends ApiResource implements Serializable {
     }
 
     public boolean isValid() {
-	return id != null && !id.equals("");
+        return id != null && !id.equals("");
     }
 
     public String getFullName() {
-	if (lastName != null && !lastName.equals("")) {
-	    if (firstName != null && !firstName.equals("")) {
-		return firstName + " " + lastName;
-	    } else {
-		return lastName;
-	    }
-	}
-	return null;
+        if (lastName != null && !lastName.equals("")) {
+            if (firstName != null && !firstName.equals("")) {
+                return firstName + " " + lastName;
+            } else {
+                return lastName;
+            }
+        }
+        return null;
     }
 
     public String getFullAlphaName() {
-	if (lastName != null && !lastName.equals("")) {
-	    if (firstName != null && !firstName.equals("")) {
-		return lastName + ", " + firstName;
-	    } else {
-		return lastName;
-	    }
-	}
-	return null;
+        if (lastName != null && !lastName.equals("")) {
+            if (firstName != null && !firstName.equals("")) {
+                return lastName + ", " + firstName;
+            } else {
+                return lastName;
+            }
+        }
+        return null;
     }
 
     public String getId() {
-	return id;
+        return id;
     }
 
     public User setId(String id) {
-	this.id = id;
-	return this;
+        this.id = id;
+        return this;
     }
 
     public String getAuthKey() {
-	return authKey;
+        return authKey;
     }
 
     public User setAuthKey(String authKey) {
-	this.authKey = authKey;
-	return this;
+        this.authKey = authKey;
+        return this;
     }
 
     public String getAccountType() {
-	return accountType;
+        return accountType;
     }
 
     public User setAccountType(String accountType) {
-	this.accountType = accountType;
-	return this;
+        this.accountType = accountType;
+        return this;
     }
 
     public String getBccEmail() {
-	return bccEmail;
+        return bccEmail;
     }
 
     public User setBccEmail(String bccEmail) {
-	this.bccEmail = bccEmail;
-	return this;
+        this.bccEmail = bccEmail;
+        return this;
     }
 
     public String getCompanyName() {
-	return companyName;
+        return companyName;
     }
 
     public User setCompanyName(String companyName) {
-	this.companyName = companyName;
-	return this;
+        this.companyName = companyName;
+        return this;
     }
 
     public String getEmail() {
-	return email;
+        return email;
     }
 
     public User setEmail(String email) {
-	this.email = email;
-	return this;
+        this.email = email;
+        return this;
     }
 
     public String getFirstName() {
-	return firstName;
+        return firstName;
     }
 
     public User setFirstName(String firstName) {
-	this.firstName = firstName;
-	return this;
+        this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
-	return lastName;
+        return lastName;
     }
 
     public User setLastName(String lastName) {
-	this.lastName = lastName;
-	return this;
+        this.lastName = lastName;
+        return this;
     }
 
     public String getPhotoUrl() {
-	return photoUrl;
+        return photoUrl;
     }
 
     public User setPhotoUrl(String photoUrl) {
-	this.photoUrl = photoUrl;
-	return this;
+        this.photoUrl = photoUrl;
+        return this;
     }
 
     public Sales getSales() {
-	return sales;
+        return sales;
     }
 
     public User setSales(Sales sales) {
-	this.sales = sales;
-	return this;
+        this.sales = sales;
+        return this;
     }
 
     public Account getAccount() {
-	return account;
+        return account;
     }
 
     public User setAccount(Account account) {
-	this.account = account;
-	return this;
+        this.account = account;
+        return this;
     }
 
     public List<CallResult> getCallResults() {
-	return callResults;
+        return callResults;
     }
 
     public User setCallResults(List<CallResult> callResults) {
-	this.callResults = callResults;
-	return this;
+        this.callResults = callResults;
+        return this;
     }
 
     @Override
     public String toString() {
-	return "User{" + "id=\'" + id + "\', authKey=\'" + authKey + "\'" + ", accountType=\'"
-		+ accountType + "\'" + ", firstName=\'" + firstName + "\'" + ", lastName=\'"
-		+ lastName + "\'" + ", email=\'" + email + "\'" + ", companyName=\'" + companyName
-		+ "\'" + ", photoUrl=\'" + photoUrl + "\'" + ", bccEmail=\'" + bccEmail + "\'";
+        return "User{" + "id=\'" + id + "\', authKey=\'" + authKey + "\'" + ", accountType=\'"
+                + accountType + "\'" + ", firstName=\'" + firstName + "\'" + ", lastName=\'"
+                + lastName + "\'" + ", email=\'" + email + "\'" + ", companyName=\'" + companyName
+                + "\'" + ", photoUrl=\'" + photoUrl + "\'" + ", bccEmail=\'" + bccEmail + "\'";
     }
 }

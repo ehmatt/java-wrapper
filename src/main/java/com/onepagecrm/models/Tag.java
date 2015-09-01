@@ -2,54 +2,55 @@ package com.onepagecrm.models;
 
 public class Tag {
 
-	private String name;
-	private int counts;
-	private int totalCounts;
-	private int actionStreamCount;
-	
-	public Tag() {}
+    private String name;
+    private int counts;
+    private int totalCounts;
+    private int actionStreamCount;
 
-	public Tag(String name, int counts, int totalCounts, int actionStreamCount) {
-		super();
-		this.name = name;
-		this.counts = counts;
-		this.totalCounts = totalCounts;
-		this.actionStreamCount = actionStreamCount;
-	}
+    public Tag() {
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Tag(String name, int counts, int totalCounts, int actionStreamCount) {
+        super();
+        this.name = name;
+        this.counts = counts;
+        this.totalCounts = totalCounts;
+        this.actionStreamCount = actionStreamCount;
+    }
 
-	public Tag setName(String name) {
-		this.name = name;
-		return this;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getCounts() {
-		return counts;
-	}
+    public Tag setName(String name) {
+        this.name = name;
+        return this;
+    }
 
-	public Tag setCounts(int counts) {
-		this.counts = counts;
-		return this;
-	}
+    public int getCounts() {
+        return counts;
+    }
 
-	public int getTotalCounts() {
-		return totalCounts;
-	}
+    public Tag setCounts(int counts) {
+        this.counts = counts;
+        return this;
+    }
 
-	public Tag setTotalCounts(int totalCounts) {
-		this.totalCounts = totalCounts;
-		return this;
-	}
+    public int getTotalCounts() {
+        return totalCounts;
+    }
 
-	public int getActionStreamCount() {
-		return actionStreamCount;
-	}
+    public Tag setTotalCounts(int totalCounts) {
+        this.totalCounts = totalCounts;
+        return this;
+    }
 
-	public Tag setActionStreamCount(int actionStreamCount) {
-		this.actionStreamCount = actionStreamCount;
-		return this;
-	}
+    public int getActionStreamCount() {
+        return actionStreamCount;
+    }
+
+    public Tag setActionStreamCount(int actionStreamCount) {
+        this.actionStreamCount = actionStreamCount;
+        return this;
+    }
 }

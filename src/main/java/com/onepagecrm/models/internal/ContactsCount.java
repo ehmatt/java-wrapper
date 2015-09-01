@@ -4,5 +4,5 @@ import java.util.Map;
 
 public class ContactsCount {
 
-	private Map<String, Integer> counts;
+    private Map<String, Integer> counts;
 }

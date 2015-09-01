@@ -16,56 +16,56 @@ public class ActionSerializer extends BaseSerializer {
 
     public static Action fromJSONObject(JSONObject actionObject) {
 
-	Action action = new Action();
-	Date date = null;
-	
-	try {
-	    String id = actionObject.getString(ID_TAG);
-	    String contactId = actionObject.getString(CONTACT_ID_TAG);
-	    String text = actionObject.getString(TEXT_TAG);
-	    String assigneeId = actionObject.getString(ASSIGNEE_ID_TAG);
-	    String modifiedAtStr = actionObject.getString(MODIFIED_AT_TAG);
-	    Date modifiedAt = DateSerializer.fromFormattedString(modifiedAtStr);
-	    String status = actionObject.getString(STATUS_TAG);
-	    
-	    if (actionObject.has(DATE_TAG)) {
-		if (!actionObject.isNull(DATE_TAG)) {
-		    date = DateSerializer.fromFormattedString(actionObject.getString(DATE_TAG));
-		    action.setDate(date);
-		} 
-	    }
-	    
-	    int dateColor = DateSerializer.getDateColour(date, status);
+        Action action = new Action();
+        Date date = null;
 
-	    return action
-	    	.setId(id)
-	    	.setContactId(contactId)
-	    	.setText(text)
-	    	.setAssigneeId(assigneeId)
-	    	.setModifiedAt(modifiedAt)
-	    	.setStatus(status)
-	    	.setDateColor(dateColor);
-	    
-	} catch (JSONException e) {
-	    LOG.severe("Error parsing contact object");
-	    LOG.severe(e.toString());
-	}
-	return new Action();
+        try {
+            String id = actionObject.getString(ID_TAG);
+            String contactId = actionObject.getString(CONTACT_ID_TAG);
+            String text = actionObject.getString(TEXT_TAG);
+            String assigneeId = actionObject.getString(ASSIGNEE_ID_TAG);
+            String modifiedAtStr = actionObject.getString(MODIFIED_AT_TAG);
+            Date modifiedAt = DateSerializer.fromFormattedString(modifiedAtStr);
+            String status = actionObject.getString(STATUS_TAG);
+
+            if (actionObject.has(DATE_TAG)) {
+                if (!actionObject.isNull(DATE_TAG)) {
+                    date = DateSerializer.fromFormattedString(actionObject.getString(DATE_TAG));
+                    action.setDate(date);
+                }
+            }
+
+            int dateColor = DateSerializer.getDateColour(date, status);
+
+            return action
+                    .setId(id)
+                    .setContactId(contactId)
+                    .setText(text)
+                    .setAssigneeId(assigneeId)
+                    .setModifiedAt(modifiedAt)
+                    .setStatus(status)
+                    .setDateColor(dateColor);
+
+        } catch (JSONException e) {
+            LOG.severe("Error parsing contact object");
+            LOG.severe(e.toString());
+        }
+        return new Action();
     }
 
     public static ArrayList<Action> fromJSONArray(JSONArray actionsArray) {
 
-	ArrayList<Action> actions = new ArrayList<>();
+        ArrayList<Action> actions = new ArrayList<>();
 
-	for (int i = 0; i < actionsArray.length(); i++) {
-	    try {
-		actions.add(fromJSONObject(actionsArray.getJSONObject(i)));
-	    } catch (JSONException e) {
-		LOG.severe("Error parsing contact object");
-		LOG.severe(e.toString());
-	    }
-	}
+        for (int i = 0; i < actionsArray.length(); i++) {
+            try {
+                actions.add(fromJSONObject(actionsArray.getJSONObject(i)));
+            } catch (JSONException e) {
+                LOG.severe("Error parsing contact object");
+                LOG.severe(e.toString());
+            }
+        }
 
-	return actions;
+        return actions;
     }
 }

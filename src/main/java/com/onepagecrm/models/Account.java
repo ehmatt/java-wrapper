@@ -8,123 +8,123 @@ import com.onepagecrm.models.internal.TeamStream;
 
 public class Account {
 
-	public static List<User> team;
-	public static User loggedInUser;
-	public static Settings settings;
-	public static String loginResponse;
+    public static List<User> team;
+    public static User loggedInUser;
+    public static Settings settings;
+    public static String loginResponse;
 
-	public List<CustomField> customFields;
-	public List<CallResult> callResults;
-	public List<Tag> tags;
-	public List<Status> statuses;
-	public List<LeadSource> leadSources;
+    public List<CustomField> customFields;
+    public List<CallResult> callResults;
+    public List<Tag> tags;
+    public List<Status> statuses;
+    public List<LeadSource> leadSources;
 
-	public TeamStream teamStream;
-	public ContactsCount contactsCount;
-	
+    public TeamStream teamStream;
+    public ContactsCount contactsCount;
 
-	// public static User switchUser(login, password) {
-	
-	public Account() {
-	    
-	}
 
-	public static List<User> getTeam() {
-	    return team;
-	}
+    // public static User switchUser(login, password) {
 
-	public Account setTeam(List<User> team) {
-	    Account.team = team;
-	    return this;
-	}
+    public Account() {
 
-	public static User getLoggedInUser() {
-	    return loggedInUser;
-	}
+    }
 
-	public Account setLoggedInUser(User loggedInUser) {
-	    Account.loggedInUser = loggedInUser;
-	    return this;
-	}
+    public static List<User> getTeam() {
+        return team;
+    }
 
-	public static Settings getSettings() {
-	    return settings;
-	}
+    public Account setTeam(List<User> team) {
+        Account.team = team;
+        return this;
+    }
 
-	public Account setSettings(Settings settings) {
-	    Account.settings = settings;
-	    return this;
-	}
+    public static User getLoggedInUser() {
+        return loggedInUser;
+    }
 
-	public static String getLoginResponse() {
-	    return loginResponse;
-	}
+    public Account setLoggedInUser(User loggedInUser) {
+        Account.loggedInUser = loggedInUser;
+        return this;
+    }
 
-	public Account setLoginResponse(String loginResponse) {
-	    Account.loginResponse = loginResponse;
-	    return this;
-	}
+    public static Settings getSettings() {
+        return settings;
+    }
 
-	public List<CustomField> getCustomFields() {
-	    return customFields;
-	}
+    public Account setSettings(Settings settings) {
+        Account.settings = settings;
+        return this;
+    }
 
-	public Account setCustomFields(List<CustomField> customFields) {
-	    this.customFields = customFields;
-	    return this;
-	}
+    public static String getLoginResponse() {
+        return loginResponse;
+    }
 
-	public List<CallResult> getCallResults() {
-	    return callResults;
-	}
+    public Account setLoginResponse(String loginResponse) {
+        Account.loginResponse = loginResponse;
+        return this;
+    }
 
-	public Account setCallResults(List<CallResult> callResults) {
-	    this.callResults = callResults;
-	    return this;
-	}
+    public List<CustomField> getCustomFields() {
+        return customFields;
+    }
 
-	public List<Tag> getTags() {
-	    return tags;
-	}
+    public Account setCustomFields(List<CustomField> customFields) {
+        this.customFields = customFields;
+        return this;
+    }
 
-	public Account setTags(List<Tag> tags) {
-	    this.tags = tags;
-	    return this;
-	}
+    public List<CallResult> getCallResults() {
+        return callResults;
+    }
 
-	public List<Status> getStatuses() {
-	    return statuses;
-	}
+    public Account setCallResults(List<CallResult> callResults) {
+        this.callResults = callResults;
+        return this;
+    }
 
-	public Account setStatuses(List<Status> statuses) {
-	    this.statuses = statuses;
-	    return this;
-	}
+    public List<Tag> getTags() {
+        return tags;
+    }
 
-	public List<LeadSource> getLeadSources() {
-	    return leadSources;
-	}
+    public Account setTags(List<Tag> tags) {
+        this.tags = tags;
+        return this;
+    }
 
-	public Account setLeadSources(List<LeadSource> leadSources) {
-	    this.leadSources = leadSources;
-	    return this;
-	}
+    public List<Status> getStatuses() {
+        return statuses;
+    }
 
-	public TeamStream getTeamStream() {
-	    return teamStream;
-	}
+    public Account setStatuses(List<Status> statuses) {
+        this.statuses = statuses;
+        return this;
+    }
 
-	public Account setTeamStream(TeamStream teamStream) {
-	    this.teamStream = teamStream;
-	    return this;
-	}
+    public List<LeadSource> getLeadSources() {
+        return leadSources;
+    }
 
-	public ContactsCount getContactsCount() {
-	    return contactsCount;
-	}
+    public Account setLeadSources(List<LeadSource> leadSources) {
+        this.leadSources = leadSources;
+        return this;
+    }
 
-	public Account setContactsCount(ContactsCount contactsCount) {
-	    this.contactsCount = contactsCount;
-	    return this;
-	}
+    public TeamStream getTeamStream() {
+        return teamStream;
+    }
+
+    public Account setTeamStream(TeamStream teamStream) {
+        this.teamStream = teamStream;
+        return this;
+    }
+
+    public ContactsCount getContactsCount() {
+        return contactsCount;
+    }
+
+    public Account setContactsCount(ContactsCount contactsCount) {
+        this.contactsCount = contactsCount;
+        return this;
+    }
 }

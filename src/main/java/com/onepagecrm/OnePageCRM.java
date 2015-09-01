@@ -4,9 +4,9 @@ import com.onepagecrm.models.Account;
 
 public final class OnePageCRM {
 
-	public static Account account;
+    public static Account account;
 
-	private OnePageCRM() {
+    private OnePageCRM() {
 
-	}
+    }
 }

@@ -42,19 +42,19 @@ public class BaseSerializer {
     protected static final String MESSAGE_TAG = "message";
 
     public static boolean createResourceFromString(String responseBody) {
-	boolean createdSuccessfully = false;
-	try {
-	    JSONObject responseObject = new JSONObject(responseBody);
-	    int status = responseObject.getInt(STATUS_TAG);
-	    String message = responseObject.getString(MESSAGE_TAG);
+        boolean createdSuccessfully = false;
+        try {
+            JSONObject responseObject = new JSONObject(responseBody);
+            int status = responseObject.getInt(STATUS_TAG);
+            String message = responseObject.getString(MESSAGE_TAG);
 
-	    if (status == 0 && message.equalsIgnoreCase("Created")) {
-		createdSuccessfully = true;
-	    }
+            if (status == 0 && message.equalsIgnoreCase("Created")) {
+                createdSuccessfully = true;
+            }
 
-	} catch (JSONException e) {
+        } catch (JSONException e) {
 
-	}
-	return createdSuccessfully;
+        }
+        return createdSuccessfully;
     }
 }

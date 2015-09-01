@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class Phone implements Serializable {
 
-	static final long serialVersionUID = 3927723378236473122L;
-	
-	private String type;
+    static final long serialVersionUID = 3927723378236473122L;
+
+    private String type;
     private String number;
 
     public Phone(String type, String number) {

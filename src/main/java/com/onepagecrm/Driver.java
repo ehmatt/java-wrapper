@@ -20,56 +20,56 @@ public class Driver {
 
     public static void main(String[] args) {
 
-	Properties prop = new Properties();
-	InputStream input = null;
+        Properties prop = new Properties();
+        InputStream input = null;
 
-	try {
-	    input = new FileInputStream("config.properties");
+        try {
+            input = new FileInputStream("config.properties");
 
-	    // Load the properties file
-	    prop.load(input);
+            // Load the properties file
+            prop.load(input);
 
-	} catch (IOException e) {
-	    LOG.severe("Error loading the config.properties file");
-	    LOG.severe(e.toString());
-	} finally {
-	    if (input != null) {
-		try {
-		    input.close();
-		} catch (IOException e) {
-		    LOG.severe("Error closing the config.properties file");
-		    LOG.severe(e.toString());
-		}
-	    }
-	}
-	
-	Request.isProdApp = true;
+        } catch (IOException e) {
+            LOG.severe("Error loading the config.properties file");
+            LOG.severe(e.toString());
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    LOG.severe("Error closing the config.properties file");
+                    LOG.severe(e.toString());
+                }
+            }
+        }
 
-	User loggedInUser = User.login(
-		prop.getProperty("username"), 
-		prop.getProperty("password"));
+        Request.isProdApp = true;
+
+        User loggedInUser = User.login(
+                prop.getProperty("username"),
+                prop.getProperty("password"));
 //		prop.getProperty("peteruser"), 
 //		prop.getProperty("peterpass"));
 
-	ContactList stream = loggedInUser.actionStream();
-	LOG.info("Contacts : " + stream);
-	
-	ContactList contacts = loggedInUser.contacts();
-	LOG.info("Contacts : " + contacts);
-	
-	Contact contact = stream.get(0);
-	LOG.info("Contact : " + contact);
-	
-	List<Action> actions = contact.getActions();
-	LOG.info("Actions : " + actions);
-	
-	Action nextAction = contact.getNextAction();
-	LOG.info("NextAction : " + nextAction);
+        ContactList stream = loggedInUser.actionStream();
+        LOG.info("Contacts : " + stream);
 
-	Call newCall = new Call()
-		.setCallResult("interested")
-		.setNote("");
+        ContactList contacts = loggedInUser.contacts();
+        LOG.info("Contacts : " + contacts);
 
-	LOG.info("SAVED : " + newCall.save(contact));
+        Contact contact = stream.get(0);
+        LOG.info("Contact : " + contact);
+
+        List<Action> actions = contact.getActions();
+        LOG.info("Actions : " + actions);
+
+        Action nextAction = contact.getNextAction();
+        LOG.info("NextAction : " + nextAction);
+
+        Call newCall = new Call()
+                .setCallResult("interested")
+                .setNote("");
+
+        LOG.info("SAVED : " + newCall.save(contact));
     }
 }

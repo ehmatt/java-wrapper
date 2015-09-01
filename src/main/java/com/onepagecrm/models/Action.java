@@ -25,65 +25,65 @@ public class Action extends ApiResource implements Serializable {
     }
 
     public String getAssigneeId() {
-	return assigneeId;
+        return assigneeId;
     }
 
     public Action setAssigneeId(String assigneeId) {
-	this.assigneeId = assigneeId;
-	return this;
+        this.assigneeId = assigneeId;
+        return this;
     }
 
     public String getContactId() {
-	return contactId;
+        return contactId;
     }
 
     public Action setContactId(String contactId) {
-	this.contactId = contactId;
-	return this;
+        this.contactId = contactId;
+        return this;
     }
 
     public String getText() {
-	return text;
+        return text;
     }
 
     public Action setText(String text) {
-	this.text = text;
-	return this;
+        this.text = text;
+        return this;
     }
 
     public Date getModifiedAt() {
-	return modifiedAt;
+        return modifiedAt;
     }
 
     public Action setModifiedAt(Date modifiedAt) {
-	this.modifiedAt = modifiedAt;
-	return this;
+        this.modifiedAt = modifiedAt;
+        return this;
     }
 
     public String getStatus() {
-	return status;
+        return status;
     }
 
     public Action setStatus(String status) {
-	this.status = status;
-	return this;
+        this.status = status;
+        return this;
     }
 
     public Date getDate() {
-	return date;
+        return date;
     }
 
     public Action setDate(Date date) {
-	this.date = date;
-	return this;
+        this.date = date;
+        return this;
     }
 
     public String getFriendlyDateString() {
-	if (this.date == null) {
-	    return this.status.toUpperCase();
-	} else {
-	    return DateSerializer.toFriendlyDateString(this.date).toUpperCase();
-	}
+        if (this.date == null) {
+            return this.status.toUpperCase();
+        } else {
+            return DateSerializer.toFriendlyDateString(this.date).toUpperCase();
+        }
     }
 
     public Action setFriendlyDateString(String friendlyDateString) {
@@ -92,27 +92,27 @@ public class Action extends ApiResource implements Serializable {
     }
 
     public String getId() {
-	return id;
+        return id;
     }
 
     public Action setId(String id) {
-	this.id = id;
-	return this;
+        this.id = id;
+        return this;
     }
 
     public int getDateColor() {
-	return dateColor;
+        return dateColor;
     }
 
     public Action setDateColor(int dateColor) {
-	this.dateColor = dateColor;
-	return this;
+        this.dateColor = dateColor;
+        return this;
     }
 
     @Override
     public String toString() {
-	return "Action{id=\'" + id + "\', assigneeId=\'" + assigneeId + "\', contactId=\'"
-		+ contactId + "\', text=\'" + text + "\', modifiedAt=\'" + modifiedAt
-		+ "\', status=\'" + status + "\', date=\'" + date + "\'}";
+        return "Action{id=\'" + id + "\', assigneeId=\'" + assigneeId + "\', contactId=\'"
+                + contactId + "\', text=\'" + text + "\', modifiedAt=\'" + modifiedAt
+                + "\', status=\'" + status + "\', date=\'" + date + "\'}";
     }
 }

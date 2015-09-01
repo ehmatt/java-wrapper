@@ -3,61 +3,61 @@ package com.onepagecrm.models;
 
 public class Address {
 
-	private String address;
-	private String city;
-	private String state;
-	private String zipCode;
-	private String countryCode;
+    private String address;
+    private String city;
+    private String state;
+    private String zipCode;
+    private String countryCode;
 
-	public Address(String address, String city, String state, String zipCode, String countryCode) {
-		this.address = address;
-		this.city = city;
-		this.state = state;
-		this.zipCode = zipCode;
-		this.countryCode = countryCode;
-	}
-	
-	public Address() {
-	
-	}
+    public Address(String address, String city, String state, String zipCode, String countryCode) {
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.countryCode = countryCode;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public Address() {
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public String getState() {
-		return state;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public String getZipCode() {
-		return zipCode;
-	}
+    public String getState() {
+        return state;
+    }
 
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
+    public void setState(String state) {
+        this.state = state;
+    }
 
-	public String getCountryCode() {
-		return countryCode;
-	}
+    public String getZipCode() {
+        return zipCode;
+    }
 
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}	
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
 }

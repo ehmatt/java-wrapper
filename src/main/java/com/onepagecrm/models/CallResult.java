@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class CallResult implements Serializable {
 
-	private static final long serialVersionUID = -3981577783870512717L;
-	
-	private int intId;
+    private static final long serialVersionUID = -3981577783870512717L;
+
+    private int intId;
     private String stringId;
     private String result;
 
