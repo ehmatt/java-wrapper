@@ -9,6 +9,10 @@ public class Phone implements Serializable {
     private String type;
     private String number;
 
+    public Phone() {
+
+    }
+
     public Phone(String type, String number) {
         this.setType(type);
         this.setNumber(number);
@@ -18,16 +22,18 @@ public class Phone implements Serializable {
         return type;
     }
 
-    public void setType(String type) {
+    public Phone setType(String type) {
         this.type = type;
+        return this;
     }
 
     public String getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public Phone setNumber(String number) {
         this.number = number;
+        return this;
     }
 
     @Override

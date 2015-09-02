@@ -2,11 +2,9 @@ package com.onepagecrm.net;
 
 import com.onepagecrm.models.User;
 import com.onepagecrm.models.serializer.BaseSerializer;
-import com.onepagecrm.models.serializer.ContactSerializer;
+import com.onepagecrm.models.serializer.ContactListSerializer;
 import com.onepagecrm.models.serializer.LoginSerializer;
-
 import junit.framework.TestCase;
-
 
 public class ResponseHandlerTest extends TestCase {
 
@@ -17,24 +15,24 @@ public class ResponseHandlerTest extends TestCase {
 
     /**
      * Normal operation of parseLoginResponse() method.
-     *
+     * <p/>
      * Will normally receive a success message (user enters details correctly).
      * Method will construct User object from JSON.
-     *
+     * <p/>
      * successResponse and loggedInUser directly map to each other.
      */
     public void testParseLoginResponse_Successful() {
-        
-    	// Set up fabricated User.        
+
+        // Set up fabricated User.
         User loggedInUser = new User()
-        		.setId("556cb8b61787fa02e000047e")
-        		.setAuthKey("WqLLs1n/Y3SvOpGg5CNOpdKy74GkGI6lnhwSfYmgNl4=")
-        		.setFirstName("Cillian")
-        		.setLastName("Myles")
-        		.setAccountType("trial")
-        		.setEmail("cillian.college@gmail.com")
-        		.setCompanyName("Myles Inc.")
-        		.setBccEmail("556cb8b61787fa02e000047d@users.onepagecrm.com");
+                .setId("556cb8b61787fa02e000047e")
+                .setAuthKey("WqLLs1n/Y3SvOpGg5CNOpdKy74GkGI6lnhwSfYmgNl4=")
+                .setFirstName("Cillian")
+                .setLastName("Myles")
+                .setAccountType("trial")
+                .setEmail("cillian.college@gmail.com")
+                .setCompanyName("Myles Inc.")
+                .setBccEmail("556cb8b61787fa02e000047d@users.onepagecrm.com");
 
         // Set up the fabricated JSON success response
         String successResponse = "{\"status\":0,\"message\":\"OK\",\"timestamp\":1435940522," +
@@ -59,7 +57,7 @@ public class ResponseHandlerTest extends TestCase {
                 "\"556cb8b61787fa02e000047d@users.onepagecrm.com\",\"account_rights\":[" +
                 "\"account_owner\",\"admin\"]}}}}";
 
-        User parsedUser = LoginSerializer.parseLogin(successResponse);
+        User parsedUser = LoginSerializer.fromString(successResponse);
         assertNotNull("User object being set is null", parsedUser);
 
         assertEquals("User ID not set correctly", loggedInUser.getId(),
@@ -83,7 +81,7 @@ public class ResponseHandlerTest extends TestCase {
     /**
      * When expired token message received, normal operation is to return a
      * new (empty) Contact object.
-     *
+     * <p/>
      * This means no fields will be set for this object, check for ID.
      */
     public void testParseLoginResponse_Expired() {
@@ -92,13 +90,13 @@ public class ResponseHandlerTest extends TestCase {
                 "\"errors\":{}}";
 
         assertFalse("Expired token response misinterpreted",
-        		LoginSerializer.parseLogin(expiredResponse).isValid());
+                LoginSerializer.fromString(expiredResponse).isValid());
     }
 
     /**
      * When no authorization data message received, normal operation is to return a
      * new (empty) Contact object.
-     *
+     * <p/>
      * This means no fields will be set for this object, check for ID.
      */
     public void testParseLoginResponse_NoAuth() {
@@ -108,12 +106,12 @@ public class ResponseHandlerTest extends TestCase {
                 "\"errors\":{}}";
 
         assertFalse("No auth token response misinterpreted",
-        		LoginSerializer.parseLogin(noAuthResponse).isValid());
+                LoginSerializer.fromString(noAuthResponse).isValid());
     }
 
     /**
      * Ensure correct operation of Contact parsing method.
-     *
+     * <p/>
      * Response containing details of only one Contact should only result in
      * the construction of one Contact object.
      */
@@ -141,15 +139,15 @@ public class ResponseHandlerTest extends TestCase {
                 "\"modified_at\":\"2015-06-16T16:31:40.088Z\",\"status\":\"asap\",\"date\":null}}]}}";
 
         assertNotNull("Contact array object mis-constructed / not constructed",
-                ContactSerializer.fromString(oneContactResponse));
+                ContactListSerializer.fromString(oneContactResponse));
 
         assertEquals("Wrong number of Contacts constructed",
-                1, ContactSerializer.fromString(oneContactResponse).size());
+                1, ContactListSerializer.fromString(oneContactResponse).size());
     }
 
     /**
      * Ensure correct operation of Contact parsing method.
-     *
+     * <p/>
      * Response containing details of two Contacts should only result in
      * the construction two Contact objects.
      */
@@ -197,15 +195,15 @@ public class ResponseHandlerTest extends TestCase {
                 "\"2015-06-16T14:48:49.723Z\",\"status\":\"asap\",\"date\":null}}]}}";
 
         assertNotNull("Contact array object mis-constructed / not constructed",
-        		ContactSerializer.fromString(twoContactsResponse));
+                ContactListSerializer.fromString(twoContactsResponse));
 
         assertEquals("Wrong number of Contacts constructed",
-                2, ContactSerializer.fromString(twoContactsResponse).size());
+                2, ContactListSerializer.fromString(twoContactsResponse).size());
     }
 
     /**
      * Ensure correct operation of Contact parsing method.
-     *
+     * <p/>
      * Response containing details of no Contacts should not result in
      * the construction of any Contact objects.
      */
@@ -214,15 +212,15 @@ public class ResponseHandlerTest extends TestCase {
                 "\"data\":{\"contacts\":[]}}";
 
         assertNotNull("Contact array object mis-constructed / not constructed",
-        		ContactSerializer.fromString(noContactResponse));
+                ContactListSerializer.fromString(noContactResponse));
 
         assertEquals("Wrong number of Contacts constructed",
-                0, ContactSerializer.fromString(noContactResponse).size());
+                0, ContactListSerializer.fromString(noContactResponse).size());
     }
 
     /**
      * Normal operation of the resource creation response parsing method.
-     *
+     * <p/>
      * Responses are boolean, successful = true.
      */
     public void testParseCreateResourceResponse_Successful() {
@@ -240,7 +238,7 @@ public class ResponseHandlerTest extends TestCase {
 
     /**
      * Normal operation of the resource creation response parsing method.
-     *
+     * <p/>
      * Responses are boolean, expired message means unsuccessful.
      */
     public void testParseCreateResourceResponse_Expired() {
@@ -254,7 +252,7 @@ public class ResponseHandlerTest extends TestCase {
 
     /**
      * Normal operation of the resource creation response parsing method.
-     *
+     * <p/>
      * Responses are boolean, no auth message means unsuccessful.
      */
     public void testParseCreateResourceResponse_NoAuth() {

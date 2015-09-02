@@ -14,11 +14,9 @@ public class ActionSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ActionSerializer.class.getName());
 
-    public static Action fromJSONObject(JSONObject actionObject) {
-
+    public static Action fromJsonObject(JSONObject actionObject) {
         Action action = new Action();
         Date date = null;
-
         try {
             String id = actionObject.getString(ID_TAG);
             String contactId = actionObject.getString(CONTACT_ID_TAG);
@@ -34,7 +32,6 @@ public class ActionSerializer extends BaseSerializer {
                     action.setDate(date);
                 }
             }
-
             int dateColor = DateSerializer.getDateColour(date, status);
 
             return action
@@ -53,19 +50,16 @@ public class ActionSerializer extends BaseSerializer {
         return new Action();
     }
 
-    public static ArrayList<Action> fromJSONArray(JSONArray actionsArray) {
-
+    public static ArrayList<Action> fromJsonArray(JSONArray actionsArray) {
         ArrayList<Action> actions = new ArrayList<>();
-
         for (int i = 0; i < actionsArray.length(); i++) {
             try {
-                actions.add(fromJSONObject(actionsArray.getJSONObject(i)));
+                actions.add(fromJsonObject(actionsArray.getJSONObject(i)));
             } catch (JSONException e) {
                 LOG.severe("Error parsing contact object");
                 LOG.severe(e.toString());
             }
         }
-
         return actions;
     }
 }

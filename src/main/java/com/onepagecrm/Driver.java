@@ -1,18 +1,14 @@
 package com.onepagecrm;
 
+import com.onepagecrm.models.*;
+import com.onepagecrm.net.request.Request;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
-
-import com.onepagecrm.models.Action;
-import com.onepagecrm.models.Call;
-import com.onepagecrm.models.Contact;
-import com.onepagecrm.models.ContactList;
-import com.onepagecrm.models.User;
-import com.onepagecrm.net.request.Request;
 
 public class Driver {
 
@@ -48,8 +44,6 @@ public class Driver {
         User loggedInUser = User.login(
                 prop.getProperty("username"),
                 prop.getProperty("password"));
-//		prop.getProperty("peteruser"), 
-//		prop.getProperty("peterpass"));
 
         ContactList stream = loggedInUser.actionStream();
         LOG.info("Contacts : " + stream);
@@ -71,5 +65,6 @@ public class Driver {
                 .setNote("");
 
         LOG.info("SAVED : " + newCall.save(contact));
+        LOG.info("SAVED : " + Contact.save());
     }
 }

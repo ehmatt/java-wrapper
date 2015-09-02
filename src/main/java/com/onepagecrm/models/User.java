@@ -1,10 +1,7 @@
 package com.onepagecrm.models;
 
-import java.util.List;
-import java.io.Serializable;
-
 import com.onepagecrm.models.internal.Sales;
-import com.onepagecrm.models.serializer.ContactSerializer;
+import com.onepagecrm.models.serializer.ContactListSerializer;
 import com.onepagecrm.models.serializer.LoginSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
@@ -12,12 +9,12 @@ import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.LoginRequest;
 import com.onepagecrm.net.request.Request;
 
+import java.io.Serializable;
+import java.util.List;
+
 public class User extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = 1383622287570201668L;
-
-    private static final String ACTION_STREAM_ENDPOINT = "action_stream";
-    private static final String CONTACTS_ENDPOINT = "contacts";
 
     private String id;
     private String authKey;
@@ -37,19 +34,19 @@ public class User extends ApiResource implements Serializable {
     public static User login(String username, String password) {
         Request request = new LoginRequest(username, password);
         Response response = request.send();
-        return LoginSerializer.parseLogin(response.getResponseBody());
+        return LoginSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList actionStream() {
         Request request = new GetRequest(ACTION_STREAM_ENDPOINT, perPageQueryString(100), null);
         Response response = request.send();
-        return ContactSerializer.fromString(response.getResponseBody());
+        return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList contacts() {
         Request request = new GetRequest(CONTACTS_ENDPOINT, perPageQueryString(100), null);
         Response response = request.send();
-        return ContactSerializer.fromString(response.getResponseBody());
+        return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     private String perPageQueryString(int number) {

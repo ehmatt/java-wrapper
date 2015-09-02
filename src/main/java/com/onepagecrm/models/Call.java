@@ -4,12 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.onepagecrm.models.serializer.BaseSerializer;
+import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.PostRequest;
 
-public class Call {
-
-    private static final String CALLS_ENDPOINT = "calls";
+public class Call extends ApiResource {
 
     private String callResult;
     private String note; // field name = 'text'
@@ -55,5 +54,15 @@ public class Call {
     public Call setNote(String note) {
         this.note = note;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return null;
+    }
+
+    @Override
+    public String getId() {
+        return null;
     }
 }

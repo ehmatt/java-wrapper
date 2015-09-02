@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+import com.onepagecrm.models.serializer.BaseSerializer;
 import com.onepagecrm.net.Response;
 
 public abstract class Request {
@@ -45,6 +46,10 @@ public abstract class Request {
 
     private static final String ACCECPTS_TAG = "Accepts";
     private static final String ACCECPTS = "application/json";
+
+    private static final String CONTENT_TYPE_TAG = "Content-Type";
+    private static final String CONTENT_TYPE = "application/json";
+
     private static final String USER_AGENT_TAG = "User-Agent";
     private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) "
             + "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36";
@@ -172,47 +177,50 @@ public abstract class Request {
     public void setRequestHeaders() {
         connection.setRequestProperty(ACCECPTS_TAG, ACCECPTS);
         connection.setRequestProperty(USER_AGENT_TAG, USER_AGENT);
+        connection.setRequestProperty(CONTENT_TYPE_TAG, CONTENT_TYPE);
 
         LOG.info("*************************************");
         LOG.info("--- REQUEST ---");
         LOG.info("Type: " + connection.getRequestMethod());
         LOG.info("URL: " + connection.getURL());
-        LOG.info("Body: " + requestBody);
     }
 
     protected void setRequestBody() {
-        this.requestBody = encodeParams(params);
+        if (this.requestBody.equals("")) {
+            this.requestBody = BaseSerializer.encodeParams(params);
+        }
+        LOG.info("Body: " + requestBody);
     }
 
-    /**
-     * Encode request parameters.
-     *
-     * @param params
-     * @return
-     */
-    private String encodeParams(Map<String, String> params) {
-        if (params != null && !params.isEmpty()) {
-            String encodedString = "";
-            int i = 0;
-            for (Map.Entry<String, String> param : params.entrySet()) {
-                if (i > 0) {
-                    encodedString += "&";
-                }
-                try {
-                    encodedString += String.format("%s=%s",
-                            URLEncoder.encode(param.getKey(), "UTF-8"),
-                            URLEncoder.encode(param.getValue(), "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    LOG.severe("Error encoding url params : " + params.toString());
-                    LOG.severe(e.toString());
-                } finally {
-                    i++;
-                }
-            }
-            return encodedString;
-        }
-        return "";
-    }
+//    /**
+//     * Encode request parameters.
+//     *
+//     * @param params
+//     * @return
+//     */
+//    private String encodeParams(Map<String, String> params) {
+//        if (params != null && !params.isEmpty()) {
+//            String encodedString = "";
+//            int i = 0;
+//            for (Map.Entry<String, String> param : params.entrySet()) {
+//                if (i > 0) {
+//                    encodedString += "&";
+//                }
+//                try {
+//                    encodedString += String.format("%s=%s",
+//                            URLEncoder.encode(param.getKey(), "UTF-8"),
+//                            URLEncoder.encode(param.getValue(), "UTF-8"));
+//                } catch (UnsupportedEncodingException e) {
+//                    LOG.severe("Error encoding url params : " + params.toString());
+//                    LOG.severe(e.toString());
+//                } finally {
+//                    i++;
+//                }
+//            }
+//            return encodedString;
+//        }
+//        return "";
+//    }
 
     /**
      * Actually write the request body using the OutputStreamWriter.

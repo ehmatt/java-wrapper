@@ -1,52 +1,21 @@
 package com.onepagecrm.models.serializer;
 
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
+import com.onepagecrm.models.Action;
+import com.onepagecrm.models.Contact;
+import com.onepagecrm.models.Phone;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.onepagecrm.models.Action;
-import com.onepagecrm.models.Contact;
-import com.onepagecrm.models.ContactList;
-import com.onepagecrm.models.Phone;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.logging.Logger;
 
 public class ContactSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ContactSerializer.class.getName());
 
-    /**
-     * Parse response from contacts/action_stream request to construct Contact
-     * object(s).
-     *
-     * @param responseBody
-     * @return
-     */
-    public static ContactList fromString(String responseBody) {
-
-        Contact.nextIntId = 1;
-        ArrayList<Contact> contacts = new ArrayList<>();
-
-        try {
-            JSONObject responseObject = new JSONObject(responseBody);
-            JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
-            JSONArray contactsArray = dataObject.getJSONArray(CONTACTS_TAG);
-
-            for (int i = 0; i < contactsArray.length(); i++) {
-                JSONObject contactObject = contactsArray.getJSONObject(i);
-//		contacts.add(fromJson(contactObject.getJSONObject(CONTACT_TAG)));
-                contacts.add(fromJson(contactObject));
-            }
-
-        } catch (JSONException e) {
-            LOG.severe("Error parsing contacts array from response body");
-            LOG.severe(e.toString());
-        }
-        return new ContactList(contacts);
-    }
-
-    public static Contact fromJson(JSONObject contactsElementObject) {
+    public static Contact fromJsonObject(JSONObject contactsElementObject) {
 
         Contact contact = new Contact();
 
@@ -60,19 +29,19 @@ public class ContactSerializer extends BaseSerializer {
             String ownerId = contactObject.getString(OWNER_ID_TAG);
 
             JSONArray phonesArray = contactObject.getJSONArray(PHONES_TAG);
-            ArrayList<Phone> phones = PhoneSerializer.fromJSON(phonesArray);
+            ArrayList<Phone> phones = PhoneSerializer.fromJsonArray(phonesArray);
 
             boolean starred = contactObject.getBoolean(STARRED_TAG);
 
             if (contactsElementObject.has(NEXT_ACTIONS_TAG)) {
                 JSONArray actionsArray = contactsElementObject.getJSONArray(NEXT_ACTIONS_TAG);
-                ArrayList<Action> actions = ActionSerializer.fromJSONArray(actionsArray);
+                ArrayList<Action> actions = ActionSerializer.fromJsonArray(actionsArray);
                 contact.setActions(actions);
             }
 
             if (contactsElementObject.has(NEXT_ACTION_TAG)) {
                 JSONObject nextActionObject = contactsElementObject.getJSONObject(NEXT_ACTION_TAG);
-                Action nextAction = ActionSerializer.fromJSONObject(nextActionObject);
+                Action nextAction = ActionSerializer.fromJsonObject(nextActionObject);
                 contact.setNextAction(nextAction);
             }
 
@@ -89,6 +58,44 @@ public class ContactSerializer extends BaseSerializer {
             LOG.severe("Error parsing contact object");
             LOG.severe(e.toString());
             return new Contact();
+        }
+    }
+
+    public static String toJsonObject(Contact contact) {
+//        Map<String, String> params = new HashMap<>();
+        JSONObject params = new JSONObject();
+        addJsonValue(contact.getType(), params, TYPE_TAG);
+        addJsonValue(contact.getLastName(), params, LAST_NAME_TAG);
+        addJsonValue(contact.getFirstName(), params, FIRST_NAME_TAG);
+        addJsonValue(contact.getCompanyName(), params, COMPANY_NAME_TAG);
+        addJsonValue(contact.getCompanyId(), params, COMPANY_ID_TAG);
+        addJsonValue(contact.getJobTitle(), params, JOB_TITLE_TAG);
+        addJsonValue(contact.getStatusId(), params, STATUS_ID_TAG);
+        addJsonValue(contact.getStatus(), params, STATUS_TAG);
+
+//        addJsonValue(contact.getTags(), params, TAGS_TAG);
+//        addJsonValue(contact.isStarred(), params, STARRED_TAG);
+
+        addJsonValue(contact.getOwnerId(), params, OWNER_ID_TAG);
+
+//        addJsonValue(contact.getAddressLines(), params, ADDRESS_LIST_TAG);
+
+        addJsonValue(contact.getBackground(), params, BACKGROUND_TAG);
+        addJsonValue(contact.getLeadSourceId(), params, LEAD_SOURCE_ID_TAG);
+
+//        addJsonValue(contact.getPhones(), params, PHONES_TAG);
+//        addJsonValue(contact.getEmails(), params, EMAILS_TAG);
+//        addJsonValue(contact.getUrls(), params, URLS_TAG);
+//        addJsonValue(contact.getCustomFields(), params, CUSTOM_FIELDS_TAG);
+
+        LOG.info("CONTACT INFO : " + params.toString());
+
+        return params.toString();
+    }
+
+    private static void checkStringValueSet(String value, Map<String, String> params, String key) {
+        if ((value != null) && (!value.equals(""))) {
+            params.put(key, value);
         }
     }
 }

@@ -8,12 +8,10 @@ import java.util.List;
 public class ContactListTest extends TestCase {
 
     private ContactList allContacts;
-
     private Contact tigerWoods;
     private Contact cillianMyles;
     private Contact janeDoe;
     private Contact joeBloggs;
-
     private Contact johnSmith;
     private Contact maryDempsey;
 

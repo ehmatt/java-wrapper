@@ -1,15 +1,14 @@
 package com.onepagecrm.net.request;
 
-import java.util.HashMap;
+import com.onepagecrm.models.serializer.BaseSerializer;
+import com.onepagecrm.models.serializer.LoginSerializer;
 
 public class LoginRequest extends Request {
 
     public LoginRequest(String username, String password) {
-        params = new HashMap<String, String>();
-        params.put("login", username);
-        params.put("password", password);
         setType();
-        setEndpointUrl("login");
+        setEndpointUrl(BaseSerializer.LOGIN_TAG);
+        this.requestBody = LoginSerializer.toJsonObject(username, password);
     }
 
     @Override

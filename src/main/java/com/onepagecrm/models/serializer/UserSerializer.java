@@ -36,7 +36,6 @@ public class UserSerializer extends BaseSerializer {
             return fromJson(userObject, user);
 
         } catch (JSONException e) {
-
             LOG.severe("Error parsing user response");
             LOG.severe(e.toString());
             return new User();
@@ -59,8 +58,7 @@ public class UserSerializer extends BaseSerializer {
         }
     }
 
-    public JSONObject toJSON(User user) {
-
+    public JSONObject toJsonObject(User user) {
         return new JSONObject();
     }
 
@@ -77,12 +75,13 @@ public class UserSerializer extends BaseSerializer {
                     callResults.add(new CallResult(index, key, value.toString()));
                 } catch (JSONException e) {
                     LOG.severe("Failed to parse all values in call_results object");
+                    LOG.severe(e.toString());
                 }
                 index++;
             }
         } catch (JSONException e) {
             LOG.severe("No call_results JSON object in response");
-
+            LOG.severe(e.toString());
             // TODO : remove this fabricated call results list
             callResults.add(new CallResult(0, "interested", "Interested"));
             callResults.add(new CallResult(1, "not_interested", "Not interested"));
