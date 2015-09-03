@@ -15,7 +15,6 @@ public class Driver {
     private static final Logger LOG = Logger.getLogger(Driver.class.getName());
 
     public static void main(String[] args) {
-
         Properties prop = new Properties();
         InputStream input = null;
 
@@ -64,16 +63,12 @@ public class Driver {
                 .setCallResult(new CallResult()
                 .setId("interested")
                 .setText("JAVA"));
-//        "interested")
-//                .setText("sample");
-
         LOG.info("CALL SAVED : " + newCall.save(contact));
 
         Contact newContact = new Contact()
                 .setLastName("Myles")
                 .setCompanyName("Myles Inc.")
                 .setFirstName("Cillian");
-
         LOG.info("CONTACT SAVED : " + newContact.save());
     }
 }

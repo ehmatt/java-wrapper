@@ -137,7 +137,7 @@ public class BaseSerializer {
      * @param object
      * @param key
      */
-    public static void addJsonValue(String value, JSONObject object, String key) {
+    public static void addJsonStringValue(String value, JSONObject object, String key) {
         if ((value != null) && (!value.equals(""))) {
             try {
                 object.put(key, value);
@@ -145,6 +145,38 @@ public class BaseSerializer {
                 LOG.severe("Error serializing string value : " + value);
                 LOG.severe(e.toString());
             }
+        }
+    }
+
+    /**
+     * Adds an integer value to a JSONObject with the specified key.
+     *
+     * @param value
+     * @param object
+     * @param key
+     */
+    public static void addJsonIntValue(int value, JSONObject object, String key) {
+        try {
+            object.put(key, value);
+        } catch (JSONException e) {
+            LOG.severe("Error serializing integer value : " + value);
+            LOG.severe(e.toString());
+        }
+    }
+
+    /**
+     * Adds a boolean value to a JSONObject with the specified key.
+     *
+     * @param value
+     * @param object
+     * @param key
+     */
+    public static void addJsonBooleanValue(boolean value, JSONObject object, String key) {
+        try {
+            object.put(key, value);
+        } catch (JSONException e) {
+            LOG.severe("Error serializing boolean value : " + value);
+            LOG.severe(e.toString());
         }
     }
 }

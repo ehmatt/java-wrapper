@@ -13,8 +13,8 @@ public class CallSerializer extends BaseSerializer {
 
     public static String toJsonObject(Call call) {
         JSONObject callObject = new JSONObject();
-        addJsonValue(call.getId(), callObject, ID_TAG);
-        addJsonValue(CallResultSerializer.toJsonKeyValuePair(call.getCallResult()), callObject, CALL_RESULT_TAG);
+        addJsonStringValue(call.getId(), callObject, ID_TAG);
+        addJsonStringValue(CallResultSerializer.toJsonKeyValuePair(call.getCallResult()), callObject, CALL_RESULT_TAG);
         LOG.info(callObject.toString());
         return callObject.toString();
     }

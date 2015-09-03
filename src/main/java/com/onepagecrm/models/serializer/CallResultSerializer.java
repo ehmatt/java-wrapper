@@ -17,8 +17,8 @@ public class CallResultSerializer extends BaseSerializer {
 
     public static String toJsonObject(CallResult callResult) {
         JSONObject callObject = new JSONObject();
-        addJsonValue(callResult.getId(), callObject, CALL_RESULT_TAG);
-        addJsonValue(callResult.getText(), callObject, TEXT_TAG);
+        addJsonStringValue(callResult.getId(), callObject, CALL_RESULT_TAG);
+        addJsonStringValue(callResult.getText(), callObject, TEXT_TAG);
         return callObject.toString();
     }
 

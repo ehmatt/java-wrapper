@@ -1,11 +1,11 @@
 package com.onepagecrm.models;
 
-import junit.framework.TestCase;
+import com.onepagecrm.BaseTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactListTest extends TestCase {
+public class ContactListTest extends BaseTest {
 
     private ContactList allContacts;
     private Contact tigerWoods;
@@ -32,70 +32,70 @@ public class ContactListTest extends TestCase {
         List<Phone> tigersPhones = new ArrayList<>();
         tigersPhones.add(0, new Phone("work", "0862524363"));
         tigerWoods = new Contact()
-        		.setId("55804f6b1787fa72b400002e")
-        		.setOwnerId("556cb8b61787fa02e000047e")
-        		.setFirstName("Tiger")
-        		.setLastName("Woods")
-        		.setPhones(tigersPhones)
-        		.setCompanyName("Myles Inc.");
+                .setId("55804f6b1787fa72b400002e")
+                .setOwnerId("556cb8b61787fa02e000047e")
+                .setFirstName("Tiger")
+                .setLastName("Woods")
+                .setPhones(tigersPhones)
+                .setCompanyName("Myles Inc.");
         allContacts.add(0, tigerWoods);
-        
+
         List<Phone> cilliansPhones = new ArrayList<>();
         cilliansPhones.add(0, new Phone("work", "6178187423"));
         cillianMyles = new Contact()
-        		.setId("558037511787fa21ba000148")
-        		.setOwnerId("556cb8b61787fa02e000047e")
-        		.setFirstName("Cillian")
-        		.setLastName("Myles")
-        		.setPhones(cilliansPhones)
-        		.setCompanyName("Myles Inc.");
+                .setId("558037511787fa21ba000148")
+                .setOwnerId("556cb8b61787fa02e000047e")
+                .setFirstName("Cillian")
+                .setLastName("Myles")
+                .setPhones(cilliansPhones)
+                .setCompanyName("Myles Inc.");
         allContacts.add(1, cillianMyles);
-        
+
         List<Phone> janesPhones = new ArrayList<>();
         janesPhones.add(0, new Phone("work", "312 34 4491223"));
         janeDoe = new Contact()
-        		.setId("556cb8c91787fa0e24000017")
-        		.setOwnerId("556cb8b61787fa02e000047e")
-        		.setFirstName("Jane")
-        		.setLastName("Doe")
-        		.setPhones(janesPhones)
-        		.setCompanyName("Big Company Inc.");
+                .setId("556cb8c91787fa0e24000017")
+                .setOwnerId("556cb8b61787fa02e000047e")
+                .setFirstName("Jane")
+                .setLastName("Doe")
+                .setPhones(janesPhones)
+                .setCompanyName("Big Company Inc.");
         allContacts.add(2, janeDoe);
-        
+
         List<Phone> joesPhones = new ArrayList<>();
         joesPhones.add(0, new Phone("work", "+1 23 978234"));
         joesPhones.add(1, new Phone("mobile", "+1 213 555 1307"));
         joesPhones.add(2, new Phone("work", "+353 85 8187777"));
         joesPhones.add(3, new Phone("mobile", "+1 284 3827 111"));
         joeBloggs = new Contact()
-        		.setId("556cb8c91787fa0e2400002a")
-        		.setOwnerId("556cb8b61787fa02e000047e")
-        		.setFirstName("Joe")
-        		.setLastName("Bloggs")
-        		.setPhones(joesPhones)
-        		.setCompanyName("Acme Inc.");
+                .setId("556cb8c91787fa0e2400002a")
+                .setOwnerId("556cb8b61787fa02e000047e")
+                .setFirstName("Joe")
+                .setLastName("Bloggs")
+                .setPhones(joesPhones)
+                .setCompanyName("Acme Inc.");
         allContacts.add(3, joeBloggs);
-        
+
         johnSmith = new Contact()
-        		.setId("556cb8c91787fa0e240fff17")
-        		.setOwnerId("556cb8b61787fa02e000047e")
-        		.setFirstName("John")
-        		.setLastName("Smith")
-        		.setCompanyName("Big Company Inc.");
+                .setId("556cb8c91787fa0e240fff17")
+                .setOwnerId("556cb8b61787fa02e000047e")
+                .setFirstName("John")
+                .setLastName("Smith")
+                .setCompanyName("Big Company Inc.");
         allContacts.add(4, johnSmith);
-        
+
         maryDempsey = new Contact()
-        		.setId("556cb8c91787fa0e24efff17")
-        		.setOwnerId("556cb8b61787fa02e000047e")
-        		.setFirstName("Mary")
-        		.setLastName("Dempsey")
-        		.setCompanyName("Big Company Inc.");
+                .setId("556cb8c91787fa0e24efff17")
+                .setOwnerId("556cb8b61787fa02e000047e")
+                .setFirstName("Mary")
+                .setLastName("Dempsey")
+                .setCompanyName("Big Company Inc.");
         allContacts.add(5, maryDempsey);
     }
 
     /**
      * Method should return list of Contacts with phone numbers.
-     *
+     * <p/>
      * Given list of Contacts, some with / some without.
      * Answer should be subset of Contacts which do have numbers.
      */
@@ -120,7 +120,7 @@ public class ContactListTest extends TestCase {
 
     /**
      * Method should return list of Contacts with phone numbers.
-     *
+     * <p/>
      * Given list of Contacts, all of which have phone numbers.
      * Answer should be the entire list of Contacts which was sent.
      */
@@ -136,7 +136,7 @@ public class ContactListTest extends TestCase {
 
     /**
      * Method should return list of Contacts with phone numbers.
-     *
+     * <p/>
      * Given list of Contacts, none of which have phone numbers.
      * Answer should be empty list of Contacts.
      */
@@ -152,11 +152,11 @@ public class ContactListTest extends TestCase {
      */
     public void testInActionStream_False() {
         // Number is not belong to any Contacts in AS.
-    	Contact contact = allContacts.inActionStream("0858187423");
-    	
-    	// Should be a new (empty) contact.
+        Contact contact = allContacts.inActionStream("0858187423");
+
+        // Should be a new (empty) contact.
         assertNotNull(contact);
-        
+
         // With no id
         assertFalse(contact.isValid());
     }
@@ -164,7 +164,7 @@ public class ContactListTest extends TestCase {
     /**
      * Searching through Contacts for Tiger Woods' number, he [Contact object]
      * should be returned.
-     *
+     * <p/>
      * In app, this would generate a notification.
      */
     public void testInActionStream_True() {
@@ -174,7 +174,7 @@ public class ContactListTest extends TestCase {
 
     /**
      * Verifying correct operation of getNextContact method.
-     *
+     * <p/>
      * Will move through the list and jump to start if reaches the end.
      */
     public void testGetNextContact_CorrectAnswer() {
@@ -188,7 +188,7 @@ public class ContactListTest extends TestCase {
 
     /**
      * Verifying correct operation of getPreviousContact method.
-     *
+     * <p/>
      * Will move backwards through the list and jump to end if positioned at the start.
      */
     public void testGetPreviousContact_CorrectAnswer() {

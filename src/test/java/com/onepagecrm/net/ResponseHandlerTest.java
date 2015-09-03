@@ -1,12 +1,17 @@
 package com.onepagecrm.net;
 
+import com.onepagecrm.BaseTest;
+import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
 import com.onepagecrm.models.serializer.BaseSerializer;
 import com.onepagecrm.models.serializer.ContactListSerializer;
 import com.onepagecrm.models.serializer.LoginSerializer;
-import junit.framework.TestCase;
 
-public class ResponseHandlerTest extends TestCase {
+import java.util.logging.Logger;
+
+public class ResponseHandlerTest extends BaseTest {
+
+    private static Logger LOG = Logger.getLogger(ResponseHandlerTest.class.getName());
 
     @Override
     protected void setUp() throws Exception {
@@ -263,6 +268,44 @@ public class ResponseHandlerTest extends TestCase {
 
         assertEquals("No auth token response misinterpreted",
                 false, BaseSerializer.createResourceFromString(noAuthResponse));
+    }
+
+    /**
+     * Test makes sure that a JSON response containing 18 contacts is parsed correctly to a
+     * ContactList with 18 Contact objects.
+     */
+    public void testParseActionStreamPerPage_Successful() {
+        String response = resource("src/test/res/request_01_action_stream_response.json");
+        ContactList actionStream = ContactListSerializer.fromString(response);
+        assertTrue("Contacts not parsed correctly", !actionStream.isEmpty());
+        assertTrue("Incorrect number of contacts parsed", actionStream.size() == 18);
+    }
+
+    /**
+     * Test makes sure that a JSON response containing 25 contacts is parsed correctly to a
+     * ContactList with 18 Contact objects.
+     */
+    public void testParseContactsPerPage_Successful() {
+        String response = resource("src/test/res/request_02_contacts_response.json");
+        ContactList contacts = ContactListSerializer.fromString(response);
+        assertTrue("Contacts not parsed correctly", !contacts.isEmpty());
+        assertTrue("Incorrect number of contacts parsed", contacts.size() == 25);
+    }
+
+    /**
+     * Test makes sure that a CALL resource has been added correctly.
+     */
+    public void testParseAddCall_Successful() {
+        String response = resource("src/test/res/request_03_add_call_response.json");
+        assertTrue("Add call response not parsed correctly", BaseSerializer.createResourceFromString(response));
+    }
+
+    /**
+     * Test makes sure that a CONTACT resource has been added correctly.
+     */
+    public void testParseAddContact_Successful() {
+        String response = resource("src/test/res/request_04_add_contact_response.json");
+        assertTrue("Add contact response not parsed correctly", BaseSerializer.createResourceFromString(response));
     }
 
     @Override

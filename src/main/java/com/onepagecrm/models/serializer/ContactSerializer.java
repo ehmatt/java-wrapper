@@ -60,29 +60,29 @@ public class ContactSerializer extends BaseSerializer {
 
     public static String toJsonObject(Contact contact) {
         JSONObject userObject = new JSONObject();
-        addJsonValue(contact.getType(), userObject, TYPE_TAG);
-        addJsonValue(contact.getLastName(), userObject, LAST_NAME_TAG);
-        addJsonValue(contact.getFirstName(), userObject, FIRST_NAME_TAG);
-        addJsonValue(contact.getCompanyName(), userObject, COMPANY_NAME_TAG);
-        addJsonValue(contact.getCompanyId(), userObject, COMPANY_ID_TAG);
-        addJsonValue(contact.getJobTitle(), userObject, JOB_TITLE_TAG);
-        addJsonValue(contact.getStatusId(), userObject, STATUS_ID_TAG);
-        addJsonValue(contact.getStatus(), userObject, STATUS_TAG);
+        addJsonStringValue(contact.getType(), userObject, TYPE_TAG);
+        addJsonStringValue(contact.getLastName(), userObject, LAST_NAME_TAG);
+        addJsonStringValue(contact.getFirstName(), userObject, FIRST_NAME_TAG);
+        addJsonStringValue(contact.getCompanyName(), userObject, COMPANY_NAME_TAG);
+        addJsonStringValue(contact.getCompanyId(), userObject, COMPANY_ID_TAG);
+        addJsonStringValue(contact.getJobTitle(), userObject, JOB_TITLE_TAG);
+        addJsonStringValue(contact.getStatusId(), userObject, STATUS_ID_TAG);
+        addJsonStringValue(contact.getStatus(), userObject, STATUS_TAG);
 
-//        addJsonValue(contact.getTags(), userObject, TAGS_TAG);
-//        addJsonValue(contact.isStarred(), userObject, STARRED_TAG);
+//        addJsonStringValue(contact.getTags(), userObject, TAGS_TAG);
+//        addJsonStringValue(contact.isStarred(), userObject, STARRED_TAG);
 
-        addJsonValue(contact.getOwnerId(), userObject, OWNER_ID_TAG);
+        addJsonStringValue(contact.getOwnerId(), userObject, OWNER_ID_TAG);
 
-//        addJsonValue(contact.getAddressLines(), userObject, ADDRESS_LIST_TAG);
+//        addJsonStringValue(contact.getAddressLines(), userObject, ADDRESS_LIST_TAG);
 
-        addJsonValue(contact.getBackground(), userObject, BACKGROUND_TAG);
-        addJsonValue(contact.getLeadSourceId(), userObject, LEAD_SOURCE_ID_TAG);
+        addJsonStringValue(contact.getBackground(), userObject, BACKGROUND_TAG);
+        addJsonStringValue(contact.getLeadSourceId(), userObject, LEAD_SOURCE_ID_TAG);
 
-        addJsonValue(PhoneSerializer.toJsonArray(contact.getPhones()), userObject, PHONES_TAG);
-//        addJsonValue(contact.getEmails(), userObject, EMAILS_TAG);
-//        addJsonValue(contact.getUrls(), userObject, URLS_TAG);
-//        addJsonValue(contact.getCustomFields(), userObject, CUSTOM_FIELDS_TAG);
+        addJsonStringValue(PhoneSerializer.toJsonArray(contact.getPhones()), userObject, PHONES_TAG);
+//        addJsonStringValue(contact.getEmails(), userObject, EMAILS_TAG);
+//        addJsonStringValue(contact.getUrls(), userObject, URLS_TAG);
+//        addJsonStringValue(contact.getCustomFields(), userObject, CUSTOM_FIELDS_TAG);
 
 //        LOG.info("CONTACT INFO : " + userObject.toString());
 
