@@ -93,7 +93,7 @@ public class Authentication {
             LOG.severe(e.toString());
         }
         String urlHash = convertStringToSha1Hash(url);
-        LOG.info("url=\'" + url + "\' hash=\'" + urlHash + "\'");
+//        LOG.info("url=\'" + url + "\' hash=\'" + urlHash + "\'");
         String signature = userId + "." + timestamp + "." + type.toUpperCase() + "." + urlHash;
         if (type.equals("POST") || type.equals("PUT")) {
             if (body != null) {

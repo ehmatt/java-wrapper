@@ -59,9 +59,13 @@ public class BaseSerializer {
     protected static final String NEXT_ACTIONS_TAG = "next_actions";
     protected static final String NEXT_ACTION_TAG = "next_action";
     protected static final String CONTACT_ID_TAG = "contact_id";
-    protected static final String TEXT_TAG = "text";
     protected static final String ASSIGNEE_ID_TAG = "assignee_id";
     protected static final String DATE_TAG = "date";
+
+    // CALL TAGS
+    public static final String CALL_RESULTS_TAG = "call_results";
+    public static final String CALL_RESULT_TAG = "call_result";
+    public static final String TEXT_TAG = "text";
 
     // 201 RESPONSE TAGS
     protected static final String STATUS_TAG = "status";

@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class PhoneSerializer extends BaseSerializer {
@@ -40,5 +41,23 @@ public class PhoneSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
         return phone;
+    }
+
+    public static String toJsonObject(Phone phone) {
+        JSONObject callObject = new JSONObject();
+        addJsonValue(phone.getType(), callObject, TYPE_TAG);
+        addJsonValue(phone.getNumber(), callObject, VALUE_TAG);
+        return callObject.toString();
+    }
+
+    public static String toJsonArray(List<Phone> phones) {
+        JSONArray phonesArray = new JSONArray();
+        if (phones != null && !phones.isEmpty()) {
+            for (int i = 0; i < phones.size(); i++) {
+                phonesArray.put(toJsonObject(phones.get(i)));
+            }
+            return phonesArray.toString();
+        }
+        return "";
     }
 }

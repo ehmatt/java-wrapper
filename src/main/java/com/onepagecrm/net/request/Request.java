@@ -81,8 +81,8 @@ public abstract class Request {
     public Response send() {
         setupAndConnect();
         setRequestMethod();
-        setRequestHeaders();
         setRequestBody();
+        setRequestHeaders();
         writeRequestBody();
         getResponse();
         connection.disconnect();
@@ -183,13 +183,13 @@ public abstract class Request {
         LOG.info("--- REQUEST ---");
         LOG.info("Type: " + connection.getRequestMethod());
         LOG.info("URL: " + connection.getURL());
+        LOG.info("Body: " + requestBody);
     }
 
     protected void setRequestBody() {
         if (this.requestBody.equals("")) {
             this.requestBody = BaseSerializer.encodeParams(params);
         }
-        LOG.info("Body: " + requestBody);
     }
 
 //    /**

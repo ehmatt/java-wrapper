@@ -1,23 +1,56 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.models.serializer.BaseSerializer;
+
 import java.io.Serializable;
 
 public class CallResult implements Serializable {
 
     private static final long serialVersionUID = -3981577783870512717L;
 
-    private int intId;
-    private String stringId;
-    private String result;
+    private String id; // id for the call result e.g. "interested", "559bc6c31787fa7b1700024b"
+    private String display; // display text for the call result e.g. "Interested", "EXTRA"
+    private String text; // note for the call result e.g. "He was interested", "This is a different note"
 
-    public CallResult(int intId, String stringId, String result) {
-        this.intId = intId;
-        this.stringId = stringId;
-        this.result = result;
+    private int intId; // needed internally
+
+    public CallResult() {
     }
 
     public String toString() {
-        return stringId + "=\'" + result + "\'";
+        String retString = "";
+        if (id != null && text != null) {
+            retString += "\"" + BaseSerializer.CALL_RESULT_TAG + "\":\"" + id + "\", ";
+            retString += "\"" + BaseSerializer.TEXT_TAG + "\":\"" + text + '\"';
+        }
+        return retString;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public CallResult setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public CallResult setText(String text) {
+        this.text = text;
+        return this;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+
+    public CallResult setDisplay(String display) {
+        this.display = display;
+        return this;
     }
 
     public int getintId() {
@@ -26,24 +59,6 @@ public class CallResult implements Serializable {
 
     public CallResult setIntId(int intId) {
         this.intId = intId;
-        return this;
-    }
-
-    public String getStringId() {
-        return stringId;
-    }
-
-    public CallResult setStringId(String stringId) {
-        this.stringId = stringId;
-        return this;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public CallResult setResult(String result) {
-        this.result = result;
         return this;
     }
 }

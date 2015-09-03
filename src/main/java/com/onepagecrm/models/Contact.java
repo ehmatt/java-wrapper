@@ -1,17 +1,15 @@
 package com.onepagecrm.models;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import com.onepagecrm.models.serializer.BaseSerializer;
 import com.onepagecrm.models.serializer.ContactSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
-import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.Request;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 public class Contact extends ApiResource implements Serializable {
 
@@ -57,11 +55,12 @@ public class Contact extends ApiResource implements Serializable {
 
     // private Address address;
 
-    public static boolean save() {
-        Request request = new PostRequest(CONTACTS_ENDPOINT, null,
-                ContactSerializer.toJsonObject(new Contact()
-                        .setLastName("Aaaahhh")
-                        .setCompanyName("CompanyName")));
+    public boolean save() {
+        Request request = new PostRequest(
+                CONTACTS_ENDPOINT,
+                null,
+                ContactSerializer.toJsonObject(this)
+        );
         Response response = request.send();
         return BaseSerializer.createResourceFromString(response.getResponseBody());
     }
@@ -333,25 +332,6 @@ public class Contact extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-
-        String retString = "Contact{" + "id=\'" + id + "\', ownerId=\'" + ownerId + "\'"
-                + ", firstName=\'" + firstName + "\'" + ", lastName=\'" + lastName + "\'"
-                + ", companyName=\'" + companyName + "\'";
-
-        if (phones != null && !phones.isEmpty()) {
-            retString += ", Phones{";
-            for (int i = 0; i < phones.size(); i++) {
-                if (i == (phones.size() - 1)) {
-                    retString += phones.get(i).getType() + "=\'" + phones.get(i).getNumber() + "\'";
-                } else {
-                    retString += phones.get(i).getType() + "=\'" + phones.get(i).getNumber()
-                            + "\', ";
-                }
-            }
-            retString += "}";
-        }
-        retString += "}";
-
-        return retString;
+        return ContactSerializer.toJsonObject(this);
     }
 }

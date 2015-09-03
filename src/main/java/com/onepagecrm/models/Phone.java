@@ -1,5 +1,7 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.models.serializer.PhoneSerializer;
+
 import java.io.Serializable;
 
 public class Phone implements Serializable {
@@ -10,7 +12,6 @@ public class Phone implements Serializable {
     private String number;
 
     public Phone() {
-
     }
 
     public Phone(String type, String number) {
@@ -38,6 +39,6 @@ public class Phone implements Serializable {
 
     @Override
     public String toString() {
-        return type + ": \'" + number + "\'";
+        return PhoneSerializer.toJsonObject(this);
     }
 }

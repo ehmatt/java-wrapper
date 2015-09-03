@@ -72,7 +72,12 @@ public class UserSerializer extends BaseSerializer {
                 String key = iterator.next();
                 try {
                     Object value = callResultsObject.get(key);
-                    callResults.add(new CallResult(index, key, value.toString()));
+//                    callResults.add(new CallResult(index, key, value.toString()));
+                    callResults.add(new CallResult()
+                            .setIntId(index)
+                            .setId(key)
+                            .setDisplay(value.toString())
+                    );
                 } catch (JSONException e) {
                     LOG.severe("Failed to parse all values in call_results object");
                     LOG.severe(e.toString());
@@ -83,11 +88,36 @@ public class UserSerializer extends BaseSerializer {
             LOG.severe("No call_results JSON object in response");
             LOG.severe(e.toString());
             // TODO : remove this fabricated call results list
-            callResults.add(new CallResult(0, "interested", "Interested"));
-            callResults.add(new CallResult(1, "not_interested", "Not interested"));
-            callResults.add(new CallResult(2, "left_message", "Left message"));
-            callResults.add(new CallResult(3, "no_answer", "No answer"));
-            callResults.add(new CallResult(4, "other", "Other"));
+//            callResults.add(new CallResult(0, "interested", "Interested"));
+//            callResults.add(new CallResult(1, "not_interested", "Not interested"));
+//            callResults.add(new CallResult(2, "left_message", "Left message"));
+//            callResults.add(new CallResult(3, "no_answer", "No answer"));
+//            callResults.add(new CallResult(4, "other", "Other"));
+            callResults.add(new CallResult()
+                            .setIntId(0)
+                            .setId("interested")
+                            .setDisplay("Interested")
+            );
+            callResults.add(new CallResult()
+                            .setIntId(1)
+                            .setId("not_interested")
+                            .setDisplay("Not interested")
+            );
+            callResults.add(new CallResult()
+                            .setIntId(2)
+                            .setId("left_message")
+                            .setDisplay("Left message")
+            );
+            callResults.add(new CallResult()
+                            .setIntId(3)
+                            .setId("no_answer")
+                            .setDisplay("No answer")
+            );
+            callResults.add(new CallResult()
+                            .setIntId(4)
+                            .setId("other")
+                            .setDisplay("Other")
+            );
         }
         return user.setCallResults(callResults);
     }

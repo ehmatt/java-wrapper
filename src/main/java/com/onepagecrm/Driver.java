@@ -61,10 +61,19 @@ public class Driver {
         LOG.info("NextAction : " + nextAction);
 
         Call newCall = new Call()
-                .setCallResult("interested")
-                .setNote("");
+                .setCallResult(new CallResult()
+                .setId("interested")
+                .setText("JAVA"));
+//        "interested")
+//                .setText("sample");
 
-        LOG.info("SAVED : " + newCall.save(contact));
-        LOG.info("SAVED : " + Contact.save());
+        LOG.info("CALL SAVED : " + newCall.save(contact));
+
+        Contact newContact = new Contact()
+                .setLastName("Myles")
+                .setCompanyName("Myles Inc.")
+                .setFirstName("Cillian");
+
+        LOG.info("CONTACT SAVED : " + newContact.save());
     }
 }
