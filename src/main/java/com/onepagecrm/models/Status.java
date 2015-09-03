@@ -7,7 +7,6 @@ import com.onepagecrm.net.ApiResource;
 
 public class Status extends ApiResource {
 
-    private String id;
     private String color;
     private String status;
     private String text;
@@ -18,20 +17,17 @@ public class Status extends ApiResource {
     private List<TeamCounts> teamCounts;
 
     public Status() {
-
     }
 
-    public Status(String id, String color, String status, String text, String description,
-                  int counts, int totalCounts, int actionStreamCount, List<TeamCounts> teamCounts) {
-        this.id = id;
-        this.color = color;
-        this.status = status;
-        this.text = text;
-        this.description = description;
-        this.counts = counts;
-        this.totalCounts = totalCounts;
-        this.actionStreamCount = actionStreamCount;
-        this.teamCounts = teamCounts;
+    @Override
+    public String getId() {
+        return super.getId();
+    }
+
+    @Override
+    public Status setId(String id) {
+        super.setId(id);
+        return this;
     }
 
     @Override
@@ -60,15 +56,6 @@ public class Status extends ApiResource {
 
         retString += "}";
         return retString;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Status setId(String id) {
-        this.id = id;
-        return this;
     }
 
     public String getColor() {

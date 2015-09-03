@@ -1,28 +1,30 @@
 package com.onepagecrm.models;
 
-import java.util.List;
-
 import com.onepagecrm.models.internal.TeamCounts;
 import com.onepagecrm.net.ApiResource;
 
-public class LeadSource extends ApiResource {
+import java.io.Serializable;
+import java.util.List;
 
-    private String id;
+public class LeadSource extends ApiResource implements Serializable {
+
     private String text;
     private int counts;
     private int totalCounts;
     private List<TeamCounts> teamCounts;
 
     public LeadSource() {
-
     }
 
-    public LeadSource(String id, String text, int counts, int totalCounts, List<TeamCounts> teamCounts) {
-        this.id = id;
-        this.text = text;
-        this.counts = counts;
-        this.totalCounts = totalCounts;
-        this.teamCounts = teamCounts;
+    @Override
+    public String getId() {
+        return super.getId();
+    }
+
+    @Override
+    public LeadSource setId(String id) {
+        super.setId(id);
+        return this;
     }
 
     @Override
@@ -34,15 +36,6 @@ public class LeadSource extends ApiResource {
                 ", totalCounts=\'" + totalCounts + "\'" +
                 ", teamCounts=\'" + teamCounts + "\'" +
                 '}';
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public LeadSource setId(String id) {
-        this.id = id;
-        return this;
     }
 
     public String getText() {

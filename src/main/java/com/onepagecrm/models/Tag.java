@@ -1,6 +1,10 @@
 package com.onepagecrm.models;
 
-public class Tag {
+import com.onepagecrm.net.ApiResource;
+
+import java.io.Serializable;
+
+public class Tag extends ApiResource implements Serializable {
 
     private String name;
     private int counts;
@@ -10,12 +14,20 @@ public class Tag {
     public Tag() {
     }
 
-    public Tag(String name, int counts, int totalCounts, int actionStreamCount) {
-        super();
-        this.name = name;
-        this.counts = counts;
-        this.totalCounts = totalCounts;
-        this.actionStreamCount = actionStreamCount;
+    @Override
+    public String getId() {
+        return super.getId();
+    }
+
+    @Override
+    public Tag setId(String id) {
+        super.setId(id);
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return null;
     }
 
     public String getName() {

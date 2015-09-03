@@ -17,15 +17,6 @@ public class CallResult implements Serializable {
     public CallResult() {
     }
 
-    public String toString() {
-        String retString = "";
-        if (id != null && text != null) {
-            retString += "\"" + BaseSerializer.CALL_RESULT_TAG + "\":\"" + id + "\", ";
-            retString += "\"" + BaseSerializer.TEXT_TAG + "\":\"" + text + '\"';
-        }
-        return retString;
-    }
-
     public String getId() {
         return id;
     }
@@ -33,6 +24,15 @@ public class CallResult implements Serializable {
     public CallResult setId(String id) {
         this.id = id;
         return this;
+    }
+
+    public String toString() {
+        String retString = "";
+        if (id != null && text != null) {
+            retString += "\"" + BaseSerializer.CALL_RESULT_TAG + "\":\"" + id + "\", ";
+            retString += "\"" + BaseSerializer.TEXT_TAG + "\":\"" + text + '\"';
+        }
+        return retString;
     }
 
     public String getText() {

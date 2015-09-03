@@ -41,8 +41,10 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
 
     public void setContacts(List<Contact> contacts) {
         this.contacts = new ArrayList<>();
-        for (int i = 0; i < contacts.size(); i++) {
-            this.contacts.add(contacts.get(i));
+        if (contacts != null && !contacts.isEmpty()) {
+            for (int i = 0; i < contacts.size(); i++) {
+                this.contacts.add(contacts.get(i));
+            }
         }
     }
 

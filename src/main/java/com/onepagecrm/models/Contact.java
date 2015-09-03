@@ -15,8 +15,6 @@ public class Contact extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -6073805195226829625L;
 
-    private String id;
-
     private int intId;
     public static int nextIntId = 1;
 
@@ -70,6 +68,22 @@ public class Contact extends ApiResource implements Serializable {
         nextIntId++;
     }
 
+    @Override
+    public String getId() {
+        return super.getId();
+    }
+
+    @Override
+    public Contact setId(String id) {
+        super.setId(id);
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return ContactSerializer.toJsonObject(this);
+    }
+
     public String getFullName() {
         if (lastName != null && !lastName.equals("")) {
             if (firstName != null && !firstName.equals("")) {
@@ -103,15 +117,6 @@ public class Contact extends ApiResource implements Serializable {
 
     public int getIntId() {
         return intId;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Contact setId(String id) {
-        this.id = id;
-        return this;
     }
 
     public String getOwnerId() {
@@ -328,10 +333,5 @@ public class Contact extends ApiResource implements Serializable {
     public Contact setNextAction(Action nextAction) {
         this.nextAction = nextAction;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return ContactSerializer.toJsonObject(this);
     }
 }

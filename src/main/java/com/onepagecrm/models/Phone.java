@@ -11,12 +11,17 @@ public class Phone implements Serializable {
     private String type;
     private String number;
 
-    public Phone() {
-    }
-
     public Phone(String type, String number) {
         this.setType(type);
         this.setNumber(number);
+    }
+
+    public Phone() {
+    }
+
+    @Override
+    public String toString() {
+        return PhoneSerializer.toJsonObject(this);
     }
 
     public String getType() {
@@ -35,10 +40,5 @@ public class Phone implements Serializable {
     public Phone setNumber(String number) {
         this.number = number;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return PhoneSerializer.toJsonObject(this);
     }
 }

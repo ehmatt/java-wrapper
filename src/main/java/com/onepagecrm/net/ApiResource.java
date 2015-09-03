@@ -16,6 +16,11 @@ public abstract class ApiResource extends BaseResource {
         return this.id;
     }
 
+    public ApiResource setId(String id) {
+        this.id = id;
+        return this;
+    }
+
     @Override
     public abstract String toString();
 }

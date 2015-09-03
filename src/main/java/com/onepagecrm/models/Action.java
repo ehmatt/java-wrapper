@@ -10,7 +10,6 @@ public class Action extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -7486991046434989805L;
 
-    private String id;
     private String assigneeId;
     private String contactId;
     private String text;
@@ -21,7 +20,24 @@ public class Action extends ApiResource implements Serializable {
     private int dateColor;
 
     public Action() {
+    }
 
+    @Override
+    public String getId() {
+        return super.getId();
+    }
+
+    @Override
+    public Action setId(String id) {
+        super.setId(id);
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Action{id=\'" + id + "\', assigneeId=\'" + assigneeId + "\', contactId=\'"
+                + contactId + "\', text=\'" + text + "\', modifiedAt=\'" + modifiedAt
+                + "\', status=\'" + status + "\', date=\'" + date + "\'}";
     }
 
     public String getAssigneeId() {
@@ -91,15 +107,6 @@ public class Action extends ApiResource implements Serializable {
         return this;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public Action setId(String id) {
-        this.id = id;
-        return this;
-    }
-
     public int getDateColor() {
         return dateColor;
     }
@@ -107,12 +114,5 @@ public class Action extends ApiResource implements Serializable {
     public Action setDateColor(int dateColor) {
         this.dateColor = dateColor;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return "Action{id=\'" + id + "\', assigneeId=\'" + assigneeId + "\', contactId=\'"
-                + contactId + "\', text=\'" + text + "\', modifiedAt=\'" + modifiedAt
-                + "\', status=\'" + status + "\', date=\'" + date + "\'}";
     }
 }

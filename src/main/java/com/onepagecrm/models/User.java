@@ -16,7 +16,6 @@ public class User extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = 1383622287570201668L;
 
-    private String id;
     private String authKey;
     private String accountType;
     private String bccEmail;
@@ -25,10 +24,8 @@ public class User extends ApiResource implements Serializable {
     private String firstName;
     private String lastName;
     private String photoUrl;
-
     private Sales sales;
     private Account account;
-
     private List<CallResult> callResults;
 
     public static User login(String username, String password) {
@@ -54,7 +51,25 @@ public class User extends ApiResource implements Serializable {
     }
 
     public User() {
+    }
 
+    @Override
+    public String getId() {
+        return super.getId();
+    }
+
+    @Override
+    public User setId(String id) {
+        super.setId(id);
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=\'" + id + "\', authKey=\'" + authKey + "\'" + ", accountType=\'"
+                + accountType + "\'" + ", firstName=\'" + firstName + "\'" + ", lastName=\'"
+                + lastName + "\'" + ", email=\'" + email + "\'" + ", companyName=\'" + companyName
+                + "\'" + ", photoUrl=\'" + photoUrl + "\'" + ", bccEmail=\'" + bccEmail + "\'";
     }
 
     public boolean isValid() {
@@ -81,15 +96,6 @@ public class User extends ApiResource implements Serializable {
             }
         }
         return null;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public User setId(String id) {
-        this.id = id;
-        return this;
     }
 
     public String getAuthKey() {
@@ -189,13 +195,5 @@ public class User extends ApiResource implements Serializable {
     public User setCallResults(List<CallResult> callResults) {
         this.callResults = callResults;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" + "id=\'" + id + "\', authKey=\'" + authKey + "\'" + ", accountType=\'"
-                + accountType + "\'" + ", firstName=\'" + firstName + "\'" + ", lastName=\'"
-                + lastName + "\'" + ", email=\'" + email + "\'" + ", companyName=\'" + companyName
-                + "\'" + ", photoUrl=\'" + photoUrl + "\'" + ", bccEmail=\'" + bccEmail + "\'";
     }
 }

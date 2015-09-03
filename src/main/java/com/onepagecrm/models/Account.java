@@ -26,7 +26,6 @@ public class Account {
     // public static User switchUser(login, password) {
 
     public Account() {
-
     }
 
     public static List<User> getTeam() {

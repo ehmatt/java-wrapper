@@ -6,13 +6,22 @@ import com.onepagecrm.net.ApiResource;
 
 public class CustomField extends ApiResource {
 
-    private String id;
     private String name;
+    private int position;
     private String type;
     private List<String> choices;
-    private int position;
+    private int reminderDays;
 
-    // private [ ] reminderDays ???
+    @Override
+    public String getId() {
+        return super.getId();
+    }
+
+    @Override
+    public CustomField setId(String id) {
+        super.setId(id);
+        return this;
+    }
 
     @Override
     public String toString() {
@@ -43,8 +52,44 @@ public class CustomField extends ApiResource {
         return retString;
     }
 
-    @Override
-    public String getId() {
-        return this.id;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<String> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(List<String> choices) {
+        this.choices = choices;
+    }
+
+    public int getReminderDays() {
+        return reminderDays;
+    }
+
+    public void setReminderDays(int reminderDays) {
+        this.reminderDays = reminderDays;
     }
 }

@@ -12,7 +12,6 @@ import java.util.List;
 
 public class Call extends ApiResource {
 
-    private String id;
     private String author;
     private CallResult callResult;
     private Date time;
@@ -42,18 +41,19 @@ public class Call extends ApiResource {
     }
 
     @Override
-    public String toString() {
-        return CallSerializer.toJsonObject(this);
+    public String getId() {
+        return super.getId();
     }
 
     @Override
-    public String getId() {
-        return id;
+    public Call setId(String id) {
+        super.setId(id);
+        return this;
     }
 
-    public Call setId(String id) {
-        this.id = id;
-        return this;
+    @Override
+    public String toString() {
+        return CallSerializer.toJsonObject(this);
     }
 
     public String getAuthor() {
