@@ -2,6 +2,7 @@ package com.onepagecrm.models.serializer;
 
 import com.onepagecrm.models.Action;
 import com.onepagecrm.models.Contact;
+import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.Phone;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,6 +61,7 @@ public class ContactSerializer extends BaseSerializer {
 
     public static String toJsonObject(Contact contact) {
         JSONObject userObject = new JSONObject();
+        addJsonStringValue(contact.getId(), userObject, ID_TAG);
         addJsonStringValue(contact.getType(), userObject, TYPE_TAG);
         addJsonStringValue(contact.getLastName(), userObject, LAST_NAME_TAG);
         addJsonStringValue(contact.getFirstName(), userObject, FIRST_NAME_TAG);
@@ -87,5 +89,16 @@ public class ContactSerializer extends BaseSerializer {
 //        LOG.info("CONTACT INFO : " + userObject.toString());
 
         return userObject.toString();
+    }
+
+    public static String toJsonArray(ContactList contacts) {
+        JSONArray contactsArray = new JSONArray();
+        if (contacts != null && !contacts.isEmpty()) {
+            for (int i = 0; i < contacts.size(); i++) {
+                contactsArray.put(toJsonObject(contacts.get(i)));
+            }
+            return contactsArray.toString();
+        }
+        return "";
     }
 }

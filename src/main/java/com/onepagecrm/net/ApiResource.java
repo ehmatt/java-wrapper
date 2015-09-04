@@ -10,16 +10,11 @@ public abstract class ApiResource extends BaseResource {
     public static final String CONTACTS_ENDPOINT = "contacts";
     public static final String CALLS_ENDPOINT = "calls";
 
-    protected String id;
+    public String id;
 
-    public String getId() {
-        return this.id;
-    }
+    public abstract String getId();
 
-    public ApiResource setId(String id) {
-        this.id = id;
-        return this;
-    }
+    public abstract ApiResource setId(String id);
 
     @Override
     public abstract String toString();

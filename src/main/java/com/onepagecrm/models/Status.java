@@ -7,6 +7,7 @@ import com.onepagecrm.net.ApiResource;
 
 public class Status extends ApiResource {
 
+    private String id;
     private String color;
     private String status;
     private String text;
@@ -21,12 +22,12 @@ public class Status extends ApiResource {
 
     @Override
     public String getId() {
-        return super.getId();
+        return this.id;
     }
 
     @Override
     public Status setId(String id) {
-        super.setId(id);
+        this.id = id;
         return this;
     }
 

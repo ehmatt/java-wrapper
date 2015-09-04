@@ -8,6 +8,7 @@ import java.util.List;
 
 public class LeadSource extends ApiResource implements Serializable {
 
+    private String id;
     private String text;
     private int counts;
     private int totalCounts;
@@ -18,12 +19,12 @@ public class LeadSource extends ApiResource implements Serializable {
 
     @Override
     public String getId() {
-        return super.getId();
+        return this.id;
     }
 
     @Override
     public LeadSource setId(String id) {
-        super.setId(id);
+        this.id = id;
         return this;
     }
 

@@ -53,22 +53,25 @@ public class Driver {
         Contact contact = stream.get(0);
         LOG.info("Contact : " + contact);
 
-        List<Action> actions = contact.getActions();
-        LOG.info("Actions : " + actions);
+        if (contact.isValid()) {
 
-        Action nextAction = contact.getNextAction();
-        LOG.info("NextAction : " + nextAction);
+            List<Action> actions = contact.getActions();
+            LOG.info("Actions : " + actions);
 
-        Call newCall = new Call()
-                .setCallResult(new CallResult()
-                .setId("interested")
-                .setText("JAVA"));
-        LOG.info("CALL SAVED : " + newCall.save(contact));
+            Action nextAction = contact.getNextAction();
+            LOG.info("NextAction : " + nextAction);
 
-        Contact newContact = new Contact()
-                .setLastName("Myles")
-                .setCompanyName("Myles Inc.")
-                .setFirstName("Cillian");
-        LOG.info("CONTACT SAVED : " + newContact.save());
+            Call newCall = new Call()
+                    .setCallResult(new CallResult()
+                            .setId("not_interested")
+                            .setText("JAVA"));
+            LOG.info("CALL SAVED : " + newCall.save(contact));
+
+            Contact newContact = new Contact()
+                    .setLastName("Myles")
+                    .setCompanyName("Myles Inc.")
+                    .setFirstName("Cillian");
+            LOG.info("CONTACT SAVED : " + newContact.save());
+        }
     }
 }

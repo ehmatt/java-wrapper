@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class Tag extends ApiResource implements Serializable {
 
+    private String id;
     private String name;
     private int counts;
     private int totalCounts;
@@ -16,12 +17,12 @@ public class Tag extends ApiResource implements Serializable {
 
     @Override
     public String getId() {
-        return super.getId();
+        return this.id;
     }
 
     @Override
     public Tag setId(String id) {
-        super.setId(id);
+        this.id = id;
         return this;
     }
 

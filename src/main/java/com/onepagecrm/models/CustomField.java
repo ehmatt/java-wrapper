@@ -6,6 +6,7 @@ import com.onepagecrm.net.ApiResource;
 
 public class CustomField extends ApiResource {
 
+    private String id;
     private String name;
     private int position;
     private String type;
@@ -14,12 +15,12 @@ public class CustomField extends ApiResource {
 
     @Override
     public String getId() {
-        return super.getId();
+        return this.id;
     }
 
     @Override
     public CustomField setId(String id) {
-        super.setId(id);
+        this.id = id;
         return this;
     }
 

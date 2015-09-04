@@ -16,6 +16,7 @@ public class User extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = 1383622287570201668L;
 
+    private String id;
     private String authKey;
     private String accountType;
     private String bccEmail;
@@ -55,12 +56,12 @@ public class User extends ApiResource implements Serializable {
 
     @Override
     public String getId() {
-        return super.getId();
+        return this.id;
     }
 
     @Override
     public User setId(String id) {
-        super.setId(id);
+        this.id = id;
         return this;
     }
 

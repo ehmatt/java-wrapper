@@ -10,6 +10,7 @@ public class Action extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -7486991046434989805L;
 
+    private String id;
     private String assigneeId;
     private String contactId;
     private String text;
@@ -24,12 +25,12 @@ public class Action extends ApiResource implements Serializable {
 
     @Override
     public String getId() {
-        return super.getId();
+        return this.id;
     }
 
     @Override
     public Action setId(String id) {
-        super.setId(id);
+        this.id = id;
         return this;
     }
 

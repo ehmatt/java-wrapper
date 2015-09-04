@@ -1,5 +1,7 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.models.serializer.ContactSerializer;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
     }
 
     public String toString() {
-        return contacts.toString();
+        return ContactSerializer.toJsonArray(this);
     }
 
     public boolean isEmpty() {

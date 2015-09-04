@@ -15,6 +15,7 @@ public class Contact extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -6073805195226829625L;
 
+    private String id;
     private int intId;
     public static int nextIntId = 1;
 
@@ -70,13 +71,17 @@ public class Contact extends ApiResource implements Serializable {
 
     @Override
     public String getId() {
-        return super.getId();
+        return this.id;
     }
 
     @Override
     public Contact setId(String id) {
-        super.setId(id);
+        this.id = id;
         return this;
+    }
+
+    public boolean isValid() {
+        return this.id != null && !this.id.equals("");
     }
 
     @Override
@@ -104,10 +109,6 @@ public class Contact extends ApiResource implements Serializable {
             }
         }
         return null;
-    }
-
-    public boolean isValid() {
-        return this.id != null && !this.id.equals("");
     }
 
     public Contact setIntId(int intId) {

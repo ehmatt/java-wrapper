@@ -24,7 +24,8 @@ public abstract class Request {
     public static boolean isProdApp = false;
 
     protected static final String baseUrl = "https://app.onepagecrm.com/api/v3/";
-    protected static final String baseDevUrl = "http://staging.onepagecrm.com/api/v3/";
+//    protected static final String baseDevUrl = "http://staging.onepagecrm.com/api/v3/";
+    protected static final String baseDevUrl = "http://localhost:3000/api/v3/";
     protected static final String format = ".json";
     protected String endpointUrl;
 

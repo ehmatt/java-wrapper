@@ -6,14 +6,16 @@ import java.io.Serializable;
 
 public class Attachment extends ApiResource implements Serializable {
 
+    private String id;
+
     @Override
     public String getId() {
-        return super.getId();
+        return this.id;
     }
 
     @Override
     public Attachment setId(String id) {
-        super.setId(id);
+        this.id = id;
         return this;
     }
 
