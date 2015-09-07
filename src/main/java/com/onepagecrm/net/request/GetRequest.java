@@ -1,7 +1,5 @@
 package com.onepagecrm.net.request;
 
-import java.util.Map;
-
 import com.onepagecrm.models.Account;
 import com.onepagecrm.net.Authentication;
 
@@ -13,8 +11,7 @@ public class GetRequest extends SignedRequest {
         authData = new Authentication(Account.loggedInUser, Request.GET, endpointUrl, requestBody);
     }
 
-    public GetRequest(String endpoint, String query, Map<String, String> params) {
-        this.params = params;
+    public GetRequest(String endpoint, String query) {
         setType();
         setEndpointUrl(endpoint);
         if (query == null) {

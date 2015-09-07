@@ -1,21 +1,19 @@
 package com.onepagecrm.net.request;
 
+import com.onepagecrm.models.serializer.BaseSerializer;
+import com.onepagecrm.net.Response;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Logger;
-
-import com.onepagecrm.models.serializer.BaseSerializer;
-import com.onepagecrm.net.Response;
 
 public abstract class Request {
 
@@ -24,7 +22,7 @@ public abstract class Request {
     public static boolean isProdApp = false;
 
     protected static final String baseUrl = "https://app.onepagecrm.com/api/v3/";
-//    protected static final String baseDevUrl = "http://staging.onepagecrm.com/api/v3/";
+    //    protected static final String baseDevUrl = "http://staging.onepagecrm.com/api/v3/";
     protected static final String baseDevUrl = "http://localhost:3000/api/v3/";
     protected static final String format = ".json";
     protected String endpointUrl;
@@ -98,6 +96,7 @@ public abstract class Request {
         connection = null;
         try {
             connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
             HttpURLConnection.setFollowRedirects(true);
         } catch (IOException e) {
             LOG.severe("Error connecting to URL : " + url);
@@ -136,7 +135,6 @@ public abstract class Request {
                 }
                 break;
             case POST:
-                connection.setDoOutput(true);
                 try {
                     connection.setRequestMethod(POST);
                 } catch (ProtocolException e) {
@@ -192,36 +190,6 @@ public abstract class Request {
             this.requestBody = BaseSerializer.encodeParams(params);
         }
     }
-
-//    /**
-//     * Encode request parameters.
-//     *
-//     * @param params
-//     * @return
-//     */
-//    private String encodeParams(Map<String, String> params) {
-//        if (params != null && !params.isEmpty()) {
-//            String encodedString = "";
-//            int i = 0;
-//            for (Map.Entry<String, String> param : params.entrySet()) {
-//                if (i > 0) {
-//                    encodedString += "&";
-//                }
-//                try {
-//                    encodedString += String.format("%s=%s",
-//                            URLEncoder.encode(param.getKey(), "UTF-8"),
-//                            URLEncoder.encode(param.getValue(), "UTF-8"));
-//                } catch (UnsupportedEncodingException e) {
-//                    LOG.severe("Error encoding url params : " + params.toString());
-//                    LOG.severe(e.toString());
-//                } finally {
-//                    i++;
-//                }
-//            }
-//            return encodedString;
-//        }
-//        return "";
-//    }
 
     /**
      * Actually write the request body using the OutputStreamWriter.
