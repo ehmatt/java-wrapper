@@ -16,7 +16,10 @@ So far, it only contains a small subsection of calls and functions available usi
     - java-client-wrapper/src/main/java
     - java-client-wrapper/src/test/java
 
-- Download latest version of org.json-XXXXXXXX.jar from [here] (https://code.google.com/p/org-json-java/downloads/list) .
+- Download latest version of org.json-XXXXXXXX.jar from [here] (https://code.google.com/p/org-json-java/downloads/list).
+  - Import this (**Add External JARs...**) to the project.
+
+- Download latest version of Apache Commons codec commons-codec.X.XX.jar from [here] (https://commons.apache.org/proper/commons-codec/download_codec.cgi).
   - Import this (**Add External JARs...**) to the project.
 
 ## Example
@@ -36,24 +39,41 @@ import com.onepagecrm.models.User;
 
 public class Driver {
 
-	public static void main(String[] args) {
+  public static void main(String[] args) {
 
-		// Login 
-		User loggedInUser = User.login("username", "password");
+    // Login 
+    User loggedInUser = User.login("username", "password");
 
-		// Get user's Action Stream
-		ContactList contacts = loggedInUser.actionStream();
-		
-		// Pick first contact
-		Contact contact = contacts.get(0);
-		
-		// Create a call
-		Call newCall = new Call()
-				.setCallResult("interested")
-				.setNote("JAVA_CLIENT");
-		
-		// Add the call		
-		newCall.save(contact)
-	}
+    // Get user's Action Stream
+    ContactList stream = loggedInUser.actionStream();
+
+    // Get user's list of contacts in alphabetical order
+    ContactList contacts = loggedInUser.contacts();
+
+    // Pick the first contact from the Action Stream
+    Contact contact = stream.get(0);
+
+    if (contact.isValid()) {
+
+      // Get the list of Actions associated with that contact
+      List<Action> actions = contact.getActions();
+
+      // Get the Next Action specifically
+      Action nextAction = contact.getNextAction();
+
+      // Create a new Call resource
+      Call newCall = new Call()
+        .setCallResult(new CallResult()
+        .setId("interested")
+        .setText("From Java Wrapper..."));
+      newCall.save();
+
+      Contact newContact = new Contact()
+        .setLastName("Myles")
+        .setCompanyName("Myles Inc.")
+        .setFirstName("Cillian");
+      newContact.save();
+    }
+  }
 }
 ```
