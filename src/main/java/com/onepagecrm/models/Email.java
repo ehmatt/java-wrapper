@@ -9,7 +9,7 @@ public class Email {
         this.type = type;
         this.value = value;
     }
-    
+
     public Email() {
     }
 

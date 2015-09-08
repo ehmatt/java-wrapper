@@ -109,7 +109,8 @@ public class UserSerializer extends BaseSerializer {
                                 .setIntId(4)
                                 .setId("other")
                                 .setDisplay("Other")
-                );            }
+                );
+            }
         } catch (JSONException e) {
             LOG.severe("No call_results JSON object in response");
             LOG.severe(e.toString());
