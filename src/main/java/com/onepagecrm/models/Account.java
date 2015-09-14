@@ -1,12 +1,13 @@
 package com.onepagecrm.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.onepagecrm.models.internal.ContactsCount;
 import com.onepagecrm.models.internal.Settings;
 import com.onepagecrm.models.internal.TeamStream;
 
-public class Account {
+public class Account implements Serializable {
 
     public static List<User> team;
     public static User loggedInUser;

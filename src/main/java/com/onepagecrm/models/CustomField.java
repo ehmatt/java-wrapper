@@ -3,9 +3,10 @@ package com.onepagecrm.models;
 import com.onepagecrm.models.serializer.CustomFieldSerializer;
 import com.onepagecrm.net.ApiResource;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CustomField extends ApiResource {
+public class CustomField extends ApiResource implements Serializable {
 
     private String id;
     private String name;
