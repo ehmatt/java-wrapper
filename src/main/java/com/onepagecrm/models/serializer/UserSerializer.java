@@ -1,24 +1,23 @@
 package com.onepagecrm.models.serializer;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.logging.Logger;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import com.onepagecrm.models.Account;
 import com.onepagecrm.models.CallResult;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Logger;
 
 public class UserSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ContactList.class.getName());
 
-    public static User fromString(String userString) {
+    public static User fromString(String dataString) {
         try {
-            JSONObject responseObject = new JSONObject(userString);
-            JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+            JSONObject dataObject = new JSONObject(dataString);
 
             String userId = dataObject.getString(USER_ID_TAG);
             String authKey = dataObject.getString(AUTH_KEY_TAG);
@@ -28,6 +27,12 @@ public class UserSerializer extends BaseSerializer {
                     .setId(userId)
                     .setAuthKey(authKey)
                     .setAccountType(accountType);
+
+            user.setAccount(new Account()
+                    .setCustomFields(
+                            CustomFieldSerializer.fromJsonArray(dataObject.getJSONArray(CUSTOM_FIELDS_TAG))
+                    )
+            );
 
             user = addCallResults(dataObject, user);
 

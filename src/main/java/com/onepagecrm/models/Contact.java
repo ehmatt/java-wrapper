@@ -64,6 +64,16 @@ public class Contact extends ApiResource implements Serializable {
         return BaseSerializer.createResourceFromString(response.getResponseBody());
     }
 
+    public boolean addPhoto() {
+        Request request = new PostRequest(
+                "contacts/" + this.id + "/contact_photo",
+                null,
+                "{\"image\":\"/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAFA3PEY8MlBGQUZaVVBfeMiCeG5u\\nePWvuZHI////////////////////////////////////////////////////\\n2wBDAVVaWnhpeOuCguv/////////////////////////////////////////\\n////////////////////////////////wgARCAAyADIDAREAAhEBAxEB/8QA\\nFgABAQEAAAAAAAAAAAAAAAAAAAEC/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAEC\\n/9oADAMBAAIQAxAAAAG2CgAEKAAUAEKASBTC0hCoKM7VlmWWhRnRZckUERYa\\nMr//xAAYEAADAQEAAAAAAAAAAAAAAAAAARFAIP/aAAgBAQABBQLQxFLifH//\\nxAAYEQACAwAAAAAAAAAAAAAAAAABMBEgQP/aAAgBAwEBPwHTCDUL/8QAFREB\\nAQAAAAAAAAAAAAAAAAAAQBH/2gAIAQIBAT8BTUf/xAAUEAEAAAAAAAAAAAAA\\nAAAAAABQ/9oACAEBAAY/Akf/xAAfEAACAgIBBQAAAAAAAAAAAAAAARARICEx\\nQEFRYXH/2gAIAQEAAT8h6FtLCy4+jgP1LFRocNWVhfYes3gfEf/aAAwDAQAC\\nAAMAAAAQUEgmUkgAhAn7NAveDIhwHp8pn//EABoRAAMBAQEBAAAAAAAAAAAA\\nAAABERAgQEH/2gAIAQMBAT8Q8M7RRMuLEN9LwxR9rP/EABoRAAMBAAMAAAAA\\nAAAAAAAAAAABERAgMED/2gAIAQIBAT8Q9FIKUhMQ1RInB4un/8QAHxAAAwAC\\nAgIDAAAAAAAAAAAAAAERECFBUSAxYXGx/9oACAEBAAE/EBZhCEEsTMIQg0jF\\ntUmI7EnZfkRN62fA0RNcEW1hwRYRplEbOpn3LWUqIapzoSFeSubKvBFD2q2f\\noJKH/9k=\\n\"}"
+        );
+        Response response = request.send();
+        return BaseSerializer.createResourceFromString(response.getResponseBody());
+    }
+
     public Contact() {
         this.intId = nextIntId;
         nextIntId++;

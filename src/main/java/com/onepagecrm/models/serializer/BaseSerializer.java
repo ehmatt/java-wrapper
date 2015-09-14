@@ -1,5 +1,6 @@
 package com.onepagecrm.models.serializer;
 
+import com.onepagecrm.exceptions.OnePageException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,7 +35,6 @@ public class BaseSerializer {
     protected static final String CONTACT_TAG = "contact";
     protected static final String ID_TAG = "id";
     protected static final String COMPANY_ID_TAG = "company_id";
-    protected static final String CUSTOM_FIELDS_TAG = "custom_fields";
     protected static final String EMAILS_TAG = "emails";
     protected static final String JOB_TITLE_TAG = "job_title";
     protected static final String LEAD_SOURCE_ID_TAG = "lead_source_id";
@@ -70,12 +70,58 @@ public class BaseSerializer {
     // 201 RESPONSE TAGS
     protected static final String STATUS_TAG = "status";
     protected static final String MESSAGE_TAG = "message";
+    protected static final String TIMESTAMP_TAG = "timestamp";
+    protected static final String CREATED_TAG = "Created";
 
     // GENERIC TAGS
     protected static final String TYPE_TAG = "type";
     protected static final String VALUE_TAG = "value";
     protected static final String CREATED_AT_TAG = "created_at";
     protected static final String MODIFIED_AT_TAG = "modified_at";
+    protected static final String OK_TAG = "OK";
+
+    // CUSTOM FIELDS TAGS
+    protected static final String CUSTOM_FIELDS_TAG = "custom_fields";
+    protected static final String CUSTOM_FIELD_TAG = "custom_field";
+    protected static final String CHOICES_TAG = "choices";
+    protected static final String NAME_TAG = "name";
+    protected static final String POSITION_TAG = "position";
+    protected static final String REMINDER_DAYS_TAG = "reminder_days";
+
+    // ERROR TAGS
+    protected static final String ERROR_NAME_TAG = "error_name";
+    protected static final String ERROR_MESSAGE_TAG = "error_message";
+    protected static final String ERRORS_TAG = "errors";
+
+    public static Object fromString(String responseBody) throws OnePageException {
+        String dataString = "";
+        try {
+            JSONObject responseObject = new JSONObject(responseBody);
+            int status = responseObject.getInt(STATUS_TAG);
+            String message = responseObject.getString(MESSAGE_TAG);
+
+            // GET response
+            if (status == 0 && message.equalsIgnoreCase(OK_TAG)) {
+                JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+                dataString = dataObject.toString();
+            }
+
+            // 201 response
+            else if (status == 0 && message.equalsIgnoreCase(CREATED_TAG)) {
+                JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+                dataString = dataObject.toString();
+            }
+
+            // Error
+            else {
+                throw ErrorSerializer.fromString(responseBody);
+            }
+        } catch (JSONException e) {
+            LOG.severe("Error parsing response body");
+            LOG.severe(e.toString());
+        }
+        return dataString;
+    }
 
     /**
      * Method to parse 201 responses.
@@ -90,7 +136,7 @@ public class BaseSerializer {
             int status = responseObject.getInt(STATUS_TAG);
             String message = responseObject.getString(MESSAGE_TAG);
 
-            if (status == 0 && message.equalsIgnoreCase("Created")) {
+            if (status == 0 && message.equalsIgnoreCase(CREATED_TAG)) {
                 createdSuccessfully = true;
             }
 

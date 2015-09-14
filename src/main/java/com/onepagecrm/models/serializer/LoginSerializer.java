@@ -1,5 +1,6 @@
 package com.onepagecrm.models.serializer;
 
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Account;
 import com.onepagecrm.models.User;
 import org.json.JSONException;
@@ -7,11 +8,20 @@ import org.json.JSONObject;
 
 public class LoginSerializer extends BaseSerializer {
 
-    public static User fromString(String response) {
-        Account.loginResponse = response;
-        Account.loggedInUser = UserSerializer.fromString(response);
-        // Account.team.add(Account.loggedInUser);
-        return Account.loggedInUser;
+    public static User fromString(String responseBody) throws OnePageException {
+        Account.loginResponse = responseBody;
+        String parsedResponse = null;
+        OnePageException exception = null;
+
+        try {
+            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            Account.loggedInUser = UserSerializer.fromString(parsedResponse);
+            return Account.loggedInUser;
+
+        } catch (ClassCastException e) {
+            exception = (OnePageException) BaseSerializer.fromString(responseBody);
+            throw exception;
+        }
     }
 
     public static String toJsonObject(String username, String password) {

@@ -1,5 +1,6 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Sales;
 import com.onepagecrm.models.serializer.ContactListSerializer;
 import com.onepagecrm.models.serializer.LoginSerializer;
@@ -29,7 +30,7 @@ public class User extends ApiResource implements Serializable {
     private Account account;
     private List<CallResult> callResults;
 
-    public static User login(String username, String password) {
+    public static User login(String username, String password) throws OnePageException {
         Request request = new LoginRequest(username, password);
         Response response = request.send();
         return LoginSerializer.fromString(response.getResponseBody());
@@ -46,6 +47,10 @@ public class User extends ApiResource implements Serializable {
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
+
+//    public List<CustomField> customFields() {
+//
+//    }
 
     private String perPageQueryString(int number) {
         return "?per_page=" + number;

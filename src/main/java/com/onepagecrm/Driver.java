@@ -1,5 +1,6 @@
 package com.onepagecrm;
 
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.*;
 import com.onepagecrm.net.request.Request;
 
@@ -14,7 +15,7 @@ public class Driver {
 
     private static final Logger LOG = Logger.getLogger(Driver.class.getName());
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws OnePageException{
         Properties prop = new Properties();
         InputStream input = null;
 
@@ -72,6 +73,10 @@ public class Driver {
                     .setCompanyName("Myles Inc.")
                     .setFirstName("Cillian");
             LOG.info("CONTACT SAVED : " + newContact.save());
+
+            LOG.info("Custom Fields : " + loggedInUser.getAccount().customFields);
+
+//            LOG.info("Image saved : " + contact.addPhoto());
         }
     }
 }
