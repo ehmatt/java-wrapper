@@ -1,5 +1,6 @@
 package com.onepagecrm.models.serializer;
 
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Action;
 import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
@@ -14,6 +15,35 @@ import java.util.logging.Logger;
 public class ContactSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ContactSerializer.class.getName());
+
+    public static Contact fromString(String responseBody) throws OnePageException {
+        Contact contact = new Contact();
+        try {
+            JSONObject responseObject = new JSONObject(responseBody);
+            JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+
+            contact = fromJsonObject(dataObject);
+
+        } catch (JSONException e) {
+            LOG.severe("Error parsing contact object from response body");
+            LOG.severe(e.toString());
+        }
+        return contact;
+    }
+
+    public static Contact updateFromString(Contact contact, String responseBody) throws OnePageException {
+        try {
+            JSONObject responseObject = new JSONObject(responseBody);
+            JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+
+            contact = fromJsonObject(dataObject);
+
+        } catch (JSONException e) {
+            LOG.severe("Error parsing contact object from response body");
+            LOG.severe(e.toString());
+        }
+        return contact;
+    }
 
     public static Contact fromJsonObject(JSONObject contactsElementObject) {
         Contact contact = new Contact();

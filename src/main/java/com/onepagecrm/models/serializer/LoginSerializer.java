@@ -10,8 +10,8 @@ public class LoginSerializer extends BaseSerializer {
 
     public static User fromString(String responseBody) throws OnePageException {
         Account.loginResponse = responseBody;
-        String parsedResponse = null;
-        OnePageException exception = null;
+        String parsedResponse;
+        OnePageException exception;
 
         try {
             parsedResponse = (String) BaseSerializer.fromString(responseBody);

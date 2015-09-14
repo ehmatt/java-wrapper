@@ -1,6 +1,6 @@
 package com.onepagecrm.models;
 
-import com.onepagecrm.models.serializer.BaseSerializer;
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.serializer.CallResultSerializer;
 import com.onepagecrm.models.serializer.CallSerializer;
 import com.onepagecrm.net.ApiResource;
@@ -24,14 +24,14 @@ public class Call extends ApiResource {
     private String recordingLink;
     private List<Attachment> attachments;
 
-    public boolean save(Contact contact) {
+    public Call save(Contact contact) throws OnePageException {
         PostRequest saveRequest = new PostRequest(
                 CALLS_ENDPOINT,
                 saveQueryString(contact.getId()),
                 CallResultSerializer.toJsonObject(this.callResult)
         );
         Response response = saveRequest.send();
-        return BaseSerializer.createResourceFromString(response.getResponseBody());
+        return CallSerializer.fromString(response.getResponseBody());
     }
 
     private String saveQueryString(String contactId) {
@@ -50,6 +50,10 @@ public class Call extends ApiResource {
     public Call setId(String id) {
         this.id = id;
         return this;
+    }
+
+    public boolean isValid() {
+        return this.id != null && !this.id.equals("");
     }
 
     @Override

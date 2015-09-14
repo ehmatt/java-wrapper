@@ -41,6 +41,14 @@ public class DateSerializer extends BaseSerializer {
         return null;
     }
 
+    public static String toFormattedDateTimeString(Date date) {
+        return dateTimeFormat.format(date);
+    }
+
+    public static String toFormattedDateString(Date date) {
+        return dateFormat.format(date);
+    }
+
     public static String toFriendlyDateString(Date date) {
         Date today = new Date();
         if (dateFormat.format(date).equals(dateFormat.format(today))) {

@@ -63,9 +63,15 @@ public class BaseSerializer {
     protected static final String DATE_TAG = "date";
 
     // CALL TAGS
+    public static final String CALL_TAG = "call";
+    public static final String CALLS_TAG = "calls";
     public static final String CALL_RESULTS_TAG = "call_results";
     public static final String CALL_RESULT_TAG = "call_result";
+    public static final String CALL_TIME_INT_TAG = "call_time_int";
     public static final String TEXT_TAG = "text";
+    public static final String VIA_TAG = "via";
+    public static final String AUTHOR_TAG = "author";
+    public static final String ATTACHMENTS_TAG = "attachment";
 
     // 201 RESPONSE TAGS
     protected static final String STATUS_TAG = "status";
@@ -93,6 +99,13 @@ public class BaseSerializer {
     protected static final String ERROR_MESSAGE_TAG = "error_message";
     protected static final String ERRORS_TAG = "errors";
 
+    /**
+     * Method used to parse the base/start of response.
+     *
+     * @param responseBody
+     * @return
+     * @throws OnePageException
+     */
     public static Object fromString(String responseBody) throws OnePageException {
         String dataString = "";
         try {
@@ -100,7 +113,7 @@ public class BaseSerializer {
             int status = responseObject.getInt(STATUS_TAG);
             String message = responseObject.getString(MESSAGE_TAG);
 
-            // GET response
+            // OK response
             if (status == 0 && message.equalsIgnoreCase(OK_TAG)) {
                 JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
                 dataString = dataObject.toString();
@@ -116,6 +129,7 @@ public class BaseSerializer {
             else {
                 throw ErrorSerializer.fromString(responseBody);
             }
+
         } catch (JSONException e) {
             LOG.severe("Error parsing response body");
             LOG.severe(e.toString());
@@ -123,28 +137,28 @@ public class BaseSerializer {
         return dataString;
     }
 
-    /**
-     * Method to parse 201 responses.
-     *
-     * @param responseBody
-     * @return
-     */
-    public static boolean createResourceFromString(String responseBody) {
-        boolean createdSuccessfully = false;
-        try {
-            JSONObject responseObject = new JSONObject(responseBody);
-            int status = responseObject.getInt(STATUS_TAG);
-            String message = responseObject.getString(MESSAGE_TAG);
-
-            if (status == 0 && message.equalsIgnoreCase(CREATED_TAG)) {
-                createdSuccessfully = true;
-            }
-
-        } catch (JSONException e) {
-
-        }
-        return createdSuccessfully;
-    }
+//    /**
+//     * Method to parse 201 responses.
+//     *
+//     * @param responseBody
+//     * @return
+//     */
+//    public static boolean createResourceFromString(String responseBody) {
+//        boolean createdSuccessfully = false;
+//        try {
+//            JSONObject responseObject = new JSONObject(responseBody);
+//            int status = responseObject.getInt(STATUS_TAG);
+//            String message = responseObject.getString(MESSAGE_TAG);
+//
+//            if (status == 0 && message.equalsIgnoreCase(CREATED_TAG)) {
+//                createdSuccessfully = true;
+//            }
+//
+//        } catch (JSONException e) {
+//
+//        }
+//        return createdSuccessfully;
+//    }
 
     /**
      * Encode request parameters.
@@ -202,6 +216,22 @@ public class BaseSerializer {
      * @param key
      */
     public static void addJsonIntValue(int value, JSONObject object, String key) {
+        try {
+            object.put(key, value);
+        } catch (JSONException e) {
+            LOG.severe("Error serializing integer value : " + value);
+            LOG.severe(e.toString());
+        }
+    }
+
+    /**
+     * Adds a long value to a JSONObject with the specified key.
+     *
+     * @param value
+     * @param object
+     * @param key
+     */
+    public static void addJsonLongValue(long value, JSONObject object, String key) {
         try {
             object.put(key, value);
         } catch (JSONException e) {

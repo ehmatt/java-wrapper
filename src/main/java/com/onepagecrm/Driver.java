@@ -62,17 +62,21 @@ public class Driver {
             Action nextAction = contact.getNextAction();
             LOG.info("NextAction : " + nextAction);
 
+            Contact newContact = new Contact()
+                    .setLastName("Arabacus")
+                    .setCompanyName("Myles Inc.")
+                    .setFirstName("Martin");
+
+            newContact = newContact.save();
+            LOG.info("CONTACT SAVED : " + newContact);
+
             Call newCall = new Call()
                     .setCallResult(new CallResult()
-                            .setId("not_interested")
-                            .setText("JAVA"));
-            LOG.info("CALL SAVED : " + newCall.save(contact));
+                            .setId("other")
+                            .setText("ABACUS"));
 
-            Contact newContact = new Contact()
-                    .setLastName("Myles")
-                    .setCompanyName("Myles Inc.")
-                    .setFirstName("Cillian");
-            LOG.info("CONTACT SAVED : " + newContact.save());
+            newCall = newCall.save(newContact);
+            LOG.info("CALL SAVED : " + newCall);
 
             LOG.info("Custom Fields : " + loggedInUser.getAccount().customFields);
 
