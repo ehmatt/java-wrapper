@@ -20,15 +20,15 @@ public abstract class Request {
     protected static final Logger LOG = Logger.getLogger(Request.class.getName());
 
     public static final int APP_SERVER = 0;
-    public static final int DEV_SERVER = 1;
-    public static final int STAGING_SERVER = 2;
+    public static final int STAGING_SERVER = 1;
+    public static final int DEV_SERVER = 2;
     public static final int LOCAL_DEV_SERVER = 3;
 
     public static int SERVER = DEV_SERVER;
 
     protected static final String APP_URL = "https://app.onepagecrm.com/api/v3/";
-    protected static final String DEV_URL = "http://dev.onepagecrm.com/api/v3/";
     protected static final String STAGING_URL = "http://staging.onepagecrm.com/api/v3/";
+    protected static final String DEV_URL = "http://dev.onepagecrm.com/api/v3/";
     protected static final String LOCAL_DEV_URL = "http://localhost:3000/api/v3/";
 
     protected static final String format = ".json";
