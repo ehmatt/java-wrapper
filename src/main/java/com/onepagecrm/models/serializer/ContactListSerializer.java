@@ -1,5 +1,7 @@
 package com.onepagecrm.models.serializer;
 
+import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.Account;
 import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 import org.json.JSONArray;
@@ -20,19 +22,25 @@ public class ContactListSerializer extends BaseSerializer {
      * @param responseBody
      * @return
      */
-    public static ContactList fromString(String responseBody) {
+    public static ContactList fromString(String responseBody) throws OnePageException{
         ContactList contacts = new ContactList();
-        try {
-            JSONObject responseObject = new JSONObject(responseBody);
-            JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
-            JSONArray contactsArray = dataObject.getJSONArray(CONTACTS_TAG);
+        String parsedResponse;
+        OnePageException exception;
 
+        try {
+            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            JSONArray contactsArray = new JSONObject(parsedResponse).getJSONArray(CONTACTS_TAG);
             contacts = fromJsonArray(contactsArray);
+
+        } catch (ClassCastException e) {
+            exception = (OnePageException) BaseSerializer.fromString(responseBody);
+            throw exception;
 
         } catch (JSONException e) {
             LOG.severe("Error parsing contacts array from response body");
             LOG.severe(e.toString());
         }
+
         return contacts;
     }
 

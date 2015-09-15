@@ -6,7 +6,11 @@ import com.onepagecrm.models.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.logging.Logger;
+
 public class LoginSerializer extends BaseSerializer {
+
+    private static final Logger LOG = Logger.getLogger(LoginSerializer.class.getName());
 
     public static User fromString(String responseBody) throws OnePageException {
         Account.loginResponse = responseBody;

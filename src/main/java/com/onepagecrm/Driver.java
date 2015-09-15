@@ -39,7 +39,7 @@ public class Driver {
             }
         }
 
-        Request.isProdApp = true;
+        Request.SERVER = Request.APP_SERVER;
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),

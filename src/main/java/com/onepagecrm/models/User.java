@@ -36,13 +36,13 @@ public class User extends ApiResource implements Serializable {
         return LoginSerializer.fromString(response.getResponseBody());
     }
 
-    public ContactList actionStream() {
+    public ContactList actionStream() throws OnePageException {
         Request request = new GetRequest(ACTION_STREAM_ENDPOINT, perPageQueryString(100));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
-    public ContactList contacts() {
+    public ContactList contacts() throws OnePageException {
         Request request = new GetRequest(CONTACTS_ENDPOINT, perPageQueryString(100));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());

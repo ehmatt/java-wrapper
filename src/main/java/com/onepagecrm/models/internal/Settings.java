@@ -1,12 +1,9 @@
 package com.onepagecrm.models.internal;
 
+import java.io.Serializable;
 import java.util.List;
 
-import com.onepagecrm.models.CallResult;
-import com.onepagecrm.models.CustomField;
-
-public class Settings {
-
+public class Settings implements Serializable {
 
     private Reminder reminder;
     private String timeZone; // *****************

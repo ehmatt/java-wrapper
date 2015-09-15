@@ -19,11 +19,18 @@ public abstract class Request {
 
     protected static final Logger LOG = Logger.getLogger(Request.class.getName());
 
-    public static boolean isProdApp = false;
+    public static final int APP_SERVER = 0;
+    public static final int DEV_SERVER = 1;
+    public static final int STAGING_SERVER = 2;
+    public static final int LOCAL_DEV_SERVER = 3;
 
-    protected static final String baseUrl = "https://app.onepagecrm.com/api/v3/";
-    //    protected static final String baseDevUrl = "http://staging.onepagecrm.com/api/v3/";
-    protected static final String baseDevUrl = "http://localhost:3000/api/v3/";
+    public static int SERVER = DEV_SERVER;
+
+    protected static final String APP_URL = "https://app.onepagecrm.com/api/v3/";
+    protected static final String DEV_URL = "http://dev.onepagecrm.com/api/v3/";
+    protected static final String STAGING_URL = "http://staging.onepagecrm.com/api/v3/";
+    protected static final String LOCAL_DEV_URL = "http://localhost:3000/api/v3/";
+
     protected static final String format = ".json";
     protected String endpointUrl;
 
@@ -64,11 +71,20 @@ public abstract class Request {
 
     public abstract void setType();
 
-    public void setEndpointUrl(String enpoint) {
-        if (isProdApp) {
-            endpointUrl = baseUrl + enpoint + format;
-        } else {
-            endpointUrl = baseDevUrl + enpoint + format;
+    public void setEndpointUrl(String endpoint) {
+        switch (SERVER) {
+            case APP_SERVER:
+                endpointUrl = APP_URL + endpoint + format;
+                break;
+            case DEV_SERVER:
+                endpointUrl = DEV_URL + endpoint + format;
+                break;
+            case STAGING_SERVER:
+                endpointUrl = STAGING_URL + endpoint + format;
+                break;
+            case LOCAL_DEV_SERVER:
+                endpointUrl = LOCAL_DEV_URL + endpoint + format;
+                break;
         }
     }
 
@@ -96,7 +112,6 @@ public abstract class Request {
         connection = null;
         try {
             connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
             HttpURLConnection.setFollowRedirects(true);
         } catch (IOException e) {
             LOG.severe("Error connecting to URL : " + url);
@@ -136,6 +151,7 @@ public abstract class Request {
                 break;
             case POST:
                 try {
+                    connection.setDoOutput(true);
                     connection.setRequestMethod(POST);
                 } catch (ProtocolException e) {
                     LOG.severe("Could not set request as POST successfully");
@@ -144,6 +160,7 @@ public abstract class Request {
                 break;
             case PUT:
                 try {
+                    connection.setDoOutput(true);
                     connection.setRequestMethod(PUT);
                 } catch (ProtocolException e) {
                     LOG.severe("Could not set request as PUT successfully");
@@ -152,6 +169,7 @@ public abstract class Request {
                 break;
             case DELETE:
                 try {
+                    connection.setDoOutput(true);
                     connection.setRequestMethod(DELETE);
                 } catch (ProtocolException e) {
                     LOG.severe("Could not set request as DELETE successfully");
@@ -160,6 +178,7 @@ public abstract class Request {
                 break;
             case PATCH:
                 try {
+                    connection.setDoOutput(true);
                     connection.setRequestMethod(PATCH);
                 } catch (ProtocolException e) {
                     LOG.severe("Could not set request as PATCH successfully");

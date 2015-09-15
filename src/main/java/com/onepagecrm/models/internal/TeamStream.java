@@ -1,8 +1,9 @@
 package com.onepagecrm.models.internal;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TeamStream {
+public class TeamStream implements Serializable {
 
     private List<TeamCounts> users;
     private int all;

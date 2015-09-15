@@ -1,8 +1,9 @@
 package com.onepagecrm.models.internal;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Sales {
+public class Sales implements Serializable {
 
     private int target;
     private int won;
