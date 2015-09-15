@@ -1,10 +1,10 @@
 package com.onepagecrm.models;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import com.onepagecrm.models.serializer.DateSerializer;
 import com.onepagecrm.net.ApiResource;
+
+import java.io.Serializable;
+import java.util.Date;
 
 public class Action extends ApiResource implements Serializable {
 

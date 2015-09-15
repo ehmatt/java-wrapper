@@ -7,10 +7,11 @@ import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.PostRequest;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Call extends ApiResource {
+public class Call extends ApiResource implements Serializable {
 
     private String id;
     private String author;

@@ -2,7 +2,9 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.net.ApiResource;
 
-public class Note extends ApiResource {
+import java.io.Serializable;
+
+public class Note extends ApiResource implements Serializable {
 
     private String id;
 

@@ -1,6 +1,8 @@
 package com.onepagecrm.models;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
 
     private String address;
     private String city;

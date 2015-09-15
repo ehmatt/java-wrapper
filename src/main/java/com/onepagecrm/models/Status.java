@@ -1,11 +1,12 @@
 package com.onepagecrm.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.onepagecrm.models.internal.TeamCounts;
 import com.onepagecrm.net.ApiResource;
 
-public class Status extends ApiResource {
+public class Status extends ApiResource implements Serializable {
 
     private String id;
     private String color;

@@ -1,11 +1,11 @@
 package com.onepagecrm.models;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.onepagecrm.models.internal.ContactsCount;
 import com.onepagecrm.models.internal.Settings;
 import com.onepagecrm.models.internal.TeamStream;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class Account implements Serializable {
 
@@ -22,7 +22,6 @@ public class Account implements Serializable {
 
     public TeamStream teamStream;
     public ContactsCount contactsCount;
-
 
     // public static User switchUser(login, password) {
 

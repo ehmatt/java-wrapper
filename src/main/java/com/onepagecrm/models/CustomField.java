@@ -31,36 +31,6 @@ public class CustomField extends ApiResource implements Serializable {
         return CustomFieldSerializer.toJsonObject(this);
     }
 
-//    @Override
-//    public String toString() {
-//        String retString;
-//
-//        retString = "CustomField{" +
-//                "id=\'" + id + "\', " +
-//                "name=\'" + name + "\', " +
-//                "type=\'" + type + "\', ";
-//
-//        if (choices != null && !choices.isEmpty()) {
-//            retString += ", Choices{";
-//            for (int i = 0; i < choices.size(); i++) {
-//                if (i == (choices.size() - 1)) {
-//                    retString += "\'" + choices.get(i) + "\'";
-//                } else {
-//                    retString += "\'" + choices.get(i) + "\', ";
-//                }
-//            }
-//            retString += "}, ";
-//        }
-//
-//        retString += "position=\'" + position + "\'";
-//
-//        // private [ ] reminderDays ???
-//
-//        retString += "}";
-//        return retString;
-//    }
-
-
     public String getName() {
         return name;
     }

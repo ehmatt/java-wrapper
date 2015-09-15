@@ -1,5 +1,7 @@
 package com.onepagecrm.models;
 
-public class URL {
+import java.io.Serializable;
+
+public class URL implements Serializable {
 
 }
