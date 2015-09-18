@@ -105,7 +105,7 @@ public abstract class Request {
     }
 
     /**
-     * Connect to URL using HttpURLConnection class.
+     * Connect to Url using HttpURLConnection class.
      */
     private void setupAndConnect() {
         URL url = getUrl(this.endpointUrl);
@@ -114,13 +114,13 @@ public abstract class Request {
             connection = (HttpURLConnection) url.openConnection();
             HttpURLConnection.setFollowRedirects(true);
         } catch (IOException e) {
-            LOG.severe("Error connecting to URL : " + url);
+            LOG.severe("Error connecting to Url : " + url);
             LOG.severe(e.toString());
         }
     }
 
     /**
-     * Convert String to URL object.
+     * Convert String to Url object.
      *
      * @param url
      * @return
@@ -130,7 +130,7 @@ public abstract class Request {
         try {
             requestUrl = new URL(url);
         } catch (MalformedURLException e) {
-            LOG.severe("Error forming URL for GET request");
+            LOG.severe("Error forming Url for GET request");
             LOG.severe(e.toString());
         }
         return requestUrl;
@@ -200,7 +200,7 @@ public abstract class Request {
         LOG.info("*************************************");
         LOG.info("--- REQUEST ---");
         LOG.info("Type: " + connection.getRequestMethod());
-        LOG.info("URL: " + connection.getURL());
+        LOG.info("Url: " + connection.getURL());
         LOG.info("Body: " + requestBody);
     }
 

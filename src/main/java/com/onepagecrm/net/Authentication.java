@@ -104,7 +104,7 @@ public class Authentication {
     }
 
     /**
-     * Acquires the SHA-1 hash of a given URL.
+     * Acquires the SHA-1 hash of a given Url.
      *
      * @param url
      * @return

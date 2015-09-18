@@ -1,6 +1,7 @@
 package com.onepagecrm.models.serializer;
 
 import com.onepagecrm.exceptions.OnePageException;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,7 +44,6 @@ public class BaseSerializer {
     protected static final String SALES_CLOSED_FOR_TAG = "sales_closed_for";
     protected static final String STARRED_TAG = "starred";
     protected static final String STATUS_ID_TAG = "status_id";
-    protected static final String TAGS_TAG = "tags";
     protected static final String URLS_TAG = "urls";
     protected static final String BACKGROUND_TAG = "background";
     protected static final String ADDRESS_LIST_TAG = "address_list";
@@ -94,6 +94,13 @@ public class BaseSerializer {
     protected static final String POSITION_TAG = "position";
     protected static final String REMINDER_DAYS_TAG = "reminder_days";
 
+    // TAGS TAGS
+    protected static final String TAGS_TAG = "tags";
+    protected static final String SYSTEM_TAGS_TAG = "system_tags";
+    protected static final String COUNTS_TAG = "counts";
+    protected static final String TOTAL_COUNT_TAG = "total_count";
+    protected static final String ACTION_STREAM_COUNT_TAG = "action_stream_count";
+
     // ERROR TAGS
     protected static final String ERROR_NAME_TAG = "error_name";
     protected static final String ERROR_MESSAGE_TAG = "error_message";
@@ -136,29 +143,6 @@ public class BaseSerializer {
         }
         return dataString;
     }
-
-//    /**
-//     * Method to parse 201 responses.
-//     *
-//     * @param responseBody
-//     * @return
-//     */
-//    public static boolean createResourceFromString(String responseBody) {
-//        boolean createdSuccessfully = false;
-//        try {
-//            JSONObject responseObject = new JSONObject(responseBody);
-//            int status = responseObject.getInt(STATUS_TAG);
-//            String message = responseObject.getString(MESSAGE_TAG);
-//
-//            if (status == 0 && message.equalsIgnoreCase(CREATED_TAG)) {
-//                createdSuccessfully = true;
-//            }
-//
-//        } catch (JSONException e) {
-//
-//        }
-//        return createdSuccessfully;
-//    }
 
     /**
      * Encode request parameters.
@@ -209,18 +193,38 @@ public class BaseSerializer {
     }
 
     /**
-     * Adds an integer value to a JSONObject with the specified key.
+     * Adds an int value to a JSONObject with the specified key.
      *
      * @param value
      * @param object
      * @param key
      */
     public static void addJsonIntValue(int value, JSONObject object, String key) {
-        try {
-            object.put(key, value);
-        } catch (JSONException e) {
-            LOG.severe("Error serializing integer value : " + value);
-            LOG.severe(e.toString());
+//        if (value != -999999) {
+            try {
+                object.put(key, value);
+            } catch (JSONException e) {
+                LOG.severe("Error serializing integer value : " + value);
+                LOG.severe(e.toString());
+            }
+//        }
+    }
+
+    /**
+     * Adds an integer value to a JSONObject with the specified key.
+     *
+     * @param value
+     * @param object
+     * @param key
+     */
+    public static void addJsonIntegerValue(Integer value, JSONObject object, String key) {
+        if (value != null) {
+            try {
+                object.put(key, value);
+            } catch (JSONException e) {
+                LOG.severe("Error serializing integer value : " + value);
+                LOG.severe(e.toString());
+            }
         }
     }
 
@@ -252,6 +256,41 @@ public class BaseSerializer {
             object.put(key, value);
         } catch (JSONException e) {
             LOG.severe("Error serializing boolean value : " + value);
+            LOG.severe(e.toString());
+        }
+    }
+
+    /**
+     * Adds a nested JSONObject with the specified key if the object has some info (keys > 0).
+     *
+     * @param input
+     * @param object
+     * @param key
+     */
+    public static void addJsonObject(JSONObject input, JSONObject object, String key) {
+        try {
+            if (input.length() > 0)
+                object.put(key, input);
+        } catch (JSONException e) {
+            LOG.severe("Error serializing JSON object : " + input);
+            LOG.severe(e.toString());
+        }
+    }
+
+    /**
+     * Adds a nested JSONArray with the specified key if the array has some info (keys > 0).
+     *
+     * @param input
+     * @param object
+     * @param key
+     */
+    public static void addJsonArray(JSONArray input, JSONObject object, String key) {
+        try {
+            if (input.length() > 0) {
+                object.put(key, input);
+            }
+        } catch (JSONException e) {
+            LOG.severe("Error serializing JSON array : " + input);
             LOG.severe(e.toString());
         }
     }

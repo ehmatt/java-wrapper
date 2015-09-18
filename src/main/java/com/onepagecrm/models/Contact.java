@@ -25,7 +25,7 @@ public class Contact extends ApiResource implements Serializable {
     private String photoUrl;
     private String jobTitle;
     private String background;
-    private List<URL> urls;
+    private List<Url> urls;
     private List<Phone> phones;
     private List<Email> emails;
     private String status;
@@ -174,11 +174,11 @@ public class Contact extends ApiResource implements Serializable {
         return this;
     }
 
-    public List<URL> getUrls() {
+    public List<Url> getUrls() {
         return urls;
     }
 
-    public Contact setUrls(List<URL> urls) {
+    public Contact setUrls(List<Url> urls) {
         this.urls = urls;
         return this;
     }

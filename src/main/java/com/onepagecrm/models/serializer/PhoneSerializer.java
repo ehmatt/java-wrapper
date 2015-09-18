@@ -56,8 +56,7 @@ public class PhoneSerializer extends BaseSerializer {
             for (int i = 0; i < phones.size(); i++) {
                 phonesArray.put(toJsonObject(phones.get(i)));
             }
-            return phonesArray.toString();
         }
-        return "";
+        return phonesArray.toString();
     }
 }

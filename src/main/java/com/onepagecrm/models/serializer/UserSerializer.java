@@ -31,6 +31,9 @@ public class UserSerializer extends BaseSerializer {
                     .setCustomFields(
                             CustomFieldSerializer.fromJsonArray(dataObject.getJSONArray(CUSTOM_FIELDS_TAG))
                     )
+//                    .setTags(
+//                            TagSerializer.fromJsonArray(dataObject.getJSONObject(TAGS_TAG).getJSONArray(TAGS_TAG))
+//                    )
             );
 
             user = addCallResults(dataObject, user);
@@ -119,6 +122,7 @@ public class UserSerializer extends BaseSerializer {
             LOG.severe("No call_results JSON object in response");
             LOG.severe(e.toString());
         }
-        return user.setCallResults(callResults);
+        user.getAccount().setCallResults(callResults);
+        return user;
     }
 }

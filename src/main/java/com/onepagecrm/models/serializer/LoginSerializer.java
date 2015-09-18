@@ -2,10 +2,12 @@ package com.onepagecrm.models.serializer;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Account;
+import com.onepagecrm.models.Tag;
 import com.onepagecrm.models.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 public class LoginSerializer extends BaseSerializer {
@@ -20,12 +22,18 @@ public class LoginSerializer extends BaseSerializer {
         try {
             parsedResponse = (String) BaseSerializer.fromString(responseBody);
             Account.loggedInUser = UserSerializer.fromString(parsedResponse);
+            addTagsToAccount(responseBody);
             return Account.loggedInUser;
 
         } catch (ClassCastException e) {
             exception = (OnePageException) BaseSerializer.fromString(responseBody);
             throw exception;
+
+        } catch (JSONException e) {
+            LOG.severe("Error parsing tags array");
+            LOG.severe(e.toString());
         }
+        return null;
     }
 
     public static String toJsonObject(String username, String password) {
@@ -37,5 +45,24 @@ public class LoginSerializer extends BaseSerializer {
             e.printStackTrace();
         }
         return loginObject.toString();
+    }
+
+    private static void addTagsToAccount(String responseBody) throws JSONException {
+        JSONObject responseObject = new JSONObject(responseBody);
+        if (responseObject.has(TAGS_TAG)) {
+            addTags(responseObject.getJSONObject(TAGS_TAG));
+        }
+    }
+
+    private static void addTags(JSONObject tagsObject) throws JSONException {
+        List<Tag> tags = TagSerializer.fromJsonArray(
+                tagsObject.getJSONArray(TAGS_TAG)
+        );
+        List<Tag> systemTags = TagSerializer.fromJsonArray(
+                tagsObject.getJSONArray(SYSTEM_TAGS_TAG)
+        );
+        // Add system tags to list of tags
+        for (Tag systemTag : systemTags) tags.add(systemTag);
+        Account.loggedInUser.getAccount().setTags(tags);
     }
 }

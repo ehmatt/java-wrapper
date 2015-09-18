@@ -1,34 +1,23 @@
 package com.onepagecrm.models;
 
-import com.onepagecrm.net.ApiResource;
+import com.onepagecrm.models.serializer.TagSerializer;
 
 import java.io.Serializable;
 
-public class Tag extends ApiResource implements Serializable {
+public class Tag implements Serializable {
 
-    private String id;
     private String name;
     private int counts;
     private int totalCounts;
-    private int actionStreamCount;
+//    private int actionStreamCount = -999999;
+    private Integer actionStreamCount;
 
     public Tag() {
     }
 
     @Override
-    public String getId() {
-        return this.id;
-    }
-
-    @Override
-    public Tag setId(String id) {
-        this.id = id;
-        return this;
-    }
-
-    @Override
     public String toString() {
-        return null;
+        return TagSerializer.toJsonObject(this);
     }
 
     public String getName() {
@@ -58,11 +47,11 @@ public class Tag extends ApiResource implements Serializable {
         return this;
     }
 
-    public int getActionStreamCount() {
+    public Integer getActionStreamCount() {
         return actionStreamCount;
     }
 
-    public Tag setActionStreamCount(int actionStreamCount) {
+    public Tag setActionStreamCount(Integer actionStreamCount) {
         this.actionStreamCount = actionStreamCount;
         return this;
     }

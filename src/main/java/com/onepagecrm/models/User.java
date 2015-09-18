@@ -27,7 +27,7 @@ public class User extends ApiResource implements Serializable {
     private String lastName;
     private String photoUrl;
     private Sales sales;
-    private Account account;
+    public static Account account;
     private List<CallResult> callResults;
 
     public static User login(String username, String password) throws OnePageException {
@@ -47,10 +47,6 @@ public class User extends ApiResource implements Serializable {
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
-
-//    public List<CustomField> customFields() {
-//
-//    }
 
     private String perPageQueryString(int number) {
         return "?per_page=" + number;
@@ -195,15 +191,6 @@ public class User extends ApiResource implements Serializable {
 
     public User setAccount(Account account) {
         this.account = account;
-        return this;
-    }
-
-    public List<CallResult> getCallResults() {
-        return callResults;
-    }
-
-    public User setCallResults(List<CallResult> callResults) {
-        this.callResults = callResults;
         return this;
     }
 }

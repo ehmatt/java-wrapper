@@ -31,20 +31,6 @@ public class ContactSerializer extends BaseSerializer {
         return contact;
     }
 
-    public static Contact updateFromString(Contact contact, String responseBody) throws OnePageException {
-        try {
-            JSONObject responseObject = new JSONObject(responseBody);
-            JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
-
-            contact = fromJsonObject(dataObject);
-
-        } catch (JSONException e) {
-            LOG.severe("Error parsing contact object from response body");
-            LOG.severe(e.toString());
-        }
-        return contact;
-    }
-
     public static Contact fromJsonObject(JSONObject contactsElementObject) {
         Contact contact = new Contact();
         try {
@@ -89,8 +75,16 @@ public class ContactSerializer extends BaseSerializer {
         }
     }
 
+    /**
+     * Serialize Contact object to JSON.
+     *
+     * @param contact
+     * @return
+     */
     public static String toJsonObject(Contact contact) {
+
         JSONObject userObject = new JSONObject();
+
         addJsonStringValue(contact.getId(), userObject, ID_TAG);
         addJsonStringValue(contact.getType(), userObject, TYPE_TAG);
         addJsonStringValue(contact.getLastName(), userObject, LAST_NAME_TAG);
@@ -111,7 +105,15 @@ public class ContactSerializer extends BaseSerializer {
         addJsonStringValue(contact.getBackground(), userObject, BACKGROUND_TAG);
         addJsonStringValue(contact.getLeadSourceId(), userObject, LEAD_SOURCE_ID_TAG);
 
-        addJsonStringValue(PhoneSerializer.toJsonArray(contact.getPhones()), userObject, PHONES_TAG);
+        JSONArray phonesArray = new JSONArray();
+        try {
+            phonesArray = new JSONArray(PhoneSerializer.toJsonArray(contact.getPhones()));
+        } catch (JSONException e) {
+            LOG.severe("Error creating phone array while constructing contact object");
+            LOG.severe(e.toString());
+        }
+        addJsonArray(phonesArray, userObject, PHONES_TAG);
+
 //        addJsonStringValue(contact.getEmails(), userObject, EMAILS_TAG);
 //        addJsonStringValue(contact.getUrls(), userObject, URLS_TAG);
 //        addJsonStringValue(contact.getCustomFields(), userObject, CUSTOM_FIELDS_TAG);
@@ -127,8 +129,7 @@ public class ContactSerializer extends BaseSerializer {
             for (int i = 0; i < contacts.size(); i++) {
                 contactsArray.put(toJsonObject(contacts.get(i)));
             }
-            return contactsArray.toString();
         }
-        return "";
+        return contactsArray.toString();
     }
 }

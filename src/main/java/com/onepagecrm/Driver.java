@@ -80,6 +80,8 @@ public class Driver {
 
             LOG.info("Custom Fields : " + loggedInUser.getAccount().customFields);
 
+            LOG.info("Tags : " + loggedInUser.getAccount().tags);
+
 //            LOG.info("Image saved : " + contact.addPhoto());
         }
     }
