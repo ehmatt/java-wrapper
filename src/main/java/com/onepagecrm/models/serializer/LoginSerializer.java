@@ -29,11 +29,7 @@ public class LoginSerializer extends BaseSerializer {
             exception = (OnePageException) BaseSerializer.fromString(responseBody);
             throw exception;
 
-        } catch (JSONException e) {
-            LOG.severe("Error parsing tags array");
-            LOG.severe(e.toString());
         }
-        return null;
     }
 
     public static String toJsonObject(String username, String password) {
@@ -42,15 +38,22 @@ public class LoginSerializer extends BaseSerializer {
             loginObject.put(LOGIN_TAG, username);
             loginObject.put(PASSWORD_TAG, password);
         } catch (JSONException e) {
-            e.printStackTrace();
+            LOG.severe("Error creating User object");
+            LOG.severe(e.toString());
         }
         return loginObject.toString();
     }
 
-    private static void addTagsToAccount(String responseBody) throws JSONException {
-        JSONObject responseObject = new JSONObject(responseBody);
-        if (responseObject.has(TAGS_TAG)) {
-            addTags(responseObject.getJSONObject(TAGS_TAG));
+    private static void addTagsToAccount(String responseBody) {
+        JSONObject responseObject;
+        try {
+            responseObject = new JSONObject(responseBody);
+            if (responseObject.has(TAGS_TAG)) {
+                addTags(responseObject.getJSONObject(TAGS_TAG));
+            }
+        } catch (JSONException e) {
+            LOG.severe("Error parsing tags array");
+            LOG.severe(e.toString());
         }
     }
 
