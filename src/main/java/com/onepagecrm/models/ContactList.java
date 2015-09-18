@@ -118,7 +118,7 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
             List<Phone> phones = contacts.get(i).getPhones();
             if (phones != null && !phones.isEmpty()) {
                 for (int j = 0; j < contacts.get(i).getPhones().size(); j++) {
-                    if (incomingNumber.equals(contacts.get(i).getPhones().get(j).getNumber())) {
+                    if (incomingNumber.equals(contacts.get(i).getPhones().get(j).getValue())) {
                         return contacts.get(i);
                     }
                 }

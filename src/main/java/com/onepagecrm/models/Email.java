@@ -1,6 +1,8 @@
 package com.onepagecrm.models;
 
-public class Email {
+import java.io.Serializable;
+
+public class Email implements Serializable {
 
     private String type;
     private String value;

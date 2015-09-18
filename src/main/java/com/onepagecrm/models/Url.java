@@ -5,11 +5,11 @@ import java.io.Serializable;
 public class Url implements Serializable {
 
     private String type;
-    private String number;
+    private String value;
 
-    public Url(String type, String number) {
+    public Url(String type, String value) {
         this.setType(type);
-        this.setNumber(number);
+        this.setValue(value);
     }
 
     public Url() {
@@ -24,12 +24,12 @@ public class Url implements Serializable {
         return this;
     }
 
-    public String getNumber() {
-        return number;
+    public String getValue() {
+        return value;
     }
 
-    public Url setNumber(String number) {
-        this.number = number;
+    public Url setValue(String value) {
+        this.value = value;
         return this;
     }
 }

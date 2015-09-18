@@ -9,11 +9,11 @@ public class Phone implements Serializable {
     static final long serialVersionUID = 3927723378236473122L;
 
     private String type;
-    private String number;
+    private String value;
 
-    public Phone(String type, String number) {
+    public Phone(String type, String value) {
         this.setType(type);
-        this.setNumber(number);
+        this.setValue(value);
     }
 
     public Phone() {
@@ -33,12 +33,12 @@ public class Phone implements Serializable {
         return this;
     }
 
-    public String getNumber() {
-        return number;
+    public String getValue() {
+        return value;
     }
 
-    public Phone setNumber(String number) {
-        this.number = number;
+    public Phone setValue(String value) {
+        this.value = value;
         return this;
     }
 }
