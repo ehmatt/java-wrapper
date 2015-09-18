@@ -19,7 +19,6 @@ public class Phone implements Serializable {
     public Phone() {
     }
 
-    @Override
     public String toString() {
         return PhoneSerializer.toJsonObject(this);
     }

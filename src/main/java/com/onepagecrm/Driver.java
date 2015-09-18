@@ -62,25 +62,29 @@ public class Driver {
             Action nextAction = contact.getNextAction();
             LOG.info("NextAction : " + nextAction);
 
-            Contact newContact = new Contact()
-                    .setLastName("Arabacus")
-                    .setCompanyName("Myles Inc.")
-                    .setFirstName("Martin");
-
-            newContact = newContact.save();
-            LOG.info("CONTACT SAVED : " + newContact);
-
-            Call newCall = new Call()
-                    .setCallResult(new CallResult()
-                            .setId("other")
-                            .setText("ABACUS"));
-
-            newCall = newCall.save(newContact);
-            LOG.info("CALL SAVED : " + newCall);
+//            Contact newContact = new Contact()
+//                    .setLastName("Arabacus")
+//                    .setCompanyName("Myles Inc.")
+//                    .setFirstName("Martin");
+//
+//            newContact = newContact.save();
+//            LOG.info("CONTACT SAVED : " + newContact);
+//
+//            Call newCall = new Call()
+//                    .setCallResult(new CallResult()
+//                            .setId("other")
+//                            .setText("ABACUS"));
+//
+//            newCall = newCall.save(newContact);
+//            LOG.info("CALL SAVED : " + newCall);
 
             LOG.info("Custom Fields : " + loggedInUser.getAccount().customFields);
 
             LOG.info("Tags : " + loggedInUser.getAccount().tags);
+
+            LOG.info("Phones : " + contact.getPhones());
+            LOG.info("Emails : " + contact.getEmails());
+            LOG.info("Urls : " + contact.getUrls());
 
 //            LOG.info("Image saved : " + contact.addPhoto());
         }

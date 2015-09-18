@@ -1,5 +1,7 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.models.serializer.UrlSerializer;
+
 import java.io.Serializable;
 
 public class Url implements Serializable {
@@ -13,6 +15,10 @@ public class Url implements Serializable {
     }
 
     public Url() {
+    }
+
+    public String toString() {
+        return UrlSerializer.toJsonObject(this);
     }
 
     public String getType() {

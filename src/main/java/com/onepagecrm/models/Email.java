@@ -1,5 +1,7 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.models.serializer.EmailSerializer;
+
 import java.io.Serializable;
 
 public class Email implements Serializable {
@@ -13,6 +15,10 @@ public class Email implements Serializable {
     }
 
     public Email() {
+    }
+
+    public String toString() {
+        return EmailSerializer.toJsonObject(this);
     }
 
     public String getType() {

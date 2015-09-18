@@ -1,10 +1,7 @@
 package com.onepagecrm.models.serializer;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Action;
-import com.onepagecrm.models.Contact;
-import com.onepagecrm.models.ContactList;
-import com.onepagecrm.models.Phone;
+import com.onepagecrm.models.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,8 +39,20 @@ public class ContactSerializer extends BaseSerializer {
             String lastName = contactObject.getString(LAST_NAME_TAG);
             String ownerId = contactObject.getString(OWNER_ID_TAG);
 
+            // Add phone numbers.
             JSONArray phonesArray = contactObject.getJSONArray(PHONES_TAG);
             ArrayList<Phone> phones = PhoneSerializer.fromJsonArray(phonesArray);
+            if (!phones.isEmpty()) contact.setPhones(phones);
+
+            // Add emails.
+            JSONArray emailsArray = contactObject.getJSONArray(EMAILS_TAG);
+            ArrayList<Email> emails = EmailSerializer.fromJsonArray(emailsArray);
+            if (!emails.isEmpty()) contact.setEmails(emails);
+
+            // Add website addresses.
+            JSONArray urlsArray = contactObject.getJSONArray(URLS_TAG);
+            ArrayList<Url> urls = UrlSerializer.fromJsonArray(urlsArray);
+            if (!urls.isEmpty()) contact.setUrls(urls);
 
             boolean starred = contactObject.getBoolean(STARRED_TAG);
 
@@ -64,7 +73,6 @@ public class ContactSerializer extends BaseSerializer {
                     .setOwnerId(ownerId)
                     .setFirstName(firstName)
                     .setLastName(lastName)
-                    .setPhones(phones)
                     .setCompanyName(companyName)
                     .setStarred(starred);
 
