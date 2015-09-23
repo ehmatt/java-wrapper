@@ -56,12 +56,17 @@ public class Driver {
 
         if (contact.isValid()) {
 
-            List<Action> actions = contact.getActions();
-            LOG.info("Actions : " + actions);
+            contact.setFirstName("Java");
+            contact.setLastName("Wrapper");
+            contact = contact.update();
+            LOG.info("Updated Contact : " + contact);
 
-            Action nextAction = contact.getNextAction();
-            LOG.info("NextAction : " + nextAction);
-
+//            List<Action> actions = contact.getActions();
+//            LOG.info("Actions : " + actions);
+//
+//            Action nextAction = contact.getNextAction();
+//            LOG.info("NextAction : " + nextAction);
+//
 //            Contact newContact = new Contact()
 //                    .setLastName("Arabacus")
 //                    .setCompanyName("Myles Inc.")
@@ -77,15 +82,13 @@ public class Driver {
 //
 //            newCall = newCall.save(newContact);
 //            LOG.info("CALL SAVED : " + newCall);
-
-            LOG.info("Custom Fields : " + loggedInUser.getAccount().customFields);
-
-            LOG.info("Tags : " + loggedInUser.getAccount().tags);
-
-            LOG.info("Phones : " + contact.getPhones());
-            LOG.info("Emails : " + contact.getEmails());
-            LOG.info("Urls : " + contact.getUrls());
-
+//
+//            LOG.info("Custom Fields : " + loggedInUser.getAccount().customFields);
+//            LOG.info("Tags : " + loggedInUser.getAccount().tags);
+//            LOG.info("Phones : " + contact.getPhones());
+//            LOG.info("Emails : " + contact.getEmails());
+//            LOG.info("Urls : " + contact.getUrls());
+//
 //            LOG.info("Image saved : " + contact.addPhoto());
         }
     }

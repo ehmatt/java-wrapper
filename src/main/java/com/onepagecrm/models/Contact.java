@@ -5,6 +5,7 @@ import com.onepagecrm.models.serializer.ContactSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.PostRequest;
+import com.onepagecrm.net.request.PutRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
@@ -62,6 +63,20 @@ public class Contact extends ApiResource implements Serializable {
         );
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
+    }
+
+    public Contact update() throws OnePageException {
+        Request request = new PutRequest(
+                addContactIdToEndpoint(CONTACTS_ENDPOINT),
+                null,
+                ContactSerializer.toJsonObject(this)
+        );
+        Response response = request.send();
+        return ContactSerializer.fromString(response.getResponseBody());
+    }
+
+    private String addContactIdToEndpoint(String endpoint) {
+        return endpoint + "/" + this.id;
     }
 
     public Contact() {
