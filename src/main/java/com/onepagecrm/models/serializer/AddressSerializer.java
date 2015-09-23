@@ -49,18 +49,26 @@ public class AddressSerializer extends BaseSerializer {
     }
 
     public static String toJsonObject(Address address) {
-        JSONObject addressObject = new JSONObject();
-        addJsonStringValue(address.getAddress(), addressObject, ADDRESS_TAG);
-        addJsonStringValue(address.getCity(), addressObject, CITY_TAG);
-        addJsonStringValue(address.getState(), addressObject, STATE_TAG);
-        addJsonStringValue(address.getZipCode(), addressObject, ZIP_CODE_TAG);
-        addJsonStringValue(address.getCountryCode(), addressObject, COUNTRY_CODE_TAG);
-        return addressObject.toString();
+        if (address != null) {
+            JSONObject addressObject = new JSONObject();
+            addJsonStringValue(address.getAddress(), addressObject, ADDRESS_TAG);
+            addJsonStringValue(address.getCity(), addressObject, CITY_TAG);
+            addJsonStringValue(address.getState(), addressObject, STATE_TAG);
+            addJsonStringValue(address.getZipCode(), addressObject, ZIP_CODE_TAG);
+            addJsonStringValue(address.getCountryCode(), addressObject, COUNTRY_CODE_TAG);
+            return addressObject.toString();
+        } else {
+            return "";
+        }
     }
 
     public static String toJsonArray(Address address) {
-        JSONArray addressArray = new JSONArray();
-        addressArray.put(toJsonObject(address));
-        return addressArray.toString();
+        if (address != null) {
+            JSONArray addressArray = new JSONArray();
+            addressArray.put(toJsonObject(address));
+            return addressArray.toString();
+        } else {
+            return "";
+        }
     }
 }
