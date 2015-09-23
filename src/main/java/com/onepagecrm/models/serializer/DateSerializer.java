@@ -12,9 +12,9 @@ public class DateSerializer extends BaseSerializer {
     private static final Logger LOG = Logger.getLogger(DateSerializer.class.getName());
 
     public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat(
-            "yyyy-MM-dd'T'HH:mm:ss.SSS");
+    public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
     public static SimpleDateFormat friendlyDateFormat = new SimpleDateFormat("MMM dd");
+    public static SimpleDateFormat friendlyDateAndYearFormat = new SimpleDateFormat("MMM dd, yyyy");
 
     private static final String ASAP = "ASAP";
     private static final String TODAY = "TODAY";
@@ -47,6 +47,10 @@ public class DateSerializer extends BaseSerializer {
 
     public static String toFormattedDateString(Date date) {
         return dateFormat.format(date);
+    }
+
+    public static String toFormattedDateAndYearString(Date date) {
+        return friendlyDateAndYearFormat.format(date);
     }
 
     public static String toFriendlyDateString(Date date) {

@@ -31,9 +31,6 @@ public class UserSerializer extends BaseSerializer {
                     .setCustomFields(
                             CustomFieldSerializer.fromJsonArray(dataObject.getJSONArray(CUSTOM_FIELDS_TAG))
                     )
-//                    .setTags(
-//                            TagSerializer.fromJsonArray(dataObject.getJSONObject(TAGS_TAG).getJSONArray(TAGS_TAG))
-//                    )
             );
 
             user = addCallResults(dataObject, user);
@@ -74,7 +71,7 @@ public class UserSerializer extends BaseSerializer {
         int index = 0;
         try {
             if (dataObject.has(CALL_RESULTS_TAG)) {
-                JSONObject callResultsObject = dataObject.getJSONObject("call_results");
+                JSONObject callResultsObject = dataObject.getJSONObject(CALL_RESULTS_TAG);
                 Iterator<String> iterator = callResultsObject.keys();
                 while (iterator.hasNext()) {
                     String key = iterator.next();
