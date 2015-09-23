@@ -13,6 +13,7 @@ public class DateSerializer extends BaseSerializer {
 
     public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+    public static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
     public static SimpleDateFormat friendlyDateFormat = new SimpleDateFormat("MMM dd");
     public static SimpleDateFormat friendlyDateAndYearFormat = new SimpleDateFormat("MMM dd, yyyy");
 
@@ -51,6 +52,10 @@ public class DateSerializer extends BaseSerializer {
 
     public static String toFormattedDateAndYearString(Date date) {
         return friendlyDateAndYearFormat.format(date);
+    }
+
+    public static String toFormattedTimeString(Date date) {
+        return timeFormat.format(date);
     }
 
     public static String toFriendlyDateString(Date date) {
