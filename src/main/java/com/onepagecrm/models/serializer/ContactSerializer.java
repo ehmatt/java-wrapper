@@ -54,6 +54,11 @@ public class ContactSerializer extends BaseSerializer {
             ArrayList<Url> urls = UrlSerializer.fromJsonArray(urlsArray);
             if (!urls.isEmpty()) contact.setUrls(urls);
 
+            // Add geographical address.
+            JSONArray addressArray = contactObject.getJSONArray(ADDRESS_LIST_TAG);
+            Address address = AddressSerializer.fromJsonArray(addressArray);
+            contact.setAddress(address);
+
             boolean starred = contactObject.getBoolean(STARRED_TAG);
 
             if (contactsElementObject.has(NEXT_ACTIONS_TAG)) {
@@ -108,7 +113,7 @@ public class ContactSerializer extends BaseSerializer {
 
         addJsonStringValue(contact.getOwnerId(), userObject, OWNER_ID_TAG);
 
-//        addJsonStringValue(contact.getAddressLines(), userObject, ADDRESS_LIST_TAG);
+        addJsonStringValue(AddressSerializer.toJsonArray(contact.getAddress()), userObject, ADDRESS_LIST_TAG);
 
         addJsonStringValue(contact.getBackground(), userObject, BACKGROUND_TAG);
         addJsonStringValue(contact.getLeadSourceId(), userObject, LEAD_SOURCE_ID_TAG);
@@ -125,8 +130,6 @@ public class ContactSerializer extends BaseSerializer {
 //        addJsonStringValue(contact.getEmails(), userObject, EMAILS_TAG);
 //        addJsonStringValue(contact.getUrls(), userObject, URLS_TAG);
 //        addJsonStringValue(contact.getCustomFields(), userObject, CUSTOM_FIELDS_TAG);
-
-//        LOG.info("CONTACT INFO : " + userObject.toString());
 
         return userObject.toString();
     }

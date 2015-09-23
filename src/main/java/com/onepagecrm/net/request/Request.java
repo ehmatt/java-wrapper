@@ -50,8 +50,8 @@ public abstract class Request {
     protected Map<String, String> params;
     protected Response response;
 
-    private static final String ACCECPTS_TAG = "Accepts";
-    private static final String ACCECPTS = "application/json";
+    private static final String ACCEPTS_TAG = "Accepts";
+    private static final String ACCEPTS = "application/json";
 
     private static final String CONTENT_TYPE_TAG = "Content-Type";
     private static final String CONTENT_TYPE = "application/json";
@@ -193,7 +193,7 @@ public abstract class Request {
      * SignedRequest to include auth headers.
      */
     public void setRequestHeaders() {
-        connection.setRequestProperty(ACCECPTS_TAG, ACCECPTS);
+        connection.setRequestProperty(ACCEPTS_TAG, ACCEPTS);
         connection.setRequestProperty(USER_AGENT_TAG, USER_AGENT);
         connection.setRequestProperty(CONTENT_TYPE_TAG, CONTENT_TYPE);
 

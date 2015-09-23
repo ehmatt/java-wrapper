@@ -48,7 +48,7 @@ public class Contact extends ApiResource implements Serializable {
     private Date createdAt;
     private Date modifiedAt;
 
-    private List<String> addressLines;
+    private Address address;
 
     private List<Action> actions;
     private Action nextAction;
@@ -324,12 +324,12 @@ public class Contact extends ApiResource implements Serializable {
         return this;
     }
 
-    public List<String> getAddressLines() {
-        return addressLines;
+    public Address getAddress() {
+        return address;
     }
 
-    public Contact setAddressLines(List<String> addressLines) {
-        this.addressLines = addressLines;
+    public Contact setAddress(Address address) {
+        this.address = address;
         return this;
     }
 

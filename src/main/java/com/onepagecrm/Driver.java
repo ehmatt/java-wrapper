@@ -48,8 +48,8 @@ public class Driver {
         ContactList stream = loggedInUser.actionStream();
         LOG.info("Contacts : " + stream);
 
-        ContactList contacts = loggedInUser.contacts();
-        LOG.info("Contacts : " + contacts);
+//        ContactList contacts = loggedInUser.contacts();
+//        LOG.info("Contacts : " + contacts);
 
         Contact contact = stream.get(0);
         LOG.info("Contact : " + contact);
