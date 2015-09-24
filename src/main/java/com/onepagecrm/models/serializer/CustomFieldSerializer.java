@@ -93,7 +93,13 @@ public class CustomFieldSerializer extends BaseSerializer {
     public static String toJsonObject(CustomField customField) {
         JSONObject customFieldObject = new JSONObject();
         addJsonStringValue(customField.getId(), customFieldObject, ID_TAG);
-        addJsonStringValue(getChoicesJsonArray(customField), customFieldObject, CHOICES_TAG);
+        try {
+            JSONArray choicesArray = new JSONArray(getChoicesJsonArray(customField));
+            addJsonArray(choicesArray, customFieldObject, CHOICES_TAG);
+        } catch (JSONException e) {
+            LOG.severe("Error creating JSONArray out of CustomField choices");
+            LOG.severe(e.toString());
+        }
         addJsonStringValue(customField.getName(), customFieldObject, NAME_TAG);
         addJsonIntValue(customField.getPosition(), customFieldObject, POSITION_TAG);
         addJsonStringValue(customField.getType(), customFieldObject, TYPE_TAG);
@@ -105,7 +111,12 @@ public class CustomFieldSerializer extends BaseSerializer {
         JSONArray choicesArray = new JSONArray();
         if (customField.getChoices() != null) {
             for (int i = 0; i < customField.getChoices().size(); i++) {
-                choicesArray.put(customField.getChoices().get(i));
+                try {
+                    choicesArray.put(new JSONObject(customField.getChoices().get(i)));
+                } catch (JSONException e) {
+                    LOG.severe("Error creating JSONArray out of CustomField choices");
+                    LOG.severe(e.toString());
+                }
             }
         }
         return choicesArray.toString();

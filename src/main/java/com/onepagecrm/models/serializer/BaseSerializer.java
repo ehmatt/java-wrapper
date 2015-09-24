@@ -201,12 +201,12 @@ public class BaseSerializer {
      */
     public static void addJsonIntValue(int value, JSONObject object, String key) {
 //        if (value != -999999) {
-            try {
-                object.put(key, value);
-            } catch (JSONException e) {
-                LOG.severe("Error serializing integer value : " + value);
-                LOG.severe(e.toString());
-            }
+        try {
+            object.put(key, value);
+        } catch (JSONException e) {
+            LOG.severe("Error serializing integer value : " + value);
+            LOG.severe(e.toString());
+        }
 //        }
     }
 
@@ -275,6 +275,18 @@ public class BaseSerializer {
             LOG.severe("Error serializing JSON object : " + input);
             LOG.severe(e.toString());
         }
+    }
+
+    /**
+     * Adds a nested JSONObject with the specified key if the object has some info (keys > 0).
+     *
+     * @param input
+     * @param object
+     * @param key
+     */
+    public static void addJsonObject(JSONObject input, JSONArray object) {
+        if (input.length() > 0)
+            object.put(object);
     }
 
     /**

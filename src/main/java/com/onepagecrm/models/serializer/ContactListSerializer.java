@@ -1,7 +1,6 @@
 package com.onepagecrm.models.serializer;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Account;
 import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 import org.json.JSONArray;
@@ -22,7 +21,7 @@ public class ContactListSerializer extends BaseSerializer {
      * @param responseBody
      * @return
      */
-    public static ContactList fromString(String responseBody) throws OnePageException{
+    public static ContactList fromString(String responseBody) throws OnePageException {
         ContactList contacts = new ContactList();
         String parsedResponse;
         OnePageException exception;

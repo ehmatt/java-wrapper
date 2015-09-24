@@ -2,6 +2,7 @@ package com.onepagecrm.models.serializer;
 
 import com.onepagecrm.models.CallResult;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -25,7 +26,12 @@ public class CallResultSerializer extends BaseSerializer {
     public static String toJsonArray(List<CallResult> results) {
         JSONArray resultsArray = new JSONArray();
         for (int i = 0; i < results.size(); i++) {
-            resultsArray.put(toJsonObject(results.get(i)));
+            try {
+                resultsArray.put(new JSONObject(toJsonObject(results.get(i))));
+            } catch (JSONException e) {
+                LOG.severe("Error creating JSONObject out of CallResult");
+                LOG.severe(e.toString());
+            }
         }
         return resultsArray.toString();
     }

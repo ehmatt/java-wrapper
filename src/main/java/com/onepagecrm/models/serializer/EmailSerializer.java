@@ -54,7 +54,12 @@ public class EmailSerializer extends BaseSerializer {
         JSONArray emailsArray = new JSONArray();
         if (emails != null && !emails.isEmpty()) {
             for (int i = 0; i < emails.size(); i++) {
-                emailsArray.put(toJsonObject(emails.get(i)));
+                try {
+                    emailsArray.put(new JSONObject(toJsonObject(emails.get(i))));
+                } catch (JSONException e) {
+                    LOG.severe("Error creating JSONArray out of Emails");
+                    LOG.severe(e.toString());
+                }
             }
         }
         return emailsArray.toString();

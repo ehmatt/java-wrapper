@@ -65,7 +65,12 @@ public class AddressSerializer extends BaseSerializer {
     public static String toJsonArray(Address address) {
         if (address != null) {
             JSONArray addressArray = new JSONArray();
-            addressArray.put(toJsonObject(address));
+            try {
+                addressArray.put(new JSONObject(toJsonObject(address)));
+            } catch (JSONException e) {
+                LOG.severe("Error creating JSONObject out of address_list");
+                LOG.severe(e.toString());
+            }
             return addressArray.toString();
         } else {
             return "";

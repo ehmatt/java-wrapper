@@ -63,7 +63,11 @@ public class UserSerializer extends BaseSerializer {
     }
 
     public JSONObject toJsonObject(User user) {
-        return new JSONObject();
+        JSONObject userObject = new JSONObject();
+
+        // TODO : create User object here!!
+
+        return userObject;
     }
 
     public static User addCallResults(JSONObject dataObject, User user) {

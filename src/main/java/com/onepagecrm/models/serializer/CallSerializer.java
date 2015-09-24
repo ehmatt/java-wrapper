@@ -92,7 +92,12 @@ public class CallSerializer extends BaseSerializer {
     public static String toJsonArray(List<Call> calls) {
         JSONArray callsArray = new JSONArray();
         for (int i = 0; i < calls.size(); i++) {
-            callsArray.put(toJsonObject(calls.get(i)));
+            try {
+                callsArray.put(new JSONObject(toJsonObject(calls.get(i))));
+            } catch (JSONException e) {
+                LOG.severe("Error creating JSONObject out of Call");
+                LOG.severe(e.toString());
+            }
         }
         return callsArray.toString();
     }

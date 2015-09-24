@@ -58,6 +58,16 @@ public class Driver {
 
             contact.setFirstName("Java");
             contact.setLastName("Wrapper");
+            contact.setCompanyName("OnePageCRM");
+
+            Address address = new Address();
+            address.setAddress("Unit 5, Business Innovation Center, NUIG");
+            address.setCity("Galway");
+            address.setState("Connaught");
+            address.setZipCode("HJ12WE3");
+            address.setCountryCode("IE");
+            contact.setAddress(address);
+
             contact = contact.update();
             LOG.info("Updated Contact : " + contact);
 

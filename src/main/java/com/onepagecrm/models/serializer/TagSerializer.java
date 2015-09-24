@@ -61,7 +61,12 @@ public class TagSerializer extends BaseSerializer {
         JSONArray tagsArray = new JSONArray();
         if (tags != null && !tags.isEmpty()) {
             for (int i = 0; i < tags.size(); i++) {
-                tagsArray.put(toJsonObject(tags.get(i)));
+                try {
+                    tagsArray.put(new JSONObject(toJsonObject(tags.get(i))));
+                } catch (JSONException e) {
+                    LOG.severe("Error creating JSONArray out of Tags");
+                    LOG.severe(e.toString());
+                }
             }
         }
         return tagsArray.toString();

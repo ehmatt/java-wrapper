@@ -1,5 +1,7 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.models.serializer.AddressSerializer;
+
 import java.io.Serializable;
 
 public class Address implements Serializable {
@@ -11,6 +13,11 @@ public class Address implements Serializable {
     private String countryCode;
 
     public Address() {
+    }
+
+    @Override
+    public String toString() {
+        return AddressSerializer.toJsonArray(this);
     }
 
     public String getAddress() {

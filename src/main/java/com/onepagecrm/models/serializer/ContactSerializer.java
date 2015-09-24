@@ -113,19 +113,24 @@ public class ContactSerializer extends BaseSerializer {
 
         addJsonStringValue(contact.getOwnerId(), userObject, OWNER_ID_TAG);
 
-        addJsonStringValue(AddressSerializer.toJsonArray(contact.getAddress()), userObject, ADDRESS_LIST_TAG);
+        try {
+            JSONArray addressArray = new JSONArray(AddressSerializer.toJsonArray(contact.getAddress()));
+            addJsonArray(addressArray, userObject, ADDRESS_LIST_TAG);
+        } catch (JSONException e) {
+            LOG.severe("Error creating address array while constructing contact object");
+            LOG.severe(e.toString());
+        }
 
         addJsonStringValue(contact.getBackground(), userObject, BACKGROUND_TAG);
         addJsonStringValue(contact.getLeadSourceId(), userObject, LEAD_SOURCE_ID_TAG);
 
-        JSONArray phonesArray = new JSONArray();
         try {
-            phonesArray = new JSONArray(PhoneSerializer.toJsonArray(contact.getPhones()));
+            JSONArray phonesArray = new JSONArray(PhoneSerializer.toJsonArray(contact.getPhones()));
+            addJsonArray(phonesArray, userObject, PHONES_TAG);
         } catch (JSONException e) {
             LOG.severe("Error creating phone array while constructing contact object");
             LOG.severe(e.toString());
         }
-        addJsonArray(phonesArray, userObject, PHONES_TAG);
 
 //        addJsonStringValue(contact.getEmails(), userObject, EMAILS_TAG);
 //        addJsonStringValue(contact.getUrls(), userObject, URLS_TAG);
@@ -138,7 +143,12 @@ public class ContactSerializer extends BaseSerializer {
         JSONArray contactsArray = new JSONArray();
         if (contacts != null && !contacts.isEmpty()) {
             for (int i = 0; i < contacts.size(); i++) {
-                contactsArray.put(toJsonObject(contacts.get(i)));
+                try {
+                    contactsArray.put(new JSONObject(toJsonObject(contacts.get(i))));
+                } catch (JSONException e) {
+                    LOG.severe("Error creating JSONArray out of ContactList");
+                    LOG.severe(e.toString());
+                }
             }
         }
         return contactsArray.toString();

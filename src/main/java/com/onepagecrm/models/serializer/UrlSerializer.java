@@ -54,7 +54,12 @@ public class UrlSerializer extends BaseSerializer {
         JSONArray urlsArray = new JSONArray();
         if (urls != null && !urls.isEmpty()) {
             for (int i = 0; i < urls.size(); i++) {
-                urlsArray.put(toJsonObject(urls.get(i)));
+                try {
+                    urlsArray.put(new JSONObject(toJsonObject(urls.get(i))));
+                } catch (JSONException e) {
+                    LOG.severe("Error creating JSONArray out of Urls");
+                    LOG.severe(e.toString());
+                }
             }
         }
         return urlsArray.toString();

@@ -54,7 +54,12 @@ public class PhoneSerializer extends BaseSerializer {
         JSONArray phonesArray = new JSONArray();
         if (phones != null && !phones.isEmpty()) {
             for (int i = 0; i < phones.size(); i++) {
-                phonesArray.put(toJsonObject(phones.get(i)));
+                try {
+                    phonesArray.put(new JSONObject(toJsonObject(phones.get(i))));
+                } catch (JSONException e) {
+                    LOG.severe("Error creating JSONArray out of Phones");
+                    LOG.severe(e.toString());
+                }
             }
         }
         return phonesArray.toString();
