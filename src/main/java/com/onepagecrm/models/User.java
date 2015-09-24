@@ -4,6 +4,7 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Sales;
 import com.onepagecrm.models.serializer.ContactListSerializer;
 import com.onepagecrm.models.serializer.LoginSerializer;
+import com.onepagecrm.models.serializer.UserSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
@@ -72,14 +73,22 @@ public class User extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "id=\'" + id + "\', authKey=\'" + authKey + "\'" + ", accountType=\'"
-                + accountType + "\'" + ", firstName=\'" + firstName + "\'" + ", lastName=\'"
-                + lastName + "\'" + ", email=\'" + email + "\'" + ", companyName=\'" + companyName
-                + "\'" + ", photoUrl=\'" + photoUrl + "\'" + ", bccEmail=\'" + bccEmail + "\'";
+        return UserSerializer.toJsonObject(this);
     }
 
     public boolean isValid() {
         return id != null && !id.equals("");
+    }
+
+    public String getSimpleName() {
+        if (lastName != null && !lastName.equals("")) {
+            if (firstName != null && !firstName.equals("")) {
+                return firstName + " " + lastName.substring(0,1) + ".";
+            } else {
+                return lastName;
+            }
+        }
+        return null;
     }
 
     public String getFullName() {

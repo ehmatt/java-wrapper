@@ -4,11 +4,14 @@ import com.onepagecrm.models.Account;
 import com.onepagecrm.models.CallResult;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
+import com.onepagecrm.models.internal.Log;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class UserSerializer extends BaseSerializer {
@@ -35,9 +38,15 @@ public class UserSerializer extends BaseSerializer {
 
             user = addCallResults(dataObject, user);
 
+            // Add other team members to Account object
+            List<User> team = fromJsonArray(dataObject.getJSONArray(TEAM_TAG));
+            if (!team.isEmpty()) {
+                user.getAccount().setTeam(team);
+            }
+
             JSONObject outsideUserObject = dataObject.getJSONObject(USER_TAG);
             JSONObject userObject = outsideUserObject.getJSONObject(USER_TAG);
-            return fromJson(userObject, user);
+            return fromJsonObject(userObject, user);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing user response");
@@ -46,14 +55,29 @@ public class UserSerializer extends BaseSerializer {
         }
     }
 
-    public static User fromJson(JSONObject userObject, User user) {
+    public static User fromJsonObject(JSONObject userObject, User user) {
         try {
-            user.setFirstName(userObject.getString(FIRST_NAME_TAG))
-                    .setLastName(userObject.getString(LAST_NAME_TAG))
-                    .setEmail(userObject.getString(EMAIL_TAG))
-                    .setCompanyName(userObject.getString(COMPANY_NAME_TAG))
-                    .setPhotoUrl(userObject.getString(PHOTO_URL_TAG))
-                    .setBccEmail(userObject.getString(BCC_EMAIL_TAG));
+            if (userObject.has(ID_TAG)) {
+                user.setId(userObject.getString(ID_TAG));
+            }
+            if (userObject.has(FIRST_NAME_TAG)) {
+                user.setFirstName(userObject.getString(FIRST_NAME_TAG));
+            }
+            if (userObject.has(LAST_NAME_TAG)) {
+                user.setLastName(userObject.getString(LAST_NAME_TAG));
+            }
+            if (userObject.has(EMAIL_TAG)) {
+                user.setEmail(userObject.getString(EMAIL_TAG));
+            }
+            if (userObject.has(COMPANY_NAME_TAG)) {
+                user.setCompanyName(userObject.getString(COMPANY_NAME_TAG));
+            }
+            if (userObject.has(PHOTO_URL_TAG)) {
+                user.setPhotoUrl(userObject.getString(PHOTO_URL_TAG));
+            }
+            if (userObject.has(BCC_EMAIL_TAG)) {
+                user.setBccEmail(userObject.getString(BCC_EMAIL_TAG));
+            }
             return user;
         } catch (JSONException e) {
             LOG.severe("Error parsing user JSON object");
@@ -62,12 +86,74 @@ public class UserSerializer extends BaseSerializer {
         }
     }
 
-    public JSONObject toJsonObject(User user) {
+    public static User fromJsonObject(JSONObject userObject) {
+        User user = new User();
+        try {
+            if (userObject.has(ID_TAG)) {
+                user.setId(userObject.getString(ID_TAG));
+            }
+            if (userObject.has(FIRST_NAME_TAG)) {
+                user.setFirstName(userObject.getString(FIRST_NAME_TAG));
+            }
+            if (userObject.has(LAST_NAME_TAG)) {
+                user.setLastName(userObject.getString(LAST_NAME_TAG));
+            }
+            if (userObject.has(EMAIL_TAG)) {
+                user.setEmail(userObject.getString(EMAIL_TAG));
+            }
+            if (userObject.has(COMPANY_NAME_TAG)) {
+                user.setCompanyName(userObject.getString(COMPANY_NAME_TAG));
+            }
+            if (userObject.has(PHOTO_URL_TAG)) {
+                user.setPhotoUrl(userObject.getString(PHOTO_URL_TAG));
+            }
+            if (userObject.has(BCC_EMAIL_TAG)) {
+                user.setBccEmail(userObject.getString(BCC_EMAIL_TAG));
+            }
+        } catch (JSONException e) {
+            LOG.severe("Error parsing user JSON object");
+            LOG.severe(e.toString());
+        }
+        return user;
+    }
+
+    public static List<User> fromJsonArray(JSONArray teamArray) {
+        List<User> users = new ArrayList<>();
+        for (int j = 0; j < teamArray.length(); j++) {
+            JSONObject userObject;
+            try {
+                userObject = teamArray.getJSONObject(j);
+                userObject = userObject.getJSONObject(USER_TAG);
+                users.add(fromJsonObject(userObject));
+            } catch (JSONException e) {
+                LOG.severe("Error parsing team (user) array");
+                LOG.severe(e.toString());
+            }
+        }
+        return users;
+    }
+
+    public static String toJsonObject(User user) {
         JSONObject userObject = new JSONObject();
 
         // TODO : create User object here!!
+        addJsonStringValue(user.getId(), userObject, ID_TAG);
+        addJsonStringValue(user.getAuthKey(), userObject, AUTH_KEY_TAG);
+        addJsonStringValue(user.getAccountType(), userObject, ACCOUNT_TYPE_TAG);
+        addJsonStringValue(user.getBccEmail(), userObject, BCC_EMAIL_TAG);
+        addJsonStringValue(user.getCompanyName(), userObject, COMPANY_NAME_TAG);
+        addJsonStringValue(user.getEmail(), userObject, EMAIL_TAG);
+        addJsonStringValue(user.getFirstName(), userObject, FIRST_NAME_TAG);
+        addJsonStringValue(user.getLastName(), userObject, LAST_NAME_TAG);
+        addJsonStringValue(user.getPhotoUrl(), userObject, PHOTO_URL_TAG);
 
-        return userObject;
+        // SALES ??
+
+        // ACCOUNT
+
+        // CALL RESULTS ??
+
+        return userObject.toString();
     }
 
     public static User addCallResults(JSONObject dataObject, User user) {

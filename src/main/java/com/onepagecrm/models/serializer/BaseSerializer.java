@@ -106,6 +106,10 @@ public class BaseSerializer {
     protected static final String ERROR_MESSAGE_TAG = "error_message";
     protected static final String ERRORS_TAG = "errors";
 
+    // TEAM TAGS
+    protected static final String TEAM_TAG = "team";
+    protected static final String ACCOUNT_RIGHTS_TAG = "account_rights";
+
     /**
      * Method used to parse the base/start of response.
      *

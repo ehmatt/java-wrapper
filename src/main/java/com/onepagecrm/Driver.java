@@ -45,6 +45,9 @@ public class Driver {
                 prop.getProperty("username"),
                 prop.getProperty("password"));
 
+        LOG.info("Logged in User : " + loggedInUser);
+        LOG.info("User's Team : " + loggedInUser.account.team);
+
         ContactList stream = loggedInUser.actionStream();
         LOG.info("Contacts : " + stream);
 
