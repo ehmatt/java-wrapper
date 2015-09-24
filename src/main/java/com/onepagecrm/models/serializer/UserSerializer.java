@@ -37,15 +37,18 @@ public class UserSerializer extends BaseSerializer {
 
             user = addCallResults(dataObject, user);
 
-            // Add other team members to Account object
-            List<User> team = fromJsonArray(dataObject.getJSONArray(TEAM_TAG));
-            if (!team.isEmpty()) {
-                user.getAccount().setTeam(team);
-            }
-
             JSONObject outsideUserObject = dataObject.getJSONObject(USER_TAG);
             JSONObject userObject = outsideUserObject.getJSONObject(USER_TAG);
-            return fromJsonObject(userObject, user);
+            user = fromJsonObject(userObject, user);
+
+            // Add other team members to Account object
+            List<User> team = fromJsonArray(dataObject.getJSONArray(TEAM_TAG));
+            // Added logged in User as first in User's list
+            team.add(0, user);
+            // Set list of Users (team) for this account.
+            user.getAccount().setTeam(team);
+
+            return user;
 
         } catch (JSONException e) {
             LOG.severe("Error parsing user response");
