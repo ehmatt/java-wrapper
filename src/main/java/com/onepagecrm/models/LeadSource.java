@@ -1,6 +1,7 @@
 package com.onepagecrm.models;
 
-import com.onepagecrm.models.internal.TeamCounts;
+import com.onepagecrm.models.internal.TeamCount;
+import com.onepagecrm.models.serializer.LeadSourceSerializer;
 import com.onepagecrm.net.ApiResource;
 
 import java.io.Serializable;
@@ -11,8 +12,8 @@ public class LeadSource extends ApiResource implements Serializable {
     private String id;
     private String text;
     private int counts;
-    private int totalCounts;
-    private List<TeamCounts> teamCounts;
+    private int totalCount;
+    private List<TeamCount> teamCounts;
 
     public LeadSource() {
     }
@@ -30,13 +31,7 @@ public class LeadSource extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return "LeadSource{" +
-                "id=" + id +
-                ", text=\'" + text + "\'" +
-                ", counts=\'" + counts + "\'" +
-                ", totalCounts=\'" + totalCounts + "\'" +
-                ", teamCounts=\'" + teamCounts + "\'" +
-                '}';
+        return LeadSourceSerializer.toJsonObject(this);
     }
 
     public String getText() {
@@ -57,20 +52,20 @@ public class LeadSource extends ApiResource implements Serializable {
         return this;
     }
 
-    public int getTotalCounts() {
-        return totalCounts;
+    public int getTotalCount() {
+        return totalCount;
     }
 
-    public LeadSource setTotalCounts(int totalCounts) {
-        this.totalCounts = totalCounts;
+    public LeadSource setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
         return this;
     }
 
-    public List<TeamCounts> getTeamCounts() {
+    public List<TeamCount> getTeamCounts() {
         return teamCounts;
     }
 
-    public LeadSource setTeamCounts(List<TeamCounts> teamCounts) {
+    public LeadSource setTeamCounts(List<TeamCount> teamCounts) {
         this.teamCounts = teamCounts;
         return this;
     }

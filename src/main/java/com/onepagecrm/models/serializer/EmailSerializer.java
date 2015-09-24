@@ -13,8 +13,8 @@ public class EmailSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(EmailSerializer.class.getName());
 
-    public static ArrayList<Email> fromJsonArray(JSONArray emailsArray) {
-        ArrayList<Email> emails = new ArrayList<>();
+    public static List<Email> fromJsonArray(JSONArray emailsArray) {
+        List<Email> emails = new ArrayList<>();
         for (int j = 0; j < emailsArray.length(); j++) {
             JSONObject emailObject;
             try {

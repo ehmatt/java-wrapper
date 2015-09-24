@@ -2,6 +2,7 @@ package com.onepagecrm.models.serializer;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.json.JSONArray;
@@ -50,8 +51,8 @@ public class ActionSerializer extends BaseSerializer {
         return new Action();
     }
 
-    public static ArrayList<Action> fromJsonArray(JSONArray actionsArray) {
-        ArrayList<Action> actions = new ArrayList<>();
+    public static List<Action> fromJsonArray(JSONArray actionsArray) {
+        List<Action> actions = new ArrayList<>();
         for (int i = 0; i < actionsArray.length(); i++) {
             try {
                 actions.add(fromJsonObject(actionsArray.getJSONObject(i)));

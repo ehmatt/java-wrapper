@@ -6,7 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class ContactSerializer extends BaseSerializer {
@@ -41,17 +41,17 @@ public class ContactSerializer extends BaseSerializer {
 
             // Add phone numbers.
             JSONArray phonesArray = contactObject.getJSONArray(PHONES_TAG);
-            ArrayList<Phone> phones = PhoneSerializer.fromJsonArray(phonesArray);
+            List<Phone> phones = PhoneSerializer.fromJsonArray(phonesArray);
             if (!phones.isEmpty()) contact.setPhones(phones);
 
             // Add emails.
             JSONArray emailsArray = contactObject.getJSONArray(EMAILS_TAG);
-            ArrayList<Email> emails = EmailSerializer.fromJsonArray(emailsArray);
+            List<Email> emails = EmailSerializer.fromJsonArray(emailsArray);
             if (!emails.isEmpty()) contact.setEmails(emails);
 
             // Add website addresses.
             JSONArray urlsArray = contactObject.getJSONArray(URLS_TAG);
-            ArrayList<Url> urls = UrlSerializer.fromJsonArray(urlsArray);
+            List<Url> urls = UrlSerializer.fromJsonArray(urlsArray);
             if (!urls.isEmpty()) contact.setUrls(urls);
 
             // Add geographical address.
@@ -63,7 +63,7 @@ public class ContactSerializer extends BaseSerializer {
 
             if (contactsElementObject.has(NEXT_ACTIONS_TAG)) {
                 JSONArray actionsArray = contactsElementObject.getJSONArray(NEXT_ACTIONS_TAG);
-                ArrayList<Action> actions = ActionSerializer.fromJsonArray(actionsArray);
+                List<Action> actions = ActionSerializer.fromJsonArray(actionsArray);
                 contact.setActions(actions);
             }
 
@@ -82,7 +82,7 @@ public class ContactSerializer extends BaseSerializer {
                     .setStarred(starred);
 
         } catch (JSONException e) {
-            LOG.severe("Error parsing contact object");
+            LOG.severe("Error parsing Contact object");
             LOG.severe(e.toString());
             return new Contact();
         }
@@ -117,7 +117,7 @@ public class ContactSerializer extends BaseSerializer {
             JSONArray addressArray = new JSONArray(AddressSerializer.toJsonArray(contact.getAddress()));
             addJsonArray(addressArray, userObject, ADDRESS_LIST_TAG);
         } catch (JSONException e) {
-            LOG.severe("Error creating address array while constructing contact object");
+            LOG.severe("Error creating address array while constructing Contact object");
             LOG.severe(e.toString());
         }
 
@@ -128,7 +128,7 @@ public class ContactSerializer extends BaseSerializer {
             JSONArray phonesArray = new JSONArray(PhoneSerializer.toJsonArray(contact.getPhones()));
             addJsonArray(phonesArray, userObject, PHONES_TAG);
         } catch (JSONException e) {
-            LOG.severe("Error creating phone array while constructing contact object");
+            LOG.severe("Error creating Phone array while constructing Contact object");
             LOG.severe(e.toString());
         }
 

@@ -4,7 +4,6 @@ import com.onepagecrm.models.Account;
 import com.onepagecrm.models.CallResult;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
-import com.onepagecrm.models.internal.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,9 +30,9 @@ public class UserSerializer extends BaseSerializer {
                     .setAccountType(accountType);
 
             user.setAccount(new Account()
-                    .setCustomFields(
-                            CustomFieldSerializer.fromJsonArray(dataObject.getJSONArray(CUSTOM_FIELDS_TAG))
-                    )
+                            .setCustomFields(
+                                    CustomFieldSerializer.fromJsonArray(dataObject.getJSONArray(CUSTOM_FIELDS_TAG))
+                            )
             );
 
             user = addCallResults(dataObject, user);

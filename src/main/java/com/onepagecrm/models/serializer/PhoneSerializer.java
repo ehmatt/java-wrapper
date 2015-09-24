@@ -13,8 +13,8 @@ public class PhoneSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(PhoneSerializer.class.getName());
 
-    public static ArrayList<Phone> fromJsonArray(JSONArray phonesArray) {
-        ArrayList<Phone> phones = new ArrayList<>();
+    public static List<Phone> fromJsonArray(JSONArray phonesArray) {
+        List<Phone> phones = new ArrayList<>();
         for (int j = 0; j < phonesArray.length(); j++) {
             JSONObject phoneObject;
             try {

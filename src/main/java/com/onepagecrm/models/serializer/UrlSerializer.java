@@ -13,8 +13,8 @@ public class UrlSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(UrlSerializer.class.getName());
 
-    public static ArrayList<Url> fromJsonArray(JSONArray urlsArray) {
-        ArrayList<Url> urls = new ArrayList<>();
+    public static List<Url> fromJsonArray(JSONArray urlsArray) {
+        List<Url> urls = new ArrayList<>();
         for (int j = 0; j < urlsArray.length(); j++) {
             JSONObject urlObject;
             try {

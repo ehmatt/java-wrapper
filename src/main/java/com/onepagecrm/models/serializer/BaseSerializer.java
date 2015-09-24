@@ -75,6 +75,7 @@ public class BaseSerializer {
 
     // 201 RESPONSE TAGS
     protected static final String STATUS_TAG = "status";
+    protected static final String STATUSES_TAG = "statuses";
     protected static final String MESSAGE_TAG = "message";
     protected static final String TIMESTAMP_TAG = "timestamp";
     protected static final String CREATED_TAG = "Created";
@@ -109,6 +110,14 @@ public class BaseSerializer {
     // TEAM TAGS
     protected static final String TEAM_TAG = "team";
     protected static final String ACCOUNT_RIGHTS_TAG = "account_rights";
+
+    // STATUS TAGS
+    protected static final String TEAM_COUNTS_TAG = "team_counts";
+    protected static final String COLOR_TAG = "color";
+    protected static final String DESCRIPTION_TAG = "description";
+
+    // LEAD SOURCES TAGS
+    protected static final String LEAD_SOURCES_ID_TAG = "lead_sources";
 
     /**
      * Method used to parse the base/start of response.
@@ -204,14 +213,12 @@ public class BaseSerializer {
      * @param key
      */
     public static void addJsonIntValue(int value, JSONObject object, String key) {
-//        if (value != -999999) {
         try {
             object.put(key, value);
         } catch (JSONException e) {
             LOG.severe("Error serializing integer value : " + value);
             LOG.severe(e.toString());
         }
-//        }
     }
 
     /**
@@ -286,7 +293,6 @@ public class BaseSerializer {
      *
      * @param input
      * @param object
-     * @param key
      */
     public static void addJsonObject(JSONObject input, JSONArray object) {
         if (input.length() > 0)

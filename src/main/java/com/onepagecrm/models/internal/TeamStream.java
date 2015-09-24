@@ -5,14 +5,14 @@ import java.util.List;
 
 public class TeamStream implements Serializable {
 
-    private List<TeamCounts> users;
+    private List<TeamCount> users;
     private int all;
 
     public TeamStream() {
 
     }
 
-    public TeamStream(List<TeamCounts> users, int all) {
+    public TeamStream(List<TeamCount> users, int all) {
         this.users = users;
         this.all = all;
     }
@@ -21,11 +21,11 @@ public class TeamStream implements Serializable {
         return "users=\'" + users + "\', all=\'" + all;
     }
 
-    public List<TeamCounts> getUsers() {
+    public List<TeamCount> getUsers() {
         return users;
     }
 
-    public TeamStream setUsers(List<TeamCounts> users) {
+    public TeamStream setUsers(List<TeamCount> users) {
         this.users = users;
         return this;
     }

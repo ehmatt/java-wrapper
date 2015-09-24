@@ -1,11 +1,11 @@
 package com.onepagecrm.models.serializer;
 
+import com.onepagecrm.models.internal.OPCRMColors;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Logger;
-
-import com.onepagecrm.models.internal.OPCRMColors;
 
 public class DateSerializer extends BaseSerializer {
 

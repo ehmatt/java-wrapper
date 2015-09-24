@@ -3,7 +3,8 @@ package com.onepagecrm.models;
 import java.io.Serializable;
 import java.util.List;
 
-import com.onepagecrm.models.internal.TeamCounts;
+import com.onepagecrm.models.internal.TeamCount;
+import com.onepagecrm.models.serializer.StatusSerializer;
 import com.onepagecrm.net.ApiResource;
 
 public class Status extends ApiResource implements Serializable {
@@ -14,9 +15,9 @@ public class Status extends ApiResource implements Serializable {
     private String text;
     private String description;
     private int counts;
-    private int totalCounts;
+    private int totalCount;
     private int actionStreamCount;
-    private List<TeamCounts> teamCounts;
+    private List<TeamCount> teamCounts;
 
     public Status() {
     }
@@ -34,31 +35,36 @@ public class Status extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        String retString;
-
-        retString = "Status{" +
-                "id=\'" + id + "\', " +
-                "color=\'" + color + "\', " +
-                "status=\'" + status + "\', " +
-                "text=\'" + text + "\', " +
-                "description=\'" + description + "\', " +
-                "counts=\'" + counts + "\', " +
-                "totalCounts=\'" + totalCounts + "\', " +
-                "actionStreamCount=\'" + actionStreamCount + "\', ";
-
-        if (teamCounts != null && !teamCounts.isEmpty()) {
-            retString += ", TeamCounts{";
-            for (int i = 0; i < teamCounts.size(); i++) {
-                retString += teamCounts.get(i).toString();
-                if (i == teamCounts.size() - 1)
-                    retString += ", ";
-            }
-            retString += "}";
-        }
-
-        retString += "}";
-        return retString;
+        return StatusSerializer.toJsonObject(this);
     }
+
+//    @Override
+//    public String toString() {
+//        String retString;
+//
+//        retString = "Status{" +
+//                "id=\'" + id + "\', " +
+//                "color=\'" + color + "\', " +
+//                "status=\'" + status + "\', " +
+//                "text=\'" + text + "\', " +
+//                "description=\'" + description + "\', " +
+//                "counts=\'" + counts + "\', " +
+//                "totalCount=\'" + totalCount + "\', " +
+//                "actionStreamCount=\'" + actionStreamCount + "\', ";
+//
+//        if (teamCounts != null && !teamCounts.isEmpty()) {
+//            retString += ", TeamCount{";
+//            for (int i = 0; i < teamCounts.size(); i++) {
+//                retString += teamCounts.get(i).toString();
+//                if (i == teamCounts.size() - 1)
+//                    retString += ", ";
+//            }
+//            retString += "}";
+//        }
+//
+//        retString += "}";
+//        return retString;
+//    }
 
     public String getColor() {
         return color;
@@ -105,12 +111,12 @@ public class Status extends ApiResource implements Serializable {
         return this;
     }
 
-    public int getTotalCounts() {
-        return totalCounts;
+    public int getTotalCount() {
+        return totalCount;
     }
 
-    public Status setTotalCounts(int totalCounts) {
-        this.totalCounts = totalCounts;
+    public Status setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
         return this;
     }
 
@@ -123,11 +129,11 @@ public class Status extends ApiResource implements Serializable {
         return this;
     }
 
-    public List<TeamCounts> getTeamCounts() {
+    public List<TeamCount> getTeamCounts() {
         return teamCounts;
     }
 
-    public Status setTeamCounts(List<TeamCounts> teamCounts) {
+    public Status setTeamCounts(List<TeamCount> teamCounts) {
         this.teamCounts = teamCounts;
         return this;
     }

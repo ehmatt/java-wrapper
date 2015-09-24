@@ -1,15 +1,15 @@
 package com.onepagecrm.models.internal;
 
-public class TeamCounts {
+public class TeamCount {
 
     private String userId;
     private int counts;
 
-    public TeamCounts() {
+    public TeamCount() {
 
     }
 
-    public TeamCounts(String userId, int counts) {
+    public TeamCount(String userId, int counts) {
         this.userId = userId;
         this.counts = counts;
     }
@@ -22,7 +22,7 @@ public class TeamCounts {
         return userId;
     }
 
-    public TeamCounts setUserId(String userId) {
+    public TeamCount setUserId(String userId) {
         this.userId = userId;
         return this;
     }
@@ -31,7 +31,7 @@ public class TeamCounts {
         return counts;
     }
 
-    public TeamCounts setCounts(int counts) {
+    public TeamCount setCounts(int counts) {
         this.counts = counts;
         return this;
     }

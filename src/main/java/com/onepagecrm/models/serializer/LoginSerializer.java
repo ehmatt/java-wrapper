@@ -1,9 +1,8 @@
 package com.onepagecrm.models.serializer;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Account;
-import com.onepagecrm.models.Tag;
-import com.onepagecrm.models.User;
+import com.onepagecrm.models.*;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,6 +22,8 @@ public class LoginSerializer extends BaseSerializer {
             parsedResponse = (String) BaseSerializer.fromString(responseBody);
             Account.loggedInUser = UserSerializer.fromString(parsedResponse);
             addTagsToAccount(responseBody);
+            addStatusesToAccount(responseBody);
+            addLeadSourcesToAccount(responseBody);
             return Account.loggedInUser;
 
         } catch (ClassCastException e) {
@@ -38,7 +39,7 @@ public class LoginSerializer extends BaseSerializer {
             loginObject.put(LOGIN_TAG, username);
             loginObject.put(PASSWORD_TAG, password);
         } catch (JSONException e) {
-            LOG.severe("Error creating User object");
+            LOG.severe("Error creating JSONObject from login values");
             LOG.severe(e.toString());
         }
         return loginObject.toString();
@@ -52,7 +53,7 @@ public class LoginSerializer extends BaseSerializer {
                 addTags(responseObject.getJSONObject(TAGS_TAG));
             }
         } catch (JSONException e) {
-            LOG.severe("Error parsing tags array");
+            LOG.severe("Error parsing Tags array");
             LOG.severe(e.toString());
         }
     }
@@ -67,5 +68,41 @@ public class LoginSerializer extends BaseSerializer {
         // Add system tags to list of tags
         for (Tag systemTag : systemTags) tags.add(systemTag);
         Account.loggedInUser.getAccount().setTags(tags);
+    }
+
+    private static void addStatusesToAccount(String responseBody) {
+        JSONObject responseObject;
+        try {
+            responseObject = new JSONObject(responseBody);
+            if (responseObject.has(STATUSES_TAG)) {
+                addStatuses(responseObject.getJSONArray(STATUSES_TAG));
+            }
+        } catch (JSONException e) {
+            LOG.severe("Error parsing Status array");
+            LOG.severe(e.toString());
+        }
+    }
+
+    private static void addStatuses(JSONArray statusesArray) throws JSONException {
+        List<Status> statuses = StatusSerializer.fromJsonArray(statusesArray);
+        Account.loggedInUser.getAccount().setStatuses(statuses);
+    }
+
+    private static void addLeadSourcesToAccount(String responseBody) {
+        JSONObject responseObject;
+        try {
+            responseObject = new JSONObject(responseBody);
+            if (responseObject.has(LEAD_SOURCES_ID_TAG)) {
+                addLeadSources(responseObject.getJSONArray(LEAD_SOURCES_ID_TAG));
+            }
+        } catch (JSONException e) {
+            LOG.severe("Error parsing LeadSource array");
+            LOG.severe(e.toString());
+        }
+    }
+
+    private static void addLeadSources(JSONArray leadSourceArray) throws JSONException {
+        List<LeadSource> leadSources = LeadSourceSerializer.fromJsonArray(leadSourceArray);
+        Account.loggedInUser.getAccount().setLeadSources(leadSources);
     }
 }
