@@ -1,6 +1,7 @@
 package com.onepagecrm.models.serializer;
 
 import com.onepagecrm.models.CustomField;
+import com.onepagecrm.models.LeadSource;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -98,6 +99,7 @@ public class CustomFieldSerializer extends BaseSerializer {
         JSONObject object = new JSONObject();
         JSONObject customFieldObject = new JSONObject();
         addJsonStringValue(customField.getId(), customFieldObject, ID_TAG);
+
         try {
             JSONArray choicesArray = new JSONArray(getChoicesJsonArray(customField));
             // Adds empty array with key.
@@ -115,6 +117,21 @@ public class CustomFieldSerializer extends BaseSerializer {
         addJsonObject(customFieldObject, object, CUSTOM_FIELD_TAG);
         addJsonStringValue(customField.getValue(), object, VALUE_TAG);
         return object.toString();
+    }
+
+    public static String toJsonArray(List<CustomField> customFields) {
+        JSONArray customFieldsArray = new JSONArray();
+        if (customFields != null && !customFields.isEmpty()) {
+            for (int i = 0; i < customFields.size(); i++) {
+                try {
+                    customFieldsArray.put(new JSONObject(toJsonObject(customFields.get(i))));
+                } catch (JSONException e) {
+                    LOG.severe("Error creating JSONArray out of CustomField");
+                    LOG.severe(e.toString());
+                }
+            }
+        }
+        return customFieldsArray.toString();
     }
 
     private static String getChoicesJsonArray(CustomField customField) {

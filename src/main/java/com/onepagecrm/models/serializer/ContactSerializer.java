@@ -39,27 +39,27 @@ public class ContactSerializer extends BaseSerializer {
             String lastName = contactObject.getString(LAST_NAME_TAG);
             String ownerId = contactObject.getString(OWNER_ID_TAG);
 
-            // Add phone numbers.
+            // Add Custom Fields.
             JSONArray customFieldsArray = contactObject.getJSONArray(CUSTOM_FIELDS_TAG);
             List<CustomField> customFields = CustomFieldSerializer.fromJsonArray(customFieldsArray);
             if (!customFields.isEmpty()) contact.setCustomFields(customFields);
 
-            // Add phone numbers.
+            // Add Phones.
             JSONArray phonesArray = contactObject.getJSONArray(PHONES_TAG);
             List<Phone> phones = PhoneSerializer.fromJsonArray(phonesArray);
             if (!phones.isEmpty()) contact.setPhones(phones);
 
-            // Add emails.
+            // Add Emails.
             JSONArray emailsArray = contactObject.getJSONArray(EMAILS_TAG);
             List<Email> emails = EmailSerializer.fromJsonArray(emailsArray);
             if (!emails.isEmpty()) contact.setEmails(emails);
 
-            // Add website addresses.
+            // Add Websites.
             JSONArray urlsArray = contactObject.getJSONArray(URLS_TAG);
             List<Url> urls = UrlSerializer.fromJsonArray(urlsArray);
             if (!urls.isEmpty()) contact.setUrls(urls);
 
-            // Add geographical address.
+            // Add Address.
             JSONArray addressArray = contactObject.getJSONArray(ADDRESS_LIST_TAG);
             Address address = AddressSerializer.fromJsonArray(addressArray);
             contact.setAddress(address);
@@ -101,37 +101,45 @@ public class ContactSerializer extends BaseSerializer {
      */
     public static String toJsonObject(Contact contact) {
 
-        JSONObject userObject = new JSONObject();
+        JSONObject contactObject = new JSONObject();
 
-        addJsonStringValue(contact.getId(), userObject, ID_TAG);
-        addJsonStringValue(contact.getType(), userObject, TYPE_TAG);
-        addJsonStringValue(contact.getLastName(), userObject, LAST_NAME_TAG);
-        addJsonStringValue(contact.getFirstName(), userObject, FIRST_NAME_TAG);
-        addJsonStringValue(contact.getCompanyName(), userObject, COMPANY_NAME_TAG);
-        addJsonStringValue(contact.getCompanyId(), userObject, COMPANY_ID_TAG);
-        addJsonStringValue(contact.getJobTitle(), userObject, JOB_TITLE_TAG);
-        addJsonStringValue(contact.getStatusId(), userObject, STATUS_ID_TAG);
-        addJsonStringValue(contact.getStatus(), userObject, STATUS_TAG);
+        addJsonStringValue(contact.getId(), contactObject, ID_TAG);
+        addJsonStringValue(contact.getType(), contactObject, TYPE_TAG);
+        addJsonStringValue(contact.getLastName(), contactObject, LAST_NAME_TAG);
+        addJsonStringValue(contact.getFirstName(), contactObject, FIRST_NAME_TAG);
+        addJsonStringValue(contact.getCompanyName(), contactObject, COMPANY_NAME_TAG);
+        addJsonStringValue(contact.getCompanyId(), contactObject, COMPANY_ID_TAG);
+        addJsonStringValue(contact.getJobTitle(), contactObject, JOB_TITLE_TAG);
+        addJsonStringValue(contact.getStatusId(), contactObject, STATUS_ID_TAG);
+        addJsonStringValue(contact.getStatus(), contactObject, STATUS_TAG);
 
 //        addJsonStringValue(contact.getTags(), userObject, TAGS_TAG);
 //        addJsonStringValue(contact.isStarred(), userObject, STARRED_TAG);
 
-        addJsonStringValue(contact.getOwnerId(), userObject, OWNER_ID_TAG);
+        addJsonStringValue(contact.getOwnerId(), contactObject, OWNER_ID_TAG);
 
         try {
-            JSONArray addressArray = new JSONArray(AddressSerializer.toJsonArray(contact.getAddress()));
-            addJsonArray(addressArray, userObject, ADDRESS_LIST_TAG);
+            JSONArray customFieldsArray = new JSONArray(CustomFieldSerializer.toJsonArray(contact.getCustomFields()));
+            addJsonArray(customFieldsArray, contactObject, CUSTOM_FIELDS_TAG);
         } catch (JSONException e) {
-            LOG.severe("Error creating address array while constructing Contact object");
+            LOG.severe("Error creating CustomField array while constructing Contact object");
             LOG.severe(e.toString());
         }
 
-        addJsonStringValue(contact.getBackground(), userObject, BACKGROUND_TAG);
-        addJsonStringValue(contact.getLeadSourceId(), userObject, LEAD_SOURCE_ID_TAG);
+        try {
+            JSONArray addressArray = new JSONArray(AddressSerializer.toJsonArray(contact.getAddress()));
+            addJsonArray(addressArray, contactObject, ADDRESS_LIST_TAG);
+        } catch (JSONException e) {
+            LOG.severe("Error creating Address array while constructing Contact object");
+            LOG.severe(e.toString());
+        }
+
+        addJsonStringValue(contact.getBackground(), contactObject, BACKGROUND_TAG);
+        addJsonStringValue(contact.getLeadSourceId(), contactObject, LEAD_SOURCE_ID_TAG);
 
         try {
             JSONArray phonesArray = new JSONArray(PhoneSerializer.toJsonArray(contact.getPhones()));
-            addJsonArray(phonesArray, userObject, PHONES_TAG);
+            addJsonArray(phonesArray, contactObject, PHONES_TAG);
         } catch (JSONException e) {
             LOG.severe("Error creating Phone array while constructing Contact object");
             LOG.severe(e.toString());
@@ -141,7 +149,7 @@ public class ContactSerializer extends BaseSerializer {
 //        addJsonStringValue(contact.getUrls(), userObject, URLS_TAG);
 //        addJsonStringValue(contact.getCustomFields(), userObject, CUSTOM_FIELDS_TAG);
 
-        return userObject.toString();
+        return contactObject.toString();
     }
 
     public static String toJsonArray(ContactList contacts) {
