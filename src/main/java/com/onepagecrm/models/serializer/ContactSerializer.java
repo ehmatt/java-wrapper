@@ -40,6 +40,11 @@ public class ContactSerializer extends BaseSerializer {
             String ownerId = contactObject.getString(OWNER_ID_TAG);
 
             // Add phone numbers.
+            JSONArray customFieldsArray = contactObject.getJSONArray(CUSTOM_FIELDS_TAG);
+            List<CustomField> customFields = CustomFieldSerializer.fromJsonArray(customFieldsArray);
+            if (!customFields.isEmpty()) contact.setCustomFields(customFields);
+
+            // Add phone numbers.
             JSONArray phonesArray = contactObject.getJSONArray(PHONES_TAG);
             List<Phone> phones = PhoneSerializer.fromJsonArray(phonesArray);
             if (!phones.isEmpty()) contact.setPhones(phones);

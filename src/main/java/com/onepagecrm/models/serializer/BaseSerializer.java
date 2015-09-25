@@ -194,6 +194,24 @@ public class BaseSerializer {
      * @param object
      * @param key
      */
+    public static void addJsonStringValue(Object value, JSONObject object, String key) {
+        if ((value != null)) {
+            try {
+                object.put(key, value);
+            } catch (JSONException e) {
+                LOG.severe("Error serializing string value : " + value);
+                LOG.severe(e.toString());
+            }
+        }
+    }
+
+    /**
+     * Adds a value to a JSONObject with the specified key.
+     *
+     * @param value
+     * @param object
+     * @param key
+     */
     public static void addJsonStringValue(String value, JSONObject object, String key) {
         if ((value != null) && (!value.equals(""))) {
             try {

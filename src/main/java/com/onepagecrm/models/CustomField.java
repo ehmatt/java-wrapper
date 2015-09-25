@@ -14,6 +14,7 @@ public class CustomField extends ApiResource implements Serializable {
     private String type;
     private List<String> choices;
     private int reminderDays;
+    private Object value;
 
     @Override
     public String getId() {
@@ -73,6 +74,15 @@ public class CustomField extends ApiResource implements Serializable {
 
     public CustomField setReminderDays(int reminderDays) {
         this.reminderDays = reminderDays;
+        return this;
+    }
+
+    public Object getValue() {
+        return value;
+    }
+
+    public CustomField setValue(Object value) {
+        this.value = value;
         return this;
     }
 }
