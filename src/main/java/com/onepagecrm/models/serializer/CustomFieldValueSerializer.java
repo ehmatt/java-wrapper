@@ -34,30 +34,34 @@ public class CustomFieldValueSerializer extends BaseSerializer {
     }
 
     public static String toJsonObject(CustomFieldValue customFieldValue, JSONObject valueObject) {
-        if (customFieldValue.getValue() instanceof String) {
-            addJsonStringValue((String) customFieldValue.getValue(), valueObject, VALUE_TAG);
-        } else if (customFieldValue.getValue() instanceof Integer) {
-            addJsonIntegerValue((Integer) customFieldValue.getValue(), valueObject, VALUE_TAG);
-        } else if (customFieldValue.getValue() instanceof Float) {
-            addJsonFloatValue((Float) customFieldValue.getValue(), valueObject, VALUE_TAG);
-        } else if (customFieldValue.getValue() instanceof String[]) {
-            JSONArray valueArray = toJsonStringArray((String[]) customFieldValue.getValue());
-            addJsonArray(valueArray, valueObject, VALUE_TAG);
+        if (customFieldValue != null) {
+            if (customFieldValue.getValue() instanceof String) {
+                addJsonStringValue((String) customFieldValue.getValue(), valueObject, VALUE_TAG);
+            } else if (customFieldValue.getValue() instanceof Integer) {
+                addJsonIntegerValue((Integer) customFieldValue.getValue(), valueObject, VALUE_TAG);
+            } else if (customFieldValue.getValue() instanceof Float) {
+                addJsonFloatValue((Float) customFieldValue.getValue(), valueObject, VALUE_TAG);
+            } else if (customFieldValue.getValue() instanceof String[]) {
+                JSONArray valueArray = toJsonStringArray((String[]) customFieldValue.getValue());
+                addJsonArray(valueArray, valueObject, VALUE_TAG);
+            }
         }
         return valueObject.toString();
     }
 
     public static String toJsonObject(CustomFieldValue customFieldValue) {
         JSONObject valueObject = new JSONObject();
-        if (customFieldValue.getValue() instanceof String) {
-            addJsonStringValue((String) customFieldValue.getValue(), valueObject, VALUE_TAG);
-        } else if (customFieldValue.getValue() instanceof Integer) {
-            addJsonIntegerValue((Integer) customFieldValue.getValue(), valueObject, VALUE_TAG);
-        } else if (customFieldValue.getValue() instanceof Float) {
-            addJsonFloatValue((Float) customFieldValue.getValue(), valueObject, VALUE_TAG);
-        } else if (customFieldValue.getValue() instanceof String[]) {
-            JSONArray valueArray = toJsonStringArray((String[]) customFieldValue.getValue());
-            addJsonArray(valueArray, valueObject, VALUE_TAG);
+        if (customFieldValue != null) {
+            if (customFieldValue.getValue() instanceof String) {
+                addJsonStringValue((String) customFieldValue.getValue(), valueObject, VALUE_TAG);
+            } else if (customFieldValue.getValue() instanceof Integer) {
+                addJsonIntegerValue((Integer) customFieldValue.getValue(), valueObject, VALUE_TAG);
+            } else if (customFieldValue.getValue() instanceof Float) {
+                addJsonFloatValue((Float) customFieldValue.getValue(), valueObject, VALUE_TAG);
+            } else if (customFieldValue.getValue() instanceof String[]) {
+                JSONArray valueArray = toJsonStringArray((String[]) customFieldValue.getValue());
+                addJsonArray(valueArray, valueObject, VALUE_TAG);
+            }
         }
         return valueObject.toString();
     }
