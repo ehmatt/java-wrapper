@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -187,6 +189,56 @@ public class BaseSerializer {
         return "";
     }
 
+    public static JSONArray toJsonStringArray(String[] stringArray) {
+        JSONArray stringArrayObject = new JSONArray();
+        if (stringArray.length > 0) {
+            for (int i = 0; i < stringArray.length; i++) {
+                stringArrayObject.put(stringArray[i]);
+            }
+        }
+        return stringArrayObject;
+    }
+
+    public static JSONArray toJsonStringArray(List<String> stringList) {
+        JSONArray stringArrayObject = new JSONArray();
+        if (stringList != null) {
+            if (stringList.size() > 0) {
+                for (int i = 0; i < stringList.size(); i++) {
+                    stringArrayObject.put(stringList.get(i));
+                }
+            }
+        }
+        return stringArrayObject;
+    }
+
+    public static String[] toArrayOfStrings(JSONArray stringArray) {
+        String[] choices = new String[stringArray.length()];
+        for (int i = 0; i < stringArray.length(); i++) {
+            try {
+                String choice = stringArray.getString(i);
+                choices[i] = choice;
+            } catch (JSONException e) {
+                LOG.severe("Error parsing array of Strings");
+                LOG.severe(e.toString());
+            }
+        }
+        return choices;
+    }
+
+    public static List<String> toListOfStrings(JSONArray stringArray) {
+        List<String> choices = new ArrayList<>();
+        for (int i = 0; i < stringArray.length(); i++) {
+            try {
+                String choice = stringArray.getString(i);
+                choices.add(choice);
+            } catch (JSONException e) {
+                LOG.severe("Error parsing array of Strings");
+                LOG.severe(e.toString());
+            }
+        }
+        return choices;
+    }
+
     /**
      * Adds a value to a JSONObject with the specified key.
      *
@@ -194,12 +246,12 @@ public class BaseSerializer {
      * @param object
      * @param key
      */
-    public static void addJsonStringValue(Object value, JSONObject object, String key) {
-        if ((value != null)) {
+    public static void addJsonValue(Object value, JSONObject object, String key) {
+        if (value != null) {
             try {
                 object.put(key, value);
             } catch (JSONException e) {
-                LOG.severe("Error serializing string value : " + value);
+                LOG.severe("Error serializing object value : " + value);
                 LOG.severe(e.toString());
             }
         }
@@ -268,7 +320,7 @@ public class BaseSerializer {
         try {
             object.put(key, value);
         } catch (JSONException e) {
-            LOG.severe("Error serializing integer value : " + value);
+            LOG.severe("Error serializing long value : " + value);
             LOG.severe(e.toString());
         }
     }
@@ -286,6 +338,24 @@ public class BaseSerializer {
         } catch (JSONException e) {
             LOG.severe("Error serializing boolean value : " + value);
             LOG.severe(e.toString());
+        }
+    }
+
+    /**
+     * Adds a Float value to a JSONObject with the specified key.
+     *
+     * @param value
+     * @param object
+     * @param key
+     */
+    public static void addJsonFloatValue(Float value, JSONObject object, String key) {
+        if (value != null) {
+            try {
+                object.put(key, value);
+            } catch (JSONException e) {
+                LOG.severe("Error serializing float value : " + value);
+                LOG.severe(e.toString());
+            }
         }
     }
 

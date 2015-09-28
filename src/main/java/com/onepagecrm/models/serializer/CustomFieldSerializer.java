@@ -1,7 +1,7 @@
 package com.onepagecrm.models.serializer;
 
 import com.onepagecrm.models.CustomField;
-import com.onepagecrm.models.LeadSource;
+import com.onepagecrm.models.internal.CustomFieldValue;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,17 +52,17 @@ public class CustomFieldSerializer extends BaseSerializer {
         CustomField customField = new CustomField();
         try {
             if (outerObject.has(VALUE_TAG)) {
-                customField.setValue(outerObject.get(VALUE_TAG));
+//                CustomFieldValue customFieldValue = new CustomFieldValue();
+//                customFieldValue.setValue(outerObject.get(VALUE_TAG));
+//                customField.setValue(customFieldValue);
+//                JSONObject valueObject = new JSONObject(outerObject.get(VALUE_TAG));
+                customField.setValue(CustomFieldValueSerializer.fromJsonObject(outerObject));
             }
             JSONObject customFieldObject = outerObject.getJSONObject(CUSTOM_FIELD_TAG);
             String id = customFieldObject.getString(ID_TAG);
 
-            List<String> choices = new ArrayList<>();
             JSONArray choicesArray = customFieldObject.getJSONArray(CHOICES_TAG);
-            for (int i = 0; i < choicesArray.length(); i++) {
-                String choice = choicesArray.getString(i);
-                choices.add(choice);
-            }
+            List<String> choices = toListOfStrings(choicesArray);
 
             if (!choices.isEmpty()) {
                 customField.setChoices(choices);
@@ -115,7 +115,7 @@ public class CustomFieldSerializer extends BaseSerializer {
         addJsonStringValue(customField.getType(), customFieldObject, TYPE_TAG);
         addJsonIntValue(customField.getReminderDays(), customFieldObject, REMINDER_DAYS_TAG);
         addJsonObject(customFieldObject, object, CUSTOM_FIELD_TAG);
-        addJsonStringValue(customField.getValue(), object, VALUE_TAG);
+        CustomFieldValueSerializer.toJsonObject(customField.getValue(), object);
         return object.toString();
     }
 
@@ -135,12 +135,6 @@ public class CustomFieldSerializer extends BaseSerializer {
     }
 
     private static String getChoicesJsonArray(CustomField customField) {
-        JSONArray choicesArray = new JSONArray();
-        if (customField.getChoices() != null) {
-            for (int i = 0; i < customField.getChoices().size(); i++) {
-                choicesArray.put(customField.getChoices().get(i));
-            }
-        }
-        return choicesArray.toString();
+        return toJsonStringArray(customField.getChoices()).toString();
     }
 }

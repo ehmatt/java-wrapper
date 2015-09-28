@@ -1,5 +1,6 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.models.internal.CustomFieldValue;
 import com.onepagecrm.models.serializer.CustomFieldSerializer;
 import com.onepagecrm.net.ApiResource;
 
@@ -14,7 +15,7 @@ public class CustomField extends ApiResource implements Serializable {
     private String type;
     private List<String> choices;
     private int reminderDays;
-    private Object value;
+    private CustomFieldValue value;
 
     @Override
     public String getId() {
@@ -77,11 +78,11 @@ public class CustomField extends ApiResource implements Serializable {
         return this;
     }
 
-    public Object getValue() {
+    public CustomFieldValue getValue() {
         return value;
     }
 
-    public CustomField setValue(Object value) {
+    public CustomField setValue(CustomFieldValue value) {
         this.value = value;
         return this;
     }

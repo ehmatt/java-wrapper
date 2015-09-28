@@ -74,6 +74,17 @@ public class Driver {
             address.setCountryCode("IE");
             contact.setAddress(address);
 
+            List<CustomField> customFields = contact.getCustomFields();
+            LOG.info("Custom Fields : " + customFields);
+
+//            CustomField singleLineText = customFields.get(0);
+//            customFields.setAddress("Unit 5, Business Innovation Center, NUIG");
+//            customFields.setCity("Galway");
+//            customFields.setState("Connaught");
+//            customFields.setZipCode("HJ12WE3");
+//            customFields.setCountryCode("IE");
+//            contact.setAddress(customFields);
+
             contact = contact.update();
             LOG.info("Updated Contact : " + contact);
 
