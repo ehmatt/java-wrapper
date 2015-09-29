@@ -124,7 +124,8 @@ public class CustomFieldSerializer extends BaseSerializer {
         if (customFields != null && !customFields.isEmpty()) {
             for (int i = 0; i < customFields.size(); i++) {
                 try {
-                    customFieldsArray.put(new JSONObject(toJsonObject(customFields.get(i))));
+                    CustomField customField = customFields.get(i);
+                    customFieldsArray.put(customField.getPosition(), new JSONObject(toJsonObject(customField)));
                 } catch (JSONException e) {
                     LOG.severe("Error creating JSONArray out of CustomField");
                     LOG.severe(e.toString());

@@ -50,6 +50,7 @@ public class Driver {
         LOG.info("User's Team : " + loggedInUser.account.team);
         LOG.info("User's Statuses : " + loggedInUser.account.statuses);
         LOG.info("User's Lead Sources : " + loggedInUser.account.leadSources);
+        LOG.info("User's Custom Fields : " + loggedInUser.account.customFields);
 
         ContactList stream = loggedInUser.actionStream();
         LOG.info("Contacts : " + stream);
@@ -75,7 +76,7 @@ public class Driver {
             contact.setAddress(address);
 
             List<CustomField> customFields = contact.getCustomFields();
-            LOG.info("Custom Fields : " + customFields);
+            LOG.info("Contact's Custom Fields : " + customFields);
 
 //            CustomField singleLineText = customFields.get(0);
 //            customFields.setAddress("Unit 5, Business Innovation Center, NUIG");
