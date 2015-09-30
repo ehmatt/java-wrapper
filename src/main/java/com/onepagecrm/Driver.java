@@ -1,9 +1,7 @@
 package com.onepagecrm;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.ContactList;
-import com.onepagecrm.models.Countries;
-import com.onepagecrm.models.User;
+import com.onepagecrm.models.*;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
@@ -55,17 +53,16 @@ public class Driver {
         LOG.info("User's Call Results : " + loggedInUser.account.callResults);
 //        LOG.info("Countries List : " + Countries.list());
 
-//        ContactList stream = loggedInUser.actionStream();
+        ContactList stream = loggedInUser.actionStream();
 //        LOG.info("Stream Contacts : " + stream);
-
 
 //        ContactList contacts = loggedInUser.contacts();
 //        LOG.info("Contacts : " + contacts);
 
-//        Contact contact = stream.get(0);
+        Contact contact = stream.get(0);
 //        LOG.info("Contact : " + contact);
 //
-//        if (contact.isValid()) {
+        if (contact.isValid()) {
 
 //            contact.setFirstName("Java");
 //            contact.setLastName("Wrapper");
@@ -107,13 +104,13 @@ public class Driver {
 //            newContact = newContact.save();
 //            LOG.info("CONTACT SAVED : " + newContact);
 //
-//            Call newCall = new Call()
-//                    .setCallResult(new CallResult()
-//                            .setId("other")
-//                            .setText("ABACUS"));
-//
-//            newCall = newCall.save(newContact);
-//            LOG.info("CALL SAVED : " + newCall);
+            Call newCall = new Call()
+                    .setCallResult(new CallResult()
+                            .setId("other")
+                            .setText("ABACUS"));
+
+            newCall = newCall.save(contact);
+            LOG.info("CALL SAVED : " + newCall);
 //
 //            LOG.info("Custom Fields : " + loggedInUser.getAccount().customFields);
 //            LOG.info("Tags : " + loggedInUser.getAccount().tags);
@@ -122,6 +119,6 @@ public class Driver {
 //            LOG.info("Urls : " + contact.getUrls());
 //
 //            LOG.info("Image saved : " + contact.addPhoto());
-//        }
+        }
     }
 }

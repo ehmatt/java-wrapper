@@ -323,12 +323,14 @@ public class BaseSerializer {
      * @param object
      * @param key
      */
-    public static void addJsonLongValue(long value, JSONObject object, String key) {
-        try {
-            object.put(key, value);
-        } catch (JSONException e) {
-            LOG.severe("Error serializing long value : " + value);
-            LOG.severe(e.toString());
+    public static void addJsonLongValue(Long value, JSONObject object, String key) {
+        if (value != null) {
+            try {
+                object.put(key, value);
+            } catch (JSONException e) {
+                LOG.severe("Error serializing long value : " + value);
+                LOG.severe(e.toString());
+            }
         }
     }
 

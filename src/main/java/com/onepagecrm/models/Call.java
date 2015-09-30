@@ -29,7 +29,7 @@ public class Call extends ApiResource implements Serializable {
         PostRequest saveRequest = new PostRequest(
                 CALLS_ENDPOINT,
                 saveQueryString(contact.getId()),
-                CallResultSerializer.toJsonObject(this.callResult)
+                CallSerializer.toJsonObject(this)
         );
         Response response = saveRequest.send();
         return CallSerializer.fromString(response.getResponseBody());

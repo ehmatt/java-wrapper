@@ -25,6 +25,13 @@ public class DateSerializer extends BaseSerializer {
     private static final int TODAY_COLOR = OPCRMColors.FLAG_ORANGE;
     private static final int FUTURE_WAITING_COLOR = OPCRMColors.FLAG_GREY_BROWN;
 
+    public static Long dateInMillis(Date date) {
+        if (date != null) {
+            return date.getTime();
+        }
+        return null;
+    }
+
     public static Date fromFormattedString(String dateStr) {
         if (dateStr != null) {
             try {
@@ -43,28 +50,43 @@ public class DateSerializer extends BaseSerializer {
     }
 
     public static String toFormattedDateTimeString(Date date) {
-        return dateTimeFormat.format(date);
+        if (date != null) {
+            return dateTimeFormat.format(date);
+        }
+        return null;
     }
 
     public static String toFormattedDateString(Date date) {
-        return dateFormat.format(date);
+        if (date != null) {
+            return dateFormat.format(date);
+        }
+        return null;
     }
 
     public static String toFormattedDateAndYearString(Date date) {
-        return friendlyDateAndYearFormat.format(date);
+        if (date != null) {
+            return friendlyDateAndYearFormat.format(date);
+        }
+        return null;
     }
 
     public static String toFormattedTimeString(Date date) {
-        return timeFormat.format(date);
+        if (date != null) {
+            return timeFormat.format(date);
+        }
+        return null;
     }
 
     public static String toFriendlyDateString(Date date) {
         Date today = new Date();
-        if (dateFormat.format(date).equals(dateFormat.format(today))) {
-            return TODAY;
-        } else {
-            return friendlyDateFormat.format(date);
+        if (date != null) {
+            if (dateFormat.format(date).equals(dateFormat.format(today))) {
+                return TODAY;
+            } else {
+                return friendlyDateFormat.format(date);
+            }
         }
+        return null;
     }
 
     public static int getDateColour(Date date, String status) {

@@ -80,8 +80,8 @@ public class CallSerializer extends BaseSerializer {
         JSONObject callObject = new JSONObject();
         addJsonStringValue(call.getId(), callObject, ID_TAG);
         addJsonStringValue(call.getCallResult().getText(), callObject, TEXT_TAG);
-        addJsonStringValue((call.getCallResult().getId()), callObject, CALL_RESULT_TAG);
-        addJsonLongValue(call.getTime().getTime(), callObject, CALL_TIME_INT_TAG);
+        addJsonStringValue(call.getCallResult().getId(), callObject, CALL_RESULT_TAG);
+        addJsonLongValue(DateSerializer.dateInMillis(call.getTime()), callObject, CALL_TIME_INT_TAG);
         addJsonStringValue(call.getContactId(), callObject, CONTACT_ID_TAG);
         addJsonStringValue(DateSerializer.toFormattedDateTimeString(call.getCreatedAt()), callObject, CREATED_AT_TAG);
         addJsonStringValue(DateSerializer.toFormattedDateTimeString(call.getModifiedAt()), callObject, MODIFIED_AT_TAG);
