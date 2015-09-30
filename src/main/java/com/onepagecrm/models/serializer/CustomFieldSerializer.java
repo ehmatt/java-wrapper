@@ -1,7 +1,6 @@
 package com.onepagecrm.models.serializer;
 
 import com.onepagecrm.models.CustomField;
-import com.onepagecrm.models.internal.CustomFieldValue;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,17 +44,22 @@ public class CustomFieldSerializer extends BaseSerializer {
                 LOG.severe(e.toString());
             }
         }
-        return customFields;
+        // Re-sort the custom fields by their "position" field.
+        List<CustomField> orderedCustomFields = new ArrayList<>();
+        for (int i = 0; i < customFields.size(); i++) {
+            for (int j = 0; j < customFields.size(); j++) {
+                if (customFields.get(j).getPosition() == i) {
+                    orderedCustomFields.add(i, customFields.get(j));
+                }
+            }
+        }
+        return orderedCustomFields;
     }
 
     public static CustomField fromJsonObject(JSONObject outerObject) {
         CustomField customField = new CustomField();
         try {
             if (outerObject.has(VALUE_TAG)) {
-//                CustomFieldValue customFieldValue = new CustomFieldValue();
-//                customFieldValue.setValue(outerObject.get(VALUE_TAG));
-//                customField.setValue(customFieldValue);
-//                JSONObject valueObject = new JSONObject(outerObject.get(VALUE_TAG));
                 customField.setValue(CustomFieldValueSerializer.fromJsonObject(outerObject));
             }
             JSONObject customFieldObject = outerObject.getJSONObject(CUSTOM_FIELD_TAG);
@@ -124,8 +128,7 @@ public class CustomFieldSerializer extends BaseSerializer {
         if (customFields != null && !customFields.isEmpty()) {
             for (int i = 0; i < customFields.size(); i++) {
                 try {
-                    CustomField customField = customFields.get(i);
-                    customFieldsArray.put(customField.getPosition(), new JSONObject(toJsonObject(customField)));
+                    customFieldsArray.put(new JSONObject(toJsonObject(customFields.get(i))));
                 } catch (JSONException e) {
                     LOG.severe("Error creating JSONArray out of CustomField");
                     LOG.severe(e.toString());
