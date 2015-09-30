@@ -13,13 +13,15 @@ public class CallResultSerializer extends BaseSerializer {
     private static final Logger LOG = Logger.getLogger(CallResultSerializer.class.getName());
 
     public static String toJsonKeyValuePair(CallResult callResult) {
-        return callResult.toString();
+        if (callResult.getId() != null && callResult.getDisplay() != null) {
+            return "\"" + callResult.getId() + "\":\"" + callResult.getDisplay() + "\"";
+        }
+        return null;
     }
 
     public static String toJsonObject(CallResult callResult) {
         JSONObject callObject = new JSONObject();
-        addJsonStringValue(callResult.getId(), callObject, CALL_RESULT_TAG);
-        addJsonStringValue(callResult.getText(), callObject, TEXT_TAG);
+        addJsonStringValue(callResult.getDisplay(), callObject, callResult.getId());
         return callObject.toString();
     }
 

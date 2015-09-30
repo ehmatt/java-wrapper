@@ -1,6 +1,7 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.models.serializer.BaseSerializer;
+import com.onepagecrm.models.serializer.CallResultSerializer;
 
 import java.io.Serializable;
 
@@ -27,12 +28,7 @@ public class CallResult implements Serializable {
     }
 
     public String toString() {
-        String retString = "";
-        if (id != null && text != null) {
-            retString += "\"" + BaseSerializer.CALL_RESULT_TAG + "\":\"" + id + "\", ";
-            retString += "\"" + BaseSerializer.TEXT_TAG + "\":\"" + text + '\"';
-        }
-        return retString;
+        return CallResultSerializer.toJsonObject(this);
     }
 
     public String getText() {

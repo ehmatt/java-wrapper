@@ -52,10 +52,11 @@ public class Driver {
         LOG.info("User's Statuses : " + loggedInUser.account.statuses);
         LOG.info("User's Lead Sources : " + loggedInUser.account.leadSources);
         LOG.info("User's Custom Fields : " + loggedInUser.account.customFields);
-        LOG.info("Countries List : " + Countries.list());
+        LOG.info("User's Call Results : " + loggedInUser.account.callResults);
+//        LOG.info("Countries List : " + Countries.list());
 
-        ContactList stream = loggedInUser.actionStream();
-        LOG.info("Stream Contacts : " + stream);
+//        ContactList stream = loggedInUser.actionStream();
+//        LOG.info("Stream Contacts : " + stream);
 
 
 //        ContactList contacts = loggedInUser.contacts();
