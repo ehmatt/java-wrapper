@@ -121,6 +121,13 @@ public class BaseSerializer {
     // LEAD SOURCES TAGS
     protected static final String LEAD_SOURCES_ID_TAG = "lead_sources";
 
+    // COUNTRIES TAGS
+    protected static final String COUNTRIES_TAG = "countries";
+    protected static final String COUNTRY_TAG = "country";
+    protected static final String CODE_TAG = "code";
+    protected static final String PHONE_PREFIX_TAG = "phone_prefix";
+    protected static final String CURRENCY_TAG = "currency";
+
     /**
      * Method used to parse the base/start of response.
      *
@@ -384,7 +391,7 @@ public class BaseSerializer {
      */
     public static void addJsonObject(JSONObject input, JSONArray object) {
         if (input.length() > 0)
-            object.put(object);
+            object.put(input);
     }
 
     /**

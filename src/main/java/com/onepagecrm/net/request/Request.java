@@ -23,6 +23,8 @@ public abstract class Request {
     public static final int STAGING_SERVER = 1;
     public static final int DEV_SERVER = 2;
     public static final int LOCAL_DEV_SERVER = 3;
+    public static final int NETWORK_DEV_SERVER = 4;
+    public static final int ORION_SERVER = 5;
 
     public static int SERVER = DEV_SERVER;
 
@@ -30,11 +32,13 @@ public abstract class Request {
     protected static final String STAGING_URL = "http://staging.onepagecrm.com/api/v3/";
     protected static final String DEV_URL = "http://dev.onepagecrm.com/api/v3/";
     protected static final String LOCAL_DEV_URL = "http://localhost:3000/api/v3/";
+    protected static final String NETWORK_DEV_URL = "http://10.100.0.18:3001/api/v3/";
+    protected static final String ORION_URL = "http://orion.dev.onepagecrm.com/api/v3/";
 
-    protected static final String format = ".json";
+    public static String format = ".json";
     protected String endpointUrl;
 
-    protected static enum Type {
+    protected enum Type {
         GET, POST, PUT, DELETE, PATCH
     }
 
@@ -84,6 +88,12 @@ public abstract class Request {
                 break;
             case LOCAL_DEV_SERVER:
                 endpointUrl = LOCAL_DEV_URL + endpoint + format;
+                break;
+            case NETWORK_DEV_SERVER:
+                endpointUrl = NETWORK_DEV_URL + endpoint + format;
+                break;
+            case ORION_SERVER:
+                endpointUrl = ORION_URL + endpoint + format;
                 break;
         }
     }

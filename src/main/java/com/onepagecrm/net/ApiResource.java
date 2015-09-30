@@ -9,6 +9,7 @@ public abstract class ApiResource extends BaseResource {
     public static final String ACTION_STREAM_ENDPOINT = "action_stream";
     public static final String CONTACTS_ENDPOINT = "contacts";
     public static final String CALLS_ENDPOINT = "calls";
+    public static final String COUNTRIES_ENDPOINT = "countries"; // -> Countries class as doesn't inherit from here
 
     public String id;
 

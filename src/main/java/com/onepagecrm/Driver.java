@@ -1,13 +1,14 @@
 package com.onepagecrm;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.*;
+import com.onepagecrm.models.ContactList;
+import com.onepagecrm.models.Countries;
+import com.onepagecrm.models.User;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -15,7 +16,7 @@ public class Driver {
 
     private static final Logger LOG = Logger.getLogger(Driver.class.getName());
 
-    public static void main(String[] args) throws OnePageException{
+    public static void main(String[] args) throws OnePageException {
         Properties prop = new Properties();
         InputStream input = null;
 
@@ -51,32 +52,34 @@ public class Driver {
         LOG.info("User's Statuses : " + loggedInUser.account.statuses);
         LOG.info("User's Lead Sources : " + loggedInUser.account.leadSources);
         LOG.info("User's Custom Fields : " + loggedInUser.account.customFields);
+        LOG.info("Countries List : " + Countries.list());
 
         ContactList stream = loggedInUser.actionStream();
-        LOG.info("Contacts : " + stream);
+        LOG.info("Stream Contacts : " + stream);
+
 
 //        ContactList contacts = loggedInUser.contacts();
 //        LOG.info("Contacts : " + contacts);
 
-        Contact contact = stream.get(0);
-        LOG.info("Contact : " + contact);
+//        Contact contact = stream.get(0);
+//        LOG.info("Contact : " + contact);
+//
+//        if (contact.isValid()) {
 
-        if (contact.isValid()) {
-
-            contact.setFirstName("Java");
-            contact.setLastName("Wrapper");
-            contact.setCompanyName("OnePageCRM");
-
-            Address address = new Address();
-            address.setAddress("Unit 5, Business Innovation Center, NUIG");
-            address.setCity("Galway");
-            address.setState("Connaught");
-            address.setZipCode("HJ12WE3");
-            address.setCountryCode("IE");
-            contact.setAddress(address);
-
-            List<CustomField> customFields = contact.getCustomFields();
-            LOG.info("Contact's Custom Fields : " + customFields);
+//            contact.setFirstName("Java");
+//            contact.setLastName("Wrapper");
+//            contact.setCompanyName("OnePageCRM");
+//
+//            Address address = new Address();
+//            address.setAddress("Unit 5, Business Innovation Center, NUIG");
+//            address.setCity("Galway");
+//            address.setState("Connaught");
+//            address.setZipCode("HJ12WE3");
+//            address.setCountryCode("IE");
+//            contact.setAddress(address);
+//
+//            List<CustomField> customFields = contact.getCustomFields();
+//            LOG.info("Contact's Custom Fields : " + customFields);
 
 //            CustomField singleLineText = customFields.get(0);
 //            customFields.setAddress("Unit 5, Business Innovation Center, NUIG");
@@ -86,8 +89,8 @@ public class Driver {
 //            customFields.setCountryCode("IE");
 //            contact.setAddress(customFields);
 
-            contact = contact.update();
-            LOG.info("Updated Contact : " + contact);
+//            contact = contact.update();
+//            LOG.info("Updated Contact : " + contact);
 
 //            List<Action> actions = contact.getActions();
 //            LOG.info("Actions : " + actions);
@@ -118,6 +121,6 @@ public class Driver {
 //            LOG.info("Urls : " + contact.getUrls());
 //
 //            LOG.info("Image saved : " + contact.addPhoto());
-        }
+//        }
     }
 }

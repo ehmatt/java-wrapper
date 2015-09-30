@@ -28,6 +28,7 @@ public class CallSerializer extends BaseSerializer {
         } catch (ClassCastException e) {
             exception = (OnePageException) BaseSerializer.fromString(responseBody);
             throw exception;
+
         } catch (JSONException e) {
             LOG.severe("Could not find call tag");
             LOG.severe(e.toString());
@@ -69,7 +70,8 @@ public class CallSerializer extends BaseSerializer {
 //            .setAttachments(attachments);
 
         } catch (JSONException e) {
-            e.printStackTrace();
+            LOG.severe("Could not find call object tags");
+            LOG.severe(e.toString());
         }
         return call;
     }
