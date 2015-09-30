@@ -38,36 +38,46 @@ public class CallSerializer extends BaseSerializer {
 
     public static Call fromJsonObject(JSONObject callObject) {
         Call call = new Call();
+        CallResult result = new CallResult();
+
         try {
-            String id = callObject.getString(ID_TAG);
-            String text = callObject.getString(TEXT_TAG);
-            String callResultId = callObject.getString(CALL_RESULT_TAG);
-            String callTimeIntString = callObject.getString(CALL_TIME_INT_TAG);
-            int callTimeInt = Integer.parseInt(callTimeIntString);
-            Date callTime = new Date(callTimeInt);
-            String contactId = callObject.getString(CONTACT_ID_TAG);
-            String createdAtString = callObject.getString(CREATED_AT_TAG);
-            Date createdAt = DateSerializer.fromFormattedString(createdAtString);
-            String modifiedAtString = callObject.getString(MODIFIED_AT_TAG);
-            Date modifiedAt = DateSerializer.fromFormattedString(modifiedAtString);
-            String via = callObject.getString(VIA_TAG);
-            String author = callObject.getString(AUTHOR_TAG);
+            if (callObject.has(ID_TAG)) {
+                call.setId(callObject.getString(ID_TAG));
+            }
+            if (callObject.has(CALL_RESULT_TAG)) {
+                result.setId(callObject.getString(CALL_RESULT_TAG));
+            }
+            if (callObject.has(CALL_TIME_INT_TAG)) {
+                String callTimeIntString = callObject.getString(CALL_TIME_INT_TAG);
+                int callTimeInt = Integer.parseInt(callTimeIntString);
+                Date callTime = new Date(callTimeInt);
+                call.setTime(callTime);
+            }
+            if (callObject.has(CONTACT_ID_TAG)) {
+                call.setContactId(callObject.getString(CONTACT_ID_TAG));
+            }
+            if (callObject.has(CREATED_AT_TAG)) {
+                String createdAtString = callObject.getString(CREATED_AT_TAG);
+                Date createdAt = DateSerializer.fromFormattedString(createdAtString);
+                call.setCreatedAt(createdAt);
+            }
+            if (callObject.has(MODIFIED_AT_TAG)) {
+                String modifiedAtString = callObject.getString(MODIFIED_AT_TAG);
+                Date modifiedAt = DateSerializer.fromFormattedString(modifiedAtString);
+                call.setModifiedAt(modifiedAt);
+            }
+            if (callObject.has(VIA_TAG)) {
+                call.setVia(callObject.getString(VIA_TAG));
+            }
+            if (callObject.has(AUTHOR_TAG)) {
+                call.setAuthor(callObject.getString(AUTHOR_TAG));
+            }
 
 //            JSONArray attachmentsArray = callObject.getJSONArray(ATTACHMENTS_TAG);
 //            List<Attachment> attachments = AttachmentSerializer.fromJsonArray(attachmentsArray);
-
-            call.setCallResult
-                    (new CallResult()
-                            .setText(text)
-                            .setId(callResultId))
-                    .setId(id)
-                    .setTime(callTime)
-                    .setContactId(contactId)
-                    .setCreatedAt(createdAt)
-                    .setModifiedAt(modifiedAt)
-                    .setVia(via)
-                    .setAuthor(author);
 //            .setAttachments(attachments);
+
+            call.setCallResult(result);
 
         } catch (JSONException e) {
             LOG.severe("Could not find call object tags");
