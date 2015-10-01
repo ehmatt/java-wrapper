@@ -67,28 +67,20 @@ public class Driver {
 //            contact.setFirstName("Java");
 //            contact.setLastName("Wrapper");
 //            contact.setCompanyName("OnePageCRM");
-//
-//            Address address = new Address();
-//            address.setAddress("Unit 5, Business Innovation Center, NUIG");
-//            address.setCity("Galway");
-//            address.setState("Connaught");
-//            address.setZipCode("HJ12WE3");
-//            address.setCountryCode("IE");
-//            contact.setAddress(address);
-//
+
+            Address address = new Address();
+            address.setAddress("Unit 5, Business Innovation Center, NUIG");
+            address.setCity("Galway");
+            address.setState("Connaught");
+            address.setZipCode("HJ12WE3");
+            address.setCountryCode("IE");
+            contact.setAddress(address);
+
 //            List<CustomField> customFields = contact.getCustomFields();
 //            LOG.info("Contact's Custom Fields : " + customFields);
 
-//            CustomField singleLineText = customFields.get(0);
-//            customFields.setAddress("Unit 5, Business Innovation Center, NUIG");
-//            customFields.setCity("Galway");
-//            customFields.setState("Connaught");
-//            customFields.setZipCode("HJ12WE3");
-//            customFields.setCountryCode("IE");
-//            contact.setAddress(customFields);
-
-//            contact = contact.update();
-//            LOG.info("Updated Contact : " + contact);
+            contact = contact.update();
+            LOG.info("Updated Contact : " + contact);
 
 //            List<Action> actions = contact.getActions();
 //            LOG.info("Actions : " + actions);
@@ -104,13 +96,13 @@ public class Driver {
 //            newContact = newContact.save();
 //            LOG.info("CONTACT SAVED : " + newContact);
 //
-            Call newCall = new Call()
-                    .setCallResult(new CallResult()
-                            .setId("other")
-                            .setText("ABACUS"));
-
-            newCall = newCall.save(contact);
-            LOG.info("CALL SAVED : " + newCall);
+//            Call newCall = new Call()
+//                    .setCallResult(new CallResult()
+//                            .setId("other")
+//                            .setText("ABACUS"));
+//
+//            newCall = newCall.save(contact);
+//            LOG.info("CALL SAVED : " + newCall);
 //
 //            LOG.info("Custom Fields : " + loggedInUser.getAccount().customFields);
 //            LOG.info("Tags : " + loggedInUser.getAccount().tags);

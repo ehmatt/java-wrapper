@@ -49,31 +49,30 @@ public class AddressSerializer extends BaseSerializer {
     }
 
     public static String toJsonObject(Address address) {
+        JSONObject addressObject = new JSONObject();
         if (address != null) {
-            JSONObject addressObject = new JSONObject();
             addJsonStringValue(address.getAddress(), addressObject, ADDRESS_TAG);
             addJsonStringValue(address.getCity(), addressObject, CITY_TAG);
             addJsonStringValue(address.getState(), addressObject, STATE_TAG);
             addJsonStringValue(address.getZipCode(), addressObject, ZIP_CODE_TAG);
             addJsonStringValue(address.getCountryCode(), addressObject, COUNTRY_CODE_TAG);
-            return addressObject.toString();
-        } else {
-            return "";
         }
+        return addressObject.toString();
     }
 
     public static String toJsonArray(Address address) {
+        JSONArray addressArray = new JSONArray();
         if (address != null) {
-            JSONArray addressArray = new JSONArray();
             try {
-                addressArray.put(new JSONObject(toJsonObject(address)));
+                String addressString = toJsonObject(address);
+                if (addressString != null) {
+                    addressArray.put(new JSONObject(addressString));
+                }
             } catch (JSONException e) {
                 LOG.severe("Error creating JSONObject out of address_list");
                 LOG.severe(e.toString());
             }
-            return addressArray.toString();
-        } else {
-            return "";
         }
+        return addressArray.toString();
     }
 }

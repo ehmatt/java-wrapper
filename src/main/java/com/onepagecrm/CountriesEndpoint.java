@@ -49,7 +49,7 @@ public class CountriesEndpoint {
 
         LOG.info("Logged in User : " + loggedInUser);
 
-//        Request.format = ".xml";
+        Request.format = ".s";
 
         LOG.info("Countries : " + Countries.list());
 
