@@ -44,16 +44,17 @@ public class CustomFieldSerializer extends BaseSerializer {
                 LOG.severe(e.toString());
             }
         }
-        // Re-sort the custom fields by their "position" field.
-        List<CustomField> orderedCustomFields = new ArrayList<>();
-        for (int i = 0; i < customFields.size(); i++) {
-            for (int j = 0; j < customFields.size(); j++) {
-                if (customFields.get(j).getPosition() == i) {
-                    orderedCustomFields.add(i, customFields.get(j));
-                }
-            }
-        }
-        return orderedCustomFields;
+        return customFields;
+//        // Re-sort the custom fields by their "position" field.
+//        List<CustomField> orderedCustomFields = new ArrayList<>();
+//        for (int i = 0; i < customFields.size(); i++) {
+//            for (int j = 0; j < customFields.size(); j++) {
+//                if (customFields.get(j).getPosition() == i) {
+//                    orderedCustomFields.add(i, customFields.get(j));
+//                }
+//            }
+//        }
+//        return orderedCustomFields;
     }
 
     public static CustomField fromJsonObject(JSONObject outerObject) {

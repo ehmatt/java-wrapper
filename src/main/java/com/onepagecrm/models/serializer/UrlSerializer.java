@@ -45,7 +45,15 @@ public class UrlSerializer extends BaseSerializer {
 
     public static String toJsonObject(Url url) {
         JSONObject urlObject = new JSONObject();
-        addJsonStringValue(url.getType(), urlObject, TYPE_TAG);
+        String webType = url.getType();
+        if (webType != null && webType.length() > 0) {
+            if (!webType.equalsIgnoreCase("google+")) {
+                webType = webType.toLowerCase();
+            } else {
+                webType = "google_plus";
+            }
+        }
+        addJsonStringValue(webType, urlObject, TYPE_TAG);
         addJsonStringValue(url.getValue(), urlObject, VALUE_TAG);
         return urlObject.toString();
     }

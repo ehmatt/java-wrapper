@@ -7,6 +7,8 @@ import com.onepagecrm.net.request.Request;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -75,6 +77,27 @@ public class Driver {
             address.setZipCode("HJ12WE3");
             address.setCountryCode("IE");
             contact.setAddress(address);
+
+            List<Phone> phones = new ArrayList<>();
+            Phone phone = new Phone();
+            phone.setType("Fax");
+            phone.setValue("0858187423");
+            phones.add(phone);
+            contact.setPhones(phones);
+
+            List<Email> emails = new ArrayList<>();
+            Email email = new Email();
+            email.setType("Work");
+            email.setValue("example@domain.com");
+            emails.add(email);
+            contact.setEmails(emails);
+
+            List<Url> urls = new ArrayList<>();
+            Url url = new Url();
+            url.setType("Google+");
+            url.setValue("www.blog.com");
+            urls.add(url);
+            contact.setUrls(urls);
 
 //            List<CustomField> customFields = contact.getCustomFields();
 //            LOG.info("Contact's Custom Fields : " + customFields);

@@ -145,6 +145,22 @@ public class ContactSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
 
+        try {
+            JSONArray emailsArray = new JSONArray(EmailSerializer.toJsonArray(contact.getEmails()));
+            addJsonArray(emailsArray, contactObject, EMAILS_TAG);
+        } catch (JSONException e) {
+            LOG.severe("Error creating Email array while constructing Contact object");
+            LOG.severe(e.toString());
+        }
+
+        try {
+            JSONArray urlsArray = new JSONArray(UrlSerializer.toJsonArray(contact.getUrls()));
+            addJsonArray(urlsArray, contactObject, URLS_TAG);
+        } catch (JSONException e) {
+            LOG.severe("Error creating Url array while constructing Contact object");
+            LOG.severe(e.toString());
+        }
+
 //        addJsonStringValue(contact.getEmails(), userObject, EMAILS_TAG);
 //        addJsonStringValue(contact.getUrls(), userObject, URLS_TAG);
 //        addJsonStringValue(contact.getCustomFields(), userObject, CUSTOM_FIELDS_TAG);

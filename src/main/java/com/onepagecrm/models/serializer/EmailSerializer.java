@@ -45,7 +45,7 @@ public class EmailSerializer extends BaseSerializer {
 
     public static String toJsonObject(Email email) {
         JSONObject emailObject = new JSONObject();
-        addJsonStringValue(email.getType(), emailObject, TYPE_TAG);
+        addJsonStringValue(email.getType().toLowerCase(), emailObject, TYPE_TAG);
         addJsonStringValue(email.getValue(), emailObject, VALUE_TAG);
         return emailObject.toString();
     }

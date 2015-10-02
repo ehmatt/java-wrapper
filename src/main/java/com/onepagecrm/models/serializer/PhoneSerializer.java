@@ -45,7 +45,7 @@ public class PhoneSerializer extends BaseSerializer {
 
     public static String toJsonObject(Phone phone) {
         JSONObject callObject = new JSONObject();
-        addJsonStringValue(phone.getType(), callObject, TYPE_TAG);
+        addJsonStringValue(phone.getType().toLowerCase(), callObject, TYPE_TAG);
         addJsonStringValue(phone.getValue(), callObject, VALUE_TAG);
         return callObject.toString();
     }
