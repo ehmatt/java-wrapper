@@ -44,18 +44,22 @@ public class UrlSerializer extends BaseSerializer {
     }
 
     public static String toJsonObject(Url url) {
-        JSONObject urlObject = new JSONObject();
-        String webType = url.getType();
-        if (webType != null && webType.length() > 0) {
-            if (!webType.equalsIgnoreCase("google+")) {
-                webType = webType.toLowerCase();
-            } else {
-                webType = "google_plus";
+        if (url.getValue() != null) {
+            JSONObject urlObject = new JSONObject();
+            String webType = url.getType();
+            if (webType != null && webType.length() > 0) {
+                if (!webType.equalsIgnoreCase("google+")) {
+                    webType = webType.toLowerCase();
+                } else {
+                    webType = "google_plus";
+                }
             }
+            addJsonStringValue(webType, urlObject, TYPE_TAG);
+            addJsonStringValue(url.getValue(), urlObject, VALUE_TAG);
+            return urlObject.toString();
+        } else {
+            return null;
         }
-        addJsonStringValue(webType, urlObject, TYPE_TAG);
-        addJsonStringValue(url.getValue(), urlObject, VALUE_TAG);
-        return urlObject.toString();
     }
 
     public static String toJsonArray(List<Url> urls) {
@@ -63,7 +67,9 @@ public class UrlSerializer extends BaseSerializer {
         if (urls != null && !urls.isEmpty()) {
             for (int i = 0; i < urls.size(); i++) {
                 try {
-                    urlsArray.put(new JSONObject(toJsonObject(urls.get(i))));
+                    if (urls.get(i).getValue() != null) {
+                        urlsArray.put(new JSONObject(toJsonObject(urls.get(i))));
+                    }
                 } catch (JSONException e) {
                     LOG.severe("Error creating JSONArray out of Urls");
                     LOG.severe(e.toString());

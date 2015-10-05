@@ -44,10 +44,14 @@ public class PhoneSerializer extends BaseSerializer {
     }
 
     public static String toJsonObject(Phone phone) {
-        JSONObject callObject = new JSONObject();
-        addJsonStringValue(phone.getType().toLowerCase(), callObject, TYPE_TAG);
-        addJsonStringValue(phone.getValue(), callObject, VALUE_TAG);
-        return callObject.toString();
+        if (phone.getValue() != null) {
+            JSONObject callObject = new JSONObject();
+            addJsonStringValue(phone.getType().toLowerCase(), callObject, TYPE_TAG);
+            addJsonStringValue(phone.getValue(), callObject, VALUE_TAG);
+            return callObject.toString();
+        } else {
+            return null;
+        }
     }
 
     public static String toJsonArray(List<Phone> phones) {
@@ -55,7 +59,9 @@ public class PhoneSerializer extends BaseSerializer {
         if (phones != null && !phones.isEmpty()) {
             for (int i = 0; i < phones.size(); i++) {
                 try {
-                    phonesArray.put(new JSONObject(toJsonObject(phones.get(i))));
+                    if (phones.get(i).getValue() != null) {
+                        phonesArray.put(new JSONObject(toJsonObject(phones.get(i))));
+                    }
                 } catch (JSONException e) {
                     LOG.severe("Error creating JSONArray out of Phones");
                     LOG.severe(e.toString());

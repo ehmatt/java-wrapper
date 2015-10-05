@@ -44,10 +44,14 @@ public class EmailSerializer extends BaseSerializer {
     }
 
     public static String toJsonObject(Email email) {
-        JSONObject emailObject = new JSONObject();
-        addJsonStringValue(email.getType().toLowerCase(), emailObject, TYPE_TAG);
-        addJsonStringValue(email.getValue(), emailObject, VALUE_TAG);
-        return emailObject.toString();
+        if (email.getValue() != null) {
+            JSONObject emailObject = new JSONObject();
+            addJsonStringValue(email.getType().toLowerCase(), emailObject, TYPE_TAG);
+            addJsonStringValue(email.getValue(), emailObject, VALUE_TAG);
+            return emailObject.toString();
+        } else {
+            return null;
+        }
     }
 
     public static String toJsonArray(List<Email> emails) {
@@ -55,7 +59,9 @@ public class EmailSerializer extends BaseSerializer {
         if (emails != null && !emails.isEmpty()) {
             for (int i = 0; i < emails.size(); i++) {
                 try {
-                    emailsArray.put(new JSONObject(toJsonObject(emails.get(i))));
+                    if (emails.get(i).getValue() != null) {
+                        emailsArray.put(new JSONObject(toJsonObject(emails.get(i))));
+                    }
                 } catch (JSONException e) {
                     LOG.severe("Error creating JSONArray out of Emails");
                     LOG.severe(e.toString());
