@@ -9,6 +9,14 @@ import java.util.List;
 
 public class CustomField extends ApiResource implements Serializable {
 
+    public static final String TYPE_ANNIVERSARY = "anniversary";
+    public static final String TYPE_DATE = "date";
+    public static final String TYPE_DROPDOWN = "select_box";
+    public static final String TYPE_MULTI_LINE_TEXT = "multi_line_text";
+    public static final String TYPE_MULTIPLE_CHOICE = "multiple_choice";
+    public static final String TYPE_NUMBER = "number";
+    public static final String TYPE_SINGLE_LINE_TEXT = "single_line_text";
+
     private String id;
     private String name;
     private int position;
