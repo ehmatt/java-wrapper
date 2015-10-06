@@ -197,9 +197,12 @@ public class ContactSerializer extends BaseSerializer {
         }
 
         // Serialize Tags.
+        List<Tag> tags = contact.getTags();
         List<String> tagNames = new ArrayList<>();
-        for (int i = 0; i < contact.getTags().size(); i++) {
-            tagNames.add(contact.getTags().get(i).getName());
+        if (tags != null && !tags.isEmpty()) {
+            for (int i = 0; i < contact.getTags().size(); i++) {
+                tagNames.add(contact.getTags().get(i).getName());
+            }
         }
         addJsonArray(BaseSerializer.toJsonStringArray(tagNames), contactObject, TAGS_TAG);
 
