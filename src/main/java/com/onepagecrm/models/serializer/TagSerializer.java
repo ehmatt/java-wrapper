@@ -31,16 +31,15 @@ public class TagSerializer extends BaseSerializer {
     public static Tag fromJsonObject(JSONObject tagObject) {
         Tag tag = new Tag();
         try {
-            String name = tagObject.getString(NAME_TAG);
-            int counts = tagObject.getInt(COUNTS_TAG);
-            int totalCounts = tagObject.getInt(TOTAL_COUNT_TAG);
+            if (tagObject.has(NAME_TAG)) {
+                tag.setName(tagObject.getString(NAME_TAG));
+            }
+            if (tagObject.has(COUNTS_TAG)) {
+                tag.setCounts(tagObject.getInt(COUNTS_TAG));
+            }
             if (tagObject.has(ACTION_STREAM_COUNT_TAG)) {
                 tag.setActionStreamCount(tagObject.getInt(ACTION_STREAM_COUNT_TAG));
             }
-            return tag
-                    .setName(name)
-                    .setCounts(counts)
-                    .setTotalCounts(totalCounts);
         } catch (JSONException e) {
             LOG.severe("Error parsing tag object");
             LOG.severe(e.toString());
@@ -51,8 +50,8 @@ public class TagSerializer extends BaseSerializer {
     public static String toJsonObject(Tag tag) {
         JSONObject tagObject = new JSONObject();
         addJsonStringValue(tag.getName(), tagObject, NAME_TAG);
-        addJsonIntValue(tag.getCounts(), tagObject, COUNTS_TAG);
-        addJsonIntValue(tag.getTotalCounts(), tagObject, TOTAL_COUNT_TAG);
+        addJsonIntegerValue(tag.getCounts(), tagObject, COUNTS_TAG);
+        addJsonIntegerValue(tag.getTotalCounts(), tagObject, TOTAL_COUNT_TAG);
         addJsonIntegerValue(tag.getActionStreamCount(), tagObject, ACTION_STREAM_COUNT_TAG);
         return tagObject.toString();
     }

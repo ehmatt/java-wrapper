@@ -7,9 +7,8 @@ import java.io.Serializable;
 public class Tag implements Serializable {
 
     private String name;
-    private int counts;
-    private int totalCounts;
-//    private int actionStreamCount = -999999;
+    private Integer counts;
+    private Integer totalCounts;
     private Integer actionStreamCount;
 
     public Tag() {
@@ -29,20 +28,20 @@ public class Tag implements Serializable {
         return this;
     }
 
-    public int getCounts() {
+    public Integer getCounts() {
         return counts;
     }
 
-    public Tag setCounts(int counts) {
+    public Tag setCounts(Integer counts) {
         this.counts = counts;
         return this;
     }
 
-    public int getTotalCounts() {
+    public Integer getTotalCounts() {
         return totalCounts;
     }
 
-    public Tag setTotalCounts(int totalCounts) {
+    public Tag setTotalCounts(Integer totalCounts) {
         this.totalCounts = totalCounts;
         return this;
     }

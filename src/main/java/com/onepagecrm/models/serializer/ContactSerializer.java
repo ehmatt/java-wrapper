@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -35,9 +37,33 @@ public class ContactSerializer extends BaseSerializer {
 
             String id = contactObject.getString(ID_TAG);
             String companyName = contactObject.getString(COMPANY_NAME_TAG);
+            if (contactObject.has(COMPANY_ID_TAG)) {
+                contact.setCompanyId(contactObject.getString(COMPANY_ID_TAG));
+            }
+            String type = contactObject.getString(TYPE_TAG);
             String firstName = contactObject.getString(FIRST_NAME_TAG);
             String lastName = contactObject.getString(LAST_NAME_TAG);
             String ownerId = contactObject.getString(OWNER_ID_TAG);
+            String background = contactObject.getString(BACKGROUND_TAG);
+            String jobTitle = contactObject.getString(JOB_TITLE_TAG);
+            String leadSourceId = contactObject.getString(LEAD_SOURCE_ID_TAG);
+            String photoUrl = contactObject.getString(PHOTO_URL_TAG);
+            // TODO : sales closed for ...
+            boolean starred = contactObject.getBoolean(STARRED_TAG);
+            String status = contactObject.getString(STATUS_TAG);
+            String statusId = contactObject.getString(STATUS_ID_TAG);
+            String createdAtStr = contactObject.getString(CREATED_AT_TAG);
+            Date createdAt = DateSerializer.fromFormattedString(createdAtStr);
+            String modifiedAtStr = contactObject.getString(MODIFIED_AT_TAG);
+            Date modifiedAt = DateSerializer.fromFormattedString(modifiedAtStr);
+
+            // Add Tags.
+            List<String> tagNames = BaseSerializer.toListOfStrings(contactObject.getJSONArray(TAGS_TAG));
+            List<Tag> tags = new ArrayList<>();
+            for (int i = 0; i < tagNames.size(); i++) {
+                tags.add(new Tag().setName(tagNames.get(i)));
+            }
+            if (!tags.isEmpty()) contact.setTags(tags);
 
             // Add Custom Fields.
             JSONArray customFieldsArray = contactObject.getJSONArray(CUSTOM_FIELDS_TAG);
@@ -64,9 +90,6 @@ public class ContactSerializer extends BaseSerializer {
             Address address = AddressSerializer.fromJsonArray(addressArray);
             contact.setAddress(address);
 
-            boolean starred = contactObject.getBoolean(STARRED_TAG);
-            String photoUrl = contactObject.getString(PHOTO_URL_TAG);
-
             if (contactsElementObject.has(NEXT_ACTIONS_TAG)) {
                 JSONArray actionsArray = contactsElementObject.getJSONArray(NEXT_ACTIONS_TAG);
                 List<Action> actions = ActionSerializer.fromJsonArray(actionsArray);
@@ -81,12 +104,20 @@ public class ContactSerializer extends BaseSerializer {
 
             return contact
                     .setId(id)
-                    .setOwnerId(ownerId)
+                    .setCompanyName(companyName)
+                    .setType(type)
                     .setFirstName(firstName)
                     .setLastName(lastName)
-                    .setCompanyName(companyName)
+                    .setOwnerId(ownerId)
+                    .setBackground(background)
+                    .setJobTitle(jobTitle)
+                    .setLeadSourceId(leadSourceId)
+                    .setPhotoUrl(photoUrl)
                     .setStarred(starred)
-                    .setPhotoUrl(photoUrl);
+                    .setStatus(status)
+                    .setStatusId(statusId)
+                    .setCreatedAt(createdAt)
+                    .setModifiedAt(modifiedAt);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Contact object");
@@ -107,19 +138,20 @@ public class ContactSerializer extends BaseSerializer {
 
         addJsonStringValue(contact.getId(), contactObject, ID_TAG);
         addJsonStringValue(contact.getType(), contactObject, TYPE_TAG);
-        addJsonStringValue(contact.getLastName(), contactObject, LAST_NAME_TAG);
         addJsonStringValue(contact.getFirstName(), contactObject, FIRST_NAME_TAG);
+        addJsonStringValue(contact.getLastName(), contactObject, LAST_NAME_TAG);
         addJsonStringValue(contact.getCompanyName(), contactObject, COMPANY_NAME_TAG);
         addJsonStringValue(contact.getCompanyId(), contactObject, COMPANY_ID_TAG);
         addJsonStringValue(contact.getJobTitle(), contactObject, JOB_TITLE_TAG);
-        addJsonStringValue(contact.getStatusId(), contactObject, STATUS_ID_TAG);
+        addJsonStringValue(contact.getBackground(), contactObject, BACKGROUND_TAG);
         addJsonStringValue(contact.getStatus(), contactObject, STATUS_TAG);
-
-//        addJsonStringValue(contact.getTags(), userObject, TAGS_TAG);
-//        addJsonStringValue(contact.isStarred(), userObject, STARRED_TAG);
-
+        addJsonStringValue(contact.getStatusId(), contactObject, STATUS_ID_TAG);
+        addJsonStringValue(contact.getLeadSourceId(), contactObject, LEAD_SOURCE_ID_TAG);
         addJsonStringValue(contact.getOwnerId(), contactObject, OWNER_ID_TAG);
+        addJsonStringValue(contact.getPhotoUrl(), contactObject, PHOTO_URL_TAG);
+        addJsonBooleanValue(contact.isStarred(), contactObject, STARRED_TAG);
 
+        // Serialize Custom Fields.
         try {
             JSONArray customFieldsArray = new JSONArray(CustomFieldSerializer.toJsonArray(contact.getCustomFields()));
             addJsonArray(customFieldsArray, contactObject, CUSTOM_FIELDS_TAG);
@@ -128,6 +160,7 @@ public class ContactSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
 
+        // Serialize Address.
         try {
             JSONArray addressArray = new JSONArray(AddressSerializer.toJsonArray(contact.getAddress()));
             addJsonArray(addressArray, contactObject, ADDRESS_LIST_TAG);
@@ -136,9 +169,7 @@ public class ContactSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
 
-        addJsonStringValue(contact.getBackground(), contactObject, BACKGROUND_TAG);
-        addJsonStringValue(contact.getLeadSourceId(), contactObject, LEAD_SOURCE_ID_TAG);
-
+        // Serialize Phones.
         try {
             JSONArray phonesArray = new JSONArray(PhoneSerializer.toJsonArray(contact.getPhones()));
             addJsonArray(phonesArray, contactObject, PHONES_TAG);
@@ -147,6 +178,7 @@ public class ContactSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
 
+        // Serialize Emails.
         try {
             JSONArray emailsArray = new JSONArray(EmailSerializer.toJsonArray(contact.getEmails()));
             addJsonArray(emailsArray, contactObject, EMAILS_TAG);
@@ -155,6 +187,7 @@ public class ContactSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
 
+        // Serialize Urls.
         try {
             JSONArray urlsArray = new JSONArray(UrlSerializer.toJsonArray(contact.getUrls()));
             addJsonArray(urlsArray, contactObject, URLS_TAG);
@@ -163,9 +196,12 @@ public class ContactSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
 
-//        addJsonStringValue(contact.getEmails(), userObject, EMAILS_TAG);
-//        addJsonStringValue(contact.getUrls(), userObject, URLS_TAG);
-//        addJsonStringValue(contact.getCustomFields(), userObject, CUSTOM_FIELDS_TAG);
+        // Serialize Tags.
+        List<String> tagNames = new ArrayList<>();
+        for (int i = 0; i < contact.getTags().size(); i++) {
+            tagNames.add(contact.getTags().get(i).getName());
+        }
+        addJsonArray(BaseSerializer.toJsonStringArray(tagNames), contactObject, TAGS_TAG);
 
         return contactObject.toString();
     }

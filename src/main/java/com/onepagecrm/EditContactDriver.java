@@ -63,9 +63,11 @@ public class EditContactDriver {
             contact.setLastName("Wrapper");
             contact.setJobTitle("Software Developer");
             contact.setCompanyName("OnePageCRM");
+            contact.setBackground("Java is very verbose, we met in college.");
             contact.setOwnerId(loggedInUser.getId());
             contact.setStatusId(loggedInUser.getAccount().statuses.get(1).getId());
             contact.setLeadSourceId(loggedInUser.getAccount().leadSources.get(1).getId());
+            contact.setStarred(true);
 
             Address address = new Address();
             address.setAddress("Unit 5, Business Innovation Center, NUIG");
