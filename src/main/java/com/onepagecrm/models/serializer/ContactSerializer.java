@@ -65,6 +65,7 @@ public class ContactSerializer extends BaseSerializer {
             contact.setAddress(address);
 
             boolean starred = contactObject.getBoolean(STARRED_TAG);
+            String photoUrl = contactObject.getString(PHOTO_URL_TAG);
 
             if (contactsElementObject.has(NEXT_ACTIONS_TAG)) {
                 JSONArray actionsArray = contactsElementObject.getJSONArray(NEXT_ACTIONS_TAG);
@@ -84,7 +85,8 @@ public class ContactSerializer extends BaseSerializer {
                     .setFirstName(firstName)
                     .setLastName(lastName)
                     .setCompanyName(companyName)
-                    .setStarred(starred);
+                    .setStarred(starred)
+                    .setPhotoUrl(photoUrl);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Contact object");
