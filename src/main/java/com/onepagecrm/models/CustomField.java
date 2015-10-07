@@ -25,6 +25,19 @@ public class CustomField extends ApiResource implements Serializable {
     private int reminderDays;
     private CustomFieldValue value;
 
+    public CustomField() {
+    }
+
+    public CustomField(CustomField customField) {
+        this.id = customField.getId();
+        this.name = customField.getName();
+        this.position = customField.getPosition();
+        this.type = customField.getType();
+        this.choices = customField.getChoices();
+        this.reminderDays = customField.getReminderDays();
+        this.value = customField.getValue();
+    }
+
     @Override
     public String getId() {
         return this.id;
