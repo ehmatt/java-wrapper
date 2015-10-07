@@ -17,9 +17,15 @@ public class CustomFieldValueSerializer extends BaseSerializer {
             try {
                 Object valueObject = customFieldObject.get(VALUE_TAG);
                 if (valueObject instanceof Number) {
-                    // Floating point numbers are of type Number in Java.
-                    // Convert this to an actual Float.
-                    valueObject = ((Number) valueObject).floatValue();
+                    // Integers are of type Number in Java.
+                    if (valueObject instanceof Integer) {
+                        // Convert this to an Integer.
+                        valueObject = ((Number) valueObject).intValue();
+                    } else {
+                        // Floating point numbers are of type Number in Java.
+                        // Convert this to a Float.
+                        valueObject = ((Number) valueObject).floatValue();
+                    }
                 } else if (valueObject instanceof JSONArray) {
                     // Parse array of Strings.
                     valueObject = toArrayOfStrings((JSONArray) valueObject);
