@@ -14,6 +14,13 @@ public class Tag implements Serializable {
     public Tag() {
     }
 
+    public Tag(Tag tag) {
+        this.name = tag.getName();
+        this.counts = tag.getCounts();
+        this.totalCounts = tag.getTotalCounts();
+        this.actionStreamCount = tag.getActionStreamCount();
+    }
+
     @Override
     public String toString() {
         return TagSerializer.toJsonObject(this);
