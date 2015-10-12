@@ -13,7 +13,6 @@ public class Account implements Serializable {
     public static User loggedInUser;
     public static Settings settings;
     public Countries countries;
-    public CountriesMap countriesMap;
 
     public List<CustomField> customFields;
     public List<CallResult> callResults;
@@ -62,15 +61,6 @@ public class Account implements Serializable {
 
     public Account setCountries(Countries countries) {
         this.countries = countries;
-        return this;
-    }
-
-    public CountriesMap getCountriesMap() {
-        return countriesMap;
-    }
-
-    public Account setCountriesMap(CountriesMap countriesMap) {
-        this.countriesMap = countriesMap;
         return this;
     }
 

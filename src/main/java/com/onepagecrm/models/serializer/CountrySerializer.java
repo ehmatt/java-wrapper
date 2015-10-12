@@ -86,7 +86,7 @@ public class CountrySerializer extends BaseSerializer {
 
     public static String toJsonArray(Countries countries) {
         JSONArray countryArray = new JSONArray();
-        List<Country> countryList = countries.getCountries();
+        List<Country> countryList = countries.getCountryList();
         for (int i = 0; i < countryList.size(); i++) {
             try {
                 JSONObject outerObject = new JSONObject();
