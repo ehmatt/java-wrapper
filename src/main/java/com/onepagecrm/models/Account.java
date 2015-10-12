@@ -12,7 +12,7 @@ public class Account implements Serializable {
     public static List<User> team;
     public static User loggedInUser;
     public static Settings settings;
-    public static String loginResponse;
+    public Countries countries;
 
     public List<CustomField> customFields;
     public List<CallResult> callResults;
@@ -55,13 +55,12 @@ public class Account implements Serializable {
         return this;
     }
 
-    public static String getLoginResponse() {
-        return loginResponse;
+    public Countries getCountries() {
+        return countries;
     }
 
-    public Account setLoginResponse(String loginResponse) {
-        Account.loginResponse = loginResponse;
-        return this;
+    public void setCountries(Countries countries) {
+        this.countries = countries;
     }
 
     public List<CustomField> getCustomFields() {

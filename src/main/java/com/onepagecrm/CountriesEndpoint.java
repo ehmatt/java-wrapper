@@ -39,17 +39,12 @@ public class CountriesEndpoint {
             }
         }
 
-        Request.SERVER = Request.ORION_SERVER;
+        Request.SERVER = Request.DEV_SERVER;
         User loggedInUser = User.login(
                 prop.getProperty("username"),
                 prop.getProperty("password"));
 
-//        Request.SERVER = Request.NETWORK_DEV_SERVER;
-//        User loggedInUser = User.login("fkae@fasdfasdfasdf.com", "easy2remember");
-
         LOG.info("Logged in User : " + loggedInUser);
-
-        Request.format = ".s";
 
         LOG.info("Countries : " + Countries.list());
 

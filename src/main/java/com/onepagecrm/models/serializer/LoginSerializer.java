@@ -14,7 +14,6 @@ public class LoginSerializer extends BaseSerializer {
     private static final Logger LOG = Logger.getLogger(LoginSerializer.class.getName());
 
     public static User fromString(String responseBody) throws OnePageException {
-        Account.loginResponse = responseBody;
         String parsedResponse;
         OnePageException exception;
 
