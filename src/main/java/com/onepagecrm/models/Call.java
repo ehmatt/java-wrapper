@@ -1,7 +1,6 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.serializer.CallResultSerializer;
 import com.onepagecrm.models.serializer.CallSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
@@ -28,15 +27,11 @@ public class Call extends ApiResource implements Serializable {
     public Call save(Contact contact) throws OnePageException {
         PostRequest saveRequest = new PostRequest(
                 CALLS_ENDPOINT,
-                saveQueryString(contact.getId()),
+                Query.contactIdQueryString(contact.getId()),
                 CallSerializer.toJsonObject(this)
         );
         Response response = saveRequest.send();
         return CallSerializer.fromString(response.getResponseBody());
-    }
-
-    private String saveQueryString(String contactId) {
-        return "?contact_id=" + contactId;
     }
 
     public Call() {

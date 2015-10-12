@@ -43,14 +43,14 @@ public class EditContactDriver {
             }
         }
 
-        Request.SERVER = Request.APP_SERVER;
+        Request.SERVER = Request.DEV_SERVER;
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
                 prop.getProperty("password"));
 
         LOG.info("Logged in User : " + loggedInUser);
-        LOG.info("User's Custom Fields : " + loggedInUser.account.customFields);
+        LOG.info("User's Custom Fields : " + loggedInUser.getAccount().customFields);
 
         ContactList stream = loggedInUser.actionStream();
 
@@ -180,7 +180,7 @@ public class EditContactDriver {
             // Add list of urls to our Contact.
             contact.setUrls(urls);
 
-            List<CustomField> customFields = contact.getCustomFields();
+            List<CustomField> customFields = loggedInUser.getAccount().customFields;
 
             for (int i = 0; i < customFields.size(); i++) {
                 CustomField customField = customFields.get(i);
@@ -228,6 +228,8 @@ public class EditContactDriver {
                     customField.setValue(newValue);
                 }
             }
+
+            contact.setCustomFields(customFields);
 
             contact = contact.update();
             LOG.info("Updated Contact : " + contact);

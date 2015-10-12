@@ -116,12 +116,32 @@ public class CustomFieldSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
         addJsonStringValue(customField.getName(), customFieldObject, NAME_TAG);
-        addJsonIntValue(customField.getPosition(), customFieldObject, POSITION_TAG);
+        addJsonIntegerValue(customField.getPosition(), customFieldObject, POSITION_TAG);
         addJsonStringValue(customField.getType(), customFieldObject, TYPE_TAG);
-        addJsonIntValue(customField.getReminderDays(), customFieldObject, REMINDER_DAYS_TAG);
+        addJsonIntegerValue(customField.getReminderDays(), customFieldObject, REMINDER_DAYS_TAG);
         addJsonObject(customFieldObject, object, CUSTOM_FIELD_TAG);
         CustomFieldValueSerializer.toJsonObject(customField.getValue(), object);
         return object.toString();
+    }
+
+    public static String toJsonObjectNew(CustomField customField) {
+        JSONObject customFieldObject = new JSONObject();
+        addJsonStringValue(customField.getId(), customFieldObject, ID_TAG);
+
+        try {
+            JSONArray choicesArray = new JSONArray(getChoicesJsonArray(customField));
+            // Adds empty array with key.
+            customFieldObject.put(CHOICES_TAG, choicesArray);
+        } catch (JSONException e) {
+            LOG.severe("Error creating JSONArray out of CustomField choices");
+            LOG.severe(e.toString());
+        }
+        addJsonStringValue(customField.getName(), customFieldObject, NAME_TAG);
+        addJsonIntegerValue(customField.getPosition(), customFieldObject, POSITION_TAG);
+        addJsonStringValue(customField.getType(), customFieldObject, TYPE_TAG);
+        addJsonIntegerValue(customField.getReminderDays(), customFieldObject, REMINDER_DAYS_TAG);
+        CustomFieldValueSerializer.toJsonObject(customField.getValue(), customFieldObject);
+        return customFieldObject.toString();
     }
 
     public static String toJsonArray(List<CustomField> customFields) {

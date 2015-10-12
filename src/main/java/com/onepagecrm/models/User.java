@@ -38,23 +38,15 @@ public class User extends ApiResource implements Serializable {
     }
 
     public ContactList actionStream() throws OnePageException {
-        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, perPageQueryString(100));
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.perPageQueryString(100));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList contacts() throws OnePageException {
-        Request request = new GetRequest(CONTACTS_ENDPOINT, perPageQueryString(100));
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.perPageQueryString(100));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
-    }
-
-    private String perPageQueryString(int number) {
-        return "?per_page=" + number;
-    }
-
-    private String teamValueQueryString(boolean value) {
-        return "?team=" + value;
     }
 
     public User() {

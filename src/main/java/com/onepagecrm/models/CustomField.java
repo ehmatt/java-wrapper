@@ -3,6 +3,10 @@ package com.onepagecrm.models;
 import com.onepagecrm.models.internal.CustomFieldValue;
 import com.onepagecrm.models.serializer.CustomFieldSerializer;
 import com.onepagecrm.net.ApiResource;
+import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.request.PostRequest;
+import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,11 +23,27 @@ public class CustomField extends ApiResource implements Serializable {
 
     private String id;
     private String name;
-    private int position;
+    private Integer position;
     private String type;
     private List<String> choices;
-    private int reminderDays;
+    private Integer reminderDays;
     private CustomFieldValue value;
+
+    public static List<CustomField> list() {
+        Request request = new GetRequest(CUSTOM_FIELDS_ENDPOINT, Query.perPageQueryString(100));
+        Response response = request.send();
+        return CustomFieldSerializer.fromString(response.getResponseBody());
+    }
+
+    public String save() {
+        Request request = new PostRequest(
+                CUSTOM_FIELDS_ENDPOINT,
+                null,
+                CustomFieldSerializer.toJsonObjectNew(this)
+        );
+        Response response = request.send();
+        return response.getResponseBody();
+    }
 
     public CustomField() {
     }
@@ -63,11 +83,11 @@ public class CustomField extends ApiResource implements Serializable {
         return this;
     }
 
-    public int getPosition() {
+    public Integer getPosition() {
         return position;
     }
 
-    public CustomField setPosition(int position) {
+    public CustomField setPosition(Integer position) {
         this.position = position;
         return this;
     }
@@ -90,11 +110,11 @@ public class CustomField extends ApiResource implements Serializable {
         return this;
     }
 
-    public int getReminderDays() {
+    public Integer getReminderDays() {
         return reminderDays;
     }
 
-    public CustomField setReminderDays(int reminderDays) {
+    public CustomField setReminderDays(Integer reminderDays) {
         this.reminderDays = reminderDays;
         return this;
     }
