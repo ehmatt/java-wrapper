@@ -36,6 +36,22 @@ public class Countries extends ArrayList<Country> implements Serializable {
         this.countries = new ArrayList<>();
     }
 
+    public boolean isEmpty() {
+        return countries.isEmpty();
+    }
+
+    public int size() {
+        return countries.size();
+    }
+
+    public void add(int index, Country country) {
+        countries.add(index, country);
+    }
+
+    public Country get(int index) {
+        return countries.get(index);
+    }
+
     public List<Country> getCountries() {
         return countries;
     }
