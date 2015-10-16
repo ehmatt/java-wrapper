@@ -38,34 +38,6 @@ public class Status extends ApiResource implements Serializable {
         return StatusSerializer.toJsonObject(this);
     }
 
-//    @Override
-//    public String toString() {
-//        String retString;
-//
-//        retString = "Status{" +
-//                "id=\'" + id + "\', " +
-//                "color=\'" + color + "\', " +
-//                "status=\'" + status + "\', " +
-//                "text=\'" + text + "\', " +
-//                "description=\'" + description + "\', " +
-//                "counts=\'" + counts + "\', " +
-//                "totalCount=\'" + totalCount + "\', " +
-//                "actionStreamCount=\'" + actionStreamCount + "\', ";
-//
-//        if (teamCounts != null && !teamCounts.isEmpty()) {
-//            retString += ", TeamCount{";
-//            for (int i = 0; i < teamCounts.size(); i++) {
-//                retString += teamCounts.get(i).toString();
-//                if (i == teamCounts.size() - 1)
-//                    retString += ", ";
-//            }
-//            retString += "}";
-//        }
-//
-//        retString += "}";
-//        return retString;
-//    }
-
     public String getColor() {
         return color;
     }

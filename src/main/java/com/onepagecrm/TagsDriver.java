@@ -11,7 +11,10 @@ import com.onepagecrm.net.request.Request;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 public class TagsDriver {
@@ -42,7 +45,7 @@ public class TagsDriver {
             }
         }
 
-        Request.SERVER = Request.DEV_SERVER;
+        Request.SERVER = Request.APP_SERVER;
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
@@ -71,6 +74,19 @@ public class TagsDriver {
             Collections.sort(accountTags, new TagsComparator());
             LOG.info("accountTags : " + copyListNames(accountTags));
         }
+
+        for (int i = 0; i < accountTags.size(); i++) {
+            LOG.info("[" + i + "] : " + accountTags.get(i).delete());
+        }
+
+        Tag androidTagTest = new Tag().setName("AndroidTagTest");
+        LOG.info("AndroidTagTest : " + androidTagTest.save());
+
+        Tag iOSTagTest = new Tag().setName("iOSTagTest");
+        LOG.info("iOSTagTest : " + iOSTagTest.save());
+
+        Tag vip = new Tag().setName("VIP");
+        LOG.info("VIP : " + vip.save());
     }
 
     private static List<Tag> copyList(List<Tag> tags) {

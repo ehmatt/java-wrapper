@@ -3,6 +3,7 @@ package com.onepagecrm.models;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Country;
 import com.onepagecrm.models.serializer.CountrySerializer;
+import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.Request;
@@ -12,7 +13,7 @@ import java.util.*;
 
 public class Countries extends ArrayList<Country> implements Serializable {
 
-    private static final String COUNTRIES_ENDPOINT = "countries";
+    private static final String COUNTRIES_ENDPOINT = ApiResource.COUNTRIES_ENDPOINT;
 
     private List<Country> countryList;
     private Map<String, Country> countryMap;

@@ -11,6 +11,7 @@ public abstract class ApiResource extends BaseResource {
     public static final String CALLS_ENDPOINT = "calls";
     public static final String CUSTOM_FIELDS_ENDPOINT = "custom_fields";
     public static final String COUNTRIES_ENDPOINT = "countries"; // -> Countries class as doesn't inherit from here
+    public static final String TAGS_ENDPOINT = "tags"; // -> Countries class as doesn't inherit from here
 
     public String id;
 
