@@ -49,6 +49,20 @@ public class Tag implements Serializable {
         return TagSerializer.toJsonObject(this);
     }
 
+    /**
+     * Method to compare Tags to one another based off of their name.
+     *
+     * @param object
+     * @return
+     */
+    public boolean equals(Object object) {
+        if (object instanceof Tag) {
+            Tag toCompare = (Tag) object;
+            return this.name.equals(toCompare.name);
+        }
+        return false;
+    }
+
     public String getName() {
         return name;
     }
