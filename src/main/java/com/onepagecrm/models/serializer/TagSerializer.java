@@ -48,12 +48,15 @@ public class TagSerializer extends BaseSerializer {
     }
 
     public static String toJsonObject(Tag tag) {
-        JSONObject tagObject = new JSONObject();
-        addJsonStringValue(tag.getName(), tagObject, NAME_TAG);
-        addJsonIntegerValue(tag.getCounts(), tagObject, COUNTS_TAG);
-        addJsonIntegerValue(tag.getTotalCounts(), tagObject, TOTAL_COUNT_TAG);
-        addJsonIntegerValue(tag.getActionStreamCount(), tagObject, ACTION_STREAM_COUNT_TAG);
-        return tagObject.toString();
+        if (tag.getName() != null) {
+            JSONObject tagObject = new JSONObject();
+            addJsonStringValue(tag.getName(), tagObject, NAME_TAG);
+            addJsonIntegerValue(tag.getCounts(), tagObject, COUNTS_TAG);
+            addJsonIntegerValue(tag.getTotalCounts(), tagObject, TOTAL_COUNT_TAG);
+            addJsonIntegerValue(tag.getActionStreamCount(), tagObject, ACTION_STREAM_COUNT_TAG);
+            return tagObject.toString();
+        }
+        return null;
     }
 
     public static String toJsonArray(List<Tag> tags) {

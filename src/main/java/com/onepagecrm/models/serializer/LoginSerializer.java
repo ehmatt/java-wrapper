@@ -61,11 +61,6 @@ public class LoginSerializer extends BaseSerializer {
         List<Tag> tags = TagSerializer.fromJsonArray(
                 tagsObject.getJSONArray(TAGS_TAG)
         );
-        List<Tag> systemTags = TagSerializer.fromJsonArray(
-                tagsObject.getJSONArray(SYSTEM_TAGS_TAG)
-        );
-        // Add system tags to list of tags
-        for (Tag systemTag : systemTags) tags.add(systemTag);
         Account.loggedInUser.getAccount().setTags(tags);
     }
 

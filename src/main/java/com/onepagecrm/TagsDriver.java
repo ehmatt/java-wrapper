@@ -42,7 +42,7 @@ public class TagsDriver {
             }
         }
 
-        Request.SERVER = Request.APP_SERVER;
+        Request.SERVER = Request.DEV_SERVER;
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
