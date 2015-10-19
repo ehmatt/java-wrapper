@@ -69,12 +69,14 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
      */
     public ContactList getPhoneableContacts() {
         ArrayList<Contact> phoneableContacts = new ArrayList<>();
-        int counter = 0;
-        for (int i = 0; i < contacts.size(); i++) {
-            if (!contacts.get(i).getPhones().isEmpty() && contacts.get(i).getPhones() != null) {
-                contacts.get(i).setIntId(counter + 1);
-                phoneableContacts.add(contacts.get(i));
-                counter++;
+        if (contacts != null && !contacts.isEmpty()) {
+            int counter = 0;
+            for (int i = 0; i < contacts.size(); i++) {
+                if (contacts.get(i).getPhones() != null && !contacts.get(i).getPhones().isEmpty()) {
+                    contacts.get(i).setIntId(counter + 1);
+                    phoneableContacts.add(contacts.get(i));
+                    counter++;
+                }
             }
         }
         return new ContactList(phoneableContacts);
@@ -91,13 +93,15 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
      */
     public ContactList getStarredPhoneableContacts() {
         ArrayList<Contact> phoneableContacts = new ArrayList<>();
-        int counter = 0;
-        for (int i = 0; i < contacts.size(); i++) {
-            if (contacts.get(i).isStarred()) {
-                if (!contacts.get(i).getPhones().isEmpty() && contacts.get(i).getPhones() != null) {
-                    contacts.get(i).setIntId(counter + 1);
-                    phoneableContacts.add(contacts.get(i));
-                    counter++;
+        if (contacts != null && !contacts.isEmpty()) {
+            int counter = 0;
+            for (int i = 0; i < contacts.size(); i++) {
+                if (contacts.get(i).isStarred()) {
+                    if (contacts.get(i).getPhones() != null && !contacts.get(i).getPhones().isEmpty()) {
+                        contacts.get(i).setIntId(counter + 1);
+                        phoneableContacts.add(contacts.get(i));
+                        counter++;
+                    }
                 }
             }
         }
