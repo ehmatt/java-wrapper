@@ -1,5 +1,7 @@
 package com.onepagecrm.models.serializer;
 
+import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.Account;
 import com.onepagecrm.models.Tag;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,6 +15,93 @@ public class TagSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(TagSerializer.class.getName());
 
+    public static List<Tag> fromString(String responseBody) throws OnePageException {
+        String parsedResponse;
+        OnePageException exception;
+
+        try {
+            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            JSONObject parsedObject = new JSONObject(parsedResponse);
+            return fromJsonArray(parsedObject.getJSONArray(TAGS_TAG));
+
+        } catch (ClassCastException e) {
+            exception = (OnePageException) BaseSerializer.fromString(responseBody);
+            throw exception;
+
+        } catch (JSONException e) {
+            LOG.severe("Could not find Tags tag");
+            LOG.severe(e.toString());
+        }
+        return new ArrayList<>();
+    }
+
+    public static boolean fromStringSave(String responseBody) throws OnePageException {
+        String parsedResponse;
+        OnePageException exception;
+        boolean saveSuccessful = false;
+
+        try {
+            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            JSONObject parsedObject = new JSONObject(parsedResponse);
+            if (parsedObject.length() > 0) {
+                if (updateAccountTags(responseBody)) {
+                    saveSuccessful = true;
+                }
+            }
+
+        } catch (ClassCastException e) {
+            exception = (OnePageException) BaseSerializer.fromString(responseBody);
+            throw exception;
+
+        } catch (JSONException e) {
+            LOG.severe("Could not find create new JSONObject out of response");
+            LOG.severe(e.toString());
+        }
+
+        return saveSuccessful;
+    }
+
+    public static boolean fromStringDelete(String responseBody) throws OnePageException {
+        String parsedResponse;
+        OnePageException exception;
+        boolean saveSuccessful = false;
+
+        try {
+            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            JSONObject parsedObject = new JSONObject(parsedResponse);
+            if (parsedObject.length() == 0) {
+                if (updateAccountTags(responseBody)) {
+                    saveSuccessful = true;
+                }
+            }
+
+        } catch (ClassCastException e) {
+            exception = (OnePageException) BaseSerializer.fromString(responseBody);
+            throw exception;
+
+        } catch (JSONException e) {
+            LOG.severe("Could not find create new JSONObject out of response");
+            LOG.severe(e.toString());
+        }
+
+        return saveSuccessful;
+    }
+
+    private static boolean updateAccountTags(String responseBody) {
+        boolean updateSuccessful = true;
+        try {
+            JSONObject responseObject = new JSONObject(responseBody);
+            JSONObject tagsObject = responseObject.getJSONObject(TAGS_TAG);
+            JSONArray tagsArray = tagsObject.getJSONArray(TAGS_TAG);
+            Account.loggedInUser.getAccount().setTags(TagSerializer.fromJsonArray(tagsArray));
+        } catch (JSONException e) {
+            LOG.severe("Could not find the Tags tag in response");
+            LOG.severe(e.toString());
+            updateSuccessful = false;
+        }
+        return updateSuccessful;
+    }
+
     public static List<Tag> fromJsonArray(JSONArray tagsArray) {
         List<Tag> tags = new ArrayList<>();
         for (int j = 0; j < tagsArray.length(); j++) {
@@ -21,7 +110,7 @@ public class TagSerializer extends BaseSerializer {
                 tagObject = tagsArray.getJSONObject(j);
                 tags.add(fromJsonObject(tagObject));
             } catch (JSONException e) {
-                LOG.severe("Error parsing tag array");
+                LOG.severe("Error parsing Tag array");
                 LOG.severe(e.toString());
             }
         }
@@ -37,11 +126,14 @@ public class TagSerializer extends BaseSerializer {
             if (tagObject.has(COUNTS_TAG)) {
                 tag.setCounts(tagObject.getInt(COUNTS_TAG));
             }
+            if (tagObject.has(TOTAL_COUNT_TAG)) {
+                tag.setTotalCounts(tagObject.getInt(TOTAL_COUNT_TAG));
+            }
             if (tagObject.has(ACTION_STREAM_COUNT_TAG)) {
                 tag.setActionStreamCount(tagObject.getInt(ACTION_STREAM_COUNT_TAG));
             }
         } catch (JSONException e) {
-            LOG.severe("Error parsing tag object");
+            LOG.severe("Error parsing Tag object");
             LOG.severe(e.toString());
         }
         return tag;

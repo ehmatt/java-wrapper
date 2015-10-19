@@ -1,13 +1,16 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.serializer.TagSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.DeleteRequest;
+import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Tag implements Serializable {
 
@@ -18,20 +21,33 @@ public class Tag implements Serializable {
     private Integer totalCounts;
     private Integer actionStreamCount;
 
-    public String delete() {
-        Request request = new DeleteRequest(TAGS_ENDPOINT + "/" + this.name);
+    public static List<Tag> list() throws OnePageException {
+        Request request = new GetRequest(
+                TAGS_ENDPOINT,
+                Query.perPageQueryString(100)
+        );
         Response response = request.send();
-        return response.getResponseBody();
+        return TagSerializer.fromString(response.getResponseBody());
     }
 
-    public String save() {
+    public boolean save() throws OnePageException {
         Request request = new PostRequest(
                 TAGS_ENDPOINT,
                 null,
                 TagSerializer.toJsonObject(this)
         );
         Response response = request.send();
-        return response.getResponseBody();
+        return TagSerializer.fromStringSave(response.getResponseBody());
+    }
+
+    public boolean delete() throws OnePageException {
+        Request request = new DeleteRequest(addNameToEndpoint(TAGS_ENDPOINT));
+        Response response = request.send();
+        return TagSerializer.fromStringDelete(response.getResponseBody());
+    }
+
+    private String addNameToEndpoint(String endpoint) {
+        return endpoint + "/" + this.name;
     }
 
     public Tag() {

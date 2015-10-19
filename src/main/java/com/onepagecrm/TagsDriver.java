@@ -5,7 +5,6 @@ import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.Tag;
 import com.onepagecrm.models.User;
-import com.onepagecrm.models.internal.Log;
 import com.onepagecrm.models.internal.TagsComparator;
 import com.onepagecrm.net.request.Request;
 
@@ -55,44 +54,42 @@ public class TagsDriver {
         LOG.info("Logged in User : " + loggedInUser);
 
         ContactList stream = loggedInUser.actionStream();
-        Contact contact = stream.get(1);
-        LOG.info("Tags : " + loggedInUser.getAccount().tags);
-        LOG.info("Contact : " + contact);
+        Contact contact = stream.get(0);
 
         List<Tag> accountTags = copyList(loggedInUser.getAccount().getTags());
-//        LOG.info("accountTags : " + copyListNames(accountTags));
+        LOG.info("accountTags *0 : " + copyListNames(accountTags));
 
         if (contact.isValid()) {
 
             List<Tag> contactsTags = contact.getTags();
-//            LOG.info("contactsTags : " + copyListNames(contactsTags));
+            LOG.info("contactsTags : " + copyListNames(contactsTags));
 
-            Tag firstAccount = accountTags.get(0);
-            Tag firstContact = contactsTags.get(0);
+            Tag iOsTag = accountTags.get(0);
+            accountTags.remove(0);
+            LOG.info("accountTags : " + copyListNames(accountTags));
 
-            LOG.info("Tags equal : " + firstAccount.equals(firstContact));
-//            accountTags.remove(0);
-//            LOG.info("accountTags : " + copyListNames(accountTags));
+            accountTags.add(iOsTag);
+            LOG.info("accountTags : " + copyListNames(accountTags));
 
-//            accountTags.add(first);
-//            LOG.info("accountTags : " + copyListNames(accountTags));
-
-//            Collections.sort(accountTags, new TagsComparator());
-//            LOG.info("accountTags : " + copyListNames(accountTags));
+            Collections.sort(accountTags, new TagsComparator());
+            LOG.info("accountTags : " + copyListNames(accountTags));
         }
 
-//        for (int i = 0; i < accountTags.size(); i++) {
-//            LOG.info("[" + i + "] : " + accountTags.get(i).delete());
-//        }
-//
-//        Tag androidTagTest = new Tag().setName("AndroidTagTest");
-//        LOG.info("AndroidTagTest : " + androidTagTest.save());
-//
-//        Tag iOSTagTest = new Tag().setName("iOSTagTest");
-//        LOG.info("iOSTagTest : " + iOSTagTest.save());
-//
-//        Tag vip = new Tag().setName("VIP");
-//        LOG.info("VIP : " + vip.save());
+        for (int i = 0; i < accountTags.size(); i++) {
+            LOG.info("[" + i + "] : " + accountTags.get(i).delete());
+        }
+
+        Tag androidTagTest = new Tag().setName("AndroidTagTest");
+        LOG.info("AndroidTagTest : " + androidTagTest.save());
+
+        Tag iOSTagTest = new Tag().setName("iOSTagTest");
+        LOG.info("iOSTagTest : " + iOSTagTest.save());
+
+        Tag vip = new Tag().setName("VIP");
+        LOG.info("VIP : " + vip.save());
+
+        List<Tag> tags = Tag.list();
+        LOG.info("Tags.list() : " + tags);
     }
 
     private static List<Tag> copyList(List<Tag> tags) {
