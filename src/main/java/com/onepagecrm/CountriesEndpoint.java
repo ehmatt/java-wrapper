@@ -40,12 +40,14 @@ public class CountriesEndpoint {
         }
 
         Request.SERVER = Request.DEV_SERVER;
+
         User loggedInUser = User.login(
                 prop.getProperty("username"),
                 prop.getProperty("password"));
 
         LOG.info("Logged in User : " + loggedInUser);
-
+//        Request.format = ".xml";
+//        Request.format = ".s";
         LOG.info("Countries : " + Countries.list());
 
     }
