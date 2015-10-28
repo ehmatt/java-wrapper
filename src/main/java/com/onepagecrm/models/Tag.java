@@ -74,7 +74,9 @@ public class Tag implements Serializable {
     public boolean equals(Object object) {
         if (object instanceof Tag) {
             Tag toCompare = (Tag) object;
-            return this.name.equals(toCompare.name);
+            if (this.name != null && toCompare.name != null) {
+                return this.name.equals(toCompare.name);
+            }
         }
         return false;
     }
