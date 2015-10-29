@@ -90,6 +90,24 @@ public class TagsDriver {
 
         List<Tag> tags = Tag.list();
         LOG.info("Tags.list() : " + tags);
+
+        List<Tag> tempTags = tags;
+
+        for (int i = 0; i < stream.size(); i++) {
+            Contact tempContact = stream.get(i);
+            if (i == 0) {
+                tempContact.setTags(tempTags);
+                tempContact.update();
+            } else if (i == 1) {
+                tempTags.remove(tempTags.size() - 1);
+                tempContact.setTags(tempTags);
+                tempContact.update();
+            } else if (i == 2) {
+                tempTags.remove(tempTags.size() - 1);
+                tempContact.setTags(tempTags);
+                tempContact.update();
+            }
+        }
     }
 
     private static List<Tag> copyList(List<Tag> tags) {
