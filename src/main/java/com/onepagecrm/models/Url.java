@@ -6,6 +6,14 @@ import java.io.Serializable;
 
 public class Url implements Serializable {
 
+    public static final String TYPE_WEBSITE = "website";
+    public static final String TYPE_BLOG = "blog";
+    public static final String TYPE_TWITTER = "twitter";
+    public static final String TYPE_LINKEDIN = "linkedin";
+    public static final String TYPE_FACEBOOK = "facebook";
+    public static final String TYPE_GOOGLE_PLUS = "google_plus";
+    public static final String TYPE_OTHER = "other";
+
     private String type;
     private String value;
 

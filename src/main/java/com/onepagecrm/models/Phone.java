@@ -8,6 +8,14 @@ public class Phone implements Serializable {
 
     static final long serialVersionUID = 3927723378236473122L;
 
+    public static final String TYPE_WORK = "work";
+    public static final String TYPE_MOBILE = "mobile";
+    public static final String TYPE_HOME = "home";
+    public static final String TYPE_DIRECT = "direct";
+    public static final String TYPE_FAX = "fax";
+    public static final String TYPE_SKYPE = "skype";
+    public static final String TYPE_OTHER = "other";
+
     private String type;
     private String value;
 
