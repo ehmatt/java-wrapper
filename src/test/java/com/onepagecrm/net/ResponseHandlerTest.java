@@ -7,6 +7,7 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Call;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
+import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.models.serializer.CallSerializer;
 import com.onepagecrm.models.serializer.ContactListSerializer;
 import com.onepagecrm.models.serializer.ContactSerializer;
@@ -333,7 +334,7 @@ public class ResponseHandlerTest extends BaseTest {
      * ContactList with 18 Contact objects.
      */
     public void testParseActionStreamPerPage_Successful() {
-        String response = resource("src/test/res/request_01_action_stream_response.json");
+        String response = Utilities.getResourceContents("src/test/res/request_01_action_stream_response.json");
         ContactList actionStream = null;
         try {
             actionStream = ContactListSerializer.fromString(response);
@@ -349,7 +350,7 @@ public class ResponseHandlerTest extends BaseTest {
      * ContactList with 18 Contact objects.
      */
     public void testParseContactsPerPage_Successful() {
-        String response = resource("src/test/res/request_02_contacts_response.json");
+        String response = Utilities.getResourceContents("src/test/res/request_02_contacts_response.json");
         ContactList contacts = null;
         try {
             contacts = ContactListSerializer.fromString(response);
@@ -364,7 +365,7 @@ public class ResponseHandlerTest extends BaseTest {
      * Test makes sure that a CALL resource has been added correctly.
      */
     public void testParseAddCall_Successful() {
-        String response = resource("src/test/res/request_03_add_call_response.json");
+        String response = Utilities.getResourceContents("src/test/res/request_03_add_call_response.json");
         try {
             assertTrue("Add call response not parsed correctly", CallSerializer.fromString(response).isValid());
         } catch (OnePageException e) {
@@ -376,7 +377,7 @@ public class ResponseHandlerTest extends BaseTest {
      * Test makes sure that a CONTACT resource has been added correctly.
      */
     public void testParseAddContact_Successful() {
-        String response = resource("src/test/res/request_04_add_contact_response.json");
+        String response = Utilities.getResourceContents("src/test/res/request_04_add_contact_response.json");
         try {
             assertTrue("Add contact response not parsed correctly", ContactSerializer.fromString(response).isValid());
         } catch (OnePageException e) {

@@ -49,6 +49,7 @@ public class BaseSerializer {
     protected static final String URLS_TAG = "urls";
     protected static final String BACKGROUND_TAG = "background";
     protected static final String ADDRESS_LIST_TAG = "address_list";
+    protected static final String IMAGE_TAG = "image";
 
     // ADDRESS LIST TAGS
     protected static final String ADDRESS_TAG = "address";
@@ -347,6 +348,24 @@ public class BaseSerializer {
         } catch (JSONException e) {
             LOG.severe("Error serializing boolean value : " + value);
             LOG.severe(e.toString());
+        }
+    }
+
+    /**
+     * Adds a boolean value to a JSONObject with the specified key.
+     *
+     * @param value
+     * @param object
+     * @param key
+     */
+    public static void addJsonBooleanValue(Boolean value, JSONObject object, String key) {
+        if (value != null) {
+            try {
+                object.put(key, value);
+            } catch (JSONException e) {
+                LOG.severe("Error serializing boolean value : " + value);
+                LOG.severe(e.toString());
+            }
         }
     }
 

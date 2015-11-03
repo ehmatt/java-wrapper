@@ -1,6 +1,7 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.serializer.ContactPhotoSerializer;
 import com.onepagecrm.models.serializer.ContactSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
@@ -11,8 +12,11 @@ import com.onepagecrm.net.request.Request;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Contact extends ApiResource implements Serializable {
+
+    private static final Logger LOG = Logger.getLogger(Contact.class.getName());
 
     private static final long serialVersionUID = -6073805195226829625L;
 
@@ -31,7 +35,7 @@ public class Contact extends ApiResource implements Serializable {
     private List<Email> emails;
     private String status;
     private String statusId;
-    private boolean starred;
+    private Boolean starred;
 
     private String leadSourceId;
     // private LeadSource leadSource;
@@ -75,8 +79,26 @@ public class Contact extends ApiResource implements Serializable {
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
+    public Contact addPhoto(String base64EncodedImageString) throws OnePageException {
+        Request request = new PutRequest(
+                addContactPhotoToEndpoint(CONTACTS_ENDPOINT),
+                null,
+                ContactPhotoSerializer.toJsonObject(base64EncodedImageString)
+        );
+        Response response = request.send();
+        Contact photoContact = ContactPhotoSerializer.fromString(response.getResponseBody());
+        if (this.isValid() && photoContact.photoUrl != null && !photoContact.photoUrl.equals("")) {
+            this.photoUrl = photoContact.photoUrl;
+        }
+        return this;
+    }
+
     private String addContactIdToEndpoint(String endpoint) {
         return endpoint + "/" + this.id;
+    }
+
+    private String addContactPhotoToEndpoint(String endpoint) {
+        return addContactIdToEndpoint(endpoint) + "/contact_photo";
     }
 
     public Contact() {
@@ -234,11 +256,11 @@ public class Contact extends ApiResource implements Serializable {
         return this;
     }
 
-    public boolean isStarred() {
+    public Boolean isStarred() {
         return starred;
     }
 
-    public Contact setStarred(boolean starred) {
+    public Contact setStarred(Boolean starred) {
         this.starred = starred;
         return this;
     }

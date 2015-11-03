@@ -34,61 +34,106 @@ public class ContactSerializer extends BaseSerializer {
         Contact contact = new Contact();
         try {
             JSONObject contactObject = contactsElementObject.getJSONObject(CONTACT_TAG);
-
-            String id = contactObject.getString(ID_TAG);
-            String companyName = contactObject.getString(COMPANY_NAME_TAG);
+            if (contactObject.has(ID_TAG)) {
+                contact.setId(contactObject.getString(ID_TAG));
+            }
+            if (contactObject.has(COMPANY_NAME_TAG)) {
+                contact.setCompanyName(contactObject.getString(COMPANY_NAME_TAG));
+            }
             if (contactObject.has(COMPANY_ID_TAG)) {
                 contact.setCompanyId(contactObject.getString(COMPANY_ID_TAG));
             }
-            String type = contactObject.getString(TYPE_TAG);
-            String firstName = contactObject.getString(FIRST_NAME_TAG);
-            String lastName = contactObject.getString(LAST_NAME_TAG);
-            String ownerId = contactObject.getString(OWNER_ID_TAG);
-            String background = contactObject.getString(BACKGROUND_TAG);
-            String jobTitle = contactObject.getString(JOB_TITLE_TAG);
-            String leadSourceId = contactObject.getString(LEAD_SOURCE_ID_TAG);
-            String photoUrl = contactObject.getString(PHOTO_URL_TAG);
-            // TODO : sales closed for ...
-            boolean starred = contactObject.getBoolean(STARRED_TAG);
-            String status = contactObject.getString(STATUS_TAG);
-            String statusId = contactObject.getString(STATUS_ID_TAG);
-            String createdAtStr = contactObject.getString(CREATED_AT_TAG);
-            Date createdAt = DateSerializer.fromFormattedString(createdAtStr);
-            String modifiedAtStr = contactObject.getString(MODIFIED_AT_TAG);
-            Date modifiedAt = DateSerializer.fromFormattedString(modifiedAtStr);
+            if (contactObject.has(TYPE_TAG)) {
+                contact.setType(contactObject.getString(TYPE_TAG));
+            }
+            if (contactObject.has(FIRST_NAME_TAG)) {
+                contact.setFirstName(contactObject.getString(FIRST_NAME_TAG));
+            }
+            if (contactObject.has(LAST_NAME_TAG)) {
+                contact.setLastName(contactObject.getString(LAST_NAME_TAG));
+            }
+            if (contactObject.has(OWNER_ID_TAG)) {
+                contact.setOwnerId(contactObject.getString(OWNER_ID_TAG));
+            }
+            if (contactObject.has(BACKGROUND_TAG)) {
+                contact.setBackground(contactObject.getString(BACKGROUND_TAG));
+            }
+            if (contactObject.has(JOB_TITLE_TAG)) {
+                contact.setJobTitle(contactObject.getString(JOB_TITLE_TAG));
+            }
+            if (contactObject.has(LEAD_SOURCE_ID_TAG)) {
+                contact.setLeadSourceId(contactObject.getString(LEAD_SOURCE_ID_TAG));
+            }
+            if (contactObject.has(PHOTO_URL_TAG)) {
+                contact.setPhotoUrl(contactObject.getString(PHOTO_URL_TAG));
+            }
+            if (contactObject.has(SALES_CLOSED_FOR_TAG)) {
+                // TODO : sales closed for ...
+            }
+            if (contactObject.has(STARRED_TAG)) {
+                contact.setStarred(contactObject.getBoolean(STARRED_TAG));
+            }
+            if (contactObject.has(STATUS_TAG)) {
+                contact.setStatus(contactObject.getString(STATUS_TAG));
+            }
+            if (contactObject.has(STATUS_ID_TAG)) {
+                contact.setStatusId(contactObject.getString(STATUS_ID_TAG));
+            }
+            if (contactObject.has(CREATED_AT_TAG)) {
+                String createdAtStr = contactObject.getString(CREATED_AT_TAG);
+                Date createdAt = DateSerializer.fromFormattedString(createdAtStr);
+                contact.setCreatedAt(createdAt);
+            }
+            if (contactObject.has(MODIFIED_AT_TAG)) {
+                String modifiedAtStr = contactObject.getString(MODIFIED_AT_TAG);
+                Date modifiedAt = DateSerializer.fromFormattedString(modifiedAtStr);
+                contact.setModifiedAt(modifiedAt);
+            }
 
             // Add Tags.
-            List<String> tagNames = BaseSerializer.toListOfStrings(contactObject.getJSONArray(TAGS_TAG));
-            List<Tag> tags = new ArrayList<>();
-            for (int i = 0; i < tagNames.size(); i++) {
-                tags.add(new Tag().setName(tagNames.get(i)));
+            if (contactObject.has(TAGS_TAG)) {
+                List<String> tagNames = BaseSerializer.toListOfStrings(contactObject.getJSONArray(TAGS_TAG));
+                List<Tag> tags = new ArrayList<>();
+                for (int i = 0; i < tagNames.size(); i++) {
+                    tags.add(new Tag().setName(tagNames.get(i)));
+                }
+                if (!tags.isEmpty()) contact.setTags(tags);
             }
-            if (!tags.isEmpty()) contact.setTags(tags);
 
             // Add Custom Fields.
-            JSONArray customFieldsArray = contactObject.getJSONArray(CUSTOM_FIELDS_TAG);
-            List<CustomField> customFields = CustomFieldSerializer.fromJsonArray(customFieldsArray);
-            if (!customFields.isEmpty()) contact.setCustomFields(customFields);
+            if (contactObject.has(CUSTOM_FIELDS_TAG)) {
+                JSONArray customFieldsArray = contactObject.getJSONArray(CUSTOM_FIELDS_TAG);
+                List<CustomField> customFields = CustomFieldSerializer.fromJsonArray(customFieldsArray);
+                if (!customFields.isEmpty()) contact.setCustomFields(customFields);
+            }
 
             // Add Phones.
-            JSONArray phonesArray = contactObject.getJSONArray(PHONES_TAG);
-            List<Phone> phones = PhoneSerializer.fromJsonArray(phonesArray);
-            if (!phones.isEmpty()) contact.setPhones(phones);
+            if (contactObject.has(PHONES_TAG)) {
+                JSONArray phonesArray = contactObject.getJSONArray(PHONES_TAG);
+                List<Phone> phones = PhoneSerializer.fromJsonArray(phonesArray);
+                if (!phones.isEmpty()) contact.setPhones(phones);
+            }
 
             // Add Emails.
-            JSONArray emailsArray = contactObject.getJSONArray(EMAILS_TAG);
-            List<Email> emails = EmailSerializer.fromJsonArray(emailsArray);
-            if (!emails.isEmpty()) contact.setEmails(emails);
+            if (contactObject.has(EMAILS_TAG)) {
+                JSONArray emailsArray = contactObject.getJSONArray(EMAILS_TAG);
+                List<Email> emails = EmailSerializer.fromJsonArray(emailsArray);
+                if (!emails.isEmpty()) contact.setEmails(emails);
+            }
 
             // Add Websites.
-            JSONArray urlsArray = contactObject.getJSONArray(URLS_TAG);
-            List<Url> urls = UrlSerializer.fromJsonArray(urlsArray);
-            if (!urls.isEmpty()) contact.setUrls(urls);
+            if (contactObject.has(URLS_TAG)) {
+                JSONArray urlsArray = contactObject.getJSONArray(URLS_TAG);
+                List<Url> urls = UrlSerializer.fromJsonArray(urlsArray);
+                if (!urls.isEmpty()) contact.setUrls(urls);
+            }
 
             // Add Address.
-            JSONArray addressArray = contactObject.getJSONArray(ADDRESS_LIST_TAG);
-            Address address = AddressSerializer.fromJsonArray(addressArray);
-            contact.setAddress(address);
+            if (contactObject.has(ADDRESS_LIST_TAG)) {
+                JSONArray addressArray = contactObject.getJSONArray(ADDRESS_LIST_TAG);
+                Address address = AddressSerializer.fromJsonArray(addressArray);
+                contact.setAddress(address);
+            }
 
             if (contactsElementObject.has(NEXT_ACTIONS_TAG)) {
                 JSONArray actionsArray = contactsElementObject.getJSONArray(NEXT_ACTIONS_TAG);
@@ -102,22 +147,7 @@ public class ContactSerializer extends BaseSerializer {
                 contact.setNextAction(nextAction);
             }
 
-            return contact
-                    .setId(id)
-                    .setCompanyName(companyName)
-                    .setType(type)
-                    .setFirstName(firstName)
-                    .setLastName(lastName)
-                    .setOwnerId(ownerId)
-                    .setBackground(background)
-                    .setJobTitle(jobTitle)
-                    .setLeadSourceId(leadSourceId)
-                    .setPhotoUrl(photoUrl)
-                    .setStarred(starred)
-                    .setStatus(status)
-                    .setStatusId(statusId)
-                    .setCreatedAt(createdAt)
-                    .setModifiedAt(modifiedAt);
+            return contact;
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Contact object");
