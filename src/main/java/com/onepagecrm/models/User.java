@@ -12,7 +12,6 @@ import com.onepagecrm.net.request.LoginRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class User extends ApiResource implements Serializable {
 
@@ -28,8 +27,7 @@ public class User extends ApiResource implements Serializable {
     private String lastName;
     private String photoUrl;
     private Sales sales;
-    public static Account account;
-    private List<CallResult> callResults;
+    public Account account;
 
     public static User login(String username, String password) throws OnePageException {
         Request request = new LoginRequest(username, password);
@@ -75,7 +73,7 @@ public class User extends ApiResource implements Serializable {
     public String getSimpleName() {
         if (lastName != null && !lastName.equals("")) {
             if (firstName != null && !firstName.equals("")) {
-                return firstName + " " + lastName.substring(0,1) + ".";
+                return firstName + " " + lastName.substring(0, 1) + ".";
             } else {
                 return lastName;
             }

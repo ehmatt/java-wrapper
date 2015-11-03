@@ -1,12 +1,13 @@
 package com.onepagecrm.models.internal;
 
-public class TeamCount {
+import java.io.Serializable;
+
+public class TeamCount implements Serializable {
 
     private String userId;
     private int counts;
 
     public TeamCount() {
-
     }
 
     public TeamCount(String userId, int counts) {
