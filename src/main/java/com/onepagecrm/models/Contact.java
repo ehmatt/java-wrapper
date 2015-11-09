@@ -60,6 +60,10 @@ public class Contact extends ApiResource implements Serializable {
     // private Address address;
 
     public Contact save() throws OnePageException {
+        return this.isValid() ? update() : create();
+    }
+
+    private Contact create() throws OnePageException {
         Request request = new PostRequest(
                 CONTACTS_ENDPOINT,
                 null,
@@ -69,7 +73,7 @@ public class Contact extends ApiResource implements Serializable {
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
-    public Contact update() throws OnePageException {
+    private Contact update() throws OnePageException {
         Request request = new PutRequest(
                 addContactIdToEndpoint(CONTACTS_ENDPOINT),
                 null,

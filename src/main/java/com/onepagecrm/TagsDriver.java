@@ -97,15 +97,15 @@ public class TagsDriver {
             Contact tempContact = stream.get(i);
             if (i == 0) {
                 tempContact.setTags(tempTags);
-                tempContact.update();
+                tempContact.save();
             } else if (i == 1) {
                 tempTags.remove(tempTags.size() - 1);
                 tempContact.setTags(tempTags);
-                tempContact.update();
+                tempContact.save();
             } else if (i == 2) {
                 tempTags.remove(tempTags.size() - 1);
                 tempContact.setTags(tempTags);
-                tempContact.update();
+                tempContact.save();
             }
         }
     }

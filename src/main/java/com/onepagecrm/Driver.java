@@ -102,7 +102,7 @@ public class Driver {
 //            List<CustomField> customFields = contact.getCustomFields();
 //            LOG.info("Contact's Custom Fields : " + customFields);
 
-            contact = contact.update();
+            contact = contact.save();
             LOG.info("Updated Contact : " + contact);
 
 //            List<Action> actions = contact.getActions();

@@ -231,7 +231,7 @@ public class EditContactDriver {
 
             contact.setCustomFields(customFields);
 
-            contact = contact.update();
+            contact = contact.save();
             LOG.info("Updated Contact : " + contact);
         }
     }
