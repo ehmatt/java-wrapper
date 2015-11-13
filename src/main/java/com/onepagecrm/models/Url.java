@@ -29,6 +29,22 @@ public class Url implements Serializable {
         return UrlSerializer.toJsonObject(this);
     }
 
+    /**
+     * Method to compare Phone obj's to one another based off of their value attr.
+     *
+     * @param object
+     * @return
+     */
+    public boolean equals(Object object) {
+        if (object instanceof Url) {
+            Url toCompare = (Url) object;
+            if (this.value != null && toCompare.value != null) {
+                return this.value.equals(toCompare.value);
+            }
+        }
+        return false;
+    }
+
     public String getType() {
         return type;
     }
