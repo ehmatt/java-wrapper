@@ -199,7 +199,7 @@ public abstract class Request {
     }
 
     /**
-     * Define the headers for the request. This method will be overriden in
+     * Define the headers for the request. This method will be overridden in
      * SignedRequest to include auth headers.
      */
     public void setRequestHeaders() {
