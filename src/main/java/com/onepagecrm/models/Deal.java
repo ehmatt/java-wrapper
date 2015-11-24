@@ -1,5 +1,6 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.models.serializer.DealSerializer;
 import com.onepagecrm.net.ApiResource;
 
 import java.io.Serializable;
@@ -7,6 +8,8 @@ import java.io.Serializable;
 public class Deal extends ApiResource implements Serializable {
 
     private String id;
+    private String ownerId;
+    // TODO : add rest of stuff for deals.
 
     @Override
     public String getId() {
@@ -21,6 +24,15 @@ public class Deal extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return null;
+        return DealSerializer.toJsonObject(this);
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public Deal setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+        return this;
     }
 }

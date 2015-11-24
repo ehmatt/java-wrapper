@@ -129,6 +129,10 @@ public class BaseSerializer {
     protected static final String PHONE_PREFIX_TAG = "phone_prefix";
     protected static final String CURRENCY_TAG = "currency";
 
+    // DEALS_TAG
+    protected static final String DEALS_TAG = "deals";
+    protected static final String DEAL_TAG = "deal";
+
     /**
      * Method used to parse the base/start of response.
      *

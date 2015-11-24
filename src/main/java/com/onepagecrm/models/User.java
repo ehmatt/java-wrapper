@@ -3,6 +3,7 @@ package com.onepagecrm.models;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Sales;
 import com.onepagecrm.models.serializer.ContactListSerializer;
+import com.onepagecrm.models.serializer.DealListSerializer;
 import com.onepagecrm.models.serializer.LoginSerializer;
 import com.onepagecrm.models.serializer.UserSerializer;
 import com.onepagecrm.net.ApiResource;
@@ -45,6 +46,12 @@ public class User extends ApiResource implements Serializable {
         Request request = new GetRequest(CONTACTS_ENDPOINT, Query.perPageQueryString(100));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
+    public DealList pipeline() throws OnePageException {
+        Request request = new GetRequest("deals", Query.perPageQueryString(100));
+        Response response = request.send();
+        return DealListSerializer.fromString(response.getResponseBody());
     }
 
     public User() {
