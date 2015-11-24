@@ -132,6 +132,13 @@ public class BaseSerializer {
     // DEALS_TAG
     protected static final String DEALS_TAG = "deals";
     protected static final String DEAL_TAG = "deal";
+    protected static final String AMOUNT_TAG = "amount";
+    protected static final String EXPECTED_CLOSE_DATE = "expected_close_date";
+    protected static final String MONTHS_TAG = "months";
+    protected static final String STAGE_TAG = "stage";
+    protected static final String TOTAL_AMOUNT_TAG = "total_amount";
+    protected static final String HAS_RELATED_NOTES_TAG = "has_related_notes";
+    protected static final String CLOSE_DATE_TAG = "close_date";
 
     /**
      * Method used to parse the base/start of response.
@@ -199,6 +206,30 @@ public class BaseSerializer {
             return encodedString;
         }
         return "";
+    }
+
+    public static Number parseNumber(JSONObject object, String key) {
+        if (object.has(key)) {
+            try {
+                Object valueObject = object.get(key);
+                if (valueObject instanceof Number) {
+                    // Integers are of type Number in Java.
+                    if (valueObject instanceof Integer) {
+                        // Convert this to an Integer.
+                        valueObject = ((Number) valueObject).intValue();
+                    } else {
+                        // Floating point numbers are of type Number in Java.
+                        // Convert this to a Double (big Float).
+                        valueObject = ((Number) valueObject).doubleValue();
+                    }
+                    return (Number) valueObject;
+                }
+            } catch (JSONException e) {
+                LOG.severe("No pair found with the key " + key);
+                LOG.severe(e.toString());
+            }
+        }
+        return null;
     }
 
     public static JSONArray toJsonStringArray(String[] stringArray) {
@@ -386,6 +417,24 @@ public class BaseSerializer {
                 object.put(key, value);
             } catch (JSONException e) {
                 LOG.severe("Error serializing float value : " + value);
+                LOG.severe(e.toString());
+            }
+        }
+    }
+
+    /**
+     * Adds a Float value to a JSONObject with the specified key.
+     *
+     * @param value
+     * @param object
+     * @param key
+     */
+    public static void addJsonDoubleValue(Double value, JSONObject object, String key) {
+        if (value != null) {
+            try {
+                object.put(key, value);
+            } catch (JSONException e) {
+                LOG.severe("Error serializing double value : " + value);
                 LOG.severe(e.toString());
             }
         }

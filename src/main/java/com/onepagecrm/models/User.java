@@ -49,7 +49,7 @@ public class User extends ApiResource implements Serializable {
     }
 
     public DealList pipeline() throws OnePageException {
-        Request request = new GetRequest("deals", Query.perPageQueryString(100));
+        Request request = new GetRequest(DEALS_ENDPOINT, Query.perPageQueryString(100));
         Response response = request.send();
         return DealListSerializer.fromString(response.getResponseBody());
     }

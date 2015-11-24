@@ -24,7 +24,7 @@ public class ContactSerializer extends BaseSerializer {
             contact = fromJsonObject(dataObject);
 
         } catch (JSONException e) {
-            LOG.severe("Error parsing contact object from response body");
+            LOG.severe("Error parsing Contact object from response body");
             LOG.severe(e.toString());
         }
         return contact;

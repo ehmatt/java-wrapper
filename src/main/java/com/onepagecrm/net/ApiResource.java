@@ -12,6 +12,7 @@ public abstract class ApiResource extends BaseResource {
     public static final String CUSTOM_FIELDS_ENDPOINT = "custom_fields";
     public static final String COUNTRIES_ENDPOINT = "countries"; // -> Countries class as doesn't inherit from here
     public static final String TAGS_ENDPOINT = "tags"; // -> Countries class as doesn't inherit from here
+    public static final String DEALS_ENDPOINT = "deals";
 
     public String id;
 
@@ -21,4 +22,20 @@ public abstract class ApiResource extends BaseResource {
 
     @Override
     public abstract String toString();
+
+    /**
+     * Method to compare ApiResource's to one another based off of their id.
+     *
+     * @param object
+     * @return
+     */
+    public boolean equals(Object object) {
+        if (object instanceof ApiResource) {
+            ApiResource toCompare = (ApiResource) object;
+            if (this.id != null && toCompare.id != null) {
+                return this.id.equals(toCompare.id);
+            }
+        }
+        return false;
+    }
 }
