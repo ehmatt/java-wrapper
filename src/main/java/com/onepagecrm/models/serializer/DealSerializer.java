@@ -93,7 +93,7 @@ public class DealSerializer extends BaseSerializer {
                 deal.setHasRelatedNotes(dealObject.getBoolean(HAS_RELATED_NOTES_TAG));
             }
             if (dealObject.has(CLOSE_DATE_TAG)) {
-                if (dealObject.get(CLOSE_DATE_TAG) != null) {
+                if (!dealObject.isNull(CLOSE_DATE_TAG)) {
                     String closeDateStr = dealObject.getString(CLOSE_DATE_TAG);
                     Date closeDate = DateSerializer.fromFormattedString(closeDateStr);
                     deal.setCloseDate(closeDate);
