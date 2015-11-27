@@ -57,7 +57,12 @@ public class AddPhotoResourceDriver {
 
         File imageFile = new File(imagePath);
 
-        LOG.info("Base64 encoded String : " + Utilities.encodeImage(imagePath));
+        String b64EncodedString = Utilities.encodeImage(imagePath);
+        LOG.info("Base64 encoded String : " + b64EncodedString);
+
+        contact.addPhoto(b64EncodedString);
+
+        LOG.info(contact.toString());
 
 //        try {
 //            // Reading Image file from file system.

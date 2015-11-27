@@ -16,7 +16,7 @@ public class Deal extends ApiResource implements Serializable {
     private Double amount;
     private String author;
     private String text;
-    //    private ContactInfo contactInfo;
+//    private ContactInfo contactInfo;
     private String contactId;
     private Date createdAt;
     private Date date;
