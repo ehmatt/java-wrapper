@@ -74,7 +74,8 @@ public class User extends ApiResource implements Serializable {
     }
 
     public boolean isValid() {
-        return id != null && !id.equals("");
+        return id != null && !id.equals("") &&
+                this.authKey != null && !this.authKey.equals("");
     }
 
     public String getSimpleName() {
