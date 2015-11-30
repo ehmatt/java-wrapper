@@ -58,6 +58,11 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
         return contacts.get(index);
     }
 
+    public Contact set(int index, Contact contact) {
+        contacts.set(index, contact);
+        return contact;
+    }
+
     /**
      * Determines mContacts which are phone-able i.e. have at least 1 phone
      * number.
