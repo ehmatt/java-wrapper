@@ -96,10 +96,15 @@ public class Action extends ApiResource implements Serializable {
     }
 
     public String getFriendlyDateString() {
-        if (this.date == null) {
+        if (this.date != null) {
+            // Return date in format yyyy-MM-dd (uppercase).
+            return DateSerializer.toFriendlyDateString(this.date).toUpperCase();
+        } else if (this.status != null) {
+            // Return status (uppercase).
             return this.status.toUpperCase();
         } else {
-            return DateSerializer.toFriendlyDateString(this.date).toUpperCase();
+            // This is needed to correctly display contacts w/out NA's in Action Stream.
+            return null;
         }
     }
 
