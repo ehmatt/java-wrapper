@@ -1,6 +1,8 @@
 package com.onepagecrm.models.serializer;
 
 import com.onepagecrm.models.Action;
+import com.onepagecrm.models.ContactList;
+import com.onepagecrm.models.Deal;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +59,43 @@ public class ActionSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
         return new Action();
+    }
+
+    public static String toJsonObject(Action action) {
+        JSONObject actionObject = new JSONObject();
+        if (action != null) {
+            addJsonStringValue(action.getId(), actionObject, ID_TAG);
+            addJsonStringValue(action.getContactId(), actionObject, CONTACT_ID_TAG);
+            addJsonStringValue(action.getText(), actionObject, TEXT_TAG);
+            addJsonStringValue(action.getAssigneeId(), actionObject, ASSIGNEE_ID_TAG);
+            addJsonStringValue(
+                    DateSerializer.toFormattedDateTimeString(action.getModifiedAt()),
+                    actionObject,
+                    MODIFIED_AT_TAG
+            );
+            addJsonStringValue(action.getStatus(), actionObject, STATUS_TAG);
+            addJsonStringValue(
+                    DateSerializer.toFormattedDateString(action.getDate()),
+                    actionObject,
+                    DATE_TAG
+            );
+        }
+        return actionObject.toString();
+    }
+
+    public static String toJsonArray(List<Action> actions) {
+        JSONArray actionsArray = new JSONArray();
+        if (actions != null && !actions.isEmpty()) {
+            for (int i = 0; i < actions.size(); i++) {
+                try {
+                    actionsArray.put(new JSONObject(toJsonObject(actions.get(i))));
+                } catch (JSONException e) {
+                    LOG.severe("Error creating JSONArray out of list of Actions.");
+                    LOG.severe(e.toString());
+                }
+            }
+        }
+        return actionsArray.toString();
     }
 
     public static List<Action> fromJsonArray(JSONArray actionsArray) {

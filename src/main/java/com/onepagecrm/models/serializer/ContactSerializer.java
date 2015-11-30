@@ -236,6 +236,24 @@ public class ContactSerializer extends BaseSerializer {
         }
         addJsonArray(BaseSerializer.toJsonStringArray(tagNames), contactObject, TAGS_TAG);
 
+        // Serialize Actions.
+        try {
+            JSONArray nextActionsArray = new JSONArray(ActionSerializer.toJsonArray(contact.getActions()));
+            addJsonArray(nextActionsArray, contactObject, NEXT_ACTIONS_TAG);
+        } catch (JSONException e) {
+            LOG.severe("Error creating Next Action array while constructing Contact object");
+            LOG.severe(e.toString());
+        }
+
+        // Serialize Next Action.
+        try {
+            JSONObject nextActionObject = new JSONObject(ActionSerializer.toJsonObject(contact.getNextAction()));
+            addJsonObject(nextActionObject, contactObject, NEXT_ACTION_TAG);
+        } catch (JSONException e) {
+            LOG.severe("Error creating Next Action object while constructing Contact object");
+            LOG.severe(e.toString());
+        }
+
         return contactObject.toString();
     }
 
