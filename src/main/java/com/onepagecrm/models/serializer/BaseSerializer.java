@@ -50,7 +50,8 @@ public class BaseSerializer {
     protected static final String BACKGROUND_TAG = "background";
     protected static final String ADDRESS_LIST_TAG = "address_list";
     protected static final String IMAGE_TAG = "image";
-
+    protected static final String PENDING_DEAL_TAG = "pending_deal";
+    protected static final String TOTAL_PENDINGS_TAG = "total_pendings";
     // ADDRESS LIST TAGS
     protected static final String ADDRESS_TAG = "address";
     protected static final String CITY_TAG = "city";

@@ -64,6 +64,12 @@ public class ContactSerializer extends BaseSerializer {
             if (contactObject.has(LEAD_SOURCE_ID_TAG)) {
                 contact.setLeadSourceId(contactObject.getString(LEAD_SOURCE_ID_TAG));
             }
+            if (contactObject.has(PENDING_DEAL_TAG)) {
+                contact.setHasPendingDeal(contactObject.getBoolean(PENDING_DEAL_TAG));
+            }
+            if (contactObject.has(TOTAL_PENDINGS_TAG)) {
+                contact.setTotalPending(contactObject.getDouble(TOTAL_PENDINGS_TAG));
+            }
             if (contactObject.has(PHOTO_URL_TAG)) {
                 contact.setPhotoUrl(contactObject.getString(PHOTO_URL_TAG));
             }
@@ -89,7 +95,6 @@ public class ContactSerializer extends BaseSerializer {
                 Date modifiedAt = DateSerializer.fromFormattedString(modifiedAtStr);
                 contact.setModifiedAt(modifiedAt);
             }
-
             // Add Tags.
             if (contactObject.has(TAGS_TAG)) {
                 List<String> tagNames = BaseSerializer.toListOfStrings(contactObject.getJSONArray(TAGS_TAG));
@@ -99,48 +104,41 @@ public class ContactSerializer extends BaseSerializer {
                 }
                 if (!tags.isEmpty()) contact.setTags(tags);
             }
-
             // Add Custom Fields.
             if (contactObject.has(CUSTOM_FIELDS_TAG)) {
                 JSONArray customFieldsArray = contactObject.getJSONArray(CUSTOM_FIELDS_TAG);
                 List<CustomField> customFields = CustomFieldSerializer.fromJsonArray(customFieldsArray);
                 if (!customFields.isEmpty()) contact.setCustomFields(customFields);
             }
-
             // Add Phones.
             if (contactObject.has(PHONES_TAG)) {
                 JSONArray phonesArray = contactObject.getJSONArray(PHONES_TAG);
                 List<Phone> phones = PhoneSerializer.fromJsonArray(phonesArray);
                 if (!phones.isEmpty()) contact.setPhones(phones);
             }
-
             // Add Emails.
             if (contactObject.has(EMAILS_TAG)) {
                 JSONArray emailsArray = contactObject.getJSONArray(EMAILS_TAG);
                 List<Email> emails = EmailSerializer.fromJsonArray(emailsArray);
                 if (!emails.isEmpty()) contact.setEmails(emails);
             }
-
             // Add Websites.
             if (contactObject.has(URLS_TAG)) {
                 JSONArray urlsArray = contactObject.getJSONArray(URLS_TAG);
                 List<Url> urls = UrlSerializer.fromJsonArray(urlsArray);
                 if (!urls.isEmpty()) contact.setUrls(urls);
             }
-
             // Add Address.
             if (contactObject.has(ADDRESS_LIST_TAG)) {
                 JSONArray addressArray = contactObject.getJSONArray(ADDRESS_LIST_TAG);
                 Address address = AddressSerializer.fromJsonArray(addressArray);
                 contact.setAddress(address);
             }
-
             if (contactsElementObject.has(NEXT_ACTIONS_TAG)) {
                 JSONArray actionsArray = contactsElementObject.getJSONArray(NEXT_ACTIONS_TAG);
                 List<Action> actions = ActionSerializer.fromJsonArray(actionsArray);
                 contact.setActions(actions);
             }
-
             if (contactsElementObject.has(NEXT_ACTION_TAG)) {
                 JSONObject nextActionObject = contactsElementObject.getJSONObject(NEXT_ACTION_TAG);
                 Action nextAction = ActionSerializer.fromJsonObject(nextActionObject);
@@ -177,6 +175,8 @@ public class ContactSerializer extends BaseSerializer {
         addJsonStringValue(contact.getStatus(), contactObject, STATUS_TAG);
         addJsonStringValue(contact.getStatusId(), contactObject, STATUS_ID_TAG);
         addJsonStringValue(contact.getLeadSourceId(), contactObject, LEAD_SOURCE_ID_TAG);
+        addJsonBooleanValue(contact.hasPendingDeal(), contactObject, PENDING_DEAL_TAG);
+        addJsonDoubleValue(contact.getTotalPending(), contactObject, TOTAL_PENDINGS_TAG);
         addJsonStringValue(contact.getOwnerId(), contactObject, OWNER_ID_TAG);
         addJsonStringValue(contact.getPhotoUrl(), contactObject, PHOTO_URL_TAG);
         addJsonBooleanValue(contact.isStarred(), contactObject, STARRED_TAG);

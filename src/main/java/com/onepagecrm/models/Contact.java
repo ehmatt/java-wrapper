@@ -40,7 +40,8 @@ public class Contact extends ApiResource implements Serializable {
     private String leadSourceId;
     // private LeadSource leadSource;
 
-    private Boolean pendingDeal;
+    private Boolean hasPendingDeal;
+    private Double totalPending;
     private String type;
     private String companyName;
     private String companyId;
@@ -278,12 +279,21 @@ public class Contact extends ApiResource implements Serializable {
         return this;
     }
 
-    public Boolean isPendingDeal() {
-        return pendingDeal;
+    public Boolean hasPendingDeal() {
+        return hasPendingDeal;
     }
 
-    public Contact setPendingDeal(Boolean pendingDeal) {
-        this.pendingDeal = pendingDeal;
+    public Contact setHasPendingDeal(Boolean hasPendingDeal) {
+        this.hasPendingDeal = hasPendingDeal;
+        return this;
+    }
+
+    public Double getTotalPending() {
+        return totalPending;
+    }
+
+    public Contact setTotalPending(Double totalPending) {
+        this.totalPending = totalPending;
         return this;
     }
 
