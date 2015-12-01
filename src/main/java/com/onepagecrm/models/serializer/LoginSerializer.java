@@ -23,12 +23,12 @@ public class LoginSerializer extends BaseSerializer {
             addTagsToAccount(responseBody);
             addStatusesToAccount(responseBody);
             addLeadSourcesToAccount(responseBody);
+            addFiltersToAccount(responseBody);
             return Account.loggedInUser;
 
         } catch (ClassCastException e) {
             exception = (OnePageException) BaseSerializer.fromString(responseBody);
             throw exception;
-
         }
     }
 
@@ -98,5 +98,24 @@ public class LoginSerializer extends BaseSerializer {
     private static void addLeadSources(JSONArray leadSourceArray) throws JSONException {
         List<LeadSource> leadSources = LeadSourceSerializer.fromJsonArray(leadSourceArray);
         Account.loggedInUser.getAccount().setLeadSources(leadSources);
+    }
+
+    private static void addFiltersToAccount(String responseBody) {
+        JSONObject responseObject;
+        try {
+            responseObject = new JSONObject(responseBody);
+            JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+            if (dataObject.has(FILTERS_TAG)) {
+                addFilters(dataObject.getJSONArray(FILTERS_TAG));
+            }
+        } catch (JSONException e) {
+            LOG.severe("Error parsing Filters array");
+            LOG.severe(e.toString());
+        }
+    }
+
+    private static void addFilters(JSONArray filterArray) throws JSONException {
+        List<Filter> filters = FilterSerializer.fromJsonArray(filterArray);
+        Account.loggedInUser.getAccount().setFilters(filters);
     }
 }

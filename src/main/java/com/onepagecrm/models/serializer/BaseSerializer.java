@@ -52,6 +52,7 @@ public class BaseSerializer {
     protected static final String IMAGE_TAG = "image";
     protected static final String PENDING_DEAL_TAG = "pending_deal";
     protected static final String TOTAL_PENDINGS_TAG = "total_pendings";
+
     // ADDRESS LIST TAGS
     protected static final String ADDRESS_TAG = "address";
     protected static final String CITY_TAG = "city";
@@ -140,6 +141,10 @@ public class BaseSerializer {
     protected static final String TOTAL_AMOUNT_TAG = "total_amount";
     protected static final String HAS_RELATED_NOTES_TAG = "has_related_notes";
     protected static final String CLOSE_DATE_TAG = "close_date";
+
+    // FILTERS TAGS
+    protected static final String FILTER_TAG = "filter";
+    protected static final String FILTERS_TAG = "filters";
 
     /**
      * Method used to parse the base/start of response.

@@ -15,6 +15,7 @@ public class Account implements Serializable {
     public Countries countries;
 
     public List<CustomField> customFields;
+    public List<Filter> filters;
     public List<CallResult> callResults;
     public List<Tag> tags;
     public List<Status> statuses;
@@ -75,6 +76,15 @@ public class Account implements Serializable {
 
     public List<CallResult> getCallResults() {
         return callResults;
+    }
+
+    public List<Filter> getFilters() {
+        return filters;
+    }
+
+    public Account setFilters(List<Filter> filters) {
+        this.filters = filters;
+        return this;
     }
 
     public Account setCallResults(List<CallResult> callResults) {
