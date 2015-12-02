@@ -19,11 +19,9 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
     private Paginator paginator;
 
     public ContactList nextPage() throws OnePageException {
-        if (paginator != null) {
-            this.paginator.getNextPageNo();
-            ContactList nextPage = Account.loggedInUser.actionStream(paginator);
-            this.addNextPage(nextPage);
-        }
+        this.paginator.getNextPageNo();
+        ContactList nextPage = Account.loggedInUser.actionStream(paginator);
+        this.addNextPage(nextPage);
         return this;
     }
 
