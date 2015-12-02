@@ -2,7 +2,7 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
-import com.onepagecrm.models.serializer.ContactSerializer;
+import com.onepagecrm.models.serializer.ContactListSerializer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,9 +19,11 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
     private Paginator paginator;
 
     public ContactList nextPage() throws OnePageException {
-        this.paginator.getNextPageNo();
-        ContactList nextPage = Account.loggedInUser.actionStream(paginator);
-        this.addNextPage(nextPage);
+        if (paginator != null) {
+            this.paginator.getNextPageNo();
+            ContactList nextPage = Account.loggedInUser.actionStream(paginator);
+            this.addNextPage(nextPage);
+        }
         return this;
     }
 
@@ -57,7 +59,7 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
     }
 
     public String toString() {
-        return ContactSerializer.toJsonArray(this);
+        return ContactListSerializer.toJsonObject(this);
     }
 
     public List<Contact> getContacts() {

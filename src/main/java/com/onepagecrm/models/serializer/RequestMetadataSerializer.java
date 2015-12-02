@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 02/12/2015.
  */
-public class RequestMetadataSerializer extends BaseSerializer{
+public class RequestMetadataSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(RequestMetadataSerializer.class.getName());
 
@@ -42,5 +42,10 @@ public class RequestMetadataSerializer extends BaseSerializer{
         addJsonIntegerValue(paginator.getMaxPage(), paginatorObject, MAX_PAGE_TAG);
         addJsonIntegerValue(paginator.getPerPage(), paginatorObject, PER_PAGE_TAG);
         return paginatorObject.toString();
+    }
+
+    public static String toJsonKeyValuePair(Paginator paginator) {
+        String jsonValues = toJsonObject(paginator);
+        return jsonValues.substring(1, jsonValues.length() - 2);
     }
 }

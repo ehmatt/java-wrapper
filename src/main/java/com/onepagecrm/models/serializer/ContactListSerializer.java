@@ -68,4 +68,23 @@ public class ContactListSerializer extends BaseSerializer {
         }
         return new ContactList(contacts);
     }
+
+    public static String toJsonObject(ContactList contacts) {
+        JSONObject contactsObject = new JSONObject();
+        try {
+            JSONArray contactsArray = new JSONArray(ContactSerializer.toJsonArray(contacts));
+            addJsonArray(contactsArray, contactsObject, CONTACTS_TAG);
+            Paginator paginator = contacts.getPaginator();
+            if (paginator != null) {
+                addJsonIntegerValue(paginator.getTotalCount(), contactsObject, TOTAL_COUNT_TAG);
+                addJsonIntegerValue(paginator.getCurrentPage(), contactsObject, PAGE_TAG);
+                addJsonIntegerValue(paginator.getMaxPage(), contactsObject, MAX_PAGE_TAG);
+                addJsonIntegerValue(paginator.getPerPage(), contactsObject, PER_PAGE_TAG);
+            }
+        } catch (JSONException e) {
+            LOG.severe("Error parsing contacts array from response body");
+            LOG.severe(e.toString());
+        }
+        return contactsObject.toString();
+    }
 }

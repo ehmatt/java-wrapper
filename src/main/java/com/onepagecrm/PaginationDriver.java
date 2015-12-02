@@ -3,6 +3,7 @@ package com.onepagecrm;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
+import com.onepagecrm.models.serializer.RequestMetadataSerializer;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
@@ -58,5 +59,7 @@ public class PaginationDriver {
 
         ContactList refreshedList = stream.refresh();
         LOG.info("page 1 : " + refreshedList.size() + " : " + refreshedList.toString());
+
+        LOG.info(RequestMetadataSerializer.toJsonKeyValuePair(stream.getPaginator()));
     }
 }

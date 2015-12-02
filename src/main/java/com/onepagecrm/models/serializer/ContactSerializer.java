@@ -268,6 +268,13 @@ public class ContactSerializer extends BaseSerializer {
                     LOG.severe(e.toString());
                 }
             }
+//            if (contacts.getPaginator() != null) {
+//                addJsonStringValue(
+//                        RequestMetadataSerializer.toJsonKeyValuePair(contacts.getPaginator()),
+//                        new JSONObject(),
+//
+//                );
+//            }
         }
         return contactsArray.toString();
     }
