@@ -17,7 +17,7 @@ package com.onepagecrm.exceptions;
  404 	Resource Not Found. When an id was provided for a request but no resource exists for that object.
 
  409 	Precondition Failed. Server state does not allow requested operation to be carried on. Issued in cases such as
-        when trying to add an assigned next action to a contact which already has one assigned for a user.
+        when trying to add an assigned nextPage action to a contact which already has one assigned for a user.
 
  500 	Internal Server Error.
  *
@@ -34,7 +34,6 @@ public class OnePageException extends Exception {
     private List<String> errors;
 
     public OnePageException() {
-
     }
 
     public void throwOnePageException() throws OnePageException {

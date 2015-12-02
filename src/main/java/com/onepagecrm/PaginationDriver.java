@@ -1,7 +1,6 @@
 package com.onepagecrm;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
 import com.onepagecrm.net.request.Request;
@@ -15,9 +14,9 @@ import java.util.logging.Logger;
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 02/12/2015.
  */
-public class EqualsMethodDriver {
+public class PaginationDriver {
 
-    private static final Logger LOG = Logger.getLogger(EqualsMethodDriver.class.getName());
+    private static final Logger LOG = Logger.getLogger(PaginationDriver.class.getName());
 
     public static void main(String[] args) throws OnePageException {
         Properties prop = new Properties();
@@ -52,21 +51,12 @@ public class EqualsMethodDriver {
         LOG.info("Logged in User : " + loggedInUser);
 
         ContactList stream = loggedInUser.actionStream();
+        LOG.info("page 1 : " + stream.size() + " : " + stream.toString());
 
-        User newUser = new User()
-                .setId(loggedInUser.getId())
-                .setAuthKey(loggedInUser.getAuthKey());
+        ContactList updatedStream = stream.nextPage();
+        LOG.info("page 1&2 : " + updatedStream.size() + " : " + updatedStream.toString());
 
-        LOG.info(loggedInUser.toString());
-        LOG.info(newUser.toString());
-        LOG.info("Users equal : " + loggedInUser.equals(newUser));
-
-        Contact contact = stream.get(0);
-        Contact newContact = new Contact()
-                .setId(contact.getId());
-
-        LOG.info(contact.toString());
-        LOG.info(newContact.toString());
-        LOG.info("Contacts equal : " + contact.equals(newContact));
+        ContactList refreshedList = stream.refresh();
+        LOG.info("page 1 : " + refreshedList.size() + " : " + refreshedList.toString());
     }
 }

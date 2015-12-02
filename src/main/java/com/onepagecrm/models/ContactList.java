@@ -1,16 +1,35 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.serializer.ContactSerializer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ContactList extends ArrayList<Contact> implements Serializable {
+
+    private static final Logger LOG = Logger.getLogger(ContactList.class.getName());
 
     private static final long serialVersionUID = 8185938052776557364L;
 
     private List<Contact> contacts;
+    private Paginator paginator;
+
+    public ContactList nextPage() throws OnePageException {
+        this.paginator.getNextPageNo();
+        ContactList nextPage = Account.loggedInUser.actionStream(paginator);
+        this.addNextPage(nextPage);
+        return this;
+    }
+
+    public ContactList refresh() throws OnePageException {
+        ContactList list = Account.loggedInUser.actionStream();
+        this.setContacts(list);
+        return this;
+    }
 
     public ContactList(List<Contact> contacts) {
         this.contacts = new ArrayList<>();
@@ -23,6 +42,18 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
 
     public ContactList() {
         this.contacts = new ArrayList<>();
+    }
+
+    public ContactList addNextPage(ContactList contactsList) {
+        if (this.contacts != null && !this.contacts.isEmpty()) {
+            List<Contact> contacts = contactsList.getContacts();
+            if (contacts != null && !contacts.isEmpty()) {
+                for (Contact contact : contacts) {
+                    this.contacts.add(contact);
+                }
+            }
+        }
+        return this;
     }
 
     public String toString() {
@@ -40,6 +71,15 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
                 this.contacts.add(contacts.get(i));
             }
         }
+    }
+
+    public Paginator getPaginator() {
+        return paginator;
+    }
+
+    public ContactList setPaginator(Paginator paginator) {
+        this.paginator = paginator;
+        return this;
     }
 
     public boolean isEmpty() {
@@ -141,7 +181,7 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
     }
 
     /**
-     * Simply gets the next Contact in the list.
+     * Simply gets the nextPage Contact in the list.
      * <p/>
      * If at end of list, jumps back to the start.
      *

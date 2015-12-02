@@ -146,6 +146,11 @@ public class BaseSerializer {
     protected static final String FILTER_TAG = "filter";
     protected static final String FILTERS_TAG = "filters";
 
+    // METADATA TAGS
+    protected static final String PAGE_TAG = "page";
+    protected static final String MAX_PAGE_TAG = "max_page";
+    protected static final String PER_PAGE_TAG = "per_page";
+
     /**
      * Method used to parse the base/start of response.
      *
