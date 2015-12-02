@@ -73,9 +73,24 @@ public class User extends ApiResource implements Serializable {
         return UserSerializer.toJsonObject(this);
     }
 
+    @Override
+    public boolean equals(Object object) {
+        boolean idsEqual = super.equals(object);
+        boolean authKeysEqual = false;
+        if (object instanceof User) {
+            User toCompare = (User) object;
+            if (this.authKey != null && toCompare.authKey != null) {
+                authKeysEqual = this.authKey.equals(toCompare.authKey);
+            }
+        }
+        return idsEqual && authKeysEqual;
+    }
+
+    @Override
     public boolean isValid() {
-        return id != null && !id.equals("") &&
-                this.authKey != null && !this.authKey.equals("");
+        boolean idValid = super.isValid();
+        boolean authKeyValid = this.authKey != null && !this.authKey.equals("");
+        return idValid && authKeyValid;
     }
 
     public String getSimpleName() {

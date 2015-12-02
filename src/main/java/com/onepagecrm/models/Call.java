@@ -48,10 +48,6 @@ public class Call extends ApiResource implements Serializable {
         return this;
     }
 
-    public boolean isValid() {
-        return this.id != null && !this.id.equals("");
-    }
-
     @Override
     public String toString() {
         return CallSerializer.toJsonObject(this);

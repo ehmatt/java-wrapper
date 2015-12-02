@@ -1,5 +1,6 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.models.serializer.ActionSerializer;
 import com.onepagecrm.models.serializer.DateSerializer;
 import com.onepagecrm.net.ApiResource;
 
@@ -17,7 +18,6 @@ public class Action extends ApiResource implements Serializable {
     private Date modifiedAt;
     private String status;
     private Date date;
-    private String friendlyDateString;
     private int dateColor;
 
     public Action() {
@@ -36,9 +36,7 @@ public class Action extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return "Action{id=\'" + id + "\', assigneeId=\'" + assigneeId + "\', contactId=\'"
-                + contactId + "\', text=\'" + text + "\', modifiedAt=\'" + modifiedAt
-                + "\', status=\'" + status + "\', date=\'" + date + "\'}";
+        return ActionSerializer.toJsonObject(this);
     }
 
     public String getAssigneeId() {
@@ -106,11 +104,6 @@ public class Action extends ApiResource implements Serializable {
             // This is needed to correctly display contacts w/out NA's in Action Stream.
             return null;
         }
-    }
-
-    public Action setFriendlyDateString(String friendlyDateString) {
-        this.friendlyDateString = friendlyDateString;
-        return this;
     }
 
     public int getDateColor() {

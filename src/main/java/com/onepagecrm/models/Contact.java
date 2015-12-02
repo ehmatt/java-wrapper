@@ -122,10 +122,6 @@ public class Contact extends ApiResource implements Serializable {
         return this;
     }
 
-    public boolean isValid() {
-        return this.id != null && !this.id.equals("");
-    }
-
     @Override
     public String toString() {
         return ContactSerializer.toJsonObject(this);

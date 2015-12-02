@@ -55,25 +55,9 @@ public class Countries extends ArrayList<Country> implements Serializable {
         this.countryMap = new HashMap<>();
     }
 
-    public boolean isEmpty() {
-        return countryList.isEmpty() && countryMap.isEmpty();
-    }
-
-    public int size() {
-        return countryList.size();
-    }
-
-    public void add(int index, Country country) {
-        countryList.add(index, country);
-        countryMap.put(country.getCode(), country);
-    }
-
-    public Country get(int index) {
-        return countryList.get(index);
-    }
-
-    public Country get(String code) {
-        return countryMap.get(code);
+    @Override
+    public String toString() {
+        return CountrySerializer.toJsonArray(this);
     }
 
     public List<Country> getCountryList() {
@@ -108,8 +92,24 @@ public class Countries extends ArrayList<Country> implements Serializable {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return CountrySerializer.toJsonArray(this);
+    public boolean isEmpty() {
+        return countryList.isEmpty() && countryMap.isEmpty();
+    }
+
+    public int size() {
+        return countryList.size();
+    }
+
+    public void add(int index, Country country) {
+        countryList.add(index, country);
+        countryMap.put(country.getCode(), country);
+    }
+
+    public Country get(int index) {
+        return countryList.get(index);
+    }
+
+    public Country get(String code) {
+        return countryMap.get(code);
     }
 }

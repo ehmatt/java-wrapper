@@ -14,8 +14,6 @@ public abstract class ApiResource extends BaseResource {
     public static final String TAGS_ENDPOINT = "tags"; // -> Countries class as doesn't inherit from here
     public static final String DEALS_ENDPOINT = "deals";
 
-    public String id;
-
     public abstract String getId();
 
     public abstract ApiResource setId(String id);
@@ -32,10 +30,14 @@ public abstract class ApiResource extends BaseResource {
     public boolean equals(Object object) {
         if (object instanceof ApiResource) {
             ApiResource toCompare = (ApiResource) object;
-            if (this.id != null && toCompare.id != null) {
-                return this.id.equals(toCompare.id);
+            if (this.getId() != null && toCompare.getId() != null) {
+                return this.getId().equals(toCompare.getId());
             }
         }
         return false;
+    }
+
+    public boolean isValid() {
+        return this.getId() != null && !this.getId().equals("");
     }
 }

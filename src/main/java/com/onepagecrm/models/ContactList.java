@@ -29,14 +29,6 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
         return ContactSerializer.toJsonArray(this);
     }
 
-    public boolean isEmpty() {
-        return contacts.isEmpty();
-    }
-
-    public int size() {
-        return contacts.size();
-    }
-
     public List<Contact> getContacts() {
         return contacts;
     }
@@ -50,6 +42,14 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
         }
     }
 
+    public boolean isEmpty() {
+        return contacts.isEmpty();
+    }
+
+    public int size() {
+        return contacts.size();
+    }
+
     public void add(int index, Contact contact) {
         contacts.add(index, contact);
     }
@@ -61,6 +61,10 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
     public Contact set(int index, Contact contact) {
         contacts.set(index, contact);
         return contact;
+    }
+
+    public int indexOf(Contact contact) {
+        return contacts.indexOf(contact);
     }
 
     /**

@@ -16,7 +16,7 @@ public class Deal extends ApiResource implements Serializable {
     private Double amount;
     private String author;
     private String text;
-//    private ContactInfo contactInfo;
+    //    private ContactInfo contactInfo;
     private String contactId;
     private Date createdAt;
     private Date date;
@@ -91,10 +91,6 @@ public class Deal extends ApiResource implements Serializable {
     public Deal setId(String id) {
         this.id = id;
         return this;
-    }
-
-    public boolean isValid() {
-        return this.id != null && !this.id.equals("");
     }
 
     @Override

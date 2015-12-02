@@ -30,14 +30,6 @@ public class DealList extends ArrayList<Deal> implements Serializable {
         return DealSerializer.toJsonArray(this);
     }
 
-    public boolean isEmpty() {
-        return deals.isEmpty();
-    }
-
-    public int size() {
-        return deals.size();
-    }
-
     public List<Deal> getDeals() {
         return deals;
     }
@@ -51,6 +43,14 @@ public class DealList extends ArrayList<Deal> implements Serializable {
         }
     }
 
+    public boolean isEmpty() {
+        return deals.isEmpty();
+    }
+
+    public int size() {
+        return deals.size();
+    }
+
     public void add(int index, Deal deal) {
         deals.add(index, deal);
     }
@@ -59,5 +59,12 @@ public class DealList extends ArrayList<Deal> implements Serializable {
         return deals.get(index);
     }
 
-    // TODO : add rest of stuff for deals.
+    public Deal set(int index, Deal deal) {
+        deals.set(index, deal);
+        return deal;
+    }
+
+    public int indexOf(Deal deal) {
+        return deals.indexOf(deal);
+    }
 }

@@ -7,7 +7,4 @@ public abstract class BaseResource {
     @Override
     public abstract String toString();
 
-    protected static boolean equals(Object a, Object b) {
-        return a == null ? b == null : a.equals(b);
-    }
 }
