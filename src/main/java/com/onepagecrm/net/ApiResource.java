@@ -2,7 +2,9 @@ package com.onepagecrm.net;
 
 import com.onepagecrm.models.BaseResource;
 
-public abstract class ApiResource extends BaseResource {
+import java.io.Serializable;
+
+public abstract class ApiResource extends BaseResource implements Serializable {
 
     public static final String CHARSET = "UTF-8";
 

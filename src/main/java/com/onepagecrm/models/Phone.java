@@ -4,7 +4,7 @@ import com.onepagecrm.models.serializer.PhoneSerializer;
 
 import java.io.Serializable;
 
-public class Phone implements Serializable {
+public class Phone extends BaseResource implements Serializable {
 
     static final long serialVersionUID = 3927723378236473122L;
 
@@ -37,6 +37,7 @@ public class Phone implements Serializable {
      * @param object
      * @return
      */
+    @Override
     public boolean equals(Object object) {
         if (object instanceof Phone) {
             Phone toCompare = (Phone) object;

@@ -4,7 +4,7 @@ import com.onepagecrm.models.serializer.EmailSerializer;
 
 import java.io.Serializable;
 
-public class Email implements Serializable {
+public class Email extends BaseResource implements Serializable {
 
     public static final String TYPE_WORK = "work";
     public static final String TYPE_HOME = "home";
@@ -26,11 +26,12 @@ public class Email implements Serializable {
     }
 
     /**
-     * Method to compare Phone obj's to one another based off of their value attr.
+     * Method to compare Email obj's to one another based off of their value attr.
      *
      * @param object
      * @return
      */
+    @Override
     public boolean equals(Object object) {
         if (object instanceof Email) {
             Email toCompare = (Email) object;

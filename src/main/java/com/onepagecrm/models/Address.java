@@ -4,7 +4,7 @@ import com.onepagecrm.models.serializer.AddressSerializer;
 
 import java.io.Serializable;
 
-public class Address implements Serializable {
+public class Address extends BaseResource implements Serializable {
 
     private String address;
     private String city;
@@ -18,6 +18,40 @@ public class Address implements Serializable {
     @Override
     public String toString() {
         return AddressSerializer.toJsonArray(this);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        boolean addressObjectsEqual = false;
+        boolean addressesEqual = false;
+        boolean citiesEqual = false;
+        boolean statesEqual = false;
+        boolean zipCodesEqual = false;
+        boolean countryCodesEqual = false;
+        if (object instanceof Address) {
+            Address toCompare = (Address) object;
+            if (this.address != null && toCompare.address != null) {
+                addressesEqual = this.address.equals(toCompare.address);
+            }
+            if (this.city != null && toCompare.city != null) {
+                citiesEqual = this.city.equals(toCompare.city);
+            }
+            if (this.state != null && toCompare.state != null) {
+                statesEqual = this.state.equals(toCompare.state);
+            }
+            if (this.zipCode != null && toCompare.zipCode != null) {
+                zipCodesEqual = this.zipCode.equals(toCompare.zipCode);
+            }
+            if (this.countryCode != null && toCompare.countryCode != null) {
+                countryCodesEqual = this.countryCode.equals(toCompare.countryCode);
+            }
+            addressObjectsEqual = addressesEqual
+                    && citiesEqual
+                    && statesEqual
+                    && zipCodesEqual
+                    && countryCodesEqual;
+        }
+        return addressObjectsEqual;
     }
 
     public String getAddress() {

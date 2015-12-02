@@ -4,7 +4,7 @@ import com.onepagecrm.models.serializer.CallResultSerializer;
 
 import java.io.Serializable;
 
-public class CallResult implements Serializable {
+public class CallResult extends BaseResource implements Serializable {
 
     private static final long serialVersionUID = -3981577783870512717L;
 
@@ -28,6 +28,16 @@ public class CallResult implements Serializable {
 
     public String toString() {
         return CallResultSerializer.toJsonObject(this);
+    }
+
+    public boolean equals(Object object) {
+        if (object instanceof CallResult) {
+            CallResult toCompare = (CallResult) object;
+            if (this.id != null && toCompare.id != null) {
+                return this.id.equals(toCompare.id);
+            }
+        }
+        return false;
     }
 
     public String getText() {

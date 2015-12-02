@@ -4,7 +4,7 @@ import com.onepagecrm.models.serializer.UrlSerializer;
 
 import java.io.Serializable;
 
-public class Url implements Serializable {
+public class Url extends BaseResource implements Serializable {
 
     public static final String TYPE_WEBSITE = "website";
     public static final String TYPE_BLOG = "blog";
@@ -30,11 +30,12 @@ public class Url implements Serializable {
     }
 
     /**
-     * Method to compare Phone obj's to one another based off of their value attr.
+     * Method to compare Url obj's to one another based off of their value attr.
      *
      * @param object
      * @return
      */
+    @Override
     public boolean equals(Object object) {
         if (object instanceof Url) {
             Url toCompare = (Url) object;

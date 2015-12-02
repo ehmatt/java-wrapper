@@ -12,7 +12,7 @@ import com.onepagecrm.net.request.Request;
 import java.io.Serializable;
 import java.util.List;
 
-public class Tag implements Serializable {
+public class Tag extends BaseResource implements Serializable {
 
     private static final String TAGS_ENDPOINT = ApiResource.TAGS_ENDPOINT;
 
@@ -71,6 +71,7 @@ public class Tag implements Serializable {
      * @param object
      * @return
      */
+    @Override
     public boolean equals(Object object) {
         if (object instanceof Tag) {
             Tag toCompare = (Tag) object;
