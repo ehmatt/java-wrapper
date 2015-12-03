@@ -29,9 +29,10 @@ public class ContactListSerializer extends BaseSerializer {
 
         try {
             parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONArray contactsArray = new JSONObject(parsedResponse).getJSONArray(CONTACTS_TAG);
+            JSONObject responseObject = new JSONObject(parsedResponse);
+            JSONArray contactsArray = responseObject.getJSONArray(CONTACTS_TAG);
             contacts = fromJsonArray(contactsArray);
-            Paginator paginator = RequestMetadataSerializer.fromJsonObject(new JSONObject(parsedResponse));
+            Paginator paginator = RequestMetadataSerializer.fromJsonObject(responseObject);
             contacts.setPaginator(paginator);
 
         } catch (ClassCastException e) {
@@ -39,13 +40,11 @@ public class ContactListSerializer extends BaseSerializer {
             throw exception;
 
         } catch (JSONException e) {
-            LOG.severe("Error parsing contacts array from response body");
+            LOG.severe("Error parsing Contacts array from response body");
             LOG.severe(e.toString());
         }
-
         return contacts;
     }
-
 
     /**
      * Parse response from contacts/action_stream request to construct Contact
@@ -63,28 +62,43 @@ public class ContactListSerializer extends BaseSerializer {
                 contacts.add(ContactSerializer.fromJsonObject(contactObject));
             }
         } catch (JSONException e) {
-            LOG.severe("Error parsing contacts array from response body");
+            LOG.severe("Error parsing Contacts array from response body");
             LOG.severe(e.toString());
         }
         return new ContactList(contacts);
     }
 
     public static String toJsonObject(ContactList contacts) {
-        JSONObject contactsObject = new JSONObject();
+        JSONObject contactsListObject = new JSONObject();
         try {
             JSONArray contactsArray = new JSONArray(ContactSerializer.toJsonArray(contacts));
-            addJsonArray(contactsArray, contactsObject, CONTACTS_TAG);
+            addJsonArray(contactsArray, contactsListObject, CONTACTS_TAG);
             Paginator paginator = contacts.getPaginator();
             if (paginator != null) {
-                addJsonIntegerValue(paginator.getTotalCount(), contactsObject, TOTAL_COUNT_TAG);
-                addJsonIntegerValue(paginator.getCurrentPage(), contactsObject, PAGE_TAG);
-                addJsonIntegerValue(paginator.getMaxPage(), contactsObject, MAX_PAGE_TAG);
-                addJsonIntegerValue(paginator.getPerPage(), contactsObject, PER_PAGE_TAG);
+                addJsonIntegerValue(paginator.getTotalCount(), contactsListObject, TOTAL_COUNT_TAG);
+                addJsonIntegerValue(paginator.getCurrentPage(), contactsListObject, PAGE_TAG);
+                addJsonIntegerValue(paginator.getMaxPage(), contactsListObject, MAX_PAGE_TAG);
+                addJsonIntegerValue(paginator.getPerPage(), contactsListObject, PER_PAGE_TAG);
             }
         } catch (JSONException e) {
-            LOG.severe("Error parsing contacts array from response body");
+            LOG.severe("Error serializing Contacts array from ContactList object");
             LOG.severe(e.toString());
         }
-        return contactsObject.toString();
+        return contactsListObject.toString();
+    }
+
+    public static ContactList fromJsonObject(JSONObject contactsObject) {
+        ContactList contacts = new ContactList();
+        try {
+            JSONArray contactsArray = contactsObject.getJSONArray(CONTACTS_TAG);
+            contacts = fromJsonArray(contactsArray);
+            Paginator paginator = RequestMetadataSerializer.fromJsonObject(contactsObject);
+            contacts.setPaginator(paginator);
+
+        } catch (JSONException e) {
+            LOG.severe("Error parsing Contacts array from Contacts object");
+            LOG.severe(e.toString());
+        }
+        return contacts;
     }
 }

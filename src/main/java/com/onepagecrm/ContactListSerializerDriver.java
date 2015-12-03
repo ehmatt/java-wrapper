@@ -3,7 +3,10 @@ package com.onepagecrm;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
+import com.onepagecrm.models.serializer.ContactListSerializer;
 import com.onepagecrm.net.request.Request;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,11 +14,14 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class Driver {
+/**
+ * Created by Cillian Myles <cillian@onepagecrm.com> on 03/12/2015.
+ */
+public class ContactListSerializerDriver {
 
     private static final Logger LOG = Logger.getLogger(Driver.class.getName());
 
-    public static void main(String[] args) throws OnePageException {
+    public static void main(String[] args) throws OnePageException, JSONException {
         Properties prop = new Properties();
         InputStream input = null;
 
@@ -47,19 +53,17 @@ public class Driver {
 
         LOG.info("Logged in User : " + loggedInUser);
 
-        LOG.info("User's Team : " + loggedInUser.getAccount().team);
-        LOG.info("User's Statuses : " + loggedInUser.getAccount().statuses);
-        LOG.info("User's Lead Sources : " + loggedInUser.getAccount().leadSources);
-        LOG.info("User's Custom Fields : " + loggedInUser.getAccount().customFields);
-        LOG.info("User's Call Results : " + loggedInUser.getAccount().callResults);
-        LOG.info("User's Filters : " + loggedInUser.getAccount().filters);
-
         ContactList stream = loggedInUser.actionStream();
-        ContactList contacts = loggedInUser.contacts();
 
-        LOG.info(stream.getPaginator().toString());
-//        Contact contact = stream.get(0);
-//
-//        LOG.info(contact.toString());
+        String serialized = ContactListSerializer.toJsonObject(stream);
+
+        ContactList serializedAndParsed = ContactListSerializer.fromJsonObject(
+                new JSONObject(serialized)
+        );
+
+        LOG.info("stream : " + stream);
+        LOG.info("stream.getPaginator() : " + stream.getPaginator());
+//        LOG.info("serialized.getPaginator() : " + serialized.getPaginator());
+        LOG.info("serializedAndParsed.getPaginator() : " + serializedAndParsed.getPaginator());
     }
 }

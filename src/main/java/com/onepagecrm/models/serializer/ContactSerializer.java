@@ -2,6 +2,7 @@ package com.onepagecrm.models.serializer;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.*;
+import com.sun.script.javascript.JSAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -162,6 +163,7 @@ public class ContactSerializer extends BaseSerializer {
      */
     public static String toJsonObject(Contact contact) {
 
+        JSONObject contactAndActionsObject = new JSONObject();
         JSONObject contactObject = new JSONObject();
 
         addJsonStringValue(contact.getId(), contactObject, ID_TAG);
@@ -239,7 +241,7 @@ public class ContactSerializer extends BaseSerializer {
         // Serialize Actions.
         try {
             JSONArray nextActionsArray = new JSONArray(ActionSerializer.toJsonArray(contact.getActions()));
-            addJsonArray(nextActionsArray, contactObject, NEXT_ACTIONS_TAG);
+            addJsonArray(nextActionsArray, contactAndActionsObject, NEXT_ACTIONS_TAG);
         } catch (JSONException e) {
             LOG.severe("Error creating Next Action array while constructing Contact object");
             LOG.severe(e.toString());
@@ -248,13 +250,15 @@ public class ContactSerializer extends BaseSerializer {
         // Serialize Next Action.
         try {
             JSONObject nextActionObject = new JSONObject(ActionSerializer.toJsonObject(contact.getNextAction()));
-            addJsonObject(nextActionObject, contactObject, NEXT_ACTION_TAG);
+            addJsonObject(nextActionObject, contactAndActionsObject, NEXT_ACTION_TAG);
         } catch (JSONException e) {
             LOG.severe("Error creating Next Action object while constructing Contact object");
             LOG.severe(e.toString());
         }
 
-        return contactObject.toString();
+        addJsonObject(contactObject, contactAndActionsObject, CONTACT_TAG);
+
+        return contactAndActionsObject.toString();
     }
 
     public static String toJsonArray(ContactList contacts) {
@@ -262,19 +266,13 @@ public class ContactSerializer extends BaseSerializer {
         if (contacts != null && !contacts.isEmpty()) {
             for (int i = 0; i < contacts.size(); i++) {
                 try {
-                    contactsArray.put(new JSONObject(toJsonObject(contacts.get(i))));
+                    String contactString = toJsonObject(contacts.get(i));
+                    contactsArray.put(new JSONObject(contactString));
                 } catch (JSONException e) {
-                    LOG.severe("Error creating JSONArray out of ContactList");
+                    LOG.severe("Error serializing Contacts array out of ContactList");
                     LOG.severe(e.toString());
                 }
             }
-//            if (contacts.getPaginator() != null) {
-//                addJsonStringValue(
-//                        RequestMetadataSerializer.toJsonKeyValuePair(contacts.getPaginator()),
-//                        new JSONObject(),
-//
-//                );
-//            }
         }
         return contactsArray.toString();
     }

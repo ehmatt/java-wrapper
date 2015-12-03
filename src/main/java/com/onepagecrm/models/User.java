@@ -50,13 +50,25 @@ public class User extends ApiResource implements Serializable {
     }
 
     public ContactList contacts() throws OnePageException {
-        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.perPageQueryString(100));
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.paginatorToString(new Paginator()));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
+    public ContactList contacts(Paginator paginator) throws OnePageException {
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.paginatorToString(paginator));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public DealList pipeline() throws OnePageException {
-        Request request = new GetRequest(DEALS_ENDPOINT, Query.perPageQueryString(100));
+        Request request = new GetRequest(DEALS_ENDPOINT, Query.paginatorToString(new Paginator()));
+        Response response = request.send();
+        return DealListSerializer.fromString(response.getResponseBody());
+    }
+
+    public DealList pipeline(Paginator paginator) throws OnePageException {
+        Request request = new GetRequest(DEALS_ENDPOINT, Query.paginatorToString(paginator));
         Response response = request.send();
         return DealListSerializer.fromString(response.getResponseBody());
     }

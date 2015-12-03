@@ -38,18 +38,20 @@ public class Paginator extends BaseResource implements Serializable {
         // Set defaults.
         this.currentPage = 1;
         this.perPage = 10;
+        this.maxPage = 1;
     }
 
     public Paginator reset() {
         // Restore defaults.
         this.currentPage = 1;
         this.perPage = 10;
+        this.maxPage = 1;
         return this;
     }
 
     @Override
     public String toString() {
-        return RequestMetadataSerializer.toJsonObject(this);
+        return RequestMetadataSerializer.toJsonKeyValuePair(this);
     }
 
     @Override

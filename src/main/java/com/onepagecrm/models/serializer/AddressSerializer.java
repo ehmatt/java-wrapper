@@ -20,7 +20,7 @@ public class AddressSerializer extends BaseSerializer {
                 addressObject = addressArray.getJSONObject(j);
                 addresses.add(fromJsonObject(addressObject));
             } catch (JSONException e) {
-                LOG.severe("Error parsing address_list array");
+                LOG.severe("Error parsing Address array");
                 LOG.severe(e.toString());
             }
         }
@@ -30,19 +30,23 @@ public class AddressSerializer extends BaseSerializer {
     public static Address fromJsonObject(JSONObject addressObject) {
         Address address = new Address();
         try {
-            String line1 = addressObject.getString(ADDRESS_TAG);
-            String city = addressObject.getString(CITY_TAG);
-            String state = addressObject.getString(STATE_TAG);
-            String zipCode = addressObject.getString(ZIP_CODE_TAG);
-            String countryCode = addressObject.getString(COUNTRY_CODE_TAG);
-            return address
-                    .setAddress(line1)
-                    .setCity(city)
-                    .setState(state)
-                    .setZipCode(zipCode)
-                    .setCountryCode(countryCode);
+            if (addressObject.has(ADDRESS_TAG)) {
+                address.setAddress(addressObject.getString(ADDRESS_TAG));
+            }
+            if (addressObject.has(CITY_TAG)) {
+                address.setCity(addressObject.getString(CITY_TAG));
+            }
+            if (addressObject.has(STATE_TAG)) {
+                address.setState(addressObject.getString(STATE_TAG));
+            }
+            if (addressObject.has(ZIP_CODE_TAG)) {
+                address.setZipCode(addressObject.getString(ZIP_CODE_TAG));
+            }
+            if (addressObject.has(COUNTRY_CODE_TAG)) {
+                address.setCountryCode(addressObject.getString(COUNTRY_CODE_TAG));
+            }
         } catch (JSONException e) {
-            LOG.severe("Error parsing address_list object");
+            LOG.severe("Error parsing Address object");
             LOG.severe(e.toString());
         }
         return address;
@@ -69,7 +73,7 @@ public class AddressSerializer extends BaseSerializer {
                     addressArray.put(new JSONObject(addressString));
                 }
             } catch (JSONException e) {
-                LOG.severe("Error creating JSONObject out of address_list");
+                LOG.severe("Error creating JSONObject out of Address");
                 LOG.severe(e.toString());
             }
         }

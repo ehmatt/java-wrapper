@@ -12,17 +12,12 @@ import com.onepagecrm.models.serializer.CallSerializer;
 import com.onepagecrm.models.serializer.ContactListSerializer;
 import com.onepagecrm.models.serializer.ContactSerializer;
 import com.onepagecrm.models.serializer.LoginSerializer;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
 
 import java.util.logging.Logger;
 
 public class ResponseHandlerTest extends BaseTest {
 
     private static Logger LOG = Logger.getLogger(ResponseHandlerTest.class.getName());
-
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
 
     @Override
     protected void setUp() throws Exception {
