@@ -19,53 +19,53 @@ public class BaseSerializer {
     // LOGIN TAGS
     public static final String LOGIN_TAG = "login";
     public static final String PASSWORD_TAG = "password";
-    protected static final String DATA_TAG = "data";
-    protected static final String USER_ID_TAG = "user_id";
-    protected static final String AUTH_KEY_TAG = "auth_key";
-    protected static final String ACCOUNT_TYPE_TAG = "account_type";
+    public static final String DATA_TAG = "data";
+    public static final String USER_ID_TAG = "user_id";
+    public static final String AUTH_KEY_TAG = "auth_key";
+    public static final String ACCOUNT_TYPE_TAG = "account_type";
 
     // LOGIN RESPONSE / USER TAGS
-    protected static final String USER_TAG = "user";
-    protected static final String FIRST_NAME_TAG = "first_name";
-    protected static final String LAST_NAME_TAG = "last_name";
-    protected static final String EMAIL_TAG = "email";
-    protected static final String COMPANY_NAME_TAG = "company_name";
-    protected static final String PHOTO_URL_TAG = "photo_url";
-    protected static final String BCC_EMAIL_TAG = "bcc_email";
+    public static final String USER_TAG = "user";
+    public static final String FIRST_NAME_TAG = "first_name";
+    public static final String LAST_NAME_TAG = "last_name";
+    public static final String EMAIL_TAG = "email";
+    public static final String COMPANY_NAME_TAG = "company_name";
+    public static final String PHOTO_URL_TAG = "photo_url";
+    public static final String BCC_EMAIL_TAG = "bcc_email";
 
     // CONTACT TAGS
-    protected static final String CONTACTS_TAG = "contacts";
-    protected static final String CONTACT_TAG = "contact";
-    protected static final String ID_TAG = "id";
-    protected static final String COMPANY_ID_TAG = "company_id";
-    protected static final String EMAILS_TAG = "emails";
-    protected static final String JOB_TITLE_TAG = "job_title";
-    protected static final String LEAD_SOURCE_ID_TAG = "lead_source_id";
-    protected static final String OWNER_ID_TAG = "owner_id";
-    protected static final String PHONES_TAG = "phones";
-    protected static final String SALES_CLOSED_FOR_TAG = "sales_closed_for";
-    protected static final String STARRED_TAG = "starred";
-    protected static final String STATUS_ID_TAG = "status_id";
-    protected static final String URLS_TAG = "urls";
-    protected static final String BACKGROUND_TAG = "background";
-    protected static final String ADDRESS_LIST_TAG = "address_list";
-    protected static final String IMAGE_TAG = "image";
-    protected static final String PENDING_DEAL_TAG = "pending_deal";
-    protected static final String TOTAL_PENDINGS_TAG = "total_pendings";
+    public static final String CONTACTS_TAG = "contacts";
+    public static final String CONTACT_TAG = "contact";
+    public static final String ID_TAG = "id";
+    public static final String COMPANY_ID_TAG = "company_id";
+    public static final String EMAILS_TAG = "emails";
+    public static final String JOB_TITLE_TAG = "job_title";
+    public static final String LEAD_SOURCE_ID_TAG = "lead_source_id";
+    public static final String OWNER_ID_TAG = "owner_id";
+    public static final String PHONES_TAG = "phones";
+    public static final String SALES_CLOSED_FOR_TAG = "sales_closed_for";
+    public static final String STARRED_TAG = "starred";
+    public static final String STATUS_ID_TAG = "status_id";
+    public static final String URLS_TAG = "urls";
+    public static final String BACKGROUND_TAG = "background";
+    public static final String ADDRESS_LIST_TAG = "address_list";
+    public static final String IMAGE_TAG = "image";
+    public static final String PENDING_DEAL_TAG = "pending_deal";
+    public static final String TOTAL_PENDINGS_TAG = "total_pendings";
 
     // ADDRESS LIST TAGS
-    protected static final String ADDRESS_TAG = "address";
-    protected static final String CITY_TAG = "city";
-    protected static final String STATE_TAG = "state";
-    protected static final String ZIP_CODE_TAG = "zip_code";
-    protected static final String COUNTRY_CODE_TAG = "country_code";
+    public static final String ADDRESS_TAG = "address";
+    public static final String CITY_TAG = "city";
+    public static final String STATE_TAG = "state";
+    public static final String ZIP_CODE_TAG = "zip_code";
+    public static final String COUNTRY_CODE_TAG = "country_code";
 
     // ACTION TAGS
-    protected static final String NEXT_ACTIONS_TAG = "next_actions";
-    protected static final String NEXT_ACTION_TAG = "next_action";
-    protected static final String CONTACT_ID_TAG = "contact_id";
-    protected static final String ASSIGNEE_ID_TAG = "assignee_id";
-    protected static final String DATE_TAG = "date";
+    public static final String NEXT_ACTIONS_TAG = "next_actions";
+    public static final String NEXT_ACTION_TAG = "next_action";
+    public static final String CONTACT_ID_TAG = "contact_id";
+    public static final String ASSIGNEE_ID_TAG = "assignee_id";
+    public static final String DATE_TAG = "date";
 
     // CALL TAGS
     public static final String CALL_TAG = "call";
@@ -79,77 +79,77 @@ public class BaseSerializer {
     public static final String ATTACHMENTS_TAG = "attachment";
 
     // 201 RESPONSE TAGS
-    protected static final String STATUS_TAG = "status";
-    protected static final String STATUSES_TAG = "statuses";
-    protected static final String MESSAGE_TAG = "message";
-    protected static final String TIMESTAMP_TAG = "timestamp";
-    protected static final String CREATED_TAG = "Created";
+    public static final String STATUS_TAG = "status";
+    public static final String STATUSES_TAG = "statuses";
+    public static final String MESSAGE_TAG = "message";
+    public static final String TIMESTAMP_TAG = "timestamp";
+    public static final String CREATED_TAG = "Created";
 
     // GENERIC TAGS
-    protected static final String TYPE_TAG = "type";
-    protected static final String VALUE_TAG = "value";
-    protected static final String CREATED_AT_TAG = "created_at";
-    protected static final String MODIFIED_AT_TAG = "modified_at";
-    protected static final String OK_TAG = "OK";
+    public static final String TYPE_TAG = "type";
+    public static final String VALUE_TAG = "value";
+    public static final String CREATED_AT_TAG = "created_at";
+    public static final String MODIFIED_AT_TAG = "modified_at";
+    public static final String OK_TAG = "OK";
 
     // CUSTOM FIELDS TAGS
-    protected static final String CUSTOM_FIELDS_TAG = "custom_fields";
-    protected static final String CUSTOM_FIELD_TAG = "custom_field";
-    protected static final String CHOICES_TAG = "choices";
-    protected static final String NAME_TAG = "name";
-    protected static final String POSITION_TAG = "position";
-    protected static final String REMINDER_DAYS_TAG = "reminder_days";
+    public static final String CUSTOM_FIELDS_TAG = "custom_fields";
+    public static final String CUSTOM_FIELD_TAG = "custom_field";
+    public static final String CHOICES_TAG = "choices";
+    public static final String NAME_TAG = "name";
+    public static final String POSITION_TAG = "position";
+    public static final String REMINDER_DAYS_TAG = "reminder_days";
 
     // TAGS TAGS
-    protected static final String TAGS_TAG = "tags";
-    protected static final String SYSTEM_TAGS_TAG = "system_tags";
-    protected static final String COUNTS_TAG = "counts";
-    protected static final String TOTAL_COUNT_TAG = "total_count";
-    protected static final String ACTION_STREAM_COUNT_TAG = "action_stream_count";
+    public static final String TAGS_TAG = "tags";
+    public static final String SYSTEM_TAGS_TAG = "system_tags";
+    public static final String COUNTS_TAG = "counts";
+    public static final String TOTAL_COUNT_TAG = "total_count";
+    public static final String ACTION_STREAM_COUNT_TAG = "action_stream_count";
 
     // ERROR TAGS
-    protected static final String ERROR_NAME_TAG = "error_name";
-    protected static final String ERROR_MESSAGE_TAG = "error_message";
-    protected static final String ERRORS_TAG = "errors";
+    public static final String ERROR_NAME_TAG = "error_name";
+    public static final String ERROR_MESSAGE_TAG = "error_message";
+    public static final String ERRORS_TAG = "errors";
 
     // TEAM TAGS
-    protected static final String TEAM_TAG = "team";
-    protected static final String ACCOUNT_RIGHTS_TAG = "account_rights";
+    public static final String TEAM_TAG = "team";
+    public static final String ACCOUNT_RIGHTS_TAG = "account_rights";
 
     // STATUS TAGS
-    protected static final String TEAM_COUNTS_TAG = "team_counts";
-    protected static final String COLOR_TAG = "color";
-    protected static final String DESCRIPTION_TAG = "description";
+    public static final String TEAM_COUNTS_TAG = "team_counts";
+    public static final String COLOR_TAG = "color";
+    public static final String DESCRIPTION_TAG = "description";
 
     // LEAD SOURCES TAGS
-    protected static final String LEAD_SOURCES_ID_TAG = "lead_sources";
+    public static final String LEAD_SOURCES_ID_TAG = "lead_sources";
 
     // COUNTRIES TAGS
-    protected static final String COUNTRIES_TAG = "countries";
-    protected static final String COUNTRY_TAG = "country";
-    protected static final String CODE_TAG = "code";
-    protected static final String PHONE_PREFIX_TAG = "phone_prefix";
-    protected static final String CURRENCY_TAG = "currency";
+    public static final String COUNTRIES_TAG = "countries";
+    public static final String COUNTRY_TAG = "country";
+    public static final String CODE_TAG = "code";
+    public static final String PHONE_PREFIX_TAG = "phone_prefix";
+    public static final String CURRENCY_TAG = "currency";
 
     // DEALS_TAG
-    protected static final String DEALS_TAG = "deals";
-    protected static final String DEAL_TAG = "deal";
-    protected static final String AMOUNT_TAG = "amount";
-    protected static final String EXPECTED_CLOSE_DATE = "expected_close_date";
-    protected static final String MONTHS_TAG = "months";
-    protected static final String STAGE_TAG = "stage";
-    protected static final String TOTAL_AMOUNT_TAG = "total_amount";
-    protected static final String HAS_RELATED_NOTES_TAG = "has_related_notes";
-    protected static final String CLOSE_DATE_TAG = "close_date";
+    public static final String DEALS_TAG = "deals";
+    public static final String DEAL_TAG = "deal";
+    public static final String AMOUNT_TAG = "amount";
+    public static final String EXPECTED_CLOSE_DATE = "expected_close_date";
+    public static final String MONTHS_TAG = "months";
+    public static final String STAGE_TAG = "stage";
+    public static final String TOTAL_AMOUNT_TAG = "total_amount";
+    public static final String HAS_RELATED_NOTES_TAG = "has_related_notes";
+    public static final String CLOSE_DATE_TAG = "close_date";
 
     // FILTERS TAGS
-    protected static final String FILTER_TAG = "filter";
-    protected static final String FILTERS_TAG = "filters";
+    public static final String FILTER_TAG = "filter";
+    public static final String FILTERS_TAG = "filters";
 
     // METADATA TAGS
-    protected static final String PAGE_TAG = "page";
-    protected static final String MAX_PAGE_TAG = "max_page";
-    protected static final String PER_PAGE_TAG = "per_page";
+    public static final String PAGE_TAG = "page";
+    public static final String MAX_PAGE_TAG = "max_page";
+    public static final String PER_PAGE_TAG = "per_page";
 
     /**
      * Method used to parse the base/start of response.
