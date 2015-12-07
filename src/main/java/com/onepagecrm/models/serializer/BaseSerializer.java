@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -297,6 +298,50 @@ public class BaseSerializer {
             }
         }
         return choices;
+    }
+
+    public static String stringSeparator = "__,__";
+
+    public static String toCommaSeparatedString(List<String> strings) {
+        if (strings != null) {
+            // Convert from list of strings to array of strings.
+            String[] array = strings.toArray(new String[strings.size()]);
+            // Call the version of the function which takes array.
+            return toCommaSeparatedString(array);
+        } else {
+            return "";
+        }
+    }
+
+    public static String toCommaSeparatedString(String[] strings) {
+        String result = "";
+        if (strings != null) {
+            for (int i = 0; i < strings.length; i++) {
+                result = result + strings[i];
+                // Do not append comma at the end of last element
+                if (i < strings.length - 1) {
+                    result = result + stringSeparator;
+                }
+            }
+        }
+        return result;
+    }
+
+    public static List<String> toListOfStrings(String string) {
+        if (string != null) {
+            String[] array = toArrayOfStrings(string);
+            return Arrays.asList(array);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public static String[] toArrayOfStrings(String string) {
+        if (string != null) {
+            return string.split(stringSeparator);
+        } else {
+            return new String[128];
+        }
     }
 
     /**

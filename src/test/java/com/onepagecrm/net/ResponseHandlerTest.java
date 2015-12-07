@@ -5,13 +5,11 @@ import com.onepagecrm.exceptions.AuthenticationExpection;
 import com.onepagecrm.exceptions.BadRequestException;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Call;
+import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.Utilities;
-import com.onepagecrm.models.serializer.CallSerializer;
-import com.onepagecrm.models.serializer.ContactListSerializer;
-import com.onepagecrm.models.serializer.ContactSerializer;
-import com.onepagecrm.models.serializer.LoginSerializer;
+import com.onepagecrm.models.serializer.*;
 
 import java.util.logging.Logger;
 
@@ -72,22 +70,14 @@ public class ResponseHandlerTest extends BaseTest {
             User parsedUser = LoginSerializer.fromString(successResponse);
 
             assertNotNull("User object being set is null", parsedUser);
-            assertEquals("User ID not set correctly", loggedInUser.getId(),
-                    parsedUser.getId());
-            assertEquals("AuthKey not set correctly", loggedInUser.getAuthKey(),
-                    parsedUser.getAuthKey());
-            assertEquals("AccountType not set correctly", loggedInUser.getAccountType(),
-                    parsedUser.getAccountType());
-            assertEquals("FirstName not set correctly", loggedInUser.getFirstName(),
-                    parsedUser.getFirstName());
-            assertEquals("LastName not set correctly", loggedInUser.getLastName(),
-                    parsedUser.getLastName());
-            assertEquals("Email not set correctly", loggedInUser.getEmail(),
-                    parsedUser.getEmail());
-            assertEquals("Company not set correctly", loggedInUser.getCompanyName(),
-                    parsedUser.getCompanyName());
-            assertEquals("BCC Email not set correctly", loggedInUser.getBccEmail(),
-                    parsedUser.getBccEmail());
+            assertEquals("User ID not set correctly", loggedInUser.getId(), parsedUser.getId());
+            assertEquals("AuthKey not set correctly", loggedInUser.getAuthKey(), parsedUser.getAuthKey());
+            assertEquals("AccountType not set correctly", loggedInUser.getAccountType(), parsedUser.getAccountType());
+            assertEquals("FirstName not set correctly", loggedInUser.getFirstName(), parsedUser.getFirstName());
+            assertEquals("LastName not set correctly", loggedInUser.getLastName(), parsedUser.getLastName());
+            assertEquals("Email not set correctly", loggedInUser.getEmail(), parsedUser.getEmail());
+            assertEquals("Company not set correctly", loggedInUser.getCompanyName(), parsedUser.getCompanyName());
+            assertEquals("BCC Email not set correctly", loggedInUser.getBccEmail(), parsedUser.getBccEmail());
 
         } catch (OnePageException e) {
             LOG.severe("Problems parsing login response.");
@@ -168,6 +158,7 @@ public class ResponseHandlerTest extends BaseTest {
         try {
             assertNotNull("Contact array object mis-constructed / not constructed",
                     ContactListSerializer.fromString(oneContactResponse));
+
         } catch (OnePageException e) {
             // Not expecting this.
         }
@@ -175,6 +166,7 @@ public class ResponseHandlerTest extends BaseTest {
         try {
             assertEquals("Wrong number of Contacts constructed",
                     1, ContactListSerializer.fromString(oneContactResponse).size());
+
         } catch (OnePageException e) {
             // Not expecting this.
         }
@@ -232,6 +224,7 @@ public class ResponseHandlerTest extends BaseTest {
         try {
             assertNotNull("Contact array object mis-constructed / not constructed",
                     ContactListSerializer.fromString(twoContactsResponse));
+
         } catch (OnePageException e) {
             // Not expecting this.
         }
@@ -239,6 +232,7 @@ public class ResponseHandlerTest extends BaseTest {
         try {
             assertEquals("Wrong number of Contacts constructed",
                     2, ContactListSerializer.fromString(twoContactsResponse).size());
+
         } catch (OnePageException e) {
             // Not expecting this.
         }
@@ -257,6 +251,7 @@ public class ResponseHandlerTest extends BaseTest {
         try {
             assertNotNull("Contact array object mis-constructed / not constructed",
                     ContactListSerializer.fromString(noContactResponse));
+
         } catch (OnePageException e) {
             // Not expecting this.
         }
@@ -264,8 +259,50 @@ public class ResponseHandlerTest extends BaseTest {
         try {
             assertEquals("Wrong number of Contacts constructed",
                     0, ContactListSerializer.fromString(noContactResponse).size());
+
         } catch (OnePageException e) {
             // Not expecting this.
+        }
+    }
+
+    /**
+     * Ensure correct operation of Contact parsing method.
+     * <p/>
+     * Response containing details of Exception should result in Exception
+     * being thrown.
+     */
+    public void testParseGetContactsResponse_Expired() {
+        String expiredResponse = "{\"error_name\":\"expired\",\"status\":400,\"message\":" +
+                "\"Expired\",\"error_message\":\"Could not find more helpful message, sorry.\"," +
+                "\"errors\":{}}";
+
+        try {
+            BaseSerializer.fromString(expiredResponse);
+        } catch (OnePageException exception) {
+            // We are expecting this Exception to be thrown.
+            assertTrue("Expired token response misinterpreted",
+                    exception instanceof BadRequestException);
+        }
+    }
+
+    /**
+     * Ensure correct operation of Contact parsing method.
+     * <p/>
+     * Response containing details of Exception should result in Exception
+     * being thrown.
+     */
+    public void testParseGetContactsResponse_NoAuth() {
+        String noAuthResponse = "{\"error_name\":\"authorization_data_not_found\"," +
+                "\"status\":401,\"message\":\"Authorization data not found\"," +
+                "\"error_message\":\"Could not find more helpful message, sorry.\"," +
+                "\"errors\":{}}";
+
+        try {
+            BaseSerializer.fromString(noAuthResponse);
+        } catch (OnePageException exception) {
+            // We are expecting this Exception to be thrown.
+            assertTrue("No auth token response misinterpreted",
+                    exception instanceof AuthenticationExpection);
         }
     }
 
@@ -285,11 +322,13 @@ public class ResponseHandlerTest extends BaseTest {
 
         try {
             Call call = CallSerializer.fromString(createdResourceResponse);
+
             assertTrue("Success message misinterpreted", call.isValid());
             assertTrue(call.getId().equals("559689cb9b79b24686000025"));
             assertTrue(("" + call.getTime().getTime() + "").equals("1435929035"));
             assertTrue(call.getVia().equals("unknown"));
             assertTrue(call.getContactId().equals("55804f6b1787fa72b400002e"));
+
         } catch (OnePageException e) {
             // We do not expect this exception to be thrown
         }
@@ -305,8 +344,13 @@ public class ResponseHandlerTest extends BaseTest {
                 "\"Expired\",\"error_message\":\"Could not find more helpful message, sorry.\"," +
                 "\"errors\":{}}";
 
-//        assertEquals("Expired token response misinterpreted",
-//                false, BaseSerializer.createResourceFromString(expiredResponse));
+        try {
+            BaseSerializer.fromString(expiredResponse);
+        } catch (OnePageException exception) {
+            // We are expecting this Exception to be thrown.
+            assertTrue("Expired token response misinterpreted",
+                    exception instanceof BadRequestException);
+        }
     }
 
     /**
@@ -320,8 +364,13 @@ public class ResponseHandlerTest extends BaseTest {
                 "\"error_message\":\"Could not find more helpful message, sorry.\"," +
                 "\"errors\":{}}";
 
-//        assertEquals("No auth token response misinterpreted",
-//                false, BaseSerializer.createResourceFromString(noAuthResponse));
+        try {
+            BaseSerializer.fromString(noAuthResponse);
+        } catch (OnePageException exception) {
+            // We are expecting this Exception to be thrown.
+            assertTrue("No auth token response misinterpreted",
+                    exception instanceof AuthenticationExpection);
+        }
     }
 
     /**
@@ -329,15 +378,19 @@ public class ResponseHandlerTest extends BaseTest {
      * ContactList with 18 Contact objects.
      */
     public void testParseActionStreamPerPage_Successful() {
-        String response = Utilities.getResourceContents("src/test/res/request_01_action_stream_response.json");
-        ContactList actionStream = null;
+        String response = Utilities.getResourceContents(
+                "src/test/res/request_01_action_stream_response.json"
+        );
+
         try {
-            actionStream = ContactListSerializer.fromString(response);
+            ContactList actionStream = ContactListSerializer.fromString(response);
+
+            assertTrue("Contacts not parsed correctly", !actionStream.isEmpty());
+            assertTrue("Incorrect number of contacts parsed", actionStream.size() == 18);
+
         } catch (OnePageException e) {
             // Not expecting this.
         }
-        assertTrue("Contacts not parsed correctly", !actionStream.isEmpty());
-        assertTrue("Incorrect number of contacts parsed", actionStream.size() == 18);
     }
 
     /**
@@ -345,24 +398,34 @@ public class ResponseHandlerTest extends BaseTest {
      * ContactList with 18 Contact objects.
      */
     public void testParseContactsPerPage_Successful() {
-        String response = Utilities.getResourceContents("src/test/res/request_02_contacts_response.json");
-        ContactList contacts = null;
+        String response = Utilities.getResourceContents(
+                "src/test/res/request_02_contacts_response.json"
+        );
+
         try {
-            contacts = ContactListSerializer.fromString(response);
+            ContactList contacts = ContactListSerializer.fromString(response);
+
+            assertTrue("Contacts not parsed correctly", !contacts.isEmpty());
+            assertTrue("Incorrect number of contacts parsed", contacts.size() == 25);
+
         } catch (OnePageException e) {
             // Not expecting this.
         }
-        assertTrue("Contacts not parsed correctly", !contacts.isEmpty());
-        assertTrue("Incorrect number of contacts parsed", contacts.size() == 25);
     }
 
     /**
      * Test makes sure that a CALL resource has been added correctly.
      */
     public void testParseAddCall_Successful() {
-        String response = Utilities.getResourceContents("src/test/res/request_03_add_call_response.json");
+        String response = Utilities.getResourceContents(
+                "src/test/res/request_03_add_call_response.json"
+        );
+
         try {
-            assertTrue("Add call response not parsed correctly", CallSerializer.fromString(response).isValid());
+            Call call = CallSerializer.fromString(response);
+
+            assertTrue("Add call response not parsed correctly", call.isValid());
+
         } catch (OnePageException e) {
             // Not expecting this.
         }
@@ -372,9 +435,15 @@ public class ResponseHandlerTest extends BaseTest {
      * Test makes sure that a CONTACT resource has been added correctly.
      */
     public void testParseAddContact_Successful() {
-        String response = Utilities.getResourceContents("src/test/res/request_04_add_contact_response.json");
+        String response = Utilities.getResourceContents(
+                "src/test/res/request_04_add_contact_response.json"
+        );
+
         try {
-            assertTrue("Add contact response not parsed correctly", ContactSerializer.fromString(response).isValid());
+            Contact contact = ContactSerializer.fromString(response);
+
+            assertTrue("Add contact response not parsed correctly", contact.isValid());
+
         } catch (OnePageException e) {
             // Not expecting this.
         }
