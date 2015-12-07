@@ -15,11 +15,14 @@ So far, it only contains a moderately-sized subsection of calls and functions av
 - Both of these can be found in the project directory /jars/.
 
 ## Example
-The following is an example of an executable class which will:
-- Login a user.
+The following is an example of a class which will:
+- Log in a user.
 - Get their Action Stream.
-- Pick the first contact. 
-- And add a new call for that contact.
+- Get their a-to-z list of Contacts.
+- Get their list of Deals.
+- Pick the first Contact. 
+- And add a new Call for that Contact.
+- Create a new Contact.
 
 ```java
 package com.onepagecrm;
