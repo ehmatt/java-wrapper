@@ -57,7 +57,7 @@ public class Driver {
     ContactList contacts = loggedInUser.contacts();
 
     // Get user's list of deals (pipeline)
-    DealList pipelien = loggedInUser.pipeline();
+    DealList pipeline = loggedInUser.pipeline();
 
     // Pick the first contact from the Action Stream
     Contact contact = stream.get(0);
