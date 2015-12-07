@@ -32,6 +32,9 @@ public class BaseSerializer {
     public static final String COMPANY_NAME_TAG = "company_name";
     public static final String PHOTO_URL_TAG = "photo_url";
     public static final String BCC_EMAIL_TAG = "bcc_email";
+    public static final String SALES_TAG = "sales";
+    public static final String ACCOUNT_TAG = "account";
+    public static final String SETTINGS_TAG = "settings";
 
     // CONTACT TAGS
     public static final String CONTACTS_TAG = "contacts";
@@ -40,7 +43,6 @@ public class BaseSerializer {
     public static final String COMPANY_ID_TAG = "company_id";
     public static final String EMAILS_TAG = "emails";
     public static final String JOB_TITLE_TAG = "job_title";
-    public static final String LEAD_SOURCE_ID_TAG = "lead_source_id";
     public static final String OWNER_ID_TAG = "owner_id";
     public static final String PHONES_TAG = "phones";
     public static final String SALES_CLOSED_FOR_TAG = "sales_closed_for";
@@ -91,6 +93,7 @@ public class BaseSerializer {
     public static final String CREATED_AT_TAG = "created_at";
     public static final String MODIFIED_AT_TAG = "modified_at";
     public static final String OK_TAG = "OK";
+    public static final String DISPLAY_TAG = "display";
 
     // CUSTOM FIELDS TAGS
     public static final String CUSTOM_FIELDS_TAG = "custom_fields";
@@ -102,6 +105,7 @@ public class BaseSerializer {
 
     // TAGS TAGS
     public static final String TAGS_TAG = "tags";
+    public static final String TAG_TAG = "tag";
     public static final String SYSTEM_TAGS_TAG = "system_tags";
     public static final String COUNTS_TAG = "counts";
     public static final String TOTAL_COUNT_TAG = "total_count";
@@ -122,7 +126,9 @@ public class BaseSerializer {
     public static final String DESCRIPTION_TAG = "description";
 
     // LEAD SOURCES TAGS
-    public static final String LEAD_SOURCES_ID_TAG = "lead_sources";
+    public static final String LEAD_SOURCE_ID_TAG = "lead_source_id";
+    public static final String LEAD_SOURCES_TAG = "lead_sources";
+    public static final String LEAD_SOURCE_TAG = "lead_source";
 
     // COUNTRIES TAGS
     public static final String COUNTRIES_TAG = "countries";

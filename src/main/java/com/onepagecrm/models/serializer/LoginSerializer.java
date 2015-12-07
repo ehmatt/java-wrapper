@@ -86,8 +86,8 @@ public class LoginSerializer extends BaseSerializer {
         JSONObject responseObject;
         try {
             responseObject = new JSONObject(responseBody);
-            if (responseObject.has(LEAD_SOURCES_ID_TAG)) {
-                addLeadSources(responseObject.getJSONArray(LEAD_SOURCES_ID_TAG));
+            if (responseObject.has(LEAD_SOURCES_TAG)) {
+                addLeadSources(responseObject.getJSONArray(LEAD_SOURCES_TAG));
             }
         } catch (JSONException e) {
             LOG.severe("Error parsing LeadSource array");
