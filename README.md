@@ -1,26 +1,18 @@
 # OnePageCRM Java API Wrapper
-This project is (will be) a comprehensive java project aimed to abstract some of the difficulties associated with getting started interacting with external APIs, providing you quick and easy access to API resources in useful formats.
+This project is a comprehensive java API wrapper aimed to abstract some of the difficulties associated with getting started interacting with external APIs, providing you quick and easy access to API resources in useful formats.
 
-So far, it only contains a small subsection of calls and functions available using the API, though more are currently being added.
+So far, it only contains a moderately-sized subsection of calls and functions available using the API, though more are currently being added.
 
 ## Getting started
 
 - Clone the repository.
 
-- Open Eclipse and **Import** > **General** > **Existing Projects into Workspace**.
+- Import the project into your IDE.
 
-- Navigate to the cloned repository and Import.
-
-- Right click the project and click **Build Path** > **Configure Build Path**.
-  -  Add both of the following folders as source folders:
-    - java-client-wrapper/src/main/java
-    - java-client-wrapper/src/test/java
-
-- Download latest version of org.json-XXXXXXXX.jar from [here] (https://code.google.com/p/org-json-java/downloads/list).
-  - Import this (**Add External JARs...**) to the project.
-
-- Download latest version of Apache Commons codec commons-codec.X.XX.jar from [here] (https://commons.apache.org/proper/commons-codec/download_codec.cgi).
-  - Import this (**Add External JARs...**) to the project.
+- Make sure you include the following jars in the build path:
+  - org.json-20120521.jar 
+  - commons-codec-1.10.jar
+- Both of these can be found in the project directory /jars/.
 
 ## Example
 The following is an example of an executable class which will:
@@ -39,16 +31,30 @@ import com.onepagecrm.models.User;
 
 public class Driver {
 
+  private static final Logger LOG = Logger.getLogger(Driver.class.getName());
+
   public static void main(String[] args) {
 
     // Login 
     User loggedInUser = User.login("username", "password");
+
+    // Display all the details about the user / account.
+    LOG.info("Logged in User : " + loggedInUser);
+    LOG.info("User's Team : " + loggedInUser.getAccount().team);
+    LOG.info("User's Statuses : " + loggedInUser.getAccount().statuses);
+    LOG.info("User's Lead Sources : " + loggedInUser.getAccount().leadSources);
+    LOG.info("User's Custom Fields : " + loggedInUser.getAccount().customFields);
+    LOG.info("User's Call Results : " + loggedInUser.getAccount().callResults);
+    LOG.info("User's Filters : " + loggedInUser.getAccount().filters);
 
     // Get user's Action Stream
     ContactList stream = loggedInUser.actionStream();
 
     // Get user's list of contacts in alphabetical order
     ContactList contacts = loggedInUser.contacts();
+
+    // Get user's list of deals (pipeline)
+    DealList pipelien = loggedInUser.pipeline();
 
     // Pick the first contact from the Action Stream
     Contact contact = stream.get(0);
