@@ -1,5 +1,6 @@
 package com.onepagecrm.models.internal;
 
+import com.onepagecrm.models.serializer.BaseSerializer;
 import com.onepagecrm.models.serializer.CustomFieldValueSerializer;
 
 import java.io.Serializable;
@@ -22,6 +23,20 @@ public class CustomFieldValue implements Serializable {
             return this.stringArrayValue;
         }
         return null;
+    }
+
+    public String getStringValue() {
+        String retString = "";
+        if (stringValue != null) {
+            retString = this.stringValue;
+        } else if (integerValue != null) {
+            retString = String.valueOf(this.integerValue);
+        } else if (floatValue != null) {
+            retString = String.valueOf(this.floatValue);
+        } else if (stringArrayValue != null) {
+            retString = BaseSerializer.toCommaSeparatedString(this.stringArrayValue);
+        }
+        return retString;
     }
 
     public Serializable setValue(Object object) {

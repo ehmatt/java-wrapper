@@ -1,7 +1,6 @@
 package com.onepagecrm;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
 import com.onepagecrm.net.request.Request;
 
@@ -48,16 +47,16 @@ public class Driver {
         LOG.info("Logged in User : " + loggedInUser);
 
         LOG.info("User's Team : " + loggedInUser.getAccount().team);
-        LOG.info("User's Statuses : " + loggedInUser.getAccount().statuses);
-        LOG.info("User's Lead Sources : " + loggedInUser.getAccount().leadSources);
-        LOG.info("User's Custom Fields : " + loggedInUser.getAccount().customFields);
-        LOG.info("User's Call Results : " + loggedInUser.getAccount().callResults);
-        LOG.info("User's Filters : " + loggedInUser.getAccount().filters);
-
-        ContactList stream = loggedInUser.actionStream();
-        ContactList contacts = loggedInUser.contacts();
-
-        LOG.info(stream.getPaginator().toString());
+//        LOG.info("User's Statuses : " + loggedInUser.getAccount().statuses);
+//        LOG.info("User's Lead Sources : " + loggedInUser.getAccount().leadSources);
+//        LOG.info("User's Custom Fields : " + loggedInUser.getAccount().customFields);
+//        LOG.info("User's Call Results : " + loggedInUser.getAccount().callResults);
+//        LOG.info("User's Filters : " + loggedInUser.getAccount().filters);
+//
+//        ContactList stream = loggedInUser.actionStream();
+//        ContactList contacts = loggedInUser.contacts();
+//
+//        LOG.info(stream.getPaginator().toString());
 //        Contact contact = stream.get(0);
 //
 //        LOG.info(contact.toString());

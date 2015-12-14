@@ -114,19 +114,13 @@ public class BaseSerializerTest extends BaseTest {
     public void testToArrayOfStrings_Null() {
         String joinedString = null;
 
-        String[] expected = new String[3];
+        String[] expected = {};
         String[] actual = BaseSerializer.toArrayOfStrings(joinedString);
 
         assertEquals("String not converted to array of strings correctly",
-                expected.length, 3);
+                expected.length, 0);
         assertEquals("String not converted to array of strings correctly",
-                actual.length, 128);
-        assertEquals("String not converted to array of strings correctly",
-                expected[0], actual[0]);
-        assertEquals("String not converted to array of strings correctly",
-                expected[1], actual[1]);
-        assertEquals("String not converted to array of strings correctly",
-                expected[2], actual[2]);
+                actual.length, 0);
     }
 
     public void testToArrayOfStrings_Correct() {

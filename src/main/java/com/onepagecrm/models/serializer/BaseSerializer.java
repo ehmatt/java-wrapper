@@ -66,6 +66,7 @@ public class BaseSerializer {
     // ACTION TAGS
     public static final String NEXT_ACTIONS_TAG = "next_actions";
     public static final String NEXT_ACTION_TAG = "next_action";
+    public static final String NEXT_ACTION_ID_TAG = "next_action_id";
     public static final String CONTACT_ID_TAG = "contact_id";
     public static final String ASSIGNEE_ID_TAG = "assignee_id";
     public static final String DATE_TAG = "date";
@@ -99,6 +100,8 @@ public class BaseSerializer {
     // CUSTOM FIELDS TAGS
     public static final String CUSTOM_FIELDS_TAG = "custom_fields";
     public static final String CUSTOM_FIELD_TAG = "custom_field";
+    public static final String CUSTOM_FIELD_VALUE_TAG = "custom_field_value";
+    public static final String CUSTOM_FIELD_ID_TAG = "custom_field_id";
     public static final String CHOICES_TAG = "choices";
     public static final String NAME_TAG = "name";
     public static final String POSITION_TAG = "position";
@@ -250,6 +253,23 @@ public class BaseSerializer {
         return null;
     }
 
+    public static Number parseNumber(Object number) {
+        if (number != null && number instanceof Number) {
+            // Integers are of type Number in Java.
+            if (number instanceof Integer) {
+                // Convert this to an Integer.
+                number = ((Number) number).intValue();
+            } else {
+                // Floating point numbers are of type Number in Java.
+                // Convert this to a Double (big Float).
+                number = ((Number) number).doubleValue();
+            }
+            return (Number) number;
+        } else {
+            return null;
+        }
+    }
+
     public static JSONArray toJsonStringArray(String[] stringArray) {
         JSONArray stringArrayObject = new JSONArray();
         if (stringArray.length > 0) {
@@ -317,10 +337,10 @@ public class BaseSerializer {
         String result = "";
         if (strings != null) {
             for (int i = 0; i < strings.length; i++) {
-                result = result + strings[i];
+                result += strings[i];
                 // Do not append comma at the end of last element
                 if (i < strings.length - 1) {
-                    result = result + stringSeparator;
+                    result += stringSeparator;
                 }
             }
         }
@@ -336,11 +356,13 @@ public class BaseSerializer {
         }
     }
 
+    public static final String[] EMPTY_STRING_ARRAY = {};
+
     public static String[] toArrayOfStrings(String string) {
         if (string != null) {
             return string.split(stringSeparator);
         } else {
-            return new String[128];
+            return EMPTY_STRING_ARRAY;
         }
     }
 
