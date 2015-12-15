@@ -29,7 +29,6 @@ public class BaseSerializer {
     public static final String USER_TAG = "user";
     public static final String FIRST_NAME_TAG = "first_name";
     public static final String LAST_NAME_TAG = "last_name";
-    public static final String EMAIL_TAG = "email";
     public static final String COMPANY_NAME_TAG = "company_name";
     public static final String PHOTO_URL_TAG = "photo_url";
     public static final String BCC_EMAIL_TAG = "bcc_email";
@@ -42,19 +41,24 @@ public class BaseSerializer {
     public static final String CONTACT_TAG = "contact";
     public static final String ID_TAG = "id";
     public static final String COMPANY_ID_TAG = "company_id";
-    public static final String EMAILS_TAG = "emails";
     public static final String JOB_TITLE_TAG = "job_title";
     public static final String OWNER_ID_TAG = "owner_id";
-    public static final String PHONES_TAG = "phones";
     public static final String SALES_CLOSED_FOR_TAG = "sales_closed_for";
     public static final String STARRED_TAG = "starred";
     public static final String STATUS_ID_TAG = "status_id";
-    public static final String URLS_TAG = "urls";
     public static final String BACKGROUND_TAG = "background";
     public static final String ADDRESS_LIST_TAG = "address_list";
     public static final String IMAGE_TAG = "image";
     public static final String PENDING_DEAL_TAG = "pending_deal";
     public static final String TOTAL_PENDINGS_TAG = "total_pendings";
+
+    // CONTACT POINT TAGS
+    public static final String PHONES_TAG = "phones";
+    public static final String PHONE_TAG = "phone";
+    public static final String EMAILS_TAG = "emails";
+    public static final String EMAIL_TAG = "email";
+    public static final String URLS_TAG = "urls";
+    public static final String URL_TAG = "url";
 
     // ADDRESS LIST TAGS
     public static final String ADDRESS_TAG = "address";
@@ -110,6 +114,8 @@ public class BaseSerializer {
     // TAGS TAGS
     public static final String TAGS_TAG = "tags";
     public static final String TAG_TAG = "tag";
+    public static final String TAG_NAME_TAG = "tag_name";
+    public static final String TAG_VALUE_TAG = "tag_value";
     public static final String SYSTEM_TAGS_TAG = "system_tags";
     public static final String COUNTS_TAG = "counts";
     public static final String TOTAL_COUNT_TAG = "total_count";
