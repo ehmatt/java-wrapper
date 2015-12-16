@@ -74,6 +74,8 @@ public class BaseSerializer {
     public static final String CONTACT_ID_TAG = "contact_id";
     public static final String ASSIGNEE_ID_TAG = "assignee_id";
     public static final String DATE_TAG = "date";
+    public static final String ACTION_TAG = "action";
+    public static final String DATE_COLOR_TAG = "date_color";
 
     // CALL TAGS
     public static final String CALL_TAG = "call";
