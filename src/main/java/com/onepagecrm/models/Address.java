@@ -20,6 +20,10 @@ public class Address extends BaseResource implements Serializable {
         return AddressSerializer.toJsonArray(this);
     }
 
+    public boolean isValid() {
+        return address != null || city != null || state != null || zipCode != null || countryCode != null;
+    }
+
     @Override
     public boolean equals(Object object) {
         boolean addressObjectsEqual = false;
