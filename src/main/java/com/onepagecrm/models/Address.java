@@ -21,7 +21,11 @@ public class Address extends BaseResource implements Serializable {
     }
 
     public boolean isValid() {
-        return address != null || city != null || state != null || zipCode != null || countryCode != null;
+        return address != null && !address.equals("") ||
+                city != null && !city.equals("") ||
+                state != null && !state.equals("") ||
+                zipCode != null && !zipCode.equals("") ||
+                countryCode != null && !countryCode.equals("");
     }
 
     @Override
