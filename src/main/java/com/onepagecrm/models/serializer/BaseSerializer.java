@@ -102,6 +102,8 @@ public class BaseSerializer {
     public static final String MODIFIED_AT_TAG = "modified_at";
     public static final String OK_TAG = "OK";
     public static final String DISPLAY_TAG = "display";
+    public static final String AS_SORT_TAG = "as_sort";
+    public static final String AZ_SORT_TAG = "az_sort";
 
     // CUSTOM FIELDS TAGS
     public static final String CUSTOM_FIELDS_TAG = "custom_fields";
