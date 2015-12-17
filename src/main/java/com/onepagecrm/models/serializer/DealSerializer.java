@@ -61,8 +61,8 @@ public class DealSerializer extends BaseSerializer {
                 Date date = DateSerializer.fromFormattedString(dateStr);
                 deal.setDate(date);
             }
-            if (dealObject.has(EXPECTED_CLOSE_DATE)) {
-                String expectedCloseDateStr = dealObject.getString(EXPECTED_CLOSE_DATE);
+            if (dealObject.has(EXPECTED_CLOSE_DATE_TAG)) {
+                String expectedCloseDateStr = dealObject.getString(EXPECTED_CLOSE_DATE_TAG);
                 Date expectedCloseDate = DateSerializer.fromFormattedString(expectedCloseDateStr);
                 deal.setExpectedCloseDate(expectedCloseDate);
             }
@@ -126,7 +126,7 @@ public class DealSerializer extends BaseSerializer {
         addJsonStringValue(
                 DateSerializer.toFormattedDateTimeString(deal.getExpectedCloseDate()),
                 dealObject,
-                EXPECTED_CLOSE_DATE
+                EXPECTED_CLOSE_DATE_TAG
         );
         addJsonIntegerValue(deal.getMonths(), dealObject, MONTHS_TAG);
         addJsonStringValue(deal.getName(), dealObject, NAME_TAG);

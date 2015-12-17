@@ -153,7 +153,7 @@ public class BaseSerializer {
     public static final String DEALS_TAG = "deals";
     public static final String DEAL_TAG = "deal";
     public static final String AMOUNT_TAG = "amount";
-    public static final String EXPECTED_CLOSE_DATE = "expected_close_date";
+    public static final String EXPECTED_CLOSE_DATE_TAG = "expected_close_date";
     public static final String MONTHS_TAG = "months";
     public static final String STAGE_TAG = "stage";
     public static final String TOTAL_AMOUNT_TAG = "total_amount";

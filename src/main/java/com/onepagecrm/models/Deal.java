@@ -1,7 +1,6 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.serializer.DealListSerializer;
 import com.onepagecrm.models.serializer.DealSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
@@ -16,7 +15,7 @@ public class Deal extends ApiResource implements Serializable {
     private Double amount;
     private String author;
     private String text;
-    //    private ContactInfo contactInfo;
+//    private ContactInfo contactInfo;
     private String contactId;
     private Date createdAt;
     private Date date;
@@ -31,12 +30,6 @@ public class Deal extends ApiResource implements Serializable {
     private Boolean hasRelatedNotes;
     private Date closeDate;
 //    private List<Attachment> attachments;
-
-    public DealList list() throws OnePageException {
-        Request request = new GetRequest(DEALS_ENDPOINT, Query.perPageQueryString(100));
-        Response response = request.send();
-        return DealListSerializer.fromString(response.getResponseBody());
-    }
 
     public Deal save() throws OnePageException {
         return this.isValid() ? update() : create();
