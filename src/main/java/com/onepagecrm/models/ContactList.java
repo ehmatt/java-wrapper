@@ -94,6 +94,10 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
         contacts.add(index, contact);
     }
 
+    public boolean add(Contact contact) {
+        return contacts.add(contact);
+    }
+
     public Contact get(int index) {
         return contacts.get(index);
     }

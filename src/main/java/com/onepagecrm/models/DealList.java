@@ -55,6 +55,10 @@ public class DealList extends ArrayList<Deal> implements Serializable {
         deals.add(index, deal);
     }
 
+    public boolean add(Deal deal) {
+        return deals.add(deal);
+    }
+
     public Deal get(int index) {
         return deals.get(index);
     }
