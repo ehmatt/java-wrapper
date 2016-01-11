@@ -20,9 +20,7 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
 
     public ContactList nextPage() throws OnePageException {
         this.paginator.getNextPageNo();
-        ContactList nextPage = Account.loggedInUser.actionStream(paginator);
-        this.addNextPage(nextPage);
-        return this;
+        return Account.loggedInUser.actionStream(paginator);
     }
 
     public ContactList refresh() throws OnePageException {
@@ -33,6 +31,7 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
 
     public ContactList(List<Contact> contacts) {
         this.contacts = new ArrayList<>();
+        this.paginator = new Paginator();
         if (contacts != null && !contacts.isEmpty()) {
             for (int i = 0; i < contacts.size(); i++) {
                 this.contacts.add(contacts.get(i));
@@ -42,6 +41,7 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
 
     public ContactList() {
         this.contacts = new ArrayList<>();
+        this.paginator = new Paginator();
     }
 
     public ContactList addNextPage(ContactList contactsList) {
