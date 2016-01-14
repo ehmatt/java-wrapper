@@ -15,12 +15,30 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
 
     private static final long serialVersionUID = 8185938052776557364L;
 
+    public static final int AS_LISTING = 1219;
+    public static final int AZ_LISTING = 8662;
+
     private List<Contact> contacts;
     private Paginator paginator;
 
     public ContactList nextPage() throws OnePageException {
         this.paginator.getNextPageNo();
         return Account.loggedInUser.actionStream(paginator);
+    }
+
+    public ContactList nextPage(int pType) throws OnePageException {
+        this.paginator.getNextPageNo();
+        switch (pType) {
+            case AS_LISTING: {
+                return Account.loggedInUser.actionStream(paginator);
+            }
+            case AZ_LISTING: {
+                return Account.loggedInUser.contacts(paginator);
+            }
+            default: {
+                return Account.loggedInUser.actionStream(paginator);
+            }
+        }
     }
 
     public ContactList refresh() throws OnePageException {
