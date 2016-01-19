@@ -5,14 +5,12 @@ import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.Tag;
 import com.onepagecrm.models.User;
-import com.onepagecrm.models.internal.TagsComparator;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -53,27 +51,10 @@ public class TagsDriver {
 
         LOG.info("Logged in User : " + loggedInUser);
 
-        ContactList stream = loggedInUser.actionStream();
-        Contact contact = stream.get(0);
-
         List<Tag> accountTags = copyList(loggedInUser.getAccount().getTags());
         LOG.info("accountTags *0 : " + copyListNames(accountTags));
 
-        if (contact.isValid()) {
-
-            List<Tag> contactsTags = contact.getTags();
-            LOG.info("contactsTags : " + copyListNames(contactsTags));
-
-            Tag iOsTag = accountTags.get(0);
-            accountTags.remove(0);
-            LOG.info("accountTags : " + copyListNames(accountTags));
-
-            accountTags.add(iOsTag);
-            LOG.info("accountTags : " + copyListNames(accountTags));
-
-            Collections.sort(accountTags, new TagsComparator());
-            LOG.info("accountTags : " + copyListNames(accountTags));
-        }
+        ContactList stream = loggedInUser.actionStream();
 
         for (int i = 0; i < accountTags.size(); i++) {
             LOG.info("[" + i + "] : " + accountTags.get(i).delete());
@@ -95,6 +76,7 @@ public class TagsDriver {
 
         for (int i = 0; i < stream.size(); i++) {
             Contact tempContact = stream.get(i);
+            LOG.info("tempContact [" + i + "] : " + tempContact);
             if (i == 0) {
                 tempContact.setTags(tempTags);
                 tempContact.save();
