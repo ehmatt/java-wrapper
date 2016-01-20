@@ -68,6 +68,10 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
         return this;
     }
 
+    public int getType() {
+        return type;
+    }
+
     public ContactList(List<Contact> contacts) {
         this.contacts = new ArrayList<>();
         this.paginator = new Paginator();
