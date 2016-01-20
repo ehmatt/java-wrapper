@@ -34,7 +34,7 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
                 return Account.loggedInUser.contacts(paginator);
             }
             default: {
-                throw new InvalidListingTypeException("Wrong listing type.");
+                throw new InvalidListingTypeException("Not a supported contact listing type.");
             }
         }
     }
