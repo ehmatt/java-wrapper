@@ -1,9 +1,8 @@
-package com.onepagecrm;
+package com.onepagecrm.samples;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.ContactList;
+import com.onepagecrm.models.Countries;
 import com.onepagecrm.models.User;
-import com.onepagecrm.models.serializer.RequestMetadataSerializer;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
@@ -12,12 +11,9 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-/**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 02/12/2015.
- */
-public class PaginationDriver {
+public class CountriesEndpoint {
 
-    private static final Logger LOG = Logger.getLogger(PaginationDriver.class.getName());
+    private static final Logger LOG = Logger.getLogger(CountriesEndpoint.class.getName());
 
     public static void main(String[] args) throws OnePageException {
         Properties prop = new Properties();
@@ -50,16 +46,9 @@ public class PaginationDriver {
                 prop.getProperty("password"));
 
         LOG.info("Logged in User : " + loggedInUser);
+//        Request.format = ".xml";
+//        Request.format = ".s";
+        LOG.info("Countries : " + Countries.list());
 
-        ContactList stream = loggedInUser.actionStream();
-        LOG.info("page 1 : " + stream.size() + " : " + stream.toString());
-
-        ContactList updatedStream = stream.nextPage();
-        LOG.info("page 1&2 : " + updatedStream.size() + " : " + updatedStream.toString());
-
-        ContactList refreshedList = stream.refresh();
-        LOG.info("page 1 : " + refreshedList.size() + " : " + refreshedList.toString());
-
-        LOG.info(RequestMetadataSerializer.toJsonKeyValuePair(stream.getPaginator()));
     }
 }

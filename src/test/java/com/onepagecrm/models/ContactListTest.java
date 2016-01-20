@@ -110,7 +110,8 @@ public class ContactListTest extends BaseTest {
 
         int numberWithPhones = 0;
         for (int i = 0; i < someContactsWithPhones.size(); i++) {
-            if (!someContactsWithPhones.get(i).getPhones().isEmpty()) {
+            List<Phone> phones = someContactsWithPhones.get(i).getPhones();
+            if (phones != null && !phones.isEmpty()) {
                 numberWithPhones++;
             }
         }

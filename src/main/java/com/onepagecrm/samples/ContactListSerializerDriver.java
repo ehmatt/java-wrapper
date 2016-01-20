@@ -1,9 +1,12 @@
-package com.onepagecrm;
+package com.onepagecrm.samples;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Countries;
+import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
+import com.onepagecrm.models.serializer.ContactListSerializer;
 import com.onepagecrm.net.request.Request;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,11 +14,14 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class CountriesEndpoint {
+/**
+ * Created by Cillian Myles <cillian@onepagecrm.com> on 03/12/2015.
+ */
+public class ContactListSerializerDriver {
 
-    private static final Logger LOG = Logger.getLogger(CountriesEndpoint.class.getName());
+    private static final Logger LOG = Logger.getLogger(Driver.class.getName());
 
-    public static void main(String[] args) throws OnePageException {
+    public static void main(String[] args) throws OnePageException, JSONException {
         Properties prop = new Properties();
         InputStream input = null;
 
@@ -46,9 +52,18 @@ public class CountriesEndpoint {
                 prop.getProperty("password"));
 
         LOG.info("Logged in User : " + loggedInUser);
-//        Request.format = ".xml";
-//        Request.format = ".s";
-        LOG.info("Countries : " + Countries.list());
 
+        ContactList stream = loggedInUser.actionStream();
+
+        String serialized = ContactListSerializer.toJsonObject(stream);
+
+        ContactList serializedAndParsed = ContactListSerializer.fromJsonObject(
+                new JSONObject(serialized)
+        );
+
+        LOG.info("stream : " + stream);
+        LOG.info("stream.getPaginator() : " + stream.getPaginator());
+//        LOG.info("serialized.getPaginator() : " + serialized.getPaginator());
+        LOG.info("serializedAndParsed.getPaginator() : " + serializedAndParsed.getPaginator());
     }
 }

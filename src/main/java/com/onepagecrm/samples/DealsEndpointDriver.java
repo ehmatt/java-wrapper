@@ -1,4 +1,4 @@
-package com.onepagecrm;
+package com.onepagecrm.samples;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.ContactList;
