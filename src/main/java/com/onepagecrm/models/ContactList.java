@@ -1,6 +1,7 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.InvalidListingTypeException;
+import com.onepagecrm.exceptions.NoMorePagesException;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.serializer.ContactListSerializer;
@@ -25,17 +26,26 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
     private Paginator paginator;
 
     public ContactList nextPage() throws OnePageException {
-        this.paginator.getNextPageNo();
-        switch (type) {
-            case AS_LISTING: {
-                return Account.loggedInUser.actionStream(paginator);
+        try {
+            this.paginator.getNextPageNo();
+            switch (type) {
+                case AS_LISTING:
+                    return Account.loggedInUser.actionStream(paginator);
+                case AZ_LISTING:
+                    return Account.loggedInUser.contacts(paginator);
+                default:
+//                    throw new InvalidListingTypeException("Not a supported contact listing type.")
+//                            .setErrorMessage("Not a supported contact listing type.");
+                    OnePageException e = new InvalidListingTypeException("Not a supported contact listing type.")
+                            .setErrorMessage("Not a supported contact listing type.");
+                    LOG.info("*****ILT1*****");
+                    LOG.info(e.getMessage());
+                    throw e;
             }
-            case AZ_LISTING: {
-                return Account.loggedInUser.contacts(paginator);
-            }
-            default: {
-                throw new InvalidListingTypeException("Not a supported contact listing type.");
-            }
+        } catch (NoMorePagesException e) {
+            LOG.info("*****NMP1*****");
+            LOG.info(e.getMessage());
+            throw e;
         }
     }
 

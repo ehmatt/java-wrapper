@@ -1,7 +1,6 @@
 package com.onepagecrm.models.internal;
 
 import com.onepagecrm.exceptions.NoMorePagesException;
-import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.BaseResource;
 import com.onepagecrm.models.serializer.RequestMetadataSerializer;
 
@@ -14,21 +13,25 @@ public class Paginator extends BaseResource implements Serializable {
     private Integer maxPage;
     private Integer totalCount;
 
-    public Integer getNextPageNo() throws OnePageException {
+    public Integer getNextPageNo() throws NoMorePagesException {
         if (currentPage < maxPage) {
             currentPage++;
             return currentPage;
         } else {
-            throw new NoMorePagesException("Already at the end of the pages.");
+            NoMorePagesException noMorePagesException = new NoMorePagesException("Already at the end of the pages.");
+            noMorePagesException.setErrorMessage("Already at the end of the pages.");
+            throw noMorePagesException;
         }
     }
 
-    public Integer getPreviousPageNo() throws Exception {
+    public Integer getPreviousPageNo() throws NoMorePagesException {
         if (currentPage > 1) {
             currentPage--;
             return currentPage;
         } else {
-            throw new Exception("Already at the start of the pages.");
+            NoMorePagesException noMorePagesException = new NoMorePagesException("Already at the start of the pages.");
+            noMorePagesException.setErrorMessage("Already at the start of the pages.");
+            throw noMorePagesException;
         }
     }
 
