@@ -1,5 +1,6 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.exceptions.InvalidListingTypeException;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.serializer.ContactListSerializer;
@@ -18,17 +19,14 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
     public static final int AS_LISTING = 1219;
     public static final int AZ_LISTING = 8662;
 
+    private int type;
+
     private List<Contact> contacts;
     private Paginator paginator;
 
     public ContactList nextPage() throws OnePageException {
         this.paginator.getNextPageNo();
-        return Account.loggedInUser.actionStream(paginator);
-    }
-
-    public ContactList nextPage(int pType) throws OnePageException {
-        this.paginator.getNextPageNo();
-        switch (pType) {
+        switch (type) {
             case AS_LISTING: {
                 return Account.loggedInUser.actionStream(paginator);
             }
@@ -36,14 +34,37 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
                 return Account.loggedInUser.contacts(paginator);
             }
             default: {
-                return Account.loggedInUser.actionStream(paginator);
+                throw new InvalidListingTypeException("Wrong listing type.");
             }
         }
     }
 
     public ContactList refresh() throws OnePageException {
-        ContactList list = Account.loggedInUser.actionStream();
+        ContactList list = new ContactList();
+        switch (type) {
+            case AS_LISTING:
+                list = Account.loggedInUser.actionStream();
+                break;
+            case AZ_LISTING:
+                list = Account.loggedInUser.contacts();
+                break;
+        }
         this.setContacts(list);
+        return this;
+    }
+
+    public ContactList(List<Contact> contacts, int type) {
+        this.type = type;
+        new ContactList(contacts);
+    }
+
+    public ContactList(int type) {
+        this.type = type;
+        new ContactList();
+    }
+
+    public ContactList setType(int type) {
+        this.type = type;
         return this;
     }
 

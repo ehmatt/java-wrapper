@@ -19,9 +19,7 @@ public class Paginator extends BaseResource implements Serializable {
             currentPage++;
             return currentPage;
         } else {
-            throw new NoMorePagesException()
-                    .setMessage("Already at the end of the pages.")
-                    .setErrorMessage("Already at the end of the pages.");
+            throw new NoMorePagesException("Already at the end of the pages.");
         }
     }
 

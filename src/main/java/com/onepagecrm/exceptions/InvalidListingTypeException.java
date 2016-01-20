@@ -3,9 +3,9 @@ package com.onepagecrm.exceptions;
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 02/12/2015.
  */
-public class NoMorePagesException extends OnePageException {
+public class InvalidListingTypeException extends OnePageException {
 
-    public NoMorePagesException(String message) {
+    public InvalidListingTypeException(String message) {
         super(message);
     }
 }
