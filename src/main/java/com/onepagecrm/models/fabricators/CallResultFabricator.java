@@ -21,23 +21,28 @@ public class CallResultFabricator extends BaseFabricator {
         lBasics.add(new CallResult()
                 .setIntId(0)
                 .setId("interested")
-                .setDisplay("Interested"));
+                .setDisplay("Interested")
+        );
         lBasics.add(new CallResult()
                 .setIntId(1)
                 .setId("not_interested")
-                .setDisplay("Not interested"));
+                .setDisplay("Not interested")
+        );
         lBasics.add(new CallResult()
                 .setIntId(2)
                 .setId("left_message")
-                .setDisplay("Left message"));
+                .setDisplay("Left message")
+        );
         lBasics.add(new CallResult()
                 .setIntId(3)
                 .setId("no_answer")
-                .setDisplay("No answer"));
+                .setDisplay("No answer")
+        );
         lBasics.add(new CallResult()
                 .setIntId(4)
                 .setId("other")
-                .setDisplay("Other"));
+                .setDisplay("Other")
+        );
         return lBasics;
     }
 }

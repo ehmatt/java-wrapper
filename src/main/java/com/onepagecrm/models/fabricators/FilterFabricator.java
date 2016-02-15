@@ -20,10 +20,12 @@ public class FilterFabricator extends BaseFabricator {
         List<Filter> filters = new ArrayList<>();
         filters.add(new Filter()
                 .setId("556cb8c91787fa0e24000042")
-                .setName("Pending deals"));
+                .setName("Pending deals")
+        );
         filters.add(new Filter()
                 .setId("556cb8c91787fa0e24000041")
-                .setName("Prospects with pending deals"));
+                .setName("Prospects with pending deals")
+        );
         return filters;
     }
 }
