@@ -1,7 +1,7 @@
 package com.onepagecrm.models.internal;
 
-import com.onepagecrm.models.serializer.BaseSerializer;
-import com.onepagecrm.models.serializer.CustomFieldValueSerializer;
+import com.onepagecrm.models.serializers.BaseSerializer;
+import com.onepagecrm.models.serializers.CustomFieldValueSerializer;
 
 import java.io.Serializable;
 

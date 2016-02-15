@@ -1,7 +1,7 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.models.internal.CustomFieldValue;
-import com.onepagecrm.models.serializer.CustomFieldSerializer;
+import com.onepagecrm.models.serializers.CustomFieldSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;

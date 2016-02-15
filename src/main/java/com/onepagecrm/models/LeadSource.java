@@ -1,7 +1,7 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.models.internal.TeamCount;
-import com.onepagecrm.models.serializer.LeadSourceSerializer;
+import com.onepagecrm.models.serializers.LeadSourceSerializer;
 import com.onepagecrm.net.ApiResource;
 
 import java.io.Serializable;

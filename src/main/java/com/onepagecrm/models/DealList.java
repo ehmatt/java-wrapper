@@ -1,6 +1,6 @@
 package com.onepagecrm.models;
 
-import com.onepagecrm.models.serializer.DealSerializer;
+import com.onepagecrm.models.serializers.DealSerializer;
 
 import java.io.Serializable;
 import java.util.ArrayList;

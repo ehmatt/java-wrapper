@@ -3,7 +3,7 @@ package com.onepagecrm.samples;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
-import com.onepagecrm.models.serializer.ContactListSerializer;
+import com.onepagecrm.models.serializers.ContactListSerializer;
 import com.onepagecrm.net.request.Request;
 import org.json.JSONException;
 import org.json.JSONObject;

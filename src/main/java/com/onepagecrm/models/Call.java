@@ -1,7 +1,7 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.serializer.CallSerializer;
+import com.onepagecrm.models.serializers.CallSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.PostRequest;

@@ -5,7 +5,7 @@ import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.Deal;
 import com.onepagecrm.models.DealList;
 import com.onepagecrm.models.User;
-import com.onepagecrm.models.serializer.DateSerializer;
+import com.onepagecrm.models.serializers.DateSerializer;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;

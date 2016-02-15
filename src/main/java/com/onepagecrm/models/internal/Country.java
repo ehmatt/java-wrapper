@@ -1,6 +1,6 @@
 package com.onepagecrm.models.internal;
 
-import com.onepagecrm.models.serializer.CountrySerializer;
+import com.onepagecrm.models.serializers.CountrySerializer;
 
 import java.io.Serializable;
 

@@ -2,7 +2,7 @@ package com.onepagecrm.models.internal;
 
 import com.onepagecrm.exceptions.NoMorePagesException;
 import com.onepagecrm.models.BaseResource;
-import com.onepagecrm.models.serializer.RequestMetadataSerializer;
+import com.onepagecrm.models.serializers.RequestMetadataSerializer;
 
 import java.io.Serializable;
 

@@ -3,7 +3,7 @@ package com.onepagecrm.samples;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.*;
 import com.onepagecrm.models.internal.CustomFieldValue;
-import com.onepagecrm.models.serializer.DateSerializer;
+import com.onepagecrm.models.serializers.DateSerializer;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;

@@ -1,6 +1,6 @@
 package com.onepagecrm.models;
 
-import com.onepagecrm.models.serializer.PhoneSerializer;
+import com.onepagecrm.models.serializers.PhoneSerializer;
 
 import java.io.Serializable;
 

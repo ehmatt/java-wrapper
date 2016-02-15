@@ -2,7 +2,7 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Country;
-import com.onepagecrm.models.serializer.CountrySerializer;
+import com.onepagecrm.models.serializers.CountrySerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;

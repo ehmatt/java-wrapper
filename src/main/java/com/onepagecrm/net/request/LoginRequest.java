@@ -1,7 +1,7 @@
 package com.onepagecrm.net.request;
 
-import com.onepagecrm.models.serializer.BaseSerializer;
-import com.onepagecrm.models.serializer.LoginSerializer;
+import com.onepagecrm.models.serializers.BaseSerializer;
+import com.onepagecrm.models.serializers.LoginSerializer;
 
 public class LoginRequest extends Request {
 

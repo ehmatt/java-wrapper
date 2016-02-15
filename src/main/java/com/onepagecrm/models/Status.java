@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.onepagecrm.models.internal.TeamCount;
-import com.onepagecrm.models.serializer.StatusSerializer;
+import com.onepagecrm.models.serializers.StatusSerializer;
 import com.onepagecrm.net.ApiResource;
 
 public class Status extends ApiResource implements Serializable {

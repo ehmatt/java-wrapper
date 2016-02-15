@@ -1,6 +1,6 @@
 package com.onepagecrm.models;
 
-import com.onepagecrm.models.serializer.UrlSerializer;
+import com.onepagecrm.models.serializers.UrlSerializer;
 
 import java.io.Serializable;
 

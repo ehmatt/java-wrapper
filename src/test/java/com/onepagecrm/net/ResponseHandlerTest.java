@@ -9,7 +9,7 @@ import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.Utilities;
-import com.onepagecrm.models.serializer.*;
+import com.onepagecrm.models.serializers.*;
 
 import java.util.logging.Logger;
 

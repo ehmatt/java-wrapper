@@ -1,6 +1,6 @@
 package com.onepagecrm.models;
 
-import com.onepagecrm.models.serializer.FilterSerializer;
+import com.onepagecrm.models.serializers.FilterSerializer;
 import com.onepagecrm.net.ApiResource;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ public class Filter extends ApiResource implements Serializable {
     }
 
     @Override
-    public ApiResource setId(String id) {
+    public Filter setId(String id) {
         this.id = id;
         return this;
     }

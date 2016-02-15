@@ -1,7 +1,7 @@
 package com.onepagecrm.models;
 
-import com.onepagecrm.models.serializer.ActionSerializer;
-import com.onepagecrm.models.serializer.DateSerializer;
+import com.onepagecrm.models.serializers.ActionSerializer;
+import com.onepagecrm.models.serializers.DateSerializer;
 import com.onepagecrm.net.ApiResource;
 
 import java.io.Serializable;

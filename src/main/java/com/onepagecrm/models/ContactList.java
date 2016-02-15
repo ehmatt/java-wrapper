@@ -3,7 +3,7 @@ package com.onepagecrm.models;
 import com.onepagecrm.exceptions.InvalidListingTypeException;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
-import com.onepagecrm.models.serializer.ContactListSerializer;
+import com.onepagecrm.models.serializers.ContactListSerializer;
 
 import java.io.Serializable;
 import java.util.ArrayList;

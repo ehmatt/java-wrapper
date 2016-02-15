@@ -1,6 +1,6 @@
 package com.onepagecrm.net.request;
 
-import com.onepagecrm.models.serializer.BaseSerializer;
+import com.onepagecrm.models.serializers.BaseSerializer;
 import com.onepagecrm.net.Response;
 
 import java.io.BufferedReader;

@@ -1,7 +1,6 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.BaseTest;
-import com.onepagecrm.models.serializer.BaseSerializer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
