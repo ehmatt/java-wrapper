@@ -16,9 +16,37 @@ public class ContactFabricator extends BaseFabricator {
 
     private static final Logger LOG = Logger.getLogger(ContactFabricator.class.getName());
 
-    public static Contact fromAddressBook() {
+    public static Contact single() {
         // Create new Contact with desired fields.
-        Contact lContact = new Contact()
+        Contact contact = new Contact()
+                .setId("5694e1999007ba687b0000c9")
+                .setFirstName("Java")
+                .setLastName("Wrapper")
+                .setJobTitle("Software Developer")
+                .setCompanyName("OnePageCRM")
+                .setBackground("Java is very verbose, we met in college.")
+                .setPhotoUrl("https://opcrm-fd-us-west-1-54e488299007ba1342000001.s3.amazonaws.com/" +
+                        "559cd1866f6e656707000001/56b0c3919007ba1421000007/56b0c3919007ba1421000006.png")
+                .setStarred(true)
+                .setOwnerId("559cd1866f6e656707000001")
+                .setLeadSourceId("email_web")
+                .setStatus("Prospect")
+                .setStatusId("559cd1a06f6e656707000006")
+                .setHasPendingDeal(true)
+                .setTotalPending(20400d);
+
+        // Address address fields.
+        contact.setAddress(importAddress());
+
+        // Phone, Email, Web.
+        addContactables(contact);
+
+        return contact;
+    }
+
+    public static Contact importContact() {
+        // Create new Contact with desired fields.
+        Contact contact = new Contact()
                 .setFirstName("Elon")
                 .setLastName("Musk")
                 .setJobTitle("Entrepreneur|Engineer|Inventor|Investor")
@@ -32,18 +60,21 @@ public class ContactFabricator extends BaseFabricator {
                 .setStarred(true);
 
         // Address address fields.
-        lContact.setAddress(fullAddress());
+        contact.setAddress(importAddress());
 
+        // Phone, Email, Web.
+        addContactables(contact);
+
+        return contact;
+    }
+
+    private static void addContactables(Contact contact) {
         // Add list of phones to our Contact.
-        lContact.setPhones(fullListOfPhones());
-
+        contact.setPhones(fullListOfPhones());
         // Add list of emails to our Contact.
-        lContact.setEmails(fullListOfEmails());
-
+        contact.setEmails(fullListOfEmails());
         // Add list of urls to our Contact.
-        lContact.setUrls(fullListOfUrls());
-
-        return lContact;
+        contact.setUrls(fullListOfUrls());
     }
 
     public static ContactList list() {
@@ -59,6 +90,15 @@ public class ContactFabricator extends BaseFabricator {
     }
 
     public static Address fullAddress() {
+        return new Address()
+                .setAddress("Unit 5, Business Innovation Center, NUIG")
+                .setCity("Galway")
+                .setState("Connacht")
+                .setZipCode("HJ12WE3")
+                .setCountryCode("IE");
+    }
+
+    public static Address importAddress() {
         return new Address()
                 .setAddress("Bel Air")
                 .setCity("Los Angeles")
