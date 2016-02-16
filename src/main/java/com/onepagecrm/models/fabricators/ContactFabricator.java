@@ -1,14 +1,20 @@
 package com.onepagecrm.models.fabricators;
 
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.*;
+import com.onepagecrm.models.internal.Utilities;
+import com.onepagecrm.models.serializers.ContactListSerializer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
  */
 public class ContactFabricator extends BaseFabricator {
+
+    private static final Logger LOG = Logger.getLogger(ContactFabricator.class.getName());
 
     public static Contact fromAddressBook() {
         // Create new Contact with desired fields.
@@ -38,6 +44,18 @@ public class ContactFabricator extends BaseFabricator {
         lContact.setUrls(fullListOfUrls());
 
         return lContact;
+    }
+
+    public static ContactList list() {
+        String list = Utilities.getResourceContents("src/test/res/request_01_action_stream_response.json");
+        ContactList contacts = new ContactList();
+        try {
+            contacts = ContactListSerializer.fromString(list);
+        } catch (OnePageException e) {
+            LOG.severe("Problem creating contact list from JSON file.");
+            LOG.severe(e.toString());
+        }
+        return contacts;
     }
 
     public static Address fullAddress() {

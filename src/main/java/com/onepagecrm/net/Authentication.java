@@ -100,6 +100,7 @@ public class Authentication {
                 signature += "." + convertStringToSha1Hash(body);
             }
         }
+//        LOG.info("signature=\'" + signature + "\'");
         return makeHMACSHA256Signature(decodedApikey, signature);
     }
 
