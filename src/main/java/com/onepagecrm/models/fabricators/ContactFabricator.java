@@ -41,6 +41,9 @@ public class ContactFabricator extends BaseFabricator {
         // Phone, Email, Web.
         addContactables(contact);
 
+        // Next Action.
+        contact.setNextAction(ActionFabricator.single());
+
         return contact;
     }
 
