@@ -92,7 +92,7 @@ public class CustomFieldFabricator extends BaseFabricator {
         value.setValue("First");
         return new CustomField()
                 .setChoices(choicesList())
-                .setId("561b89cc9007ba41ef000005")
+                .setId("561b8a5a9007ba41ef000014")
                 .setName("TestDropdown")
                 .setPosition(5)
                 .setReminderDays(-1)
@@ -105,7 +105,7 @@ public class CustomFieldFabricator extends BaseFabricator {
         value.setValue(choicesArray());
         return new CustomField()
                 .setChoices(choicesList())
-                .setId("561b89cc9007ba41ef000005")
+                .setId("561b8a5a9007ba41ef000015")
                 .setName("TestMultipleChoice")
                 .setPosition(6)
                 .setReminderDays(-1)
