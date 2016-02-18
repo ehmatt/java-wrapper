@@ -1,6 +1,7 @@
 package com.onepagecrm.samples;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.Account;
 import com.onepagecrm.models.User;
 import com.onepagecrm.net.request.Request;
 
@@ -46,7 +47,7 @@ public class Driver {
 
         LOG.info("Logged in User : " + loggedInUser);
 
-        LOG.info("User's Team : " + loggedInUser.getAccount().team);
+        LOG.info("User's Team : " + Account.team);
         LOG.info("User's Statuses : " + loggedInUser.getAccount().statuses);
         LOG.info("User's Lead Sources : " + loggedInUser.getAccount().leadSources);
         LOG.info("User's Custom Fields : " + loggedInUser.getAccount().customFields);

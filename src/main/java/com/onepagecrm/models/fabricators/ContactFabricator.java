@@ -57,27 +57,31 @@ public class ContactFabricator extends BaseFabricator {
     }
 
     public static ContactList actionStream() {
-        String list = Utilities.getResourceContents(
-                "src/test/res/responses/perfect/DEV-action_stream.json");
         ContactList contacts = new ContactList();
-        try {
-            contacts = ContactListSerializer.fromString(list);
-        } catch (OnePageException e) {
-            LOG.severe("Problem creating contact list from JSON file.");
-            LOG.severe(e.toString());
+        String response = Utilities.getResourceContents(
+                "src/test/res/responses/perfect/DEV-action_stream.json");
+        if (response != null) {
+            try {
+                contacts = ContactListSerializer.fromString(response);
+            } catch (OnePageException e) {
+                LOG.severe("Problem creating contact list from JSON file.");
+                LOG.severe(e.toString());
+            }
         }
         return contacts;
     }
 
     public static ContactList contacts() {
-        String list = Utilities.getResourceContents(
-                "src/test/res/responses/perfect/DEV-contacts.json");
         ContactList contacts = new ContactList();
-        try {
-            contacts = ContactListSerializer.fromString(list);
-        } catch (OnePageException e) {
-            LOG.severe("Problem creating contact list from JSON file.");
-            LOG.severe(e.toString());
+        String response = Utilities.getResourceContents(
+                "src/test/res/responses/perfect/DEV-contacts.json");
+        if (response != null) {
+            try {
+                contacts = ContactListSerializer.fromString(response);
+            } catch (OnePageException e) {
+                LOG.severe("Problem creating contact list from JSON file.");
+                LOG.severe(e.toString());
+            }
         }
         return contacts;
     }
