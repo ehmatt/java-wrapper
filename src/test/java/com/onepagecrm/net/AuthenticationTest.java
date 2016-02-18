@@ -93,9 +93,4 @@ public class AuthenticationTest extends BaseTest {
         assertEquals("639cab894e5ffafeaa50d9b2b5fab903eb23215c34b8b4ba518ba8381e0419f7",
                 callsAuthSig.getSignature());
     }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
 }

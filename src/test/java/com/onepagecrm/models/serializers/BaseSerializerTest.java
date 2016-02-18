@@ -139,9 +139,4 @@ public class BaseSerializerTest extends BaseTest {
         assertEquals("String not converted to array of strings correctly",
                 expected[2], actual[2]);
     }
-
-    @Override
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
 }

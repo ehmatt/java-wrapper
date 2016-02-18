@@ -17,11 +17,6 @@ public class ResponseHandlerTest extends BaseTest {
 
     private static Logger LOG = Logger.getLogger(ResponseHandlerTest.class.getName());
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
     /**
      * Normal operation of parseLoginResponse() method.
      * <p/>
@@ -447,10 +442,5 @@ public class ResponseHandlerTest extends BaseTest {
         } catch (OnePageException e) {
             // Not expecting this.
         }
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
     }
 }

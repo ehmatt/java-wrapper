@@ -9,34 +9,11 @@ import com.onepagecrm.models.ContactList;
  */
 public class ContactFabricatorTest extends BaseTest {
 
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
     public void testSingle_correctValues() {
-        Contact fabricated = ContactFabricator.single();
-        assertTrue("Contact not valid.", fabricated.isValid());
-        assertEquals("5694e1999007ba687b0000c9", fabricated.getId());
-        assertEquals("Java", fabricated.getFirstName());
-        assertEquals("Wrapper", fabricated.getLastName());
-        assertEquals("Software Developer", fabricated.getJobTitle());
-        assertEquals("OnePageCRM", fabricated.getCompanyName());
-        assertEquals("Java is very verbose, we met in college.", fabricated.getBackground());
-        assertTrue(fabricated.isStarred() != null && fabricated.isStarred());
-        assertEquals("559cd1866f6e656707000001", fabricated.getOwnerId());
-        assertEquals("email_web", fabricated.getLeadSourceId());
-        assertEquals("Prospect", fabricated.getStatus());
-        assertEquals("559cd1a06f6e656707000006", fabricated.getStatusId());
-        assertTrue(fabricated.hasPendingDeal() != null && fabricated.hasPendingDeal());
-        assertEquals(20400d, fabricated.getTotalPending());
-        assertNotNull("This field cannot be null.", fabricated.getAddress());
-        assertNotNull("This field cannot be null.", fabricated.getPhones());
-        assertNotNull("This field cannot be null.", fabricated.getEmails());
-        assertNotNull("This field cannot be null.", fabricated.getUrls());
+        verifySingle(ContactFabricator.single());
     }
 
-    public void testFromAddressBook_fieldsNotNull() {
+    public void testImportContact_fieldsNotNull() {
         Contact fabricated = ContactFabricator.importContact();
         assertNotNull("This field cannot be null.", fabricated.getFirstName());
         assertNotNull("This field cannot be null.", fabricated.getLastName());
@@ -58,12 +35,30 @@ public class ContactFabricatorTest extends BaseTest {
 
         for (int i = 0; i < contacts.size(); i++) {
             Contact contact = contacts.get(i);
-            assertTrue("Contact not valid.", contact.isValid());
+            if (i == 0) verifySingle(contact);
+            else assertTrue("Contact not valid.", contact.isValid());
         }
     }
 
-    @Override
-    public void tearDown() throws Exception {
-        super.tearDown();
+    private void verifySingle(Contact contact) {
+        assertTrue("Contact not valid.", contact.isValid());
+        assertEquals("56c3510d9007ba7dab0000cb", contact.getId());
+        assertEquals("Java", contact.getFirstName());
+        assertEquals("Wrapper", contact.getLastName());
+        assertEquals("Software Developer", contact.getJobTitle());
+        assertEquals("OnePageCRM", contact.getCompanyName());
+        assertEquals("56c351089007ba7dab000058", contact.getCompanyId());
+        assertEquals("Java is very verbose, we met in college.", contact.getBackground());
+        assertTrue(contact.isStarred() != null && contact.isStarred());
+        assertEquals("559cd1866f6e656707000001", contact.getOwnerId());
+        assertEquals("email_web", contact.getLeadSourceId());
+        assertEquals("Prospect", contact.getStatus());
+        assertEquals("559cd1a06f6e656707000006", contact.getStatusId());
+        assertTrue(contact.hasPendingDeal() != null && contact.hasPendingDeal());
+        assertEquals(20400d, contact.getTotalPending());
+        assertNotNull("This field cannot be null.", contact.getAddress());
+        assertNotNull("This field cannot be null.", contact.getPhones());
+        assertNotNull("This field cannot be null.", contact.getEmails());
+        assertNotNull("This field cannot be null.", contact.getUrls());
     }
 }

@@ -212,9 +212,4 @@ public class ContactListTest extends BaseTest {
         assertEquals(4, allContacts.getArrayPosition(johnSmith));
         assertEquals(5, allContacts.getArrayPosition(maryDempsey));
     }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
 }

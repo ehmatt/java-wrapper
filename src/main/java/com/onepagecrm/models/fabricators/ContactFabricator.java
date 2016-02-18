@@ -16,34 +16,7 @@ public class ContactFabricator extends BaseFabricator {
     private static final Logger LOG = Logger.getLogger(ContactFabricator.class.getName());
 
     public static Contact single() {
-        // Create new Contact with desired fields.
-        Contact contact = new Contact()
-                .setId("5694e1999007ba687b0000c9")
-                .setFirstName("Java")
-                .setLastName("Wrapper")
-                .setJobTitle("Software Developer")
-                .setCompanyName("OnePageCRM")
-                .setBackground("Java is very verbose, we met in college.")
-                .setPhotoUrl("https://opcrm-fd-us-west-1-54e488299007ba1342000001.s3.amazonaws.com/" +
-                        "559cd1866f6e656707000001/56b0c3919007ba1421000007/56b0c3919007ba1421000006.png")
-                .setStarred(true)
-                .setOwnerId("559cd1866f6e656707000001")
-                .setLeadSourceId("email_web")
-                .setStatus("Prospect")
-                .setStatusId("559cd1a06f6e656707000006")
-                .setHasPendingDeal(true)
-                .setTotalPending(20400d);
-
-        // Address address fields.
-        contact.setAddress(AddressFabricator.single());
-
-        // Phone, Email, Web.
-        addContactables(contact);
-
-        // Next Action.
-        contact.setNextAction(ActionFabricator.single());
-
-        return contact;
+        return actionStream().get(0);
     }
 
     public static Contact importContact() {
