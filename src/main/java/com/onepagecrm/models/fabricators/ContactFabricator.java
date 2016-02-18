@@ -80,7 +80,25 @@ public class ContactFabricator extends BaseFabricator {
     }
 
     public static ContactList list() {
-        String list = Utilities.getResourceContents("src/test/res/request_01_action_stream_response.json");
+        return actionStream();
+    }
+
+    public static ContactList actionStream() {
+        String list = Utilities.getResourceContents(
+                "src/test/res/responses/perfect/DEV-action_stream.json");
+        ContactList contacts = new ContactList();
+        try {
+            contacts = ContactListSerializer.fromString(list);
+        } catch (OnePageException e) {
+            LOG.severe("Problem creating contact list from JSON file.");
+            LOG.severe(e.toString());
+        }
+        return contacts;
+    }
+
+    public static ContactList contacts() {
+        String list = Utilities.getResourceContents(
+                "src/test/res/responses/perfect/DEV-contacts.json");
         ContactList contacts = new ContactList();
         try {
             contacts = ContactListSerializer.fromString(list);

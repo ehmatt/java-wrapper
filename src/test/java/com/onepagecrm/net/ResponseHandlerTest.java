@@ -379,7 +379,7 @@ public class ResponseHandlerTest extends BaseTest {
      */
     public void testParseActionStreamPerPage_Successful() {
         String response = Utilities.getResourceContents(
-                "src/test/res/request_01_action_stream_response.json"
+                "src/test/res/responses/handler_test/request_01_action_stream_response.json"
         );
 
         try {
@@ -399,7 +399,7 @@ public class ResponseHandlerTest extends BaseTest {
      */
     public void testParseContactsPerPage_Successful() {
         String response = Utilities.getResourceContents(
-                "src/test/res/request_02_contacts_response.json"
+                "src/test/res/responses/handler_test/request_02_contacts_response.json"
         );
 
         try {
@@ -418,7 +418,7 @@ public class ResponseHandlerTest extends BaseTest {
      */
     public void testParseAddCall_Successful() {
         String response = Utilities.getResourceContents(
-                "src/test/res/request_03_add_call_response.json"
+                "src/test/res/responses/handler_test/request_03_add_call_response.json"
         );
 
         try {
@@ -436,7 +436,7 @@ public class ResponseHandlerTest extends BaseTest {
      */
     public void testParseAddContact_Successful() {
         String response = Utilities.getResourceContents(
-                "src/test/res/request_04_add_contact_response.json"
+                "src/test/res/responses/handler_test/request_04_add_contact_response.json"
         );
 
         try {

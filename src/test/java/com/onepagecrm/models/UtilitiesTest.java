@@ -14,8 +14,8 @@ public class UtilitiesTest extends BaseTest {
      * Should generate the same String as the contents of the text file.
      */
     public void testEncodeImage_FromPath() {
-        String imagePath = "src/test/res/cillian.jpg";
-        String correctAnswerPath = "src/test/res/cillian.jpg.base64.txt";
+        String imagePath = "src/test/res/image_encode/cillian.jpg";
+        String correctAnswerPath = "src/test/res/image_encode/cillian.jpg.base64.txt";
 
         String base64EncodedImageString = Utilities.encodeImage(imagePath);
         String correctAnswer = Utilities.getResourceContents(correctAnswerPath);
@@ -33,8 +33,8 @@ public class UtilitiesTest extends BaseTest {
      * Should generate the same String as the contents of the text file.
      */
     public void testEncodeImage_FromBytes() {
-        String imagePath = "src/test/res/cillian.jpg";
-        String correctAnswerPath = "src/test/res/cillian.jpg.base64.txt";
+        String imagePath = "src/test/res/image_encode/cillian.jpg";
+        String correctAnswerPath = "src/test/res/image_encode/cillian.jpg.base64.txt";
 
         File imageFile = new File(imagePath);
 

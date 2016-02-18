@@ -1,0 +1,39 @@
+{
+  "status": 0,
+  "message": "OK",
+  "timestamp": 1455786293,
+  "data": {
+    "deals": [
+      {
+        "deal": {
+          "id": "56c352369007ba47a7000007",
+          "amount": 20400,
+          "author": "Cillian M.",
+          "text": "Deal note for Big deal",
+          "contact_info": {
+            "contact_name": "Java Wrapper",
+            "company": "OnePageCRM"
+          },
+          "contact_id": "56c3510d9007ba7dab0000cb",
+          "created_at": "2016-02-16T16:45:42.488Z",
+          "date": "2016-02-16",
+          "expected_close_date": "2016-02-17",
+          "months": 1,
+          "name": "Big deal",
+          "owner_id": "559cd1866f6e656707000001",
+          "stage": 50,
+          "status": "pending",
+          "total_amount": 20400,
+          "modified_at": "2016-02-16T16:46:20.746Z",
+          "has_related_notes": false,
+          "close_date": null,
+          "attachments": []
+        },
+        "related_notes": []
+      }
+    ],
+    "total_count": 1,
+    "page": 1,
+    "max_page": 1,
+    "per_page": 10
+  }

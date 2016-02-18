@@ -54,7 +54,7 @@ public class ContactFabricatorTest extends BaseTest {
     @SuppressWarnings("ForLoopReplaceableByForEach")
     public void testList_allContactsValid() {
         ContactList contacts = ContactFabricator.list();
-        assertEquals("Should be 18 contacts", contacts.size(), 18);
+        assertEquals("Should be 10 contacts", contacts.size(), 10);
 
         for (int i = 0; i < contacts.size(); i++) {
             Contact contact = contacts.get(i);
