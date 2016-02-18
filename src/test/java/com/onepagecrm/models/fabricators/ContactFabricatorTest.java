@@ -10,7 +10,7 @@ import com.onepagecrm.models.ContactList;
 public class ContactFabricatorTest extends BaseTest {
 
     public void testSingle_correctValues() {
-        verifySingle(ContactFabricator.single());
+        validateSingle(ContactFabricator.single());
     }
 
     public void testImportContact_fieldsNotNull() {
@@ -35,12 +35,12 @@ public class ContactFabricatorTest extends BaseTest {
 
         for (int i = 0; i < contacts.size(); i++) {
             Contact contact = contacts.get(i);
-            if (i == 0) verifySingle(contact);
+            if (i == 0) validateSingle(contact);
             else assertTrue("Contact not valid.", contact.isValid());
         }
     }
 
-    private void verifySingle(Contact contact) {
+    private void validateSingle(Contact contact) {
         assertTrue("Contact not valid.", contact.isValid());
         assertEquals("56c3510d9007ba7dab0000cb", contact.getId());
         assertEquals("Java", contact.getFirstName());

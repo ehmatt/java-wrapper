@@ -1,10 +1,13 @@
 package com.onepagecrm.models.fabricators;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.Account;
 import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.models.serializers.LoginSerializer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -25,6 +28,16 @@ public class UserFabricator extends BaseFabricator {
                 .setFirstName("John")
                 .setLastName("Smith")
                 .setEmail("j.smith@bigcompanyinc.com");
+    }
+
+    public static List<User> list() {
+        List<User> users = new ArrayList<>();
+        User loggedUser = loggedUser();
+        users.add(loggedUser);
+        for (User member : Account.team) {
+            if (!users.contains(member)) users.add(member);
+        }
+        return users;
     }
 
     private static User loggedUser() {
