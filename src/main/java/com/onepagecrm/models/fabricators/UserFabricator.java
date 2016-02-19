@@ -40,6 +40,19 @@ public class UserFabricator extends BaseFabricator {
         return users;
     }
 
+//    private static User loggedUser() {
+//        User loggedUser = new User();
+//        Utilities utils = new Utilities();
+//        String loginResponse = utils.getResourceContentsFor("DEV-login.json");
+//        try {
+//            loggedUser = LoginSerializer.fromString(loginResponse);
+//        } catch (OnePageException e) {
+//            LOG.severe("Problem creating user object from JSON file.");
+//            LOG.severe(e.toString());
+//        }
+//        return loggedUser;
+//    }
+
     private static User loggedUser() {
         User loggedUser = new User();
         String loginResponse = Utilities.getResourceContents(
