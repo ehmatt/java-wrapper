@@ -17,9 +17,6 @@ public class ContactFabricator extends BaseFabricator {
 
     private static final Logger LOG = Logger.getLogger(ContactFabricator.class.getName());
 
-    //    public static String JAR_PATH = "responses/perfect/";
-//    public static String JAR_PATH = "/src/test/res/responses/perfect/";
-//    public static String JAR_PATH = "app/libs/onepagecrm-api-wrapper-0.0.1.jar/responses/perfect";
     public static String WRAPPER_PATH = "./src/test/res/responses/perfect/";
     public static String PATH_TO_JSON = WRAPPER_PATH;
 
@@ -64,41 +61,10 @@ public class ContactFabricator extends BaseFabricator {
         return actionStream();
     }
 
-//    public static ContactList actionStream() {
-//        ContactList contacts = new ContactList();
-//        String response = Utilities.getResourceContentsFor("DEV-action_stream.json");
-//        if (response != null) {
-//            try {
-//                contacts = ContactListSerializer.fromString(response);
-//            } catch (OnePageException e) {
-//                LOG.severe("Problem creating contact list from JSON file.");
-//                LOG.severe(e.toString());
-//            }
-//        }
-//        return contacts;
-//    }
-
-//    public static ContactList actionStream() {
-//        ContactList contacts = new ContactList();
-//        String response = Utilities.getResourceContentsFor("DEV-action_stream.json");
-//        if (response != null) {
-//            try {
-//                contacts = ContactListSerializer.fromString(response);
-//            } catch (OnePageException e) {
-//                LOG.severe("Problem creating contact list from JSON file.");
-//                LOG.severe(e.toString());
-//            }
-//        }
-//        return contacts;
-//    }
-
     public static ContactList actionStream() {
         ContactList contacts = new ContactList();
         String path = PATH_TO_JSON + "DEV-action_stream.json";
         LOG.severe("path : " + path);
-//        Path currentRelativePath = Paths.get("");
-//        String s = currentRelativePath.toAbsolutePath().toString();
-//        LOG.severe("Current relative path is: " + s);
         File f = new File("./");
         LOG.severe("files : " + Arrays.toString(f.listFiles()));
         String response = Utilities.getResourceContents(path);
@@ -113,42 +79,10 @@ public class ContactFabricator extends BaseFabricator {
         return contacts;
     }
 
-//    public static ContactList contacts() {
-//        ContactList contacts = new ContactList();
-//        String response = Utilities.getResourceContentsFor("DEV-contacts.json");
-//        if (response != null) {
-//            try {
-//                contacts = ContactListSerializer.fromString(response);
-//            } catch (OnePageException e) {
-//                LOG.severe("Problem creating contact list from JSON file.");
-//                LOG.severe(e.toString());
-//            }
-//        }
-//        return contacts;
-//    }
-
-//    public static ContactList contacts() {
-//        ContactList contacts = new ContactList();
-//        Utilities utils = new Utilities();
-//        String response = utils.getResourceContentsFor("DEV-contacts.json");
-//        if (response != null) {
-//            try {
-//                contacts = ContactListSerializer.fromString(response);
-//            } catch (OnePageException e) {
-//                LOG.severe("Problem creating contact list from JSON file.");
-//                LOG.severe(e.toString());
-//            }
-//        }
-//        return contacts;
-//    }
-
     public static ContactList contacts() {
         ContactList contacts = new ContactList();
         String path = PATH_TO_JSON + "DEV-contacts.json";
         LOG.severe("path : " + path);
-//        Path currentRelativePath = Paths.get("");
-//        String s = currentRelativePath.toAbsolutePath().toString();
-//        LOG.severe("Current relative path is: " + s);
         File f = new File("./");
         LOG.severe("files : " + Arrays.toString(f.listFiles()));
         String response = Utilities.getResourceContents(path);
