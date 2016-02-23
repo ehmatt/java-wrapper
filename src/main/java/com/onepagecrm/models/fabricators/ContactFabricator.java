@@ -6,8 +6,6 @@ import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.models.serializers.ContactListSerializer;
 
-import java.io.File;
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 /**
@@ -64,9 +62,6 @@ public class ContactFabricator extends BaseFabricator {
     public static ContactList actionStream() {
         ContactList contacts = new ContactList();
         String path = PATH_TO_JSON + "DEV-action_stream.json";
-        LOG.severe("path : " + path);
-        File f = new File("./");
-        LOG.severe("files : " + Arrays.toString(f.listFiles()));
         String response = Utilities.getResourceContents(path);
         if (response != null) {
             try {
@@ -82,9 +77,6 @@ public class ContactFabricator extends BaseFabricator {
     public static ContactList contacts() {
         ContactList contacts = new ContactList();
         String path = PATH_TO_JSON + "DEV-contacts.json";
-        LOG.severe("path : " + path);
-        File f = new File("./");
-        LOG.severe("files : " + Arrays.toString(f.listFiles()));
         String response = Utilities.getResourceContents(path);
         if (response != null) {
             try {
