@@ -1,5 +1,6 @@
 package com.onepagecrm.models.fabricators;
 
+import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
@@ -14,9 +15,6 @@ import java.util.logging.Logger;
 public class ContactFabricator extends BaseFabricator {
 
     private static final Logger LOG = Logger.getLogger(ContactFabricator.class.getName());
-
-    public static String WRAPPER_PATH = "./src/test/res/responses/perfect/";
-    public static String PATH_TO_JSON = WRAPPER_PATH;
 
     public static Contact single() {
         return actionStream().get(0);
@@ -61,7 +59,7 @@ public class ContactFabricator extends BaseFabricator {
 
     public static ContactList actionStream() {
         ContactList contacts = new ContactList();
-        String path = PATH_TO_JSON + "DEV-action_stream.json";
+        String path = OnePageCRM.JSON_PATH + "DEV-action_stream.json";
         String response = Utilities.getResourceContents(path);
         if (response != null) {
             try {
@@ -76,7 +74,7 @@ public class ContactFabricator extends BaseFabricator {
 
     public static ContactList contacts() {
         ContactList contacts = new ContactList();
-        String path = PATH_TO_JSON + "DEV-contacts.json";
+        String path = OnePageCRM.JSON_PATH + "DEV-contacts.json";
         String response = Utilities.getResourceContents(path);
         if (response != null) {
             try {

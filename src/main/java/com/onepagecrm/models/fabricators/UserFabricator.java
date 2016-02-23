@@ -1,5 +1,6 @@
 package com.onepagecrm.models.fabricators;
 
+import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Account;
 import com.onepagecrm.models.User;
@@ -40,28 +41,17 @@ public class UserFabricator extends BaseFabricator {
         return users;
     }
 
-//    private static User loggedUser() {
-//        User loggedUser = new User();
-//        Utilities utils = new Utilities();
-//        String loginResponse = utils.getResourceContentsFor("DEV-login.json");
-//        try {
-//            loggedUser = LoginSerializer.fromString(loginResponse);
-//        } catch (OnePageException e) {
-//            LOG.severe("Problem creating user object from JSON file.");
-//            LOG.severe(e.toString());
-//        }
-//        return loggedUser;
-//    }
-
     private static User loggedUser() {
         User loggedUser = new User();
-        String loginResponse = Utilities.getResourceContents(
-                "src/test/res/responses/perfect/DEV-login.json");
-        try {
-            loggedUser = LoginSerializer.fromString(loginResponse);
-        } catch (OnePageException e) {
-            LOG.severe("Problem creating user object from JSON file.");
-            LOG.severe(e.toString());
+        String path = OnePageCRM.JSON_PATH + "DEV-login.json";
+        String response = Utilities.getResourceContents(path);
+        if (response != null) {
+            try {
+                loggedUser = LoginSerializer.fromString(response);
+            } catch (OnePageException e) {
+                LOG.severe("Problem creating user object from JSON file.");
+                LOG.severe(e.toString());
+            }
         }
         return loggedUser;
     }
