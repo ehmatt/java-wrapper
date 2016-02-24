@@ -7,7 +7,9 @@ import com.onepagecrm.models.serializers.ContactListSerializer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
 public class ContactList extends ArrayList<Contact> implements Serializable {
@@ -285,5 +287,39 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
             }
         }
         return position;
+    }
+
+    @Override
+    public Iterator<Contact> iterator() {
+        return new RangeIterator(contacts);
+    }
+
+    private static final class RangeIterator implements Iterator<Contact> {
+        private List<Contact> contacts;
+        private int cursor;
+        private final int end;
+
+        public RangeIterator(List<Contact> contacts) {
+            this.contacts = contacts;
+            this.cursor = 0;
+            this.end = contacts.size();
+        }
+
+        public boolean hasNext() {
+            return this.cursor < end;
+        }
+
+        public Contact next() {
+            if (this.hasNext()) {
+                int current = cursor;
+                cursor++;
+                return contacts.get(current);
+            }
+            throw new NoSuchElementException();
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 }

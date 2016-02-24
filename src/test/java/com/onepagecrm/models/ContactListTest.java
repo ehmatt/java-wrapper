@@ -1,11 +1,15 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.BaseTest;
+import com.onepagecrm.models.fabricators.ContactFabricator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ContactListTest extends BaseTest {
+
+    private static final Logger LOG = Logger.getLogger(ContactListTest.class.getName());
 
     private ContactList allContacts;
     private Contact tigerWoods;
@@ -211,5 +215,33 @@ public class ContactListTest extends BaseTest {
         assertEquals(3, allContacts.getArrayPosition(joeBloggs));
         assertEquals(4, allContacts.getArrayPosition(johnSmith));
         assertEquals(5, allContacts.getArrayPosition(maryDempsey));
+    }
+
+    public void testContactList_Iterable() {
+        ContactList contacts = ContactFabricator.list();
+        // Create correct lists using regular old for loop.
+        List<String> contactIds = new ArrayList<>();
+        List<Integer> positions = new ArrayList<>();
+        for (int i = 0; i < contacts.size(); i++) {
+            contactIds.add(i, contacts.get(i).getId());
+            positions.add(i, i);
+        }
+
+        // Now check that foreach loop gives the same answers.
+        // This tests implementation of Iterator since foreach calls this internally.
+        boolean iteratorUsed = false;
+        int counter = 0;
+        for (Contact contact : contacts) {
+            iteratorUsed = true;
+            int index = contacts.indexOf(contact);
+            // Check order.
+            assertEquals(counter, index);
+            // Verify ids.
+            assertEquals(contactIds.get(index), contact.getId());
+            // Verify positions.
+            assertEquals(((int) positions.get(index)), counter);
+            counter++;
+        }
+        assertTrue("Did not iterate over ContactList.\n", iteratorUsed);
     }
 }
