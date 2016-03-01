@@ -23,8 +23,8 @@ public class CustomFieldValueSerializer extends BaseSerializer {
                         valueObject = ((Number) valueObject).intValue();
                     } else {
                         // Floating point numbers are of type Number in Java.
-                        // Convert this to a Float.
-                        valueObject = ((Number) valueObject).floatValue();
+                        // Convert this to a Double.
+                        valueObject = ((Number) valueObject).doubleValue();
                     }
                 } else if (valueObject instanceof JSONArray) {
                     // Parse array of Strings.
@@ -45,8 +45,8 @@ public class CustomFieldValueSerializer extends BaseSerializer {
                 addJsonStringValue((String) customFieldValue.getValue(), valueObject, VALUE_TAG);
             } else if (customFieldValue.getValue() instanceof Integer) {
                 addJsonIntegerValue((Integer) customFieldValue.getValue(), valueObject, VALUE_TAG);
-            } else if (customFieldValue.getValue() instanceof Float) {
-                addJsonFloatValue((Float) customFieldValue.getValue(), valueObject, VALUE_TAG);
+            } else if (customFieldValue.getValue() instanceof Double) {
+                addJsonDoubleValue((Double) customFieldValue.getValue(), valueObject, VALUE_TAG);
             } else if (customFieldValue.getValue() instanceof String[]) {
                 JSONArray valueArray = toJsonStringArray((String[]) customFieldValue.getValue());
                 addJsonArray(valueArray, valueObject, VALUE_TAG);
