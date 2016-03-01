@@ -263,21 +263,19 @@ public class BaseSerializer {
         return null;
     }
 
-    public static Number parseNumber(Object number) {
-        if (number != null && number instanceof Number) {
-            // Integers are of type Number in Java.
-            if (number instanceof Integer) {
-                // Convert this to an Integer.
-                number = ((Number) number).intValue();
-            } else {
-                // Floating point numbers are of type Number in Java.
-                // Convert this to a Double (big Float).
-                number = ((Number) number).doubleValue();
+    public static Number parseNumber(String numberAsString) {
+        Number number = null;
+        try {
+            number = Integer.valueOf(numberAsString);
+        } catch (NumberFormatException e) {
+            try {
+                number = Double.valueOf(numberAsString);
+            } catch (NumberFormatException ex) {
+                LOG.severe("Not float value entered. " + e);
+                LOG.severe("Not integer value entered. " + ex);
             }
-            return (Number) number;
-        } else {
-            return null;
         }
+        return number;
     }
 
     public static JSONArray toJsonStringArray(String[] stringArray) {

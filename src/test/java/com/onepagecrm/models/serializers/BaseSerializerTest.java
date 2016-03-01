@@ -139,4 +139,26 @@ public class BaseSerializerTest extends BaseTest {
         assertEquals("String not converted to array of strings correctly",
                 expected[2], actual[2]);
     }
+
+    public void testParseNumber_StringIn_DoubleOut() {
+        String pi = "3.14";
+
+        Double expected = 3.14d;
+        Object actual = BaseSerializer.parseNumber(pi);
+
+        assertTrue("Should not be null.", actual != null);
+        assertTrue("Should be of type Double.", actual instanceof Double);
+        assertEquals(expected, actual);
+    }
+
+    public void testParseNumber_StringIn_IntOut() {
+        String luckyNumberThirteen = "13";
+
+        Integer expected = 13;
+        Object actual = BaseSerializer.parseNumber(luckyNumberThirteen);
+
+        assertTrue("Should not be null.", actual != null);
+        assertTrue("Should be of type Integer.", actual instanceof Integer);
+        assertEquals(expected, actual);
+    }
 }
