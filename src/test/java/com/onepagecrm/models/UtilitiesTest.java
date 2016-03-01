@@ -15,7 +15,7 @@ public class UtilitiesTest extends BaseTest {
      */
     public void testEncodeImage_FromPath() {
         String imagePath = "src/test/res/image_encode/cillian.jpg";
-        String correctAnswerPath = "src/test/res/image_encode/cillian.jpg.base64.txt";
+        String correctAnswerPath = "src/test/res/image_encode/cillian.jpg.base64.dat";
 
         String base64EncodedImageString = Utilities.encodeImage(imagePath);
         String correctAnswer = Utilities.getResourceContents(correctAnswerPath);
@@ -34,7 +34,7 @@ public class UtilitiesTest extends BaseTest {
      */
     public void testEncodeImage_FromBytes() {
         String imagePath = "src/test/res/image_encode/cillian.jpg";
-        String correctAnswerPath = "src/test/res/image_encode/cillian.jpg.base64.txt";
+        String correctAnswerPath = "src/test/res/image_encode/cillian.jpg.base64.dat";
 
         File imageFile = new File(imagePath);
 
