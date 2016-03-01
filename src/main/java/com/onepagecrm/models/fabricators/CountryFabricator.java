@@ -29,7 +29,7 @@ public class CountryFabricator extends BaseFabricator {
 
     public static Countries list() {
         Countries countries = new Countries();
-        String path = OnePageCRM.JSON_PATH + "DEV-countries.json";
+        String path = OnePageCRM.ASSET_PATH + "DEV-countries.json";
         String response = Utilities.getResourceContents(path);
         if (response != null) {
             try {

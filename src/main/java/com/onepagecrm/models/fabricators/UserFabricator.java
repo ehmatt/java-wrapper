@@ -43,7 +43,7 @@ public class UserFabricator extends BaseFabricator {
 
     private static User loggedUser() {
         User loggedUser = new User();
-        String path = OnePageCRM.JSON_PATH + "DEV-login.json";
+        String path = OnePageCRM.ASSET_PATH + "DEV-login.json";
         String response = Utilities.getResourceContents(path);
         if (response != null) {
             try {

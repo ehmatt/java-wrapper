@@ -59,7 +59,7 @@ public class ContactFabricator extends BaseFabricator {
 
     public static ContactList actionStream() {
         ContactList contacts = new ContactList();
-        String path = OnePageCRM.JSON_PATH + "DEV-action_stream.json";
+        String path = OnePageCRM.ASSET_PATH + "DEV-action_stream.json";
         String response = Utilities.getResourceContents(path);
         if (response != null) {
             try {
@@ -74,7 +74,7 @@ public class ContactFabricator extends BaseFabricator {
 
     public static ContactList contacts() {
         ContactList contacts = new ContactList();
-        String path = OnePageCRM.JSON_PATH + "DEV-contacts.json";
+        String path = OnePageCRM.ASSET_PATH + "DEV-contacts.json";
         String response = Utilities.getResourceContents(path);
         if (response != null) {
             try {
