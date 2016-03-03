@@ -20,7 +20,6 @@ public class ContactFabricatorTest extends BaseTest {
         assertNotNull("This field cannot be null.", fabricated.getCompanyName());
         assertNotNull("This field cannot be null.", fabricated.getJobTitle());
         assertNotNull("This field cannot be null.", fabricated.getBackground());
-        assertNotNull("This field cannot be null.", fabricated.getPhotoUrl());
         assertNotNull("This field cannot be null.", fabricated.isStarred());
         assertNotNull("This field cannot be null.", fabricated.getAddress());
         assertNotNull("This field cannot be null.", fabricated.getPhones());

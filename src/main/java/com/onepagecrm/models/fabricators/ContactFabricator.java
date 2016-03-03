@@ -31,8 +31,8 @@ public class ContactFabricator extends BaseFabricator {
                         "Canadian-American business magnate, engineer, inventor and investor. " +
                         "He is the CEO and CTO of SpaceX, CEO and product architect of Tesla " +
                         "Motors, chairman of SolarCity, and co-chairman of OpenAI.")
-                .setPhotoUrl("https://onepagecrm-ud2-us-west-1.s3.amazonaws.com/5694e1999007b" +
-                        "a687b0000c9/1454424977000/56b0c3919007ba1421000006.png")
+//                .setPhotoUrl("https://onepagecrm-ud2-us-west-1.s3.amazonaws.com/5694e1999007b" +
+//                        "a687b0000c9/1454424977000/56b0c3919007ba1421000006.png")
                 .setStarred(true);
 
         // Address address fields.
