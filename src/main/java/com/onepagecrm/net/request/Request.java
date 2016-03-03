@@ -25,6 +25,7 @@ public abstract class Request {
     public static final int LOCAL_DEV_SERVER = 3;
     public static final int NETWORK_DEV_SERVER = 4;
     public static final int ORION_SERVER = 5;
+    public static final int MOCK_REQUEST_SERVER = 6;
 
     public static int SERVER = DEV_SERVER;
 
@@ -78,6 +79,7 @@ public abstract class Request {
     public void setEndpointUrl(String endpoint) {
         switch (SERVER) {
             case APP_SERVER:
+            case MOCK_REQUEST_SERVER:
                 endpointUrl = APP_URL + endpoint + format;
                 break;
             case DEV_SERVER:
@@ -104,14 +106,21 @@ public abstract class Request {
      * @return
      */
     public Response send() {
-        setupAndConnect();
-        setRequestMethod();
-        setRequestBody();
-        setRequestHeaders();
-        writeRequestBody();
-        getResponse();
-        connection.disconnect();
-        return response;
+        if (SERVER != MOCK_REQUEST_SERVER) {
+            setupAndConnect();
+            setRequestMethod();
+            setRequestBody();
+            setRequestHeaders();
+            writeRequestBody();
+            getResponse();
+            connection.disconnect();
+            return response;
+        } else {
+            return new Response()
+                    .setResponseCode(0)
+                    .setResponseMessage("")
+                    .setResponseBody("");
+        }
     }
 
     /**
@@ -232,17 +241,19 @@ public abstract class Request {
                 LOG.severe("Could not open output stream to write request body");
                 LOG.severe(e.toString());
             }
-            try {
-                out.write(requestBody);
-            } catch (IOException e) {
-                LOG.severe("Could not write request body");
-                LOG.severe(e.toString());
-            }
-            try {
-                out.flush();
-            } catch (IOException e) {
-                LOG.severe("Could not flush output stream for writing request body");
-                LOG.severe(e.toString());
+            if (out != null) {
+                try {
+                    out.write(requestBody);
+                } catch (IOException e) {
+                    LOG.severe("Could not write request body");
+                    LOG.severe(e.toString());
+                }
+                try {
+                    out.flush();
+                } catch (IOException e) {
+                    LOG.severe("Could not flush output stream for writing request body");
+                    LOG.severe(e.toString());
+                }
             }
         }
     }
@@ -312,10 +323,12 @@ public abstract class Request {
             scan = new Scanner(connection.getErrorStream());
         }
 
-        while (scan.hasNext()) {
-            responseBody += scan.nextLine();
+        if (scan != null) {
+            while (scan.hasNext()) {
+                responseBody += scan.nextLine();
+            }
+            scan.close();
         }
-        scan.close();
         return responseBody;
     }
 
