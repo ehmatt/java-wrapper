@@ -106,9 +106,11 @@ public abstract class Request {
      * @return
      */
     public Response send() {
-        boolean mockingRequest = SERVER == MOCK_REQUEST_SERVER;
-        if (!mockingRequest) setupAndConnect();
-        setRequestMethod();
+        boolean mockingRequest = (SERVER == MOCK_REQUEST_SERVER);
+        if (!mockingRequest) {
+            setupAndConnect();
+            setRequestMethod();
+        }
         setRequestBody();
         setRequestHeaders();
         if (!mockingRequest) writeRequestBody();
