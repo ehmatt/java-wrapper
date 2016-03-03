@@ -110,13 +110,31 @@ public abstract class Request {
         if (!mockingRequest) {
             setupAndConnect();
             setRequestMethod();
+            setRequestBody();
+            setRequestHeaders();
+            writeRequestBody();
+            getResponse();
+            connection.disconnect();
+            return response;
+        } else {
+            return mockRequest();
         }
+    }
+
+    private Response mockRequest() {
+        Response mockResponse = new Response(0, "OK", "MOCKED REQUEST RESPONSE!");
+        LOG.info("*************************************");
+        LOG.info("--- REQUEST ---");
+        LOG.info("Type: " + type);
+        LOG.info("Url: " + getUrl(this.endpointUrl));
         setRequestBody();
-        setRequestHeaders();
-        if (!mockingRequest) writeRequestBody();
-        getResponse();
-        if (!mockingRequest) connection.disconnect();
-        return response;
+        LOG.info("Body: " + requestBody);
+        LOG.info("--- RESPONSE ---");
+        LOG.info("Code: " + mockResponse.getResponseCode());
+        LOG.info("Message: " + mockResponse.getResponseMessage());
+        LOG.info("Body: " + mockResponse.getResponseBody());
+        LOG.info("*************************************");
+        return mockResponse;
     }
 
     /**
@@ -214,13 +232,8 @@ public abstract class Request {
 
         LOG.info("*************************************");
         LOG.info("--- REQUEST ---");
-        if (SERVER != MOCK_REQUEST_SERVER) {
-            LOG.info("Type: " + connection.getRequestMethod());
-            LOG.info("Url: " + connection.getURL());
-        } else {
-            LOG.info("Type: " + type);
-            LOG.info("Url: " + getUrl(this.endpointUrl));
-        }
+        LOG.info("Type: " + connection.getRequestMethod());
+        LOG.info("Url: " + connection.getURL());
         LOG.info("Body: " + requestBody);
     }
 
@@ -265,15 +278,9 @@ public abstract class Request {
     private void getResponse() {
         response = new Response();
 
-        if (SERVER != MOCK_REQUEST_SERVER) {
-            getResponseCode();
-            getResponseMessage();
-            getResponseBody();
-        } else {
-            response.setResponseCode(0);
-            response.setResponseMessage("OK");
-            response.setResponseBody("MOCKED REQUEST RESPONSE!");
-        }
+        getResponseCode();
+        getResponseMessage();
+        getResponseBody();
 
         LOG.info("--- RESPONSE ---");
         LOG.info("Code: " + response.getResponseCode());
