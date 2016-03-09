@@ -2,17 +2,14 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.InvalidListingTypeException;
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.serializers.ContactListSerializer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
-public class ContactList extends ArrayList<Contact> implements Serializable {
+public class ContactList extends ResourceList<Contact> implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(ContactList.class.getName());
 
@@ -23,9 +20,7 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
 
     private int type;
 
-    private List<Contact> contacts;
-    private Paginator paginator;
-
+    @Override
     public ContactList nextPage() throws OnePageException {
         this.paginator.getNextPageNo();
         switch (type) {
@@ -39,6 +34,7 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
         }
     }
 
+    @Override
     public ContactList refresh() throws OnePageException {
         ContactList list = new ContactList();
         switch (type) {
@@ -49,18 +45,26 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
                 list = Account.loggedInUser.contacts();
                 break;
         }
-        this.setContacts(list);
+        this.setList(list);
         return this;
     }
 
-    public ContactList(List<Contact> contacts, int type) {
-        this.type = type;
-        new ContactList(contacts);
+    public ContactList() {
+        super();
+    }
+
+    public ContactList(List<Contact> contacts) {
+        super(contacts);
     }
 
     public ContactList(int type) {
+        super();
         this.type = type;
-        new ContactList();
+    }
+
+    public ContactList(List<Contact> contacts, int type) {
+        super(contacts);
+        this.type = type;
     }
 
     public ContactList setType(int type) {
@@ -72,29 +76,16 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
         return type;
     }
 
-    public ContactList(List<Contact> contacts) {
-        this.contacts = new ArrayList<>();
-        this.paginator = new Paginator();
-        if (contacts != null && !contacts.isEmpty()) {
-            for (int i = 0; i < contacts.size(); i++) {
-                this.contacts.add(contacts.get(i));
-            }
-        }
-    }
-
-    public ContactList() {
-        this.contacts = new ArrayList<>();
-        this.paginator = new Paginator();
+    @Override
+    public ContactList addNextPage(List<Contact> contacts) {
+        super.addNextPage(contacts);
+        return this;
     }
 
     public ContactList addNextPage(ContactList contactsList) {
-        if (this.contacts != null && !this.contacts.isEmpty()) {
-            List<Contact> contacts = contactsList.getContacts();
-            if (contacts != null && !contacts.isEmpty()) {
-                for (Contact contact : contacts) {
-                    this.contacts.add(contact);
-                }
-            }
+        if (contactsList != null && !contactsList.isEmpty()) {
+            List<Contact> contacts = contactsList.getList();
+            addNextPage(contacts);
         }
         return this;
     }
@@ -103,74 +94,19 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
         return ContactListSerializer.toJsonObject(this);
     }
 
-    public List<Contact> getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(List<Contact> contacts) {
-        this.contacts = new ArrayList<>();
-        if (contacts != null && !contacts.isEmpty()) {
-            for (int i = 0; i < contacts.size(); i++) {
-                this.contacts.add(contacts.get(i));
-            }
-        }
-    }
-
-    public Paginator getPaginator() {
-        return paginator;
-    }
-
-    public ContactList setPaginator(Paginator paginator) {
-        this.paginator = paginator;
-        return this;
-    }
-
-    public boolean isEmpty() {
-        return contacts.isEmpty();
-    }
-
-    public int size() {
-        return contacts.size();
-    }
-
-    public void add(int index, Contact contact) {
-        contacts.add(index, contact);
-    }
-
-    public boolean add(Contact contact) {
-        return contacts.add(contact);
-    }
-
-    public Contact get(int index) {
-        return contacts.get(index);
-    }
-
-    public Contact set(int index, Contact contact) {
-        contacts.set(index, contact);
-        return contact;
-    }
-
-    public int indexOf(Contact contact) {
-        return contacts.indexOf(contact);
-    }
-
     /**
-     * Determines mContacts which are phone-able i.e. have at least 1 phone
-     * number.
-     * <p/>
-     * Takes a list of mContacts. Returns a list of Contacts which have phone
-     * numbers.
+     * Determines {@link Contact}s which are phone-able i.e. have at least 1 {@link Phone} number.
      *
-     * @return
+     * @return - List of Contacts which have at least 1 {@link Phone} number.
      */
     public ContactList getPhoneableContacts() {
-        ArrayList<Contact> phoneableContacts = new ArrayList<>();
-        if (contacts != null && !contacts.isEmpty()) {
+        List<Contact> phoneableContacts = new ArrayList<>();
+        if (list != null && !list.isEmpty()) {
             int counter = 0;
-            for (int i = 0; i < contacts.size(); i++) {
-                if (contacts.get(i).getPhones() != null && !contacts.get(i).getPhones().isEmpty()) {
-                    contacts.get(i).setIntId(counter + 1);
-                    phoneableContacts.add(contacts.get(i));
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getPhones() != null && !list.get(i).getPhones().isEmpty()) {
+                    list.get(i).setIntId(counter + 1);
+                    phoneableContacts.add(list.get(i));
                     counter++;
                 }
             }
@@ -179,23 +115,19 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
     }
 
     /**
-     * Determines mContacts which STARRED contacts are phone-able i.e. have at
-     * least 1 phone number.
-     * <p/>
-     * Takes a list of mContacts. Returns a list of Contacts which have phone
-     * numbers.
+     * Determines {@link Contact}s which STARRED contacts are phone-able i.e. have at least 1 {@link Phone} number.
      *
-     * @return
+     * @return - List of Contacts which are STARRED and have at least 1 {@link Phone} number.
      */
     public ContactList getStarredPhoneableContacts() {
-        ArrayList<Contact> phoneableContacts = new ArrayList<>();
-        if (contacts != null && !contacts.isEmpty()) {
+        List<Contact> phoneableContacts = new ArrayList<>();
+        if (list != null && !list.isEmpty()) {
             int counter = 0;
-            for (int i = 0; i < contacts.size(); i++) {
-                if (contacts.get(i).isStarred()) {
-                    if (contacts.get(i).getPhones() != null && !contacts.get(i).getPhones().isEmpty()) {
-                        contacts.get(i).setIntId(counter + 1);
-                        phoneableContacts.add(contacts.get(i));
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).isStarred()) {
+                    if (list.get(i).getPhones() != null && !list.get(i).getPhones().isEmpty()) {
+                        list.get(i).setIntId(counter + 1);
+                        phoneableContacts.add(list.get(i));
                         counter++;
                     }
                 }
@@ -205,21 +137,18 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
     }
 
     /**
-     * Checks if a phone number exists in action stream.
-     * <p/>
-     * Takes a list of mContacts Returns the Contact object if the phone numbers
-     * match.
+     * Checks if a {@link Phone} number exists in action stream.
      *
-     * @param incomingNumber
-     * @return
+     * @param incomingNumber - {@link Phone} number to be matched.
+     * @return - The {@link Contact} object whose number matches, if it exists.
      */
     public Contact inActionStream(String incomingNumber) {
-        for (int i = 0; i < contacts.size(); i++) {
-            List<Phone> phones = contacts.get(i).getPhones();
+        for (int i = 0; i < list.size(); i++) {
+            List<Phone> phones = list.get(i).getPhones();
             if (phones != null && !phones.isEmpty()) {
-                for (int j = 0; j < contacts.get(i).getPhones().size(); j++) {
-                    if (incomingNumber.equals(contacts.get(i).getPhones().get(j).getValue())) {
-                        return contacts.get(i);
+                for (int j = 0; j < list.get(i).getPhones().size(); j++) {
+                    if (incomingNumber.equals(list.get(i).getPhones().get(j).getValue())) {
+                        return list.get(i);
                     }
                 }
             }
@@ -228,98 +157,36 @@ public class ContactList extends ArrayList<Contact> implements Serializable {
     }
 
     /**
-     * Simply gets the nextPage Contact in the list.
+     * Simply gets the next {@link Contact} in the list.
      * <p/>
-     * If at end of list, jumps back to the start.
+     * If at the end, jumps back to the start.
      *
-     * @param position
-     * @return
+     * @param currentPosition - Current position in the list.
+     * @return - {@link Contact} at the next position in the list.
      */
-    public Contact getNextContact(int position) {
-        if (contacts != null && !contacts.isEmpty()) {
-            int length = contacts.size();
-            int newPosition;
-            if (position < (length - 1)) {
-                newPosition = position + 1;
-            } else {
-                newPosition = 0;
-            }
-            return contacts.get(newPosition);
-        } else {
-            return new Contact();
-        }
+    public Contact getNextContact(int currentPosition) {
+        return getNext(currentPosition);
     }
 
     /**
-     * Simply gets the previous contact in the list.
+     * Simply gets the previous {@link Contact} in the list.
      * <p/>
      * If at the start, jumps back to the end.
      *
-     * @param position
-     * @return
+     * @param currentPosition - Current position in list.
+     * @return - {@link Contact} in the previous position.
      */
-    public Contact getPreviousContact(int position) {
-        if (contacts != null && !contacts.isEmpty()) {
-            int length = contacts.size();
-            int newPosition;
-            if (position > 0) {
-                newPosition = position - 1;
-            } else {
-                newPosition = length - 1;
-            }
-            return contacts.get(newPosition);
-        } else {
-            return new Contact();
-        }
+    public Contact getPreviousContact(int currentPosition) {
+        return getPrevious(currentPosition);
     }
 
     /**
-     * Get the array index of the given contact.
+     * Get the list index of the given {@link Contact}.
      *
-     * @param contact
-     * @return
+     * @param contact - {@link Contact} whose index is being sought.
+     * @return - Index of the given item, -1 if not found in list.
      */
     public int getArrayPosition(Contact contact) {
-        int position = -1;
-        for (int i = 0; i < contacts.size(); i++) {
-            if (contact.getId().equals(contacts.get(i).getId())) {
-                position = i;
-            }
-        }
-        return position;
-    }
-
-    @Override
-    public Iterator<Contact> iterator() {
-        return new RangeIterator(contacts);
-    }
-
-    private static final class RangeIterator implements Iterator<Contact> {
-        private List<Contact> contacts;
-        private int cursor;
-        private final int end;
-
-        public RangeIterator(List<Contact> contacts) {
-            this.contacts = contacts;
-            this.cursor = 0;
-            this.end = contacts.size();
-        }
-
-        public boolean hasNext() {
-            return this.cursor < end;
-        }
-
-        public Contact next() {
-            if (this.hasNext()) {
-                int current = cursor;
-                cursor++;
-                return contacts.get(current);
-            }
-            throw new NoSuchElementException();
-        }
-
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
+        return getPosition(contact);
     }
 }
