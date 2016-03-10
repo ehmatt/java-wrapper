@@ -33,7 +33,7 @@ public class Paginator extends BaseResource implements Serializable {
         }
     }
 
-    public boolean hasMorePages() {
+    public boolean hasNoMorePages() {
         return currentPage != null && maxPage != null &&
                 currentPage.intValue() == maxPage.intValue();
     }
