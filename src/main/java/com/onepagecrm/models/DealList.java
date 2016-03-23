@@ -32,6 +32,11 @@ public class DealList extends ResourceList<Deal> implements Serializable {
         super(deals);
     }
 
+    @Override
+    public DealList subList(int start, int end) {
+        return new DealList(super.subList(start, end));
+    }
+
     public String toString() {
         return DealSerializer.toJsonArray(this);
     }

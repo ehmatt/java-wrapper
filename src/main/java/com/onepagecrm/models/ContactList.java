@@ -77,6 +77,11 @@ public class ContactList extends ResourceList<Contact> implements Serializable {
     }
 
     @Override
+    public ContactList subList(int start, int end) {
+        return new ContactList(super.subList(start, end));
+    }
+
+    @Override
     public ContactList addNextPage(List<Contact> contacts) {
         super.addNextPage(contacts);
         return this;

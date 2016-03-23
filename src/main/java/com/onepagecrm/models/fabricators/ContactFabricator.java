@@ -72,6 +72,10 @@ public class ContactFabricator extends BaseFabricator {
         return contacts;
     }
 
+    public static ContactList actionStreamPartial() {
+        return actionStream().subList(0, 3);
+    }
+
     public static ContactList contacts() {
         ContactList contacts = new ContactList();
         String path = OnePageCRM.ASSET_PATH + "DEV-contacts.json";
@@ -85,5 +89,9 @@ public class ContactFabricator extends BaseFabricator {
             }
         }
         return contacts;
+    }
+
+    public static ContactList contactsPartial() {
+        return contacts().subList(0, 3);
     }
 }

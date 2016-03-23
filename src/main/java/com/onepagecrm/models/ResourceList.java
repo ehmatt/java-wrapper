@@ -77,8 +77,8 @@ public abstract class ResourceList<Item extends ApiResource> extends ArrayList<I
         return list.add(item);
     }
 
-    public Item get(int index) {
-        return list.get(index);
+    public Item remove(int index) {
+        return list.remove(index);
     }
 
     public Item set(int index, Item item) {
@@ -86,8 +86,16 @@ public abstract class ResourceList<Item extends ApiResource> extends ArrayList<I
         return item;
     }
 
+    public Item get(int index) {
+        return list.get(index);
+    }
+
     public int indexOf(Item item) {
         return list.indexOf(item);
+    }
+
+    public List<Item> subList(int start, int end) {
+        return list.subList(start, end);
     }
 
     /**

@@ -30,7 +30,27 @@ public class ContactFabricatorTest extends BaseTest {
     @SuppressWarnings("ForLoopReplaceableByForEach")
     public void testList_allContactsValid() {
         ContactList contacts = ContactFabricator.list();
-        assertEquals("Should be 10 contacts", contacts.size(), 10);
+        assertEquals("Should be 10 contacts", 10, contacts.size());
+
+        for (int i = 0; i < contacts.size(); i++) {
+            Contact contact = contacts.get(i);
+            if (i == 0) validateSingle(contact);
+            else assertTrue("Contact not valid.", contact.isValid());
+        }
+    }
+
+    public void testList_contactsPartial() {
+        ContactList contacts = ContactFabricator.contactsPartial();
+        assertEquals("Should be 3 contacts", 3, contacts.size());
+
+        for (Contact contact : contacts) {
+            assertTrue("Contact not valid.", contact.isValid());
+        }
+    }
+
+    public void testList_actionStreamPartial() {
+        ContactList contacts = ContactFabricator.actionStreamPartial();
+        assertEquals("Should be 3 contacts", 3, contacts.size());
 
         for (int i = 0; i < contacts.size(); i++) {
             Contact contact = contacts.get(i);
