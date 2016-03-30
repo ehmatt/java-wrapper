@@ -23,7 +23,7 @@ public class DealFabricator extends BaseFabricator {
     public static DealList list() {
         // Create a list of Deals.
         DealList deals = new DealList();
-        String path = OnePageCRM.ASSET_PATH + "DEV-deals.json";
+        String path = OnePageCRM.ASSET_PATH + "deals.json";
         String response = Utilities.getResourceContents(path);
         if (response != null) {
             try {

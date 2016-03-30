@@ -13,15 +13,15 @@ public class DealFabricatorTest extends BaseTest {
     public void testSingle_correctValues() {
         Deal deal = DealFabricator.single();
         assertTrue("Deal must be valid.", deal.isValid());
-        assertEquals("56c352369007ba47a7000007", deal.getId());
+        assertEquals("56fa82159007ba1965000000", deal.getId());
         assertEquals(20400d, deal.getAmount());
         assertEquals("Cillian M.", deal.getAuthor());
         assertEquals("Deal note for Big deal", deal.getText());
-        assertEquals("56c3510d9007ba7dab0000cb", deal.getContactId());
-        assertEquals(DateSerializer.fromFormattedString("2016-02-16"), deal.getDate());
-        assertEquals(DateSerializer.fromFormattedString("2016-02-17"), deal.getExpectedCloseDate());
-        assertEquals(DateSerializer.fromFormattedString("2016-02-16T16:45:42.488Z"), deal.getCreatedAt());
-        assertEquals(DateSerializer.fromFormattedString("2016-02-16T16:46:20.746Z"), deal.getModifiedAt());
+        assertEquals("56fa81eb9007ba07fc000080", deal.getContactId());
+        assertEquals(DateSerializer.fromFormattedString("2016-03-29"), deal.getDate());
+        assertEquals(DateSerializer.fromFormattedString("2016-03-29"), deal.getExpectedCloseDate());
+        assertEquals(DateSerializer.fromFormattedString("2016-03-29T13:24:37.801Z"), deal.getCreatedAt());
+        assertEquals(DateSerializer.fromFormattedString("2016-03-29T13:24:37.801Z"), deal.getModifiedAt());
         assertTrue(deal.getMonths() != null && deal.getMonths() == 1);
         assertEquals("Big deal", deal.getName());
         assertEquals("559cd1866f6e656707000001", deal.getOwnerId());

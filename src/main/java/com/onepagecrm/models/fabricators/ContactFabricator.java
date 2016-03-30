@@ -31,8 +31,6 @@ public class ContactFabricator extends BaseFabricator {
                         "Canadian-American business magnate, engineer, inventor and investor. " +
                         "He is the CEO and CTO of SpaceX, CEO and product architect of Tesla " +
                         "Motors, chairman of SolarCity, and co-chairman of OpenAI.")
-//                .setPhotoUrl("https://onepagecrm-ud2-us-west-1.s3.amazonaws.com/5694e1999007b" +
-//                        "a687b0000c9/1454424977000/56b0c3919007ba1421000006.png")
                 .setStarred(true);
 
         // Address address fields.
@@ -59,7 +57,7 @@ public class ContactFabricator extends BaseFabricator {
 
     public static ContactList actionStream() {
         ContactList contacts = new ContactList();
-        String path = OnePageCRM.ASSET_PATH + "DEV-action_stream.json";
+        String path = OnePageCRM.ASSET_PATH + "action_stream_page_1.json";
         String response = Utilities.getResourceContents(path);
         if (response != null) {
             try {
@@ -76,9 +74,39 @@ public class ContactFabricator extends BaseFabricator {
         return actionStream().subList(0, 3);
     }
 
+    public static ContactList actionStreamPage2() {
+        ContactList contacts = new ContactList();
+        String path = OnePageCRM.ASSET_PATH + "action_stream_page_2.json";
+        String response = Utilities.getResourceContents(path);
+        if (response != null) {
+            try {
+                contacts = ContactListSerializer.fromString(response);
+            } catch (OnePageException e) {
+                LOG.severe("Problem creating contact list from JSON file.");
+                LOG.severe(e.toString());
+            }
+        }
+        return contacts;
+    }
+
+    public static ContactList actionStreamPage3() {
+        ContactList contacts = new ContactList();
+        String path = OnePageCRM.ASSET_PATH + "action_stream_page_3.json";
+        String response = Utilities.getResourceContents(path);
+        if (response != null) {
+            try {
+                contacts = ContactListSerializer.fromString(response);
+            } catch (OnePageException e) {
+                LOG.severe("Problem creating contact list from JSON file.");
+                LOG.severe(e.toString());
+            }
+        }
+        return contacts;
+    }
+
     public static ContactList contacts() {
         ContactList contacts = new ContactList();
-        String path = OnePageCRM.ASSET_PATH + "DEV-contacts.json";
+        String path = OnePageCRM.ASSET_PATH + "contacts_page_1.json";
         String response = Utilities.getResourceContents(path);
         if (response != null) {
             try {
@@ -93,5 +121,35 @@ public class ContactFabricator extends BaseFabricator {
 
     public static ContactList contactsPartial() {
         return contacts().subList(0, 3);
+    }
+
+    public static ContactList contactsPage2() {
+        ContactList contacts = new ContactList();
+        String path = OnePageCRM.ASSET_PATH + "contacts_page_2.json";
+        String response = Utilities.getResourceContents(path);
+        if (response != null) {
+            try {
+                contacts = ContactListSerializer.fromString(response);
+            } catch (OnePageException e) {
+                LOG.severe("Problem creating contact list from JSON file.");
+                LOG.severe(e.toString());
+            }
+        }
+        return contacts;
+    }
+
+    public static ContactList contactsPage3() {
+        ContactList contacts = new ContactList();
+        String path = OnePageCRM.ASSET_PATH + "contacts_page_3.json";
+        String response = Utilities.getResourceContents(path);
+        if (response != null) {
+            try {
+                contacts = ContactListSerializer.fromString(response);
+            } catch (OnePageException e) {
+                LOG.severe("Problem creating contact list from JSON file.");
+                LOG.severe(e.toString());
+            }
+        }
+        return contacts;
     }
 }

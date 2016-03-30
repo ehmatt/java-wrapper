@@ -61,12 +61,12 @@ public class ContactFabricatorTest extends BaseTest {
 
     private void validateSingle(Contact contact) {
         assertTrue("Contact not valid.", contact.isValid());
-        assertEquals("56c3510d9007ba7dab0000cb", contact.getId());
+        assertEquals("56fa81eb9007ba07fc000080", contact.getId());
         assertEquals("Java", contact.getFirstName());
         assertEquals("Wrapper", contact.getLastName());
         assertEquals("Software Developer", contact.getJobTitle());
         assertEquals("OnePageCRM", contact.getCompanyName());
-        assertEquals("56c351089007ba7dab000058", contact.getCompanyId());
+        assertEquals("56fa81ea9007ba07fc00000d", contact.getCompanyId());
         assertEquals("Java is very verbose, we met in college.", contact.getBackground());
         assertTrue(contact.isStarred() != null && contact.isStarred());
         assertEquals("559cd1866f6e656707000001", contact.getOwnerId());

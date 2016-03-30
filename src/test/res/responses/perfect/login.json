@@ -1,7 +1,7 @@
 {
   "status": 0,
   "message": "OK",
-  "timestamp": 1456238357,
+  "timestamp": 1459259234,
   "data": {
     "user_id": "559cd1866f6e656707000001",
     "auth_key": "xbigujk/IWwGwz0ojZAXnl/jOiQ3yKnBAFOWM6F9c88=",
@@ -116,12 +116,12 @@
           "id": "561b937f9007ba4cc200004e",
           "account_rights": [
             "activity",
-            "pipeline",
             "edit_target",
-            "export",
-            "delete_contacts"
+            "delete_contacts",
+            "pipeline",
+            "export"
           ],
-          "email": "cillian.college+john@gmail.com",
+          "email": "cillian.college+dev+john@gmail.com",
           "first_name": "John",
           "last_name": "Smith",
           "company_name": "",
@@ -134,16 +134,16 @@
         "type": "new_task",
         "hour": 6
       },
-      "time_zone": "london",
+      "time_zone": "Europe/London",
       "date_format": "%d/%m/%Y",
       "listing_size": 100,
       "currency": "EUR",
       "currency_symbol": "€",
       "popular_countries": [
         "IE",
+        "US",
         "AL",
         "AI",
-        "US",
         "AE"
       ],
       "deal_stages": [
@@ -180,7 +180,7 @@
         ],
         "bcc_email": "559cd1866f6e656707000000@users.onepagecrm.com",
         "company_name": "Myles Inc.",
-        "email": "cillian.college@gmail.com",
+        "email": "cillian.college+dev@gmail.com",
         "first_name": "Cillian",
         "last_name": "Myles",
         "photo_url": ""
@@ -211,8 +211,8 @@
     "system_tags": [
       {
         "name": "starred",
-        "counts": 2,
-        "total_count": 2
+        "counts": 0,
+        "total_count": 0
       },
       {
         "name": "waiting",
