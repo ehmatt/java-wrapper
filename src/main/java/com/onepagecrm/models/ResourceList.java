@@ -22,11 +22,6 @@ public abstract class ResourceList<Item extends ApiResource> extends ArrayList<I
         this.paginator = new Paginator();
     }
 
-    public ResourceList() {
-        this.setList(null);
-        this.paginator = new Paginator();
-    }
-
     public abstract List<Item> nextPage() throws OnePageException;
 
     public abstract List<Item> refresh() throws OnePageException;

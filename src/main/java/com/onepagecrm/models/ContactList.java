@@ -50,7 +50,7 @@ public class ContactList extends ResourceList<Contact> implements Serializable {
     }
 
     public ContactList() {
-        super();
+        super(null);
     }
 
     public ContactList(List<Contact> contacts) {
@@ -58,7 +58,7 @@ public class ContactList extends ResourceList<Contact> implements Serializable {
     }
 
     public ContactList(int type) {
-        super();
+        super(null);
         this.type = type;
     }
 

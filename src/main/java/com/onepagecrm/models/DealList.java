@@ -25,7 +25,7 @@ public class DealList extends ResourceList<Deal> implements Serializable {
     }
 
     public DealList() {
-        super();
+        super(null);
     }
 
     public DealList(List<Deal> deals) {

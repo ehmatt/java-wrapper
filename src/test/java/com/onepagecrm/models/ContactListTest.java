@@ -2,6 +2,7 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.BaseTest;
 import com.onepagecrm.models.fabricators.ContactFabricator;
+import com.onepagecrm.models.internal.Paginator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -243,5 +244,13 @@ public class ContactListTest extends BaseTest {
             counter++;
         }
         assertTrue("Did not iterate over ContactList.\n", iteratorUsed);
+    }
+
+    public void testContactList_PaginatorSetUp() {
+        Paginator lPaginator = new ContactList().getPaginator();
+        assertNotNull("Did not create new Pagintator object for ContactList.\n", lPaginator);
+        assertNotNull("Current page should not be null.\n", lPaginator.getCurrentPage());
+        assertNotNull("Max page should not be null.\n", lPaginator.getMaxPage());
+        assertNotNull("Per page should not be null.\n", lPaginator.getPerPage());
     }
 }
