@@ -171,6 +171,38 @@ public class BaseSerializer {
     public static final String MAX_PAGE_TAG = "max_page";
     public static final String PER_PAGE_TAG = "per_page";
 
+    // CONTACT COUNTS
+    public static final String CONTACTS_COUNT_TAG = "contacts_count";
+    public static final String ALL_TAG = "all";
+    public static final String USERS_TAG = "users";
+    public static final String LETTER_1_TAG = "1";
+    public static final String LETTER_A_TAG = "a";
+    public static final String LETTER_B_TAG = "b";
+    public static final String LETTER_C_TAG = "c";
+    public static final String LETTER_D_TAG = "d";
+    public static final String LETTER_E_TAG = "e";
+    public static final String LETTER_F_TAG = "f";
+    public static final String LETTER_G_TAG = "g";
+    public static final String LETTER_H_TAG = "h";
+    public static final String LETTER_I_TAG = "i";
+    public static final String LETTER_J_TAG = "j";
+    public static final String LETTER_K_TAG = "k";
+    public static final String LETTER_L_TAG = "l";
+    public static final String LETTER_M_TAG = "m";
+    public static final String LETTER_N_TAG = "n";
+    public static final String LETTER_O_TAG = "o";
+    public static final String LETTER_P_TAG = "p";
+    public static final String LETTER_Q_TAG = "q";
+    public static final String LETTER_R_TAG = "r";
+    public static final String LETTER_S_TAG = "s";
+    public static final String LETTER_T_TAG = "t";
+    public static final String LETTER_U_TAG = "u";
+    public static final String LETTER_V_TAG = "v";
+    public static final String LETTER_W_TAG = "w";
+    public static final String LETTER_X_TAG = "x";
+    public static final String LETTER_Y_TAG = "y";
+    public static final String LETTER_Z_TAG = "z";
+
     /**
      * Method used to parse the base/start of response.
      *

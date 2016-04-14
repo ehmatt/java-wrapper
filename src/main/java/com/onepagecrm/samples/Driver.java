@@ -53,5 +53,6 @@ public class Driver {
         LOG.info("User's Custom Fields : " + loggedInUser.getAccount().customFields);
         LOG.info("User's Call Results : " + loggedInUser.getAccount().callResults);
         LOG.info("User's Filters : " + loggedInUser.getAccount().filters);
+        LOG.info("User's ContactsCounts : " + loggedInUser.getAccount().contactsCount);
     }
 }
