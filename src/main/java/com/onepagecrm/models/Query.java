@@ -9,6 +9,10 @@ public class Query {
                 "&per_page=" + paginator.getPerPage();
     }
 
+    public static String searchWithPaginator(Paginator paginator, String search) {
+        return paginatorToString(paginator) + "&search=" + search;
+    }
+
     public static String perPageQueryString(int number) {
         return "?per_page=" + number;
     }
