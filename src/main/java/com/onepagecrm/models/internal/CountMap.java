@@ -1,9 +1,11 @@
 package com.onepagecrm.models.internal;
 
+import java.io.Serializable;
+
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 13/04/2016.
  */
-public class CountMap {
+public class CountMap implements Serializable {
 
     private Integer one;
     private Integer a;
