@@ -3,6 +3,7 @@ package com.onepagecrm.models;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.internal.Sales;
+
 import com.onepagecrm.models.serializers.ContactListSerializer;
 import com.onepagecrm.models.serializers.DealListSerializer;
 import com.onepagecrm.models.serializers.LoginSerializer;
@@ -14,6 +15,9 @@ import com.onepagecrm.net.request.LoginRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User extends ApiResource implements Serializable {
 
@@ -43,6 +47,13 @@ public class User extends ApiResource implements Serializable {
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
+    public ContactList actionStream(Map<String,Object> params, Paginator paginator) throws OnePageException {
+        String query = Query.mapsToString(params, Query.paginatorToMap(paginator));
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, query);
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
     public ContactList actionStream(Paginator paginator) throws OnePageException {
         Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.paginatorToString(paginator));
         Response response = request.send();
@@ -60,9 +71,27 @@ public class User extends ApiResource implements Serializable {
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
+    public ContactList contacts(Map<String,Object> params,Paginator paginator) throws OnePageException {
+        String query = Query.mapsToString(params, Query.paginatorToMap(paginator));
+        Request request = new GetRequest(CONTACTS_ENDPOINT, query);
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+    public ContactList teamStream(Map<String,Object> params,Paginator paginator) throws OnePageException {
+        String query = Query.mapsToString(params, Query.paginatorToMap(paginator));
+        Request request = new GetRequest(TEAM_STREAM_ENDPOINT, query);
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
 
     public DealList pipeline() throws OnePageException {
         Request request = new GetRequest(DEALS_ENDPOINT, Query.paginatorToString(new Paginator()));
+        Response response = request.send();
+        return DealListSerializer.fromString(response.getResponseBody());
+    }
+    public DealList pipeline(Map<String,Object> params, Paginator paginator) throws OnePageException {
+        String query = Query.mapsToString(params,Query.paginatorToMap(new Paginator()));
+        Request request = new GetRequest(DEALS_ENDPOINT, query);
         Response response = request.send();
         return DealListSerializer.fromString(response.getResponseBody());
     }

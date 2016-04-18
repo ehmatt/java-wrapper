@@ -5,10 +5,7 @@ import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.net.ApiResource;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public abstract class ResourceList<Item extends ApiResource> extends ArrayList<Item> implements Serializable {
 
@@ -22,9 +19,9 @@ public abstract class ResourceList<Item extends ApiResource> extends ArrayList<I
         this.paginator = new Paginator();
     }
 
-    public abstract List<Item> nextPage() throws OnePageException;
+    public abstract List<Item> nextPage(Map<String,Object> params) throws OnePageException;
 
-    public abstract List<Item> refresh() throws OnePageException;
+    public abstract List<Item> refresh(Map<String,Object> params) throws OnePageException;
 
     public List<Item> getList() {
         return list;
