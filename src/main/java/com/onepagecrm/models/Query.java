@@ -14,6 +14,10 @@ public class Query {
                 "&per_page=" + paginator.getPerPage();
     }
 
+    public static String searchWithPaginator(Paginator paginator, String search) {
+        return paginatorToString(paginator) + "&search=" + search;
+    }
+
     public static Map<String, Object> paginatorToMap(Paginator paginator) {
         Map<String, Object> p = new HashMap<String, Object>();
         p.put("page", paginator.getCurrentPage());

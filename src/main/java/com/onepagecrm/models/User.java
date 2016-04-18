@@ -60,6 +60,18 @@ public class User extends ApiResource implements Serializable {
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
+    public ContactList searchActionStream(String search) throws OnePageException {
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.searchWithPaginator(new Paginator(), search));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
+    public ContactList searchActionStream(Paginator paginator, String search) throws OnePageException {
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.searchWithPaginator(paginator, search));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
     public ContactList contacts() throws OnePageException {
         Request request = new GetRequest(CONTACTS_ENDPOINT, Query.paginatorToString(new Paginator()));
         Response response = request.send();
@@ -80,6 +92,18 @@ public class User extends ApiResource implements Serializable {
     public ContactList teamStream(Map<String,Object> params,Paginator paginator) throws OnePageException {
         String query = Query.mapsToString(params, Query.paginatorToMap(paginator));
         Request request = new GetRequest(TEAM_STREAM_ENDPOINT, query);
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
+    public ContactList searchContacts(String search) throws OnePageException {
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.searchWithPaginator(new Paginator(), search));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
+    public ContactList searchContacts(Paginator paginator, String search) throws OnePageException {
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.searchWithPaginator(paginator, search));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }

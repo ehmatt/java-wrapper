@@ -2,6 +2,7 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.*;
+import com.onepagecrm.models.internal.ContactsCount;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +25,7 @@ public class LoginSerializer extends BaseSerializer {
             addStatusesToAccount(responseBody);
             addLeadSourcesToAccount(responseBody);
             addFiltersToAccount(responseBody);
+            addContactsCountToAccount(responseBody);
             return Account.loggedInUser;
 
         } catch (ClassCastException e) {
@@ -117,5 +119,23 @@ public class LoginSerializer extends BaseSerializer {
     private static void addFilters(JSONArray filterArray) throws JSONException {
         List<Filter> filters = FilterSerializer.fromJsonArray(filterArray);
         Account.loggedInUser.getAccount().setFilters(filters);
+    }
+
+    private static void addContactsCountToAccount(String responseBody) {
+        JSONObject responseObject;
+        try {
+            responseObject = new JSONObject(responseBody);
+            if (responseObject.has(CONTACTS_COUNT_TAG)) {
+                addContactsCount(responseObject.getJSONObject(CONTACTS_COUNT_TAG));
+            }
+        } catch (JSONException e) {
+            LOG.severe("Error parsing ContactsCount object");
+            LOG.severe(e.toString());
+        }
+    }
+
+    private static void addContactsCount(JSONObject contactsCountObject) throws JSONException {
+        ContactsCount contactsCounts = ContactsCountSerializer.fromJsonObject(contactsCountObject);
+        Account.loggedInUser.getAccount().setContactsCount(contactsCounts);
     }
 }
