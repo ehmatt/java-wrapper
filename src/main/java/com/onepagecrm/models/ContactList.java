@@ -74,6 +74,30 @@ public class ContactList extends ResourceList<Contact> implements Serializable {
         }
     }
 
+    public ContactList letter(String letter) throws OnePageException {
+        switch (type) {
+            case AS_LISTING:
+                return Account.loggedInUser.actionStreamByLetter(letter);
+            case AZ_LISTING:
+                return Account.loggedInUser.contactsByLetter(letter);
+            default:
+                throw new InvalidListingTypeException("Not a supported contact listing type.")
+                        .setErrorMessage("Not a supported contact listing type.");
+        }
+    }
+
+    public ContactList letter(Paginator paginator, String letter) throws OnePageException {
+        switch (type) {
+            case AS_LISTING:
+                return Account.loggedInUser.actionStreamByLetter(paginator, letter);
+            case AZ_LISTING:
+                return Account.loggedInUser.contactsByLetter(paginator, letter);
+            default:
+                throw new InvalidListingTypeException("Not a supported contact listing type.")
+                        .setErrorMessage("Not a supported contact listing type.");
+        }
+    }
+
     public ContactList() {
         super(null);
     }

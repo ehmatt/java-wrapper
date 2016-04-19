@@ -61,6 +61,18 @@ public class User extends ApiResource implements Serializable {
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
+    public ContactList actionStreamByLetter(String letter) throws OnePageException {
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.letterWithPaginator(new Paginator(), letter));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
+    public ContactList actionStreamByLetter(Paginator paginator, String letter) throws OnePageException {
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.letterWithPaginator(paginator, letter));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
     public ContactList contacts() throws OnePageException {
         Request request = new GetRequest(CONTACTS_ENDPOINT, Query.paginatorToString(new Paginator()));
         Response response = request.send();
@@ -81,6 +93,18 @@ public class User extends ApiResource implements Serializable {
 
     public ContactList searchContacts(Paginator paginator, String search) throws OnePageException {
         Request request = new GetRequest(CONTACTS_ENDPOINT, Query.searchWithPaginator(paginator, search));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
+    public ContactList contactsByLetter(String letter) throws OnePageException {
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.letterWithPaginator(new Paginator(), letter));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
+    public ContactList contactsByLetter(Paginator paginator, String letter) throws OnePageException {
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.letterWithPaginator(paginator, letter));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }

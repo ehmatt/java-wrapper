@@ -8,6 +8,7 @@ import com.onepagecrm.net.request.Request;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -50,8 +51,8 @@ public class SearchDriver {
 
         LOG.info("Logged in User : " + loggedInUser);
 
-        ContactList stream = loggedInUser.searchActionStream("John");
-        ContactList contacts = loggedInUser.searchContacts(null);
+        ContactList stream = loggedInUser.searchActionStream(null);
+        ContactList contacts = loggedInUser.searchContacts(" W");
 
         LOG.info("Stream search results : " + stream);
         LOG.info("Contacts search results : " + contacts);
