@@ -3,12 +3,9 @@ package com.onepagecrm.models;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.serializers.BaseSerializer;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Logger;
-
-import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 
 public class Query {
 
@@ -18,38 +15,86 @@ public class Query {
         return "?" + BaseSerializer.encodeParams(params);
     }
 
-    public static String paginatorToString(Paginator paginator) {
-        return "?page=" + paginator.getCurrentPage() + "&per_page=" + paginator.getPerPage();
+    public static Map<String, Object> paramsDefault() {
+        return params(new Paginator());
     }
 
-    public static String searchWithPaginator(Paginator paginator, String search) {
-        return paginatorToString(paginator) + "&search=" + encode(search);
+    public static Map<String, Object> params(Paginator paginator) {
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("page", paginator.getCurrentPage());
+        params.put("per_page", paginator.getPerPage());
+        return params;
     }
 
-    public static String letterWithPaginator(Paginator paginator, String letter) {
-        return paginatorToString(paginator) + "&letter=" + encode(letter);
+    public static String queryDefault() {
+        return fromParams(paramsDefault());
     }
 
-    public static String perPageQueryString(int number) {
-        return "?per_page=" + number;
+    public static String query(Paginator paginator) {
+        return fromParams(params(paginator));
     }
 
-    public static String teamValueQueryString(boolean value) {
-        return "?team=" + value;
+    public static String query(boolean team) {
+        Map<String, Object> params = paramsDefault();
+        params.put("team", team ? 1 : 0);
+        return fromParams(params);
     }
 
-    public static String contactIdQueryString(String contactId) {
-        return "?contact_id=" + contactId;
+    public static String query(Paginator paginator, boolean team) {
+        Map<String, Object> params = params(paginator);
+        params.put("team", team ? 1 : 0);
+        return fromParams(params);
     }
 
-    private static String encode(String query) {
-        if (notNullOrEmpty(query)) {
-            try {
-                return URLEncoder.encode(query, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                LOG.severe("Could not encode query.\n" + e);
-            }
-        }
-        return query;
+    public static String querySearch(String search) {
+        Map<String, Object> params = paramsDefault();
+        params.put("search", search);
+        return fromParams(params);
+    }
+
+    public static String querySearch(String search, boolean team) {
+        Map<String, Object> params = paramsDefault();
+        params.put("team", team ? 1 : 0);
+        params.put("search", search);
+        return fromParams(params);
+    }
+
+    public static String querySearch(Paginator paginator, String search) {
+        Map<String, Object> params = params(paginator);
+        params.put("search", search);
+        return fromParams(params);
+    }
+
+    public static String querySearch(Paginator paginator, String search, boolean team) {
+        Map<String, Object> params = params(paginator);
+        params.put("team", team ? 1 : 0);
+        params.put("search", search);
+        return fromParams(params);
+    }
+
+    public static String queryLetter(String letter) {
+        Map<String, Object> params = paramsDefault();
+        params.put("letter", letter);
+        return fromParams(params);
+    }
+
+    public static String queryLetter(String letter, boolean team) {
+        Map<String, Object> params = paramsDefault();
+        params.put("team", team ? 1 : 0);
+        params.put("letter", letter);
+        return fromParams(params);
+    }
+
+    public static String queryLetter(Paginator paginator, String letter) {
+        Map<String, Object> params = params(paginator);
+        params.put("letter", letter);
+        return fromParams(params);
+    }
+
+    public static String queryLetter(Paginator paginator, String letter, boolean team) {
+        Map<String, Object> params = params(paginator);
+        params.put("team", team ? 1 : 0);
+        params.put("letter", letter);
+        return fromParams(params);
     }
 }

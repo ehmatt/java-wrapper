@@ -10,7 +10,9 @@ import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Tag extends BaseResource implements Serializable {
 
@@ -22,9 +24,11 @@ public class Tag extends BaseResource implements Serializable {
     private Integer actionStreamCount;
 
     public static List<Tag> list() throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("per_page", 100);
         Request request = new GetRequest(
                 TAGS_ENDPOINT,
-                Query.perPageQueryString(100)
+                Query.fromParams(params)
         );
         Response response = request.send();
         return TagSerializer.fromString(response.getResponseBody());

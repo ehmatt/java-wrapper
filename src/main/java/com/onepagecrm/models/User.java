@@ -14,7 +14,6 @@ import com.onepagecrm.net.request.LoginRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class User extends ApiResource implements Serializable {
@@ -40,129 +39,103 @@ public class User extends ApiResource implements Serializable {
     }
 
     public ContactList actionStream() throws OnePageException {
-        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.paginatorToString(new Paginator()));
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.query(true));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
+    public ContactList actionStream(Map<String, Object> params) throws OnePageException {
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList actionStream(Paginator paginator) throws OnePageException {
-        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.paginatorToString(paginator));
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.query(paginator, true));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList searchActionStream(String search) throws OnePageException {
-        Map<String, Object> params = new LinkedHashMap<>();
-        Paginator paginator = new Paginator();
-        params.put("page", paginator.getCurrentPage());
-        params.put("per_page", paginator.getPerPage());
-        params.put("team", 1);
-        params.put("search", search);
-        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.fromParams(params));
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.querySearch(search, true));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList searchActionStream(Paginator paginator, String search) throws OnePageException {
-        Map<String, Object> params = new LinkedHashMap<>();
-        params.put("page", paginator.getCurrentPage());
-        params.put("per_page", paginator.getPerPage());
-        params.put("team", 1);
-        params.put("search", search);
-        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.fromParams(params));
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.querySearch(paginator, search, true));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList actionStreamByLetter(String letter) throws OnePageException {
-        Map<String, Object> params = new LinkedHashMap<>();
-        Paginator paginator = new Paginator();
-        params.put("page", paginator.getCurrentPage());
-        params.put("per_page", paginator.getPerPage());
-        params.put("team", 1);
-        params.put("letter", letter);
-        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.fromParams(params));
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.queryLetter(letter, true));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList actionStreamByLetter(Paginator paginator, String letter) throws OnePageException {
-        Map<String, Object> params = new LinkedHashMap<>();
-        params.put("page", paginator.getCurrentPage());
-        params.put("per_page", paginator.getPerPage());
-        params.put("team", 1);
-        params.put("letter", letter);
-        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.fromParams(params));
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.queryLetter(paginator, letter, true));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList contacts() throws OnePageException {
-        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.paginatorToString(new Paginator()));
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.query(true));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
+    public ContactList contacts(Map<String, Object> params) throws OnePageException {
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList contacts(Paginator paginator) throws OnePageException {
-        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.paginatorToString(paginator));
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.query(paginator, true));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList searchContacts(String search) throws OnePageException {
-        Map<String, Object> params = new LinkedHashMap<>();
-        Paginator paginator = new Paginator();
-        params.put("page", paginator.getCurrentPage());
-        params.put("per_page", paginator.getPerPage());
-        params.put("team", 1);
-        params.put("search", search);
-        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.fromParams(params));
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.querySearch(search, true));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList searchContacts(Paginator paginator, String search) throws OnePageException {
-        Map<String, Object> params = new LinkedHashMap<>();
-        params.put("page", paginator.getCurrentPage());
-        params.put("per_page", paginator.getPerPage());
-        params.put("team", 1);
-        params.put("search", search);
-        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.fromParams(params));
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.querySearch(paginator, search, true));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList contactsByLetter(String letter) throws OnePageException {
-        Map<String, Object> params = new LinkedHashMap<>();
-        Paginator paginator = new Paginator();
-        params.put("page", paginator.getCurrentPage());
-        params.put("per_page", paginator.getPerPage());
-        params.put("team", 1);
-        params.put("letter", letter);
-        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.fromParams(params));
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.queryLetter(letter, true));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public ContactList contactsByLetter(Paginator paginator, String letter) throws OnePageException {
-        Map<String, Object> params = new LinkedHashMap<>();
-        params.put("page", paginator.getCurrentPage());
-        params.put("per_page", paginator.getPerPage());
-        params.put("team", 1);
-        params.put("letter", letter);
-        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.fromParams(params));
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.queryLetter(paginator, letter, true));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public DealList pipeline() throws OnePageException {
-        Request request = new GetRequest(DEALS_ENDPOINT, Query.paginatorToString(new Paginator()));
+        Request request = new GetRequest(DEALS_ENDPOINT, Query.query(true));
         Response response = request.send();
         return DealListSerializer.fromString(response.getResponseBody());
     }
 
+    public ContactList pipeline(Map<String, Object> params) throws OnePageException {
+        Request request = new GetRequest(DEALS_ENDPOINT, Query.fromParams(params));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
     public DealList pipeline(Paginator paginator) throws OnePageException {
-        Request request = new GetRequest(DEALS_ENDPOINT, Query.paginatorToString(paginator));
+        Request request = new GetRequest(DEALS_ENDPOINT, Query.query(paginator, true));
         Response response = request.send();
         return DealListSerializer.fromString(response.getResponseBody());
     }

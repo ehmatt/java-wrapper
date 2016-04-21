@@ -9,7 +9,9 @@ import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CustomField extends ApiResource implements Serializable {
 
@@ -30,7 +32,12 @@ public class CustomField extends ApiResource implements Serializable {
     private CustomFieldValue value;
 
     public static List<CustomField> list() {
-        Request request = new GetRequest(CUSTOM_FIELDS_ENDPOINT, Query.perPageQueryString(100));
+        Map<String, Object> params = new HashMap<>();
+        params.put("per_page", 100);
+        Request request = new GetRequest(
+                CUSTOM_FIELDS_ENDPOINT,
+                Query.fromParams(params)
+        );
         Response response = request.send();
         return CustomFieldSerializer.fromString(response.getResponseBody());
     }

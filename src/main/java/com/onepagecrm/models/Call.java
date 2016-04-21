@@ -8,7 +8,9 @@ import com.onepagecrm.net.request.PostRequest;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Call extends ApiResource implements Serializable {
 
@@ -25,9 +27,11 @@ public class Call extends ApiResource implements Serializable {
     private List<Attachment> attachments;
 
     public Call save(Contact contact) throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("contact_id", contact.getId());
         PostRequest saveRequest = new PostRequest(
                 CALLS_ENDPOINT,
-                Query.contactIdQueryString(contact.getId()),
+                Query.fromParams(params),
                 CallSerializer.toJsonObject(this)
         );
         Response response = saveRequest.send();
