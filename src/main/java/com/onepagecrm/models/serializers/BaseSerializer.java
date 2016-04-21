@@ -247,18 +247,18 @@ public class BaseSerializer {
      * @param params
      * @return
      */
-    public static String encodeParams(Map<String, String> params) {
+    public static String encodeParams(Map<String, Object> params) {
         if (params != null && !params.isEmpty()) {
             String encodedString = "";
             int i = 0;
-            for (Map.Entry<String, String> param : params.entrySet()) {
+            for (Map.Entry<String, Object> param : params.entrySet()) {
                 if (i > 0) {
                     encodedString += "&";
                 }
                 try {
                     encodedString += String.format("%s=%s",
                             URLEncoder.encode(param.getKey(), "UTF-8"),
-                            URLEncoder.encode(param.getValue(), "UTF-8"));
+                            URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     LOG.severe("Error encoding url params : " + params.toString());
                     LOG.severe(e.toString());

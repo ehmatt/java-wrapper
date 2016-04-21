@@ -42,7 +42,7 @@ public class BaseSerializerTest extends BaseTest {
     }
 
     public void testEncodeParams_Correct() {
-        Map<String, String> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("per_page", "10");
         params.put("page", "1");
 

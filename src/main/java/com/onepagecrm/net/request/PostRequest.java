@@ -33,7 +33,7 @@ public class PostRequest extends SignedRequest {
      * @param query
      * @param paramBody
      */
-    public PostRequest(String endpoint, String query, Map<String, String> paramBody) {
+    public PostRequest(String endpoint, String query, Map<String, Object> paramBody) {
         this.params = paramBody;
         setType();
         setEndpointUrl(endpoint);

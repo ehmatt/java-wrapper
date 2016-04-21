@@ -52,7 +52,7 @@ public abstract class Request {
     protected static final String PATCH = "PATCH";
 
     protected String requestBody = "";
-    protected Map<String, String> params;
+    protected Map<String, Object> params;
     protected Response response;
 
     private static final String ACCEPTS_TAG = "Accepts";

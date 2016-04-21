@@ -1,9 +1,11 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.models.internal.Paginator;
+import com.onepagecrm.models.serializers.BaseSerializer;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
@@ -11,6 +13,10 @@ import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 public class Query {
 
     private static final Logger LOG = Logger.getLogger(Query.class.getSimpleName());
+
+    public static String fromParams(Map<String, Object> params) {
+        return "?" + BaseSerializer.encodeParams(params);
+    }
 
     public static String paginatorToString(Paginator paginator) {
         return "?page=" + paginator.getCurrentPage() + "&per_page=" + paginator.getPerPage();

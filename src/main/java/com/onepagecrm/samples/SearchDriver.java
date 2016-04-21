@@ -8,7 +8,6 @@ import com.onepagecrm.net.request.Request;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.util.Properties;
 import java.util.logging.Logger;
 
