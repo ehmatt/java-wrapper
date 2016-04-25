@@ -1,10 +1,7 @@
 package com.onepagecrm.samples;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Account;
-import com.onepagecrm.models.ContactList;
-import com.onepagecrm.models.Deal;
-import com.onepagecrm.models.User;
+import com.onepagecrm.models.*;
 import com.onepagecrm.models.serializers.DateSerializer;
 import com.onepagecrm.net.request.Request;
 
@@ -18,9 +15,9 @@ import java.util.logging.Logger;
 /**
  * Created by Cillian Myles (cillian@onepagecrm.com) on 11/24/15.
  */
-public class DealsEndpointDriver {
+public class SwitchDealOwnerDriver {
 
-    private static final Logger LOG = Logger.getLogger(DealsEndpointDriver.class.getName());
+    private static final Logger LOG = Logger.getLogger(SwitchDealOwnerDriver.class.getName());
 
     public static void main(String[] args) throws OnePageException {
         Properties prop = new Properties();
@@ -56,31 +53,32 @@ public class DealsEndpointDriver {
         List<User> team = Account.team;
         ContactList stream = loggedInUser.actionStream();
 
-        Deal regDeal = new Deal()
-                .setOwnerId(team.get(0).getId())        // = Me.
-                .setContactId(stream.get(0).getId())    // = First in Stream.
-                .setAmount(50d)
-                .setText("This is the regular deal text right here!")
-                .setName("Regular wrapper deal")
-                .setStage(50)
-                .setExpectedCloseDate(DateSerializer.fromFormattedString("2016-01-01"))
+        // Create a deal with me as Owner.
+        Deal newDeal = new Deal()
+                .setOwnerId(team.get(0).getId()) // Owner = Me (when created).
+                .setContactId(stream.get(0).getId())
+                .setAmount(27.99d)
+                .setText("Shouldn't be seen")
+                .setName("Wrapper Deal")
+                .setExpectedCloseDate(DateSerializer.fromFormattedString("2014-01-01"))
                 .save();
 
-        Deal multiMonth = new Deal()
-                .setOwnerId(team.get(0).getId())        // = Me.
-                .setContactId(stream.get(1).getId())    // = Second in Stream.
-                .setAmount(25d)
-                .setMonths(3)
-                .setText("This is the multi-month deal text right here!")
-                .setName("Multi-month wrapper deal")
-                .setStage(25)
-                .setExpectedCloseDate(DateSerializer.fromFormattedString("2016-01-01"))
+        // Update a deal to have different owner than me.
+        DealList deals;
+        LOG.info("Deals : " + (deals = loggedInUser.pipeline()));
+
+        Deal updated = deals.get(0)
+                .setText("Should be seen!!!")
+                .setOwnerId(team.get(1).getId()) // Owner = Second Person (after update).
+                .setAmount(99.99d)
                 .save();
 
-        if (regDeal.isValid() && multiMonth.isValid()) {
-            regDeal.delete();
-            multiMonth.delete();
-            LOG.info("Success");
+        if (newDeal.getOwnerId().equalsIgnoreCase(team.get(0).getId())
+                && updated.getOwnerId().equalsIgnoreCase(team.get(1).getId())) {
+            if (newDeal.getId().equalsIgnoreCase(updated.getId())) {
+                newDeal.delete();
+                LOG.info("Success");
+            }
         }
     }
 }
