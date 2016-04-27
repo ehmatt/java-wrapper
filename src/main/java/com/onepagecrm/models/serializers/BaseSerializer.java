@@ -150,6 +150,12 @@ public class BaseSerializer {
     public static final String CODE_TAG = "code";
     public static final String PHONE_PREFIX_TAG = "phone_prefix";
     public static final String CURRENCY_TAG = "currency";
+    public static final String CURRENCY_SYMBOL_TAG = "currency_symbol";
+    public static final String DEAL_STAGES_TAG = "deal_stages";
+
+    // DEAL_STAGE_TAG
+    public static final String DEAL_STAGE_LABEL_TAG = "label";
+    public static final String DEAL_STAGE_STAGE_TAG = "stage";
 
     // DEALS_TAG
     public static final String DEALS_TAG = "deals";

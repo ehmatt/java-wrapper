@@ -4,6 +4,7 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.serializers.CallSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.PostRequest;
 
 import java.io.Serializable;
@@ -23,7 +24,18 @@ public class Call extends ApiResource implements Serializable {
     private String via;
     private String recordingLink;
     private List<Attachment> attachments;
+    private String mText;
 
+    public static List<Call> list(Contact pContact) throws OnePageException{
+        GetRequest getRequest = new GetRequest(CALLS_ENDPOINT,Query.contactIdQueryString(pContact.getId()));
+        Response response = getRequest.send();
+        return CallSerializer.listFromString(response.getResponseBody());
+    }
+    public static List<Call> list() throws OnePageException{
+        GetRequest getRequest = new GetRequest(CALLS_ENDPOINT);
+        Response response = getRequest.send();
+        return CallSerializer.listFromString(response.getResponseBody());
+    }
     public Call save(Contact contact) throws OnePageException {
         PostRequest saveRequest = new PostRequest(
                 CALLS_ENDPOINT,
@@ -141,5 +153,13 @@ public class Call extends ApiResource implements Serializable {
     public Call setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
         return this;
+    }
+
+    public void setText(String pText) {
+        mText = pText;
+    }
+
+    public String getText() {
+        return mText;
     }
 }

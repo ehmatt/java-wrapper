@@ -1,6 +1,7 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.Account;
 import com.onepagecrm.models.Call;
 import com.onepagecrm.models.CallResult;
 import org.json.JSONArray;
@@ -8,12 +9,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class CallSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CallSerializer.class.getName());
+    private static final java.lang.String PHONE_NUMBER_TAG = "phone_number";
+    private static final java.lang.String RECORDING_LINK_TAG = "recording_link";
 
     public static Call fromString(String responseBody) throws OnePageException {
         String parsedResponse;
@@ -112,5 +116,49 @@ public class CallSerializer extends BaseSerializer {
             }
         }
         return callsArray.toString();
+    }
+
+    public static List<Call> listFromString(String pResponseBody) {
+        List<Call> lCalls = new LinkedList<>();
+        try{
+            JSONObject root = new JSONObject(pResponseBody);
+            JSONObject data = root.optJSONObject(DATA_TAG);
+            JSONArray calls = data.optJSONArray(CALLS_TAG);
+            for (int i=0;i<calls.length();++i){
+                JSONObject obj = calls.optJSONObject(i);
+                Call lCall = objFromJson(obj);
+                if (lCall!=null) {
+                    lCalls.add(lCall);
+                }
+            }
+        }catch (Exception e){
+            LOG.severe(e.toString());
+        }
+        return lCalls;
+    }
+
+    private static Call objFromJson(JSONObject pObj) {
+        JSONObject lObject = pObj.optJSONObject("call");
+        if (lObject!=null){
+            Call lCall = new Call();
+            lCall.setId(lObject.optString(ID_TAG));
+            lCall.setVia(lObject.optString(VIA_TAG));
+            lCall.setAuthor(lObject.optString(AUTHOR_TAG));
+            lCall.setPhoneNumber(lObject.optString(PHONE_NUMBER_TAG));
+            lCall.setText(lObject.optString(TEXT_TAG));
+            String callResultId = lObject.optString(CALL_RESULT_TAG);
+            for (CallResult lCallResult:Account.loggedInUser.getAccount().getCallResults()){
+                if (lCallResult.getId().equals(callResultId)){
+                    lCall.setCallResult(lCallResult);
+                }
+            }
+            lCall.setTime(DateSerializer.fromNumString(lObject.optString(CALL_TIME_INT_TAG)));
+            lCall.setContactId(lObject.optString(CONTACT_ID_TAG));
+            lCall.setRecordingLink(lObject.optString(RECORDING_LINK_TAG));
+            lCall.setCreatedAt(DateSerializer.fromFormattedString(lObject.optString(CREATED_AT_TAG)));
+            lCall.setModifiedAt(DateSerializer.fromFormattedString(lObject.optString(MODIFIED_AT_TAG)));
+            return lCall;
+        }
+        return null;
     }
 }
