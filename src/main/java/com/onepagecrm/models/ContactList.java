@@ -8,6 +8,7 @@ import com.onepagecrm.models.serializers.ContactListSerializer;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class ContactList extends ResourceList<Contact> implements Serializable {
@@ -22,13 +23,13 @@ public class ContactList extends ResourceList<Contact> implements Serializable {
     private int type;
 
     @Override
-    public ContactList nextPage() throws OnePageException {
+    public ContactList nextPage(Map<String,Object> params) throws OnePageException {
         this.paginator.getNextPageNo();
         switch (type) {
             case AS_LISTING:
-                return Account.loggedInUser.actionStream(paginator);
+                return Account.loggedInUser.actionStream(params,paginator);
             case AZ_LISTING:
-                return Account.loggedInUser.contacts(paginator);
+                return Account.loggedInUser.contacts(params,paginator);
             default:
                 throw new InvalidListingTypeException("Not a supported contact listing type.")
                         .setErrorMessage("Not a supported contact listing type.");
@@ -36,14 +37,14 @@ public class ContactList extends ResourceList<Contact> implements Serializable {
     }
 
     @Override
-    public ContactList refresh() throws OnePageException {
+    public ContactList refresh(Map<String,Object> params) throws OnePageException {
         ContactList list = new ContactList();
         switch (type) {
             case AS_LISTING:
-                list = Account.loggedInUser.actionStream();
+                list = Account.loggedInUser.actionStream(params,new Paginator());
                 break;
             case AZ_LISTING:
-                list = Account.loggedInUser.contacts();
+                list = Account.loggedInUser.contacts(params,new Paginator());
                 break;
         }
         this.setList(list);

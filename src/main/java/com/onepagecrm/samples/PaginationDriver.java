@@ -9,6 +9,7 @@ import com.onepagecrm.net.request.Request;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -54,10 +55,10 @@ public class PaginationDriver {
         ContactList stream = loggedInUser.actionStream();
         LOG.info("page 1 : " + stream.size() + " : " + stream.toString());
 
-        ContactList updatedStream = stream.nextPage();
+        ContactList updatedStream = stream.nextPage(Collections.EMPTY_MAP);
         LOG.info("page 1&2 : " + updatedStream.size() + " : " + updatedStream.toString());
 
-        ContactList refreshedList = stream.refresh();
+        ContactList refreshedList = stream.refresh(Collections.EMPTY_MAP);
         LOG.info("page 1 : " + refreshedList.size() + " : " + refreshedList.toString());
 
         LOG.info(RequestMetadataSerializer.toJsonKeyValuePair(stream.getPaginator()));

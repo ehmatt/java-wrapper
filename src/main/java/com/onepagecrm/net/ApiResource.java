@@ -15,6 +15,7 @@ public abstract class ApiResource extends BaseResource implements Serializable {
     public static final String COUNTRIES_ENDPOINT = "countries"; // -> Countries class as doesn't inherit from here
     public static final String TAGS_ENDPOINT = "tags"; // -> Countries class as doesn't inherit from here
     public static final String DEALS_ENDPOINT = "deals";
+    public static final String TEAM_STREAM_ENDPOINT = "team_stream";
 
     public abstract String getId();
 

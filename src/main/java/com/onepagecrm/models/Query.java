@@ -4,12 +4,12 @@ import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.serializers.BaseSerializer;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
+@SuppressWarnings("WeakerAccess")
 public class Query {
-
-    private static final Logger LOG = Logger.getLogger(Query.class.getSimpleName());
 
     public static String fromParams(Map<String, Object> params) {
         return "?" + BaseSerializer.encodeParams(params);
@@ -24,6 +24,31 @@ public class Query {
         params.put("page", paginator.getCurrentPage());
         params.put("per_page", paginator.getPerPage());
         return params;
+    }
+
+    @SafeVarargs
+    public static String fromMaps(Map<String, Object>... pParams) {
+        List<String> vals = new LinkedList<>();
+        for (Map<String, Object> param : pParams) {
+            for (String key : param.keySet()) {
+                vals.add(String.format("%s=%s", key, param.get(key)));
+            }
+        }
+        return "?" + join("&", vals);
+    }
+
+    public static String join(CharSequence delimiter, List<String> tokens) {
+        StringBuilder sb = new StringBuilder();
+        boolean firstTime = true;
+        for (String token : tokens) {
+            if (firstTime) {
+                firstTime = false;
+            } else {
+                sb.append(delimiter);
+            }
+            sb.append(token);
+        }
+        return sb.toString();
     }
 
     public static String queryDefault() {

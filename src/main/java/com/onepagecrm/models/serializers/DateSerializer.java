@@ -13,6 +13,7 @@ public class DateSerializer extends BaseSerializer {
 
     public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+    public static SimpleDateFormat dateCallTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
     public static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
     public static SimpleDateFormat friendlyDateFormat = new SimpleDateFormat("MMM dd");
     public static SimpleDateFormat friendlyDateAndYearFormat = new SimpleDateFormat("MMM dd, yyyy");
@@ -40,9 +41,15 @@ public class DateSerializer extends BaseSerializer {
                 try {
                     return dateFormat.parse(dateStr);
                 } catch (ParseException ex) {
-                    LOG.severe("Error parsing date string to date object");
-                    LOG.severe(e.toString());
-                    LOG.severe(ex.toString());
+                    try{
+                        return dateCallTimeFormat.parse(dateStr);
+                    }catch (Exception ex2){
+
+                        LOG.severe("Error parsing date string to date object");
+                        LOG.severe(e.toString());
+                        LOG.severe(ex.toString());
+                        LOG.severe(ex2.toString());
+                    }
                 }
             }
         }
@@ -130,5 +137,13 @@ public class DateSerializer extends BaseSerializer {
         } else {
             return FUTURE_WAITING_COLOR;
         }
+    }
+
+    public static Date fromNumString(String s) {
+        Number lNumber = parseNumber(s);
+        if (lNumber!=null){
+            return new Date(lNumber.longValue());
+        }
+        return null;
     }
 }

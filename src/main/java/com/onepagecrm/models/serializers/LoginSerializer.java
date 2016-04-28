@@ -3,6 +3,7 @@ package com.onepagecrm.models.serializers;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.*;
 import com.onepagecrm.models.internal.ContactsCount;
+import com.onepagecrm.models.internal.Settings;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,12 +27,31 @@ public class LoginSerializer extends BaseSerializer {
             addLeadSourcesToAccount(responseBody);
             addFiltersToAccount(responseBody);
             addContactsCountToAccount(responseBody);
+            addSettingsToAccount(responseBody);
             return Account.loggedInUser;
 
         } catch (ClassCastException e) {
             exception = (OnePageException) BaseSerializer.fromString(responseBody);
             throw exception;
         }
+    }
+
+    private static void addSettingsToAccount(String pResponseBody) {
+        try{
+            JSONObject responseObject = new JSONObject(pResponseBody);
+            JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+            if (dataObject.has(SETTINGS_TAG)){
+                addSettings(dataObject.getJSONObject(SETTINGS_TAG));
+            }
+        }catch (Exception e){
+            LOG.severe("Error parsing Settings array");
+            LOG.severe(e.toString());
+        }
+    }
+
+    private static void addSettings(JSONObject pJSONObject) {
+        Settings lSettings = SettingsSerializer.fromJsonObject(pJSONObject);
+        Account.settings = lSettings;
     }
 
     public static String toJsonObject(String username, String password) {

@@ -16,6 +16,7 @@ import com.onepagecrm.net.request.Request;
 import java.io.Serializable;
 import java.util.Map;
 
+@SuppressWarnings("WeakerAccess")
 public class User extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = 1383622287570201668L;
@@ -44,14 +45,22 @@ public class User extends ApiResource implements Serializable {
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
+    public ContactList actionStream(Paginator paginator) throws OnePageException {
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.query(paginator));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
     public ContactList actionStream(Map<String, Object> params) throws OnePageException {
         Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
-    public ContactList actionStream(Paginator paginator) throws OnePageException {
-        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, Query.query(paginator));
+    @SuppressWarnings("unchecked")
+    public ContactList actionStream(Map<String, Object> params, Paginator paginator) throws OnePageException {
+        String query = Query.fromMaps(params, Query.params(paginator));
+        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, query);
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
@@ -86,14 +95,22 @@ public class User extends ApiResource implements Serializable {
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
+    public ContactList contacts(Paginator paginator) throws OnePageException {
+        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.query(paginator, true));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
     public ContactList contacts(Map<String, Object> params) throws OnePageException {
         Request request = new GetRequest(CONTACTS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
-    public ContactList contacts(Paginator paginator) throws OnePageException {
-        Request request = new GetRequest(CONTACTS_ENDPOINT, Query.query(paginator, true));
+    @SuppressWarnings("unchecked")
+    public ContactList contacts(Map<String, Object> params, Paginator paginator) throws OnePageException {
+        String query = Query.fromMaps(params, Query.params(paginator));
+        Request request = new GetRequest(CONTACTS_ENDPOINT, query);
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
     }
@@ -122,8 +139,22 @@ public class User extends ApiResource implements Serializable {
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
+    @SuppressWarnings("unchecked")
+    public ContactList teamStream(Map<String, Object> params, Paginator paginator) throws OnePageException {
+        String query = Query.fromMaps(params, Query.params(paginator));
+        Request request = new GetRequest(TEAM_STREAM_ENDPOINT, query);
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
     public DealList pipeline() throws OnePageException {
         Request request = new GetRequest(DEALS_ENDPOINT, Query.query(true));
+        Response response = request.send();
+        return DealListSerializer.fromString(response.getResponseBody());
+    }
+
+    public DealList pipeline(Paginator paginator) throws OnePageException {
+        Request request = new GetRequest(DEALS_ENDPOINT, Query.query(paginator, true));
         Response response = request.send();
         return DealListSerializer.fromString(response.getResponseBody());
     }
@@ -134,13 +165,16 @@ public class User extends ApiResource implements Serializable {
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
-    public DealList pipeline(Paginator paginator) throws OnePageException {
-        Request request = new GetRequest(DEALS_ENDPOINT, Query.query(paginator, true));
+    @SuppressWarnings("unchecked")
+    public DealList pipeline(Map<String, Object> params, Paginator paginator) throws OnePageException {
+        String query = Query.fromMaps(params, Query.params(paginator));
+        Request request = new GetRequest(DEALS_ENDPOINT, query);
         Response response = request.send();
         return DealListSerializer.fromString(response.getResponseBody());
     }
 
     public User() {
+
     }
 
     @Override
