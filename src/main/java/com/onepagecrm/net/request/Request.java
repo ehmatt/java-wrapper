@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -20,21 +21,59 @@ public abstract class Request {
     protected static final Logger LOG = Logger.getLogger(Request.class.getName());
 
     public static final int APP_SERVER = 0;
-    public static final int STAGING_SERVER = 1;
-    public static final int DEV_SERVER = 2;
-    public static final int LOCAL_DEV_SERVER = 3;
-    public static final int NETWORK_DEV_SERVER = 4;
-    public static final int ORION_SERVER = 5;
-    public static final int MOCK_REQUEST_SERVER = 6;
+    public static final int DEV_SERVER = 1;
+    public static final int STAGING_SERVER = 2;
+    public static final int ATLAS_SERVER = 3;
+    public static final int CALYPSO_SERVER = 4;
+    public static final int DEIMOS_SERVER = 5;
+    public static final int DRACO_SERVER = 6;
+    public static final int GEMINI_SERVER = 7;
+    public static final int ORION_SERVER = 8;
+    public static final int PHOBOS_SERVER = 9;
+    public static final int SECURE_SERVER = 10;
+    public static final int TITAN_SERVER = 11;
+    public static final int VOYAGER_SERVER = 12;
+    public static final int LOCAL_DEV_SERVER = 13;
+    public static final int NETWORK_DEV_SERVER = 14;
+    public static final int MOCK_REQUEST_SERVER = 15;
 
     public static int SERVER = DEV_SERVER;
 
     protected static final String APP_URL = "https://app.onepagecrm.com/api/v3/";
-    protected static final String STAGING_URL = "http://staging.onepagecrm.com/api/v3/";
     protected static final String DEV_URL = "http://dev.onepagecrm.com/api/v3/";
+    protected static final String STAGING_URL = "http://staging.onepagecrm.com/api/v3/";
+    protected static final String ATLAS_URL = "http://atlas.dev.onepagecrm.com/api/v3/";
+    protected static final String CALYPSO_URL = "http://calypso.dev.onepagecrm.com/api/v3/";
+    protected static final String DEIMOS_URL = "http://deimos.dev.onepagecrm.com/api/v3/";
+    protected static final String DRACO_URL = "http://draco.dev.onepagecrm.com/api/v3/";
+    protected static final String GEMINI_URL = "http://gemini.dev.onepagecrm.com/api/v3/";
+    protected static final String ORION_URL = "http://orion.dev.onepagecrm.com/api/v3/";
+    protected static final String PHOBOS_URL = "http://phobos.dev.onepagecrm.com/api/v3/";
+    protected static final String SECURE_URL = "https://secure.dev.onepagecrm.com/api/v3/";
+    protected static final String TITAN_URL = "http://titan.dev.onepagecrm.com/api/v3/";
+    protected static final String VOYAGER_URL = "http://voyager.dev.onepagecrm.com/api/v3/";
     protected static final String LOCAL_DEV_URL = "http://localhost:3000/api/v3/";
     protected static final String NETWORK_DEV_URL = "http://10.100.0.18:3001/api/v3/";
-    protected static final String ORION_URL = "http://orion.dev.onepagecrm.com/api/v3/";
+
+    private static final Map<Integer, String> sUrlMap = new HashMap<>();
+
+    static {
+        sUrlMap.put(APP_SERVER, APP_URL);
+        sUrlMap.put(DEV_SERVER, DEV_URL);
+        sUrlMap.put(STAGING_SERVER, STAGING_URL);
+        sUrlMap.put(ATLAS_SERVER, ATLAS_URL);
+        sUrlMap.put(CALYPSO_SERVER, CALYPSO_URL);
+        sUrlMap.put(DEIMOS_SERVER, DEIMOS_URL);
+        sUrlMap.put(DRACO_SERVER, DRACO_URL);
+        sUrlMap.put(GEMINI_SERVER, GEMINI_URL);
+        sUrlMap.put(ORION_SERVER, ORION_URL);
+        sUrlMap.put(PHOBOS_SERVER, PHOBOS_URL);
+        sUrlMap.put(SECURE_SERVER, SECURE_URL);
+        sUrlMap.put(TITAN_SERVER, TITAN_URL);
+        sUrlMap.put(VOYAGER_SERVER, VOYAGER_URL);
+        sUrlMap.put(LOCAL_DEV_SERVER, LOCAL_DEV_URL);
+        sUrlMap.put(NETWORK_DEV_SERVER, NETWORK_DEV_URL);
+    }
 
     public static String format = ".json";
     protected String endpointUrl;
@@ -77,27 +116,7 @@ public abstract class Request {
     public abstract void setType();
 
     public void setEndpointUrl(String endpoint) {
-        switch (SERVER) {
-            case APP_SERVER:
-            case MOCK_REQUEST_SERVER:
-                endpointUrl = APP_URL + endpoint + format;
-                break;
-            case DEV_SERVER:
-                endpointUrl = DEV_URL + endpoint + format;
-                break;
-            case STAGING_SERVER:
-                endpointUrl = STAGING_URL + endpoint + format;
-                break;
-            case LOCAL_DEV_SERVER:
-                endpointUrl = LOCAL_DEV_URL + endpoint + format;
-                break;
-            case NETWORK_DEV_SERVER:
-                endpointUrl = NETWORK_DEV_URL + endpoint + format;
-                break;
-            case ORION_SERVER:
-                endpointUrl = ORION_URL + endpoint + format;
-                break;
-        }
+        endpointUrl = sUrlMap.get(SERVER) + endpoint + format;
     }
 
     /**

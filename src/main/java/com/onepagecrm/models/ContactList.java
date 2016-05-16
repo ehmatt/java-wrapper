@@ -19,17 +19,20 @@ public class ContactList extends ResourceList<Contact> implements Serializable {
 
     public static final int AS_LISTING = 1219;
     public static final int AZ_LISTING = 8662;
+    public static final int AS_TEAM_LISTING = 2986;
 
     private int type;
 
     @Override
-    public ContactList nextPage(Map<String,Object> params) throws OnePageException {
+    public ContactList nextPage(Map<String, Object> params) throws OnePageException {
         this.paginator.getNextPageNo();
         switch (type) {
             case AS_LISTING:
-                return Account.loggedInUser.actionStream(params,paginator);
+                return Account.loggedInUser.actionStream(params, paginator);
             case AZ_LISTING:
-                return Account.loggedInUser.contacts(params,paginator);
+                return Account.loggedInUser.contacts(params, paginator);
+            case AS_TEAM_LISTING:
+                return Account.loggedInUser.teamStream(params, paginator);
             default:
                 throw new InvalidListingTypeException("Not a supported contact listing type.")
                         .setErrorMessage("Not a supported contact listing type.");
@@ -37,66 +40,21 @@ public class ContactList extends ResourceList<Contact> implements Serializable {
     }
 
     @Override
-    public ContactList refresh(Map<String,Object> params) throws OnePageException {
+    public ContactList refresh(Map<String, Object> params) throws OnePageException {
         ContactList list = new ContactList();
         switch (type) {
             case AS_LISTING:
-                list = Account.loggedInUser.actionStream(params,new Paginator());
+                list = Account.loggedInUser.actionStream(params, (paginator = new Paginator()));
                 break;
             case AZ_LISTING:
-                list = Account.loggedInUser.contacts(params,new Paginator());
+                list = Account.loggedInUser.contacts(params, (paginator = new Paginator()));
+                break;
+            case AS_TEAM_LISTING:
+                list = Account.loggedInUser.teamStream(params, (paginator = new Paginator()));
                 break;
         }
         this.setList(list);
         return this;
-    }
-
-    public ContactList search(String search) throws OnePageException {
-        switch (type) {
-            case AS_LISTING:
-                return Account.loggedInUser.searchActionStream(search);
-            case AZ_LISTING:
-                return Account.loggedInUser.searchContacts(search);
-            default:
-                throw new InvalidListingTypeException("Not a supported contact listing type.")
-                        .setErrorMessage("Not a supported contact listing type.");
-        }
-    }
-
-    public ContactList search(Paginator paginator, String search) throws OnePageException {
-        switch (type) {
-            case AS_LISTING:
-                return Account.loggedInUser.searchActionStream(paginator, search);
-            case AZ_LISTING:
-                return Account.loggedInUser.searchContacts(paginator, search);
-            default:
-                throw new InvalidListingTypeException("Not a supported contact listing type.")
-                        .setErrorMessage("Not a supported contact listing type.");
-        }
-    }
-
-    public ContactList letter(String letter) throws OnePageException {
-        switch (type) {
-            case AS_LISTING:
-                return Account.loggedInUser.actionStreamByLetter(letter);
-            case AZ_LISTING:
-                return Account.loggedInUser.contactsByLetter(letter);
-            default:
-                throw new InvalidListingTypeException("Not a supported contact listing type.")
-                        .setErrorMessage("Not a supported contact listing type.");
-        }
-    }
-
-    public ContactList letter(Paginator paginator, String letter) throws OnePageException {
-        switch (type) {
-            case AS_LISTING:
-                return Account.loggedInUser.actionStreamByLetter(paginator, letter);
-            case AZ_LISTING:
-                return Account.loggedInUser.contactsByLetter(paginator, letter);
-            default:
-                throw new InvalidListingTypeException("Not a supported contact listing type.")
-                        .setErrorMessage("Not a supported contact listing type.");
-        }
     }
 
     public ContactList() {
