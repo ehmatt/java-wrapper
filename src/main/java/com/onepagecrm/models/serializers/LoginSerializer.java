@@ -36,22 +36,22 @@ public class LoginSerializer extends BaseSerializer {
         }
     }
 
-    private static void addSettingsToAccount(String pResponseBody) {
-        try{
-            JSONObject responseObject = new JSONObject(pResponseBody);
+    private static void addSettingsToAccount(String responseBody) {
+        try {
+            JSONObject responseObject = new JSONObject(responseBody);
             JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
-            if (dataObject.has(SETTINGS_TAG)){
+            if (dataObject.has(SETTINGS_TAG)) {
                 addSettings(dataObject.getJSONObject(SETTINGS_TAG));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             LOG.severe("Error parsing Settings array");
             LOG.severe(e.toString());
         }
     }
 
-    private static void addSettings(JSONObject pJSONObject) {
-        Settings lSettings = SettingsSerializer.fromJsonObject(pJSONObject);
-        Account.settings = lSettings;
+    private static void addSettings(JSONObject settingsObject) {
+        Settings settings = SettingsSerializer.fromJsonObject(settingsObject);
+        Account.loggedInUser.getAccount().setSettings(settings);
     }
 
     public static String toJsonObject(String username, String password) {
