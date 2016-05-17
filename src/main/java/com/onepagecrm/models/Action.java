@@ -1,8 +1,12 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.serializers.ActionSerializer;
 import com.onepagecrm.models.serializers.DateSerializer;
 import com.onepagecrm.net.ApiResource;
+import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,6 +23,13 @@ public class Action extends ApiResource implements Serializable {
     private String status;
     private Date date;
     private int dateColor;
+
+    public static ActionList listPredefined() throws OnePageException {
+        Request request = new GetRequest(PREDEFFINED_ACTIONS_ENDPOINT, Query.queryDefault());
+        Response response = request.send();
+//        return ActionSerializer.fromString(response.getResponseBody()); // TODO - implement serializer!!
+        return null;
+    }
 
     public Action() {
     }
