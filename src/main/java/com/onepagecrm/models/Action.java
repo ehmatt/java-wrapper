@@ -1,6 +1,7 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.serializers.ActionSerializer;
 import com.onepagecrm.models.serializers.DateSerializer;
 import com.onepagecrm.net.ApiResource;
@@ -10,6 +11,7 @@ import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
 public class Action extends ApiResource implements Serializable {
 
@@ -24,8 +26,33 @@ public class Action extends ApiResource implements Serializable {
     private Date date;
     private int dateColor;
 
+    public static ActionList list(String assigneeId) throws OnePageException {
+        Map<String, Object> params = Query.paramsDefault();
+        params.put("assignee_id", assigneeId);
+        Request request = new GetRequest(ACTIONS_ENDPOINT, Query.fromParams(params));
+        Response response = request.send();
+//        return ActionSerializer.fromString(response.getResponseBody()); // TODO - implement serializer!!
+        return null;
+    }
+
+    public static ActionList list(String assigneeId, Paginator paginator) throws OnePageException {
+        Map<String, Object> params = Query.params(paginator);
+        params.put("assignee_id", assigneeId);
+        Request request = new GetRequest(ACTIONS_ENDPOINT, Query.fromParams(params));
+        Response response = request.send();
+//        return ActionSerializer.fromString(response.getResponseBody()); // TODO - implement serializer!!
+        return null;
+    }
+
     public static ActionList listPredefined() throws OnePageException {
         Request request = new GetRequest(PREDEFFINED_ACTIONS_ENDPOINT, Query.queryDefault());
+        Response response = request.send();
+//        return ActionSerializer.fromString(response.getResponseBody()); // TODO - implement serializer!!
+        return null;
+    }
+
+    public static ActionList listPredefined(Paginator paginator) throws OnePageException {
+        Request request = new GetRequest(PREDEFFINED_ACTIONS_ENDPOINT, Query.query(paginator));
         Response response = request.send();
 //        return ActionSerializer.fromString(response.getResponseBody()); // TODO - implement serializer!!
         return null;

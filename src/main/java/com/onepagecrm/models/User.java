@@ -173,6 +173,22 @@ public class User extends ApiResource implements Serializable {
         return DealListSerializer.fromString(response.getResponseBody());
     }
 
+    public ActionList actions(Paginator paginator) throws OnePageException {
+        return Action.list(this.id, paginator);
+    }
+
+    public ActionList actions() throws OnePageException {
+        return Action.list(this.id);
+    }
+
+    public ActionList actionsPredefined(Paginator paginator) throws OnePageException {
+        return Action.listPredefined(paginator);
+    }
+
+    public ActionList actionsPredefined() throws OnePageException {
+        return Action.listPredefined();
+    }
+
     public User() {
 
     }
