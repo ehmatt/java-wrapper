@@ -18,8 +18,8 @@ public class DealStageSerializer extends BaseSerializer {
             for (int i = 0; i < dealStagesArray.length(); ++i) {
                 JSONObject lObject = dealStagesArray.optJSONObject(i);
                 DealStage lDealStage = new DealStage();
-                lDealStage.setLabel(lObject.optString(DEAL_STAGE_LABEL_TAG));
-                lDealStage.setPercentage(lObject.optInt(DEAL_STAGE_STAGE_TAG));
+                lDealStage.setLabel(lObject.optString(LABEL_TAG));
+                lDealStage.setPercentage(lObject.optInt(STAGE_TAG));
                 lDealStages.add(lDealStage);
             }
         }
