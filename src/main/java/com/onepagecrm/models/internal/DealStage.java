@@ -17,15 +17,17 @@ public class DealStage {
         return percentage;
     }
 
-    public void setPercentage(int percentage) {
+    public DealStage setPercentage(int percentage) {
         this.percentage = percentage;
+        return this;
     }
 
     public String getLabel() {
         return label;
     }
 
-    public void setLabel(String label) {
+    public DealStage setLabel(String label) {
         this.label = label;
+        return this;
     }
 }
