@@ -1,10 +1,15 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.serializers.ContactPhotoSerializer;
+import com.onepagecrm.models.serializers.ContactSerializer;
 import com.onepagecrm.models.serializers.NoteSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.request.PostRequest;
+import com.onepagecrm.net.request.PutRequest;
+import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -36,6 +41,26 @@ public class Note extends ApiResource implements Serializable {
         GetRequest request = new GetRequest(NOTES_ENDPOINT);
         Response lResponse = request.send();
         return NoteSerializer.fromJsonString(lResponse.getResponseBody());
+    }
+
+    public Note save() throws OnePageException {
+        return isValid() ? update() : create();
+    }
+
+    private Note create() throws OnePageException {
+        Request request = new PostRequest(addNoteIdToEndpoint(NOTES_ENDPOINT), null, NoteSerializer.toJsonObject(this));
+        Response response = request.send();
+        return NoteSerializer.fromString(response.getResponseBody());
+    }
+
+    public Note update() throws OnePageException {
+        Request request = new PutRequest(addNoteIdToEndpoint(NOTES_ENDPOINT), null, NoteSerializer.toJsonObject(this));
+        Response response = request.send();
+        return NoteSerializer.fromString(response.getResponseBody());
+    }
+
+    private String addNoteIdToEndpoint(String endpoint) {
+        return endpoint + "/" + this.id;
     }
 
     @Override
