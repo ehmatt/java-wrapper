@@ -1,23 +1,49 @@
 package com.onepagecrm.models.internal;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class DealStage {
 
-    private int percentage;
+    public static final String LABEL_WON = "Won";
+    public static final String LABEL_LOST = "Lost";
+
+    private Integer percentage;
     private String label;
 
     public DealStage() {
 
     }
 
-    public String getFriendlyString() {
-        return percentage + "%" + ((label == null) ? "" : " - " + label);
+    public static List<DealStage> addDefaults(LinkedList<DealStage> stages) {
+        if (stages != null) {
+            stages.add(won());
+            stages.add(lost());
+        }
+        return stages;
     }
 
-    public int getPercentage() {
+    public static DealStage won() {
+        return new DealStage().setLabel(LABEL_WON);
+    }
+
+    public static DealStage lost() {
+        return new DealStage().setLabel(LABEL_LOST);
+    }
+
+    public String getFriendlyString() {
+        if (percentage != null) {
+            return percentage + "%" + ((label == null) ? "" : " - " + label);
+        } else {
+            return label;
+        }
+    }
+
+    public Integer getPercentage() {
         return percentage;
     }
 
-    public DealStage setPercentage(int percentage) {
+    public DealStage setPercentage(Integer percentage) {
         this.percentage = percentage;
         return this;
     }
