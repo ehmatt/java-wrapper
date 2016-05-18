@@ -165,7 +165,7 @@ public class BaseSerializer {
     public static final String HAS_RELATED_NOTES_TAG = "has_related_notes";
     public static final String CLOSE_DATE_TAG = "close_date";
     public static final String DEAL_ID_TAG = "deal_id";
-    public static final String DEAL_STAGE_TAG = "deal_stages";
+    public static final String DEAL_STAGE_TAG = "deal_stage";
     public static final String DEAL_STAGES_TAG = "deal_stages";
     public static final String LABEL_TAG = "label";
 
