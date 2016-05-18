@@ -13,16 +13,16 @@ import java.util.List;
 public class DealStageSerializer extends BaseSerializer {
 
     public static List<DealStage> fromJsonArray(JSONArray dealStagesArray) {
-        List<DealStage> lDealStages = new LinkedList<>();
+        List<DealStage> dealStages = new LinkedList<>();
         if (dealStagesArray != null) {
             for (int i = 0; i < dealStagesArray.length(); ++i) {
-                JSONObject lObject = dealStagesArray.optJSONObject(i);
-                DealStage lDealStage = new DealStage();
-                lDealStage.setLabel(lObject.optString(LABEL_TAG));
-                lDealStage.setPercentage(lObject.optInt(STAGE_TAG));
-                lDealStages.add(lDealStage);
+                JSONObject dealObject = dealStagesArray.optJSONObject(i);
+                DealStage dealStage = new DealStage();
+                dealStage.setLabel(dealObject.optString(LABEL_TAG));
+                dealStage.setPercentage(dealObject.optInt(STAGE_TAG));
+                dealStages.add(dealStage);
             }
         }
-        return lDealStages;
+        return dealStages;
     }
 }
