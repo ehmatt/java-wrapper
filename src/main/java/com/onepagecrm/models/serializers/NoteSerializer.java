@@ -42,7 +42,8 @@ public class NoteSerializer extends BaseSerializer{
         Note note = new Note();
         try {
             JSONObject responseObject = new JSONObject(pResponseBody);
-            note = objFromJson(responseObject);
+            JSONObject data = responseObject.optJSONObject(DATA_TAG);
+            note = objFromJson(data);
         } catch (JSONException e) {
             LOG.severe("Could not find call object tags");
             LOG.severe(e.toString());

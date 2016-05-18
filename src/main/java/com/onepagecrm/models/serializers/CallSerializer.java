@@ -20,14 +20,12 @@ public class CallSerializer extends BaseSerializer {
     private static final java.lang.String RECORDING_LINK_TAG = "recording_link";
 
     public static Call fromString(String responseBody) throws OnePageException {
-        String parsedResponse;
         OnePageException exception;
 
         try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONObject parsedObject = new JSONObject(parsedResponse);
-            JSONObject callObject = parsedObject.getJSONObject(CALL_TAG);
-            return CallSerializer.fromJsonObject(callObject);
+            JSONObject responseObject = new JSONObject(responseBody);
+            JSONObject data = responseObject.optJSONObject(DATA_TAG);
+            return CallSerializer.objFromJson(data);
 
         } catch (ClassCastException e) {
             exception = (OnePageException) BaseSerializer.fromString(responseBody);
@@ -40,57 +38,7 @@ public class CallSerializer extends BaseSerializer {
         return new Call();
     }
 
-    public static Call fromJsonObject(JSONObject callObject) {
-        Call call = new Call();
-        CallResult result = new CallResult();
-
-        try {
-            if (callObject.has(ID_TAG)) {
-                call.setId(callObject.getString(ID_TAG));
-            }
-            if (callObject.has(CALL_RESULT_TAG)) {
-                result.setId(callObject.getString(CALL_RESULT_TAG));
-            }
-            if (callObject.has(CALL_TIME_INT_TAG)) {
-                String callTimeIntString = callObject.getString(CALL_TIME_INT_TAG);
-                int callTimeInt = Integer.parseInt(callTimeIntString);
-                Date callTime = new Date(callTimeInt);
-                call.setTime(callTime);
-            }
-            if (callObject.has(CONTACT_ID_TAG)) {
-                call.setContactId(callObject.getString(CONTACT_ID_TAG));
-            }
-            if (callObject.has(CREATED_AT_TAG)) {
-                String createdAtString = callObject.getString(CREATED_AT_TAG);
-                Date createdAt = DateSerializer.fromFormattedString(createdAtString);
-                call.setCreatedAt(createdAt);
-            }
-            if (callObject.has(MODIFIED_AT_TAG)) {
-                String modifiedAtString = callObject.getString(MODIFIED_AT_TAG);
-                Date modifiedAt = DateSerializer.fromFormattedString(modifiedAtString);
-                call.setModifiedAt(modifiedAt);
-            }
-            if (callObject.has(VIA_TAG)) {
-                call.setVia(callObject.getString(VIA_TAG));
-            }
-            if (callObject.has(AUTHOR_TAG)) {
-                call.setAuthor(callObject.getString(AUTHOR_TAG));
-            }
-
-//            JSONArray attachmentsArray = callObject.getJSONArray(ATTACHMENTS_TAG);
-//            List<Attachment> attachments = AttachmentSerializer.fromJsonArray(attachmentsArray);
-//            .setAttachments(attachments);
-
-            call.setCallResult(result);
-
-        } catch (JSONException e) {
-            LOG.severe("Could not find call object tags");
-            LOG.severe(e.toString());
-        }
-        return call;
-    }
-
-    public static String toJsonObject(Call call) {
+     public static String toJsonObject(Call call) {
         JSONObject callObject = new JSONObject();
         addJsonStringValue(call.getId(), callObject, ID_TAG);
         addJsonStringValue(call.getText(), callObject, TEXT_TAG);

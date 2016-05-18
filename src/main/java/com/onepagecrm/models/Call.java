@@ -44,24 +44,24 @@ public class Call extends ApiResource implements Serializable {
     }
 
     public Call update() throws OnePageException {
-        PutRequest saveRequest = new PutRequest(
+        PutRequest updateRequest = new PutRequest(
                 addCallIdToEndpoint(CALLS_ENDPOINT),
                 null,
                 CallSerializer.toJsonObject(this)
         );
-        Response response = saveRequest.send();
+        Response response = updateRequest.send();
         return CallSerializer.fromString(response.getResponseBody());
     }
 
     public Call create(Contact contact) throws OnePageException {
         Map<String, Object> params = new HashMap<>();
         params.put("contact_id", contact.getId());
-        PostRequest saveRequest = new PostRequest(
+        PostRequest createRequest = new PostRequest(
                 CALLS_ENDPOINT,
                 Query.fromParams(params),
                 CallSerializer.toJsonObject(this)
         );
-        Response response = saveRequest.send();
+        Response response = createRequest.send();
         return CallSerializer.fromString(response.getResponseBody());
     }
 
