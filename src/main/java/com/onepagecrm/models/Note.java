@@ -43,12 +43,10 @@ public class Note extends ApiResource implements Serializable {
         return NoteSerializer.fromJsonString(lResponse.getResponseBody());
     }
 
-    public Note save() throws OnePageException {
-        return isValid() ? update() : create();
-    }
-
-    private Note create() throws OnePageException {
-        Request request = new PostRequest(addNoteIdToEndpoint(NOTES_ENDPOINT), null, NoteSerializer.toJsonObject(this));
+    public Note create(Contact contact) throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("contact_id", contact.getId());
+        Request request = new PostRequest(NOTES_ENDPOINT, Query.fromParams(params), NoteSerializer.toJsonObject(this));
         Response response = request.send();
         return NoteSerializer.fromString(response.getResponseBody());
     }
