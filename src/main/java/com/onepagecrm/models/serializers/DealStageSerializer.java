@@ -13,7 +13,7 @@ import java.util.List;
 public class DealStageSerializer extends BaseSerializer {
 
     public static List<DealStage> fromJsonArray(JSONArray dealStagesArray) {
-        LinkedList<DealStage> lDealStages = new LinkedList<>();
+        List<DealStage> lDealStages = new LinkedList<>();
         if (dealStagesArray != null) {
             for (int i = 0; i < dealStagesArray.length(); ++i) {
                 JSONObject lObject = dealStagesArray.optJSONObject(i);
@@ -23,6 +23,6 @@ public class DealStageSerializer extends BaseSerializer {
                 lDealStages.add(lDealStage);
             }
         }
-        return DealStage.addDefaults(lDealStages);
+        return lDealStages;
     }
 }
