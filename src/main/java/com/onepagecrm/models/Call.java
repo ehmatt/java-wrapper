@@ -6,6 +6,7 @@ import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.PostRequest;
+import com.onepagecrm.net.request.PutRequest;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -42,7 +43,17 @@ public class Call extends ApiResource implements Serializable {
         return CallSerializer.listFromString(response.getResponseBody());
     }
 
-    public Call save(Contact contact) throws OnePageException {
+    public Call update() throws OnePageException {
+        PutRequest saveRequest = new PutRequest(
+                addCallIdToEndpoint(CALLS_ENDPOINT),
+                null,
+                CallSerializer.toJsonObject(this)
+        );
+        Response response = saveRequest.send();
+        return CallSerializer.fromString(response.getResponseBody());
+    }
+
+    public Call create(Contact contact) throws OnePageException {
         Map<String, Object> params = new HashMap<>();
         params.put("contact_id", contact.getId());
         PostRequest saveRequest = new PostRequest(
@@ -52,6 +63,10 @@ public class Call extends ApiResource implements Serializable {
         );
         Response response = saveRequest.send();
         return CallSerializer.fromString(response.getResponseBody());
+    }
+
+    private String addCallIdToEndpoint(String endpoint) {
+        return endpoint + "/" + this.id;
     }
 
     public Call() {
