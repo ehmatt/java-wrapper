@@ -24,79 +24,89 @@ public class Settings implements Serializable {
         return reminder;
     }
 
-    public void setReminder(Reminder reminder) {
+    public Settings setReminder(Reminder reminder) {
         this.reminder = reminder;
+        return this;
     }
 
     public String getTimeZone() {
         return timeZone;
     }
 
-    public void setTimeZone(String pTimeZone) {
+    public Settings setTimeZone(String pTimeZone) {
         timeZone = pTimeZone;
+        return this;
     }
 
     public String getDateFormat() {
         return dateFormat;
     }
 
-    public void setDateFormat(String dateFormat) {
+    public Settings setDateFormat(String dateFormat) {
         this.dateFormat = dateFormat;
+        return this;
     }
 
     public int getListingSize() {
         return listingSize;
     }
 
-    public void setListingSize(int listingSize) {
+    public Settings setListingSize(int listingSize) {
         this.listingSize = listingSize;
+        return this;
     }
 
     public String getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public Settings setCurrency(String currency) {
         this.currency = currency;
+        return this;
     }
 
     public String getCurrencySymbol() {
         return currencySymbol;
     }
 
-    public void setCurrencySymbol(String currencySymbol) {
+    public Settings setCurrencySymbol(String currencySymbol) {
         this.currencySymbol = currencySymbol;
+        return this;
     }
 
     public List<Country> getPopularCountries() {
         return popularCountries;
     }
 
-    public void setPopularCountries(List<Country> popularCountries) {
+    public Settings setPopularCountries(List<Country> popularCountries) {
         this.popularCountries = popularCountries;
+        return this;
     }
 
     public List<DealStage> getDealStages() {
         return dealStages;
     }
 
-    public void setDealStages(List<DealStage> dealStages) {
+    public Settings setDealStages(List<DealStage> dealStages) {
         this.dealStages = dealStages;
+        return this;
     }
 
     public String getDefaultView() {
         return defaultView;
     }
 
-    public void setDefaultView(String defaultView) {
+    public Settings setDefaultView(String defaultView) {
         this.defaultView = defaultView;
+        return this;
     }
 
     public boolean isShowTidyStream() {
         return showTidyStream;
     }
 
-    public void setShowTidyStream(boolean showTidyStream) {
+    public Settings setShowTidyStream(boolean showTidyStream) {
         this.showTidyStream = showTidyStream;
+        return this;
     }
 }
