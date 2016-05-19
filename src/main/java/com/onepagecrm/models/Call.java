@@ -43,7 +43,11 @@ public class Call extends ApiResource implements Serializable {
         return CallSerializer.listFromString(response.getResponseBody());
     }
 
-    public Call update() throws OnePageException {
+    public Call save() throws OnePageException {
+        return this.isValid() ? update() : create();
+    }
+
+    private Call update() throws OnePageException {
         PutRequest updateRequest = new PutRequest(
                 addCallIdToEndpoint(CALLS_ENDPOINT),
                 null,
@@ -53,9 +57,9 @@ public class Call extends ApiResource implements Serializable {
         return CallSerializer.fromString(response.getResponseBody());
     }
 
-    public Call create(Contact contact) throws OnePageException {
+    private Call create() throws OnePageException {
         Map<String, Object> params = new HashMap<>();
-        params.put("contact_id", contact.getId());
+        params.put("contact_id", contactId);
         PostRequest createRequest = new PostRequest(
                 CALLS_ENDPOINT,
                 Query.fromParams(params),
