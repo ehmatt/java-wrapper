@@ -1,8 +1,6 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.serializers.ContactPhotoSerializer;
-import com.onepagecrm.models.serializers.ContactSerializer;
 import com.onepagecrm.models.serializers.NoteSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
@@ -18,8 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Note extends ApiResource implements Serializable {
-
-    private static final String NOTES_ENDPOINT = "notes";
 
     private String id;
     private String author;
@@ -81,48 +77,54 @@ public class Note extends ApiResource implements Serializable {
         return null;
     }
 
-    public void setAuthor(String author) {
+    public Note setAuthor(String author) {
         this.author = author;
+        return this;
     }
 
     public String getAuthor() {
         return author;
     }
 
-    public void setText(String text) {
+    public Note setText(String text) {
         this.text = text;
+        return this;
     }
 
     public String getText() {
         return text;
     }
 
-    public void setContactId(String contactId) {
+    public Note setContactId(String contactId) {
         this.contactId = contactId;
+        return this;
     }
 
     public String getContactId() {
         return contactId;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public Note setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+        return this;
     }
 
     public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setDate(Date date) {
+    public Note setDate(Date date) {
         this.date = date;
+        return this;
     }
 
     public Date getDate() {
         return date;
     }
 
-    public void setLinkedDealId(String linkedDealId) {
+    public Note setLinkedDealId(String linkedDealId) {
         this.linkedDealId = linkedDealId;
+        return this;
     }
 
     public String getLinkedDealId() {

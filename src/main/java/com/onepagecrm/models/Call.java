@@ -182,11 +182,12 @@ public class Call extends ApiResource implements Serializable {
         return this;
     }
 
-    public void setText(String pText) {
-        mText = pText;
-    }
-
     public String getText() {
         return mText;
+    }
+
+    public Call setText(String pText) {
+        mText = pText;
+        return this;
     }
 }

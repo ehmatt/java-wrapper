@@ -92,9 +92,6 @@ public class BaseSerializer {
     public static final String AUTHOR_TAG = "author";
     public static final String ATTACHMENTS_TAG = "attachment";
 
-    //NOTE TAGS
-    public static final String NOTE_TAG = "note";
-
     // 201 RESPONSE TAGS
     public static final String STATUS_TAG = "status";
     public static final String STATUSES_TAG = "statuses";
