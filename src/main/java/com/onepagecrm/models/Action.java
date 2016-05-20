@@ -2,8 +2,10 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
+import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.serializers.ActionSerializer;
 import com.onepagecrm.models.serializers.DateSerializer;
+import com.onepagecrm.models.serializers.PredefinedActionSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
@@ -31,8 +33,7 @@ public class Action extends ApiResource implements Serializable {
         params.put("assignee_id", assigneeId);
         Request request = new GetRequest(ACTIONS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-//        return ActionSerializer.fromString(response.getResponseBody()); // TODO - implement serializer!!
-        return null;
+        return new ActionList(ActionSerializer.fromString(response.getResponseBody()));
     }
 
     public static ActionList list(String assigneeId, Paginator paginator) throws OnePageException {
@@ -40,22 +41,19 @@ public class Action extends ApiResource implements Serializable {
         params.put("assignee_id", assigneeId);
         Request request = new GetRequest(ACTIONS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-//        return ActionSerializer.fromString(response.getResponseBody()); // TODO - implement serializer!!
-        return null;
+        return new ActionList(ActionSerializer.fromString(response.getResponseBody()));
     }
 
-    public static ActionList listPredefined() throws OnePageException {
+    public static PredefinedActionList listPredefined() throws OnePageException {
         Request request = new GetRequest(PREDEFFINED_ACTIONS_ENDPOINT, Query.queryDefault());
         Response response = request.send();
-//        return ActionSerializer.fromString(response.getResponseBody()); // TODO - implement serializer!!
-        return null;
+        return new PredefinedActionList(PredefinedActionSerializer.fromString(response.getResponseBody()));
     }
 
-    public static ActionList listPredefined(Paginator paginator) throws OnePageException {
+    public static PredefinedActionList listPredefined(Paginator paginator) throws OnePageException {
         Request request = new GetRequest(PREDEFFINED_ACTIONS_ENDPOINT, Query.query(paginator));
         Response response = request.send();
-//        return ActionSerializer.fromString(response.getResponseBody()); // TODO - implement serializer!!
-        return null;
+        return new PredefinedActionList(PredefinedActionSerializer.fromString(response.getResponseBody()));
     }
 
     public Action() {

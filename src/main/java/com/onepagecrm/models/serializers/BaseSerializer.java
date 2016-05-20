@@ -78,6 +78,8 @@ public class BaseSerializer {
     public static final String ACTION_TAG = "action";
     public static final String ACTIONS_TAG = "actions";
     public static final String DATE_COLOR_TAG = "date_color";
+    public static final String PREDEFINED_ACTION_TAG = "predefined_action";
+    public static final String PREDEFINED_ACTIONS_TAG = "predefined_actions";
 
     // CALL TAGS
     public static final String CALL_TAG = "call";

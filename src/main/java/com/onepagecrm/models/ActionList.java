@@ -2,6 +2,7 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
+import com.onepagecrm.models.serializers.ActionSerializer;
 
 import java.io.Serializable;
 import java.util.List;
@@ -27,8 +28,8 @@ public class ActionList extends ResourceList<Action> implements Serializable {
         return null; // TODO - something here!!
     }
 
-    public ActionList(List<Action> contacts) {
-        super(contacts);
+    public ActionList(List<Action> actions) {
+        super(actions);
     }
 
     public ActionList() {
@@ -38,5 +39,10 @@ public class ActionList extends ResourceList<Action> implements Serializable {
     @Override
     public ActionList subList(int start, int end) {
         return new ActionList(super.subList(start, end));
+    }
+
+    @Override
+    public String toString() {
+        return ActionSerializer.toJsonArray(this.list);
     }
 }

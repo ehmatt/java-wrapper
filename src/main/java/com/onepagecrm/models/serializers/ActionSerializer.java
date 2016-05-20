@@ -1,18 +1,36 @@
 package com.onepagecrm.models.serializers;
 
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Action;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class ActionSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ActionSerializer.class.getName());
+
+    public static List<Action> fromString(String responseBody) throws OnePageException {
+        String parsedResponse;
+        OnePageException exception;
+        try {
+            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(parsedResponse);
+            return fromJsonArray(responseObject.optJSONArray(ACTIONS_TAG));
+
+        } catch (ClassCastException e) {
+            exception = (OnePageException) BaseSerializer.fromString(responseBody);
+            throw exception;
+        } catch (JSONException e) {
+            LOG.severe("Error parsing JSON" + e);
+            return new LinkedList<>();
+        }
+    }
 
     public static Action fromJsonObject(JSONObject actionObject) {
         Action action = new Action();
@@ -59,6 +77,19 @@ public class ActionSerializer extends BaseSerializer {
         return new Action();
     }
 
+    public static List<Action> fromJsonArray(JSONArray actionsArray) {
+        List<Action> actions = new LinkedList<>();
+        for (int i = 0; i < actionsArray.length(); i++) {
+            try {
+                actions.add(fromJsonObject(actionsArray.getJSONObject(i)));
+            } catch (JSONException e) {
+                LOG.severe("Error parsing contact object");
+                LOG.severe(e.toString());
+            }
+        }
+        return actions;
+    }
+
     public static String toJsonObject(Action action) {
         JSONObject actionObject = new JSONObject();
         if (action != null) {
@@ -94,18 +125,5 @@ public class ActionSerializer extends BaseSerializer {
             }
         }
         return actionsArray.toString();
-    }
-
-    public static List<Action> fromJsonArray(JSONArray actionsArray) {
-        List<Action> actions = new ArrayList<>();
-        for (int i = 0; i < actionsArray.length(); i++) {
-            try {
-                actions.add(fromJsonObject(actionsArray.getJSONObject(i)));
-            } catch (JSONException e) {
-                LOG.severe("Error parsing contact object");
-                LOG.severe(e.toString());
-            }
-        }
-        return actions;
     }
 }

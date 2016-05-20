@@ -2,6 +2,7 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
+import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.internal.Sales;
 import com.onepagecrm.models.serializers.ContactListSerializer;
 import com.onepagecrm.models.serializers.DealListSerializer;
@@ -181,11 +182,11 @@ public class User extends ApiResource implements Serializable {
         return Action.list(this.id);
     }
 
-    public ActionList actionsPredefined(Paginator paginator) throws OnePageException {
+    public PredefinedActionList actionsPredefined(Paginator paginator) throws OnePageException {
         return Action.listPredefined(paginator);
     }
 
-    public ActionList actionsPredefined() throws OnePageException {
+    public PredefinedActionList actionsPredefined() throws OnePageException {
         return Action.listPredefined();
     }
 
