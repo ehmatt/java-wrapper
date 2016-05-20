@@ -10,20 +10,19 @@ import java.util.List;
 /**
  * Created by alex on 4/23/16.
  */
-public class DealStageSerializer extends BaseSerializer{
+public class DealStageSerializer extends BaseSerializer {
 
-
-    public static List<DealStage> fromJsonArray(JSONArray pDealStagesArray) {
-        List<DealStage> lDealStages = new LinkedList<>();
-        if (pDealStagesArray!=null){
-            for (int i=0;i<pDealStagesArray.length();++i){
-                JSONObject lObject = pDealStagesArray.optJSONObject(i);
-                DealStage lDealStage = new DealStage();
-                lDealStage.setLabel(lObject.optString(DEAL_STAGE_LABEL_TAG));
-                lDealStage.setPercentage(lObject.optInt(DEAL_STAGE_STAGE_TAG));
-                lDealStages.add(lDealStage);
+    public static List<DealStage> fromJsonArray(JSONArray dealStagesArray) {
+        List<DealStage> dealStages = new LinkedList<>();
+        if (dealStagesArray != null) {
+            for (int i = 0; i < dealStagesArray.length(); ++i) {
+                JSONObject dealObject = dealStagesArray.optJSONObject(i);
+                DealStage dealStage = new DealStage();
+                dealStage.setLabel(dealObject.optString(LABEL_TAG));
+                dealStage.setPercentage(dealObject.optInt(STAGE_TAG));
+                dealStages.add(dealStage);
             }
         }
-        return lDealStages;
+        return dealStages;
     }
 }

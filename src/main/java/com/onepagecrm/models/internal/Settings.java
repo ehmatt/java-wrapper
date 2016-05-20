@@ -5,86 +5,6 @@ import java.util.List;
 
 public class Settings implements Serializable {
 
-    public Reminder getReminder() {
-        return reminder;
-    }
-
-    public void setReminder(Reminder pReminder) {
-        reminder = pReminder;
-    }
-
-    public String getTimeZone() {
-        return timeZone;
-    }
-
-    public void setTimeZone(String pTimeZone) {
-        timeZone = pTimeZone;
-    }
-
-    public String getDateFormat() {
-        return dateFormat;
-    }
-
-    public void setDateFormat(String pDateFormat) {
-        dateFormat = pDateFormat;
-    }
-
-    public int getListingSize() {
-        return listingSize;
-    }
-
-    public void setListingSize(int pListingSize) {
-        listingSize = pListingSize;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String pCurrency) {
-        currency = pCurrency;
-    }
-
-    public String getCurrencySymbol() {
-        return currencySymbol;
-    }
-
-    public void setCurrencySymbol(String pCurrencySymbol) {
-        currencySymbol = pCurrencySymbol;
-    }
-
-    public List<Country> getPopularCountries() {
-        return popularCountries;
-    }
-
-    public void setPopularCountries(List<Country> pPopularCountries) {
-        popularCountries = pPopularCountries;
-    }
-
-    public List<DealStage> getDealStages() {
-        return dealStages;
-    }
-
-    public void setDealStages(List<DealStage> pDealStages) {
-        dealStages = pDealStages;
-    }
-
-    public String getDefaultView() {
-        return defaultView;
-    }
-
-    public void setDefaultView(String pDefaultView) {
-        defaultView = pDefaultView;
-    }
-
-    public boolean isShowTidyStream() {
-        return showTidyStream;
-    }
-
-    public void setShowTidyStream(boolean pShowTidyStream) {
-        showTidyStream = pShowTidyStream;
-    }
-
     private Reminder reminder;
     private String timeZone; // *****************
     private String dateFormat; // *****************
@@ -95,4 +15,98 @@ public class Settings implements Serializable {
     private List<DealStage> dealStages;
     private String defaultView; // *****************
     private boolean showTidyStream; // *****************
+
+    public Settings() {
+
+    }
+
+    public Reminder getReminder() {
+        return reminder;
+    }
+
+    public Settings setReminder(Reminder reminder) {
+        this.reminder = reminder;
+        return this;
+    }
+
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public Settings setTimeZone(String pTimeZone) {
+        timeZone = pTimeZone;
+        return this;
+    }
+
+    public String getDateFormat() {
+        return dateFormat;
+    }
+
+    public Settings setDateFormat(String dateFormat) {
+        this.dateFormat = dateFormat;
+        return this;
+    }
+
+    public int getListingSize() {
+        return listingSize;
+    }
+
+    public Settings setListingSize(int listingSize) {
+        this.listingSize = listingSize;
+        return this;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public Settings setCurrency(String currency) {
+        this.currency = currency;
+        return this;
+    }
+
+    public String getCurrencySymbol() {
+        return currencySymbol;
+    }
+
+    public Settings setCurrencySymbol(String currencySymbol) {
+        this.currencySymbol = currencySymbol;
+        return this;
+    }
+
+    public List<Country> getPopularCountries() {
+        return popularCountries;
+    }
+
+    public Settings setPopularCountries(List<Country> popularCountries) {
+        this.popularCountries = popularCountries;
+        return this;
+    }
+
+    public List<DealStage> getDealStages() {
+        return dealStages;
+    }
+
+    public Settings setDealStages(List<DealStage> dealStages) {
+        this.dealStages = dealStages;
+        return this;
+    }
+
+    public String getDefaultView() {
+        return defaultView;
+    }
+
+    public Settings setDefaultView(String defaultView) {
+        this.defaultView = defaultView;
+        return this;
+    }
+
+    public boolean isShowTidyStream() {
+        return showTidyStream;
+    }
+
+    public Settings setShowTidyStream(boolean showTidyStream) {
+        this.showTidyStream = showTidyStream;
+        return this;
+    }
 }
