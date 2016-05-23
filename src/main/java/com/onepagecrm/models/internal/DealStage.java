@@ -1,8 +1,9 @@
 package com.onepagecrm.models.internal;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class DealStage {
+public class DealStage implements Serializable {
 
     public static final String STATUS_WON = "Won";
     public static final String STATUS_LOST = "Lost";
