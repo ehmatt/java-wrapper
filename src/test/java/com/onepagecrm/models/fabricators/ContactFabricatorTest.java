@@ -68,12 +68,12 @@ public class ContactFabricatorTest extends BaseTest {
         assertEquals("OnePageCRM", contact.getCompanyName());
         assertEquals("56fa81ea9007ba07fc00000d", contact.getCompanyId());
         assertEquals("Java is very verbose, we met in college.", contact.getBackground());
-        assertTrue(contact.isStarred() != null && contact.isStarred());
+        assertTrue(contact.isStarred());
         assertEquals("559cd1866f6e656707000001", contact.getOwnerId());
         assertEquals("email_web", contact.getLeadSourceId());
         assertEquals("Prospect", contact.getStatus());
         assertEquals("559cd1a06f6e656707000006", contact.getStatusId());
-        assertTrue(contact.hasPendingDeal() != null && contact.hasPendingDeal());
+        assertTrue(contact.hasPendingDeal());
         assertEquals(20400d, contact.getTotalPending());
         assertNotNull("This field cannot be null.", contact.getAddress());
         assertNotNull("This field cannot be null.", contact.getPhones());

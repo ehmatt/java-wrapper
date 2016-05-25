@@ -215,11 +215,11 @@ public class ContactSerializer extends BaseSerializer {
         addJsonStringValue(contact.getStatus(), contactObject, STATUS_TAG);
         addJsonStringValue(contact.getStatusId(), contactObject, STATUS_ID_TAG);
         addJsonStringValue(contact.getLeadSourceId(), contactObject, LEAD_SOURCE_ID_TAG);
-        addJsonBooleanValue(contact.hasPendingDeal(), contactObject, PENDING_DEAL_TAG);
+        addJsonBooleanValue(contact.getHasPendingDeal(), contactObject, PENDING_DEAL_TAG);
         addJsonDoubleValue(contact.getTotalPending(), contactObject, TOTAL_PENDINGS_TAG);
         addJsonStringValue(contact.getOwnerId(), contactObject, OWNER_ID_TAG);
         addJsonStringValue(contact.getPhotoUrl(), contactObject, PHOTO_URL_TAG);
-        addJsonBooleanValue(contact.isStarred(), contactObject, STARRED_TAG);
+        addJsonBooleanValue(contact.getStarred(), contactObject, STARRED_TAG);
 
         // Serialize Custom Fields.
         try {

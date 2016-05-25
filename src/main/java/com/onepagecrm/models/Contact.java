@@ -11,7 +11,9 @@ import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class Contact extends ApiResource implements Serializable {
@@ -79,6 +81,18 @@ public class Contact extends ApiResource implements Serializable {
                 addContactIdToEndpoint(CONTACTS_ENDPOINT),
                 null,
                 ContactSerializer.toJsonObject(this)
+        );
+        Response response = request.send();
+        return ContactSerializer.fromString(response.getResponseBody());
+    }
+
+    public Contact partialUpdate(Contact updateValues) throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("partial", true);
+        Request request = new PutRequest(
+                addContactIdToEndpoint(CONTACTS_ENDPOINT),
+                Query.fromParams(params),
+                ContactSerializer.toJsonObject(updateValues)
         );
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
@@ -257,7 +271,11 @@ public class Contact extends ApiResource implements Serializable {
         return this;
     }
 
-    public Boolean isStarred() {
+    public Boolean getStarred() {
+        return starred;
+    }
+
+    public boolean isStarred() {
         return starred != null && starred;
     }
 
@@ -275,8 +293,12 @@ public class Contact extends ApiResource implements Serializable {
         return this;
     }
 
-    public Boolean hasPendingDeal() {
+    public boolean hasPendingDeal() {
         return hasPendingDeal != null && hasPendingDeal;
+    }
+
+    public Boolean getHasPendingDeal() {
+        return hasPendingDeal;
     }
 
     public Contact setHasPendingDeal(Boolean hasPendingDeal) {

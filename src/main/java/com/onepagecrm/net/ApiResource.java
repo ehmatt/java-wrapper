@@ -12,10 +12,13 @@ public abstract class ApiResource extends BaseResource implements Serializable {
     public static final String CONTACTS_ENDPOINT = "contacts";
     public static final String CALLS_ENDPOINT = "calls";
     public static final String CUSTOM_FIELDS_ENDPOINT = "custom_fields";
-    public static final String COUNTRIES_ENDPOINT = "countries"; // -> Countries class as doesn't inherit from here
-    public static final String TAGS_ENDPOINT = "tags"; // -> Countries class as doesn't inherit from here
+    public static final String COUNTRIES_ENDPOINT = "countries";
+    public static final String TAGS_ENDPOINT = "tags";
     public static final String DEALS_ENDPOINT = "deals";
     public static final String TEAM_STREAM_ENDPOINT = "team_stream";
+    public static final String ACTIONS_ENDPOINT = "actions";
+    public static final String PREDEFFINED_ACTIONS_ENDPOINT = "predefined_actions";
+    public static final String NOTES_ENDPOINT = "notes";
 
     public abstract String getId();
 

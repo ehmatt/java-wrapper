@@ -2,6 +2,7 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
+import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.internal.Sales;
 import com.onepagecrm.models.serializers.ContactListSerializer;
 import com.onepagecrm.models.serializers.DealListSerializer;
@@ -171,6 +172,22 @@ public class User extends ApiResource implements Serializable {
         Request request = new GetRequest(DEALS_ENDPOINT, query);
         Response response = request.send();
         return DealListSerializer.fromString(response.getResponseBody());
+    }
+
+    public ActionList actions(Paginator paginator) throws OnePageException {
+        return Action.list(this.id, paginator);
+    }
+
+    public ActionList actions() throws OnePageException {
+        return Action.list(this.id);
+    }
+
+    public PredefinedActionList actionsPredefined(Paginator paginator) throws OnePageException {
+        return Action.listPredefined(paginator);
+    }
+
+    public PredefinedActionList actionsPredefined() throws OnePageException {
+        return Action.listPredefined();
     }
 
     public User() {

@@ -74,8 +74,12 @@ public class BaseSerializer {
     public static final String CONTACT_ID_TAG = "contact_id";
     public static final String ASSIGNEE_ID_TAG = "assignee_id";
     public static final String DATE_TAG = "date";
+    public static final String DAYS_TAG = "days";
     public static final String ACTION_TAG = "action";
+    public static final String ACTIONS_TAG = "actions";
     public static final String DATE_COLOR_TAG = "date_color";
+    public static final String PREDEFINED_ACTION_TAG = "predefined_action";
+    public static final String PREDEFINED_ACTIONS_TAG = "predefined_actions";
 
     // CALL TAGS
     public static final String CALL_TAG = "call";
@@ -87,9 +91,6 @@ public class BaseSerializer {
     public static final String VIA_TAG = "via";
     public static final String AUTHOR_TAG = "author";
     public static final String ATTACHMENTS_TAG = "attachment";
-
-    //NOTE TAGS
-    public static final String NOTE_TAG = "note";
 
     // 201 RESPONSE TAGS
     public static final String STATUS_TAG = "status";
@@ -154,15 +155,10 @@ public class BaseSerializer {
     public static final String PHONE_PREFIX_TAG = "phone_prefix";
     public static final String CURRENCY_TAG = "currency";
     public static final String CURRENCY_SYMBOL_TAG = "currency_symbol";
-    public static final String DEAL_STAGES_TAG = "deal_stages";
 
-    // DEAL_STAGE_TAG
-    public static final String DEAL_STAGE_LABEL_TAG = "label";
-    public static final String DEAL_STAGE_STAGE_TAG = "stage";
-
-    // DEALS_TAG
-    public static final String DEALS_TAG = "deals";
+    // DEALS TAGS
     public static final String DEAL_TAG = "deal";
+    public static final String DEALS_TAG = "deals";
     public static final String AMOUNT_TAG = "amount";
     public static final String EXPECTED_CLOSE_DATE_TAG = "expected_close_date";
     public static final String MONTHS_TAG = "months";
@@ -171,6 +167,13 @@ public class BaseSerializer {
     public static final String HAS_RELATED_NOTES_TAG = "has_related_notes";
     public static final String CLOSE_DATE_TAG = "close_date";
     public static final String DEAL_ID_TAG = "deal_id";
+    public static final String DEAL_STAGE_TAG = "deal_stage";
+    public static final String DEAL_STAGES_TAG = "deal_stages";
+    public static final String LABEL_TAG = "label";
+
+    // NOTES
+    public static final String NOTE_TAG = "note";
+    public static final String NOTES_TAG = "notes";
 
     // FILTERS TAGS
     public static final String FILTER_TAG = "filter";

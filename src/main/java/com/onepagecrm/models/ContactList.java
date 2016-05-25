@@ -57,8 +57,9 @@ public class ContactList extends ResourceList<Contact> implements Serializable {
         return this;
     }
 
-    public ContactList() {
-        super(null);
+    public ContactList(List<Contact> contacts, int type) {
+        super(contacts);
+        this.type = type;
     }
 
     public ContactList(List<Contact> contacts) {
@@ -66,13 +67,11 @@ public class ContactList extends ResourceList<Contact> implements Serializable {
     }
 
     public ContactList(int type) {
-        super(null);
-        this.type = type;
+        this(null, type);
     }
 
-    public ContactList(List<Contact> contacts, int type) {
-        super(contacts);
-        this.type = type;
+    public ContactList() {
+        this(null);
     }
 
     public ContactList setType(int type) {
