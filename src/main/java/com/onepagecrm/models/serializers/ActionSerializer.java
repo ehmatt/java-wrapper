@@ -30,7 +30,7 @@ public class ActionSerializer extends BaseSerializer {
     }
 
 
-    public static List<Action> fromString(String responseBody) throws OnePageException {
+    public static List<Action> listFromString(String responseBody) throws OnePageException {
         String parsedResponse;
         OnePageException exception;
         try {

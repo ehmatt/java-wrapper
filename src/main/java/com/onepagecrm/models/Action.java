@@ -40,7 +40,7 @@ public class Action extends ApiResource implements Serializable {
         params.put("assignee_id", assigneeId);
         Request request = new GetRequest(ACTIONS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-        return new ActionList(ActionSerializer.fromString(response.getResponseBody()));
+        return new ActionList(ActionSerializer.listFromString(response.getResponseBody()));
     }
 
     public static ActionList list(String assigneeId, Paginator paginator) throws OnePageException {
@@ -48,7 +48,7 @@ public class Action extends ApiResource implements Serializable {
         params.put("assignee_id", assigneeId);
         Request request = new GetRequest(ACTIONS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-        return new ActionList(ActionSerializer.fromString(response.getResponseBody()));
+        return new ActionList(ActionSerializer.listFromString(response.getResponseBody()));
     }
 
     public static PredefinedActionList listPredefined() throws OnePageException {
