@@ -23,16 +23,16 @@ public class NoteSerializer extends BaseSerializer{
         try{
             JSONObject root = new JSONObject(pResponseBody);
             JSONObject data = root.optJSONObject(DATA_TAG);
-            JSONArray calls = data.optJSONArray(NOTES_TAG);
-            for (int i=0;i<calls.length();++i){
-                JSONObject obj = calls.optJSONObject(i);
+            JSONArray notes = data.optJSONArray(NOTES_TAG);
+            for (int i=0;i<notes.length();++i){
+                JSONObject obj = notes.optJSONObject(i);
                 Note lNote= objFromJson(obj);
                 if (lNote!=null) {
                     lNotes.add(lNote);
                 }
             }
         } catch (Exception e){
-            LOG.severe("Could not find call object tags");
+            LOG.severe("Could not find note object tags");
             LOG.severe(e.toString());
         }
         return lNotes;
@@ -45,7 +45,7 @@ public class NoteSerializer extends BaseSerializer{
             JSONObject data = responseObject.optJSONObject(DATA_TAG);
             note = objFromJson(data);
         } catch (JSONException e) {
-            LOG.severe("Could not find call object tags");
+            LOG.severe("Could not find note object tags");
             LOG.severe(e.toString());
         }
 
