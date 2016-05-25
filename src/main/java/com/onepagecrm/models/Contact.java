@@ -271,7 +271,11 @@ public class Contact extends ApiResource implements Serializable {
         return this;
     }
 
-    public Boolean isStarred() {
+    public Boolean getStarred() {
+        return starred;
+    }
+
+    public boolean isStarred() {
         return starred != null && starred;
     }
 
@@ -289,8 +293,12 @@ public class Contact extends ApiResource implements Serializable {
         return this;
     }
 
-    public Boolean hasPendingDeal() {
+    public boolean hasPendingDeal() {
         return hasPendingDeal != null && hasPendingDeal;
+    }
+
+    public Boolean getHasPendingDeal() {
+        return hasPendingDeal;
     }
 
     public Contact setHasPendingDeal(Boolean hasPendingDeal) {
