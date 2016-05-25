@@ -3,12 +3,17 @@ package com.onepagecrm.models;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.internal.PredefinedActionList;
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.serializers.ActionSerializer;
 import com.onepagecrm.models.serializers.DateSerializer;
 import com.onepagecrm.models.serializers.PredefinedActionSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.request.Request;
+import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.PostRequest;
+import com.onepagecrm.net.request.PutRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
@@ -18,7 +23,9 @@ import java.util.Map;
 public class Action extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -7486991046434989805L;
-
+    private static final String ACTIONS_ENDPOINT = "actions";
+    private static final String MARK_COMPLETE_ENDPOINT = "actions/{id}/mark_as_done";
+    private static final String UNDO_COMLETION_ENDPOINT = "actions/{id}/undo_completion";
     private String id;
     private String assigneeId;
     private String contactId;
@@ -33,7 +40,7 @@ public class Action extends ApiResource implements Serializable {
         params.put("assignee_id", assigneeId);
         Request request = new GetRequest(ACTIONS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-        return new ActionList(ActionSerializer.fromString(response.getResponseBody()));
+        return new ActionList(ActionSerializer.listFromString(response.getResponseBody()));
     }
 
     public static ActionList list(String assigneeId, Paginator paginator) throws OnePageException {
@@ -41,7 +48,7 @@ public class Action extends ApiResource implements Serializable {
         params.put("assignee_id", assigneeId);
         Request request = new GetRequest(ACTIONS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-        return new ActionList(ActionSerializer.fromString(response.getResponseBody()));
+        return new ActionList(ActionSerializer.listFromString(response.getResponseBody()));
     }
 
     public static PredefinedActionList listPredefined() throws OnePageException {
@@ -59,6 +66,36 @@ public class Action extends ApiResource implements Serializable {
     public Action() {
     }
 
+    private Action create() throws OnePageException {
+        Request request = new PostRequest("contacts/" + contactId + "/" + ACTIONS_ENDPOINT, null, ActionSerializer.toJsonObject(this));
+        Response response = request.send();
+        return ActionSerializer.fromString(response.getResponseBody());
+    }
+
+    private Action update() throws OnePageException {
+        Request request = new PutRequest(addActionIdToEndpoint(ACTIONS_ENDPOINT), null, ActionSerializer.toJsonObject(this));
+        Response response = request.send();
+        return ActionSerializer.fromString(response.getResponseBody());
+    }
+
+    public Action save() throws OnePageException {
+        return isValid() ? update() : create();
+    }
+
+    public Action markComplete() throws OnePageException {
+        String endpoint = MARK_COMPLETE_ENDPOINT.replace("{id}", this.getId());
+        Request request = new PutRequest(endpoint, null, ActionSerializer.toJsonObject(this));
+        Response response = request.send();
+        return ActionSerializer.fromString(response.getResponseBody());
+    }
+
+    public Action undoCompletion() throws OnePageException {
+        String endpoint = UNDO_COMLETION_ENDPOINT.replace("{id}", this.getId());
+        Request request = new PutRequest(endpoint, null, ActionSerializer.toJsonObject(this));
+        Response response = request.send();
+        return ActionSerializer.fromString(response.getResponseBody());
+    }
+
     @Override
     public String getId() {
         return this.id;
@@ -68,6 +105,10 @@ public class Action extends ApiResource implements Serializable {
     public Action setId(String id) {
         this.id = id;
         return this;
+    }
+
+    private String addActionIdToEndpoint(String endpoint) {
+        return endpoint + "/" + this.id;
     }
 
     @Override
