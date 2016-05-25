@@ -11,7 +11,9 @@ import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class Contact extends ApiResource implements Serializable {
@@ -79,6 +81,18 @@ public class Contact extends ApiResource implements Serializable {
                 addContactIdToEndpoint(CONTACTS_ENDPOINT),
                 null,
                 ContactSerializer.toJsonObject(this)
+        );
+        Response response = request.send();
+        return ContactSerializer.fromString(response.getResponseBody());
+    }
+
+    public Contact partialUpdate(Contact updateValues) throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("partial", true);
+        Request request = new PutRequest(
+                addContactIdToEndpoint(CONTACTS_ENDPOINT),
+                Query.fromParams(params),
+                ContactSerializer.toJsonObject(updateValues)
         );
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
