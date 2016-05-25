@@ -7,12 +7,27 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class ActionSerializer extends BaseSerializer {
-
     private static final Logger LOG = Logger.getLogger(ActionSerializer.class.getName());
+
+    public static Action fromString(String pResponseBody) {
+        Action action = new Action();
+        try {
+            JSONObject responseObject = new JSONObject(pResponseBody);
+            JSONObject data = responseObject.optJSONObject(DATA_TAG);
+            action = fromJsonObject(data);
+        } catch (JSONException e) {
+            LOG.severe("Could not find action object tags");
+            LOG.severe(e.toString());
+        }
+
+        return action;
+    }
+
 
     public static Action fromJsonObject(JSONObject actionObject) {
         Action action = new Action();
