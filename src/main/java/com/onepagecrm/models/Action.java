@@ -3,7 +3,6 @@ package com.onepagecrm.models;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.internal.PredefinedActionList;
-import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.serializers.ActionSerializer;
 import com.onepagecrm.models.serializers.DateSerializer;
 import com.onepagecrm.models.serializers.PredefinedActionSerializer;
@@ -11,10 +10,8 @@ import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.Request;
-import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.PutRequest;
-import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,9 +20,6 @@ import java.util.Map;
 public class Action extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -7486991046434989805L;
-    private static final String ACTIONS_ENDPOINT = "actions";
-    private static final String MARK_COMPLETE_ENDPOINT = "actions/{id}/mark_as_done";
-    private static final String UNDO_COMLETION_ENDPOINT = "actions/{id}/undo_completion";
     private String id;
     private String assigneeId;
     private String contactId;
@@ -67,7 +61,7 @@ public class Action extends ApiResource implements Serializable {
     }
 
     private Action create() throws OnePageException {
-        Request request = new PostRequest("contacts/" + contactId + "/" + ACTIONS_ENDPOINT, null, ActionSerializer.toJsonObject(this));
+        Request request = new PostRequest(ACTIONS_ENDPOINT, null, ActionSerializer.toJsonObject(this));
         Response response = request.send();
         return ActionSerializer.fromString(response.getResponseBody());
     }
@@ -90,7 +84,7 @@ public class Action extends ApiResource implements Serializable {
     }
 
     public Action undoCompletion() throws OnePageException {
-        String endpoint = UNDO_COMLETION_ENDPOINT.replace("{id}", this.getId());
+        String endpoint = UNDO_COMPLETION_ENDPOINT.replace("{id}", this.getId());
         Request request = new PutRequest(endpoint, null, ActionSerializer.toJsonObject(this));
         Response response = request.send();
         return ActionSerializer.fromString(response.getResponseBody());
