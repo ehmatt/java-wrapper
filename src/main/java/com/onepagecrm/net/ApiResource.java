@@ -10,6 +10,7 @@ public abstract class ApiResource extends BaseResource implements Serializable {
 
     public static final String ACTION_STREAM_ENDPOINT = "action_stream";
     public static final String CONTACTS_ENDPOINT = "contacts";
+    public static final String CLOSE_SALES_CYCLE_ENDPOINT = "contacts/{id}/close_sales_cycle.format";
     public static final String CALLS_ENDPOINT = "calls";
     public static final String CUSTOM_FIELDS_ENDPOINT = "custom_fields";
     public static final String COUNTRIES_ENDPOINT = "countries";
@@ -17,6 +18,8 @@ public abstract class ApiResource extends BaseResource implements Serializable {
     public static final String DEALS_ENDPOINT = "deals";
     public static final String TEAM_STREAM_ENDPOINT = "team_stream";
     public static final String ACTIONS_ENDPOINT = "actions";
+    public static final String MARK_COMPLETE_ENDPOINT = "actions/{id}/mark_as_done";
+    public static final String UNDO_COMPLETION_ENDPOINT = "actions/{id}/undo_completion";
     public static final String PREDEFFINED_ACTIONS_ENDPOINT = "predefined_actions";
     public static final String NOTES_ENDPOINT = "notes";
 

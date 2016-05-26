@@ -20,7 +20,8 @@ public class ActionSerializer extends BaseSerializer {
         try {
             JSONObject responseObject = new JSONObject(pResponseBody);
             JSONObject data = responseObject.optJSONObject(DATA_TAG);
-            action = fromJsonObject(data);
+            JSONObject actionObj = data.optJSONObject(ACTION_TAG);
+            action = fromJsonObject(actionObj);
         } catch (JSONException e) {
             LOG.severe("Could not find action object tags");
             LOG.severe(e.toString());

@@ -1,6 +1,8 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.internal.CloseSalesCycle;
+import com.onepagecrm.models.serializers.CloseSalesCycleSerializer;
 import com.onepagecrm.models.serializers.ContactPhotoSerializer;
 import com.onepagecrm.models.serializers.ContactSerializer;
 import com.onepagecrm.net.ApiResource;
@@ -110,6 +112,11 @@ public class Contact extends ApiResource implements Serializable {
             this.photoUrl = photoContact.photoUrl;
         }
         return this;
+    }
+
+    public void closeSalesCycle(CloseSalesCycle closeSalesCycle) {
+        Request request = new PutRequest(CLOSE_SALES_CYCLE_ENDPOINT.replace("{id}", this.getId()), null,
+                CloseSalesCycleSerializer.toJsonObject(closeSalesCycle));
     }
 
     private String addContactIdToEndpoint(String endpoint) {
