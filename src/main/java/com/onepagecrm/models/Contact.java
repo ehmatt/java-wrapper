@@ -117,6 +117,7 @@ public class Contact extends ApiResource implements Serializable {
     public void closeSalesCycle(CloseSalesCycle closeSalesCycle) {
         Request request = new PutRequest(CLOSE_SALES_CYCLE_ENDPOINT.replace("{id}", this.getId()), null,
                 CloseSalesCycleSerializer.toJsonObject(closeSalesCycle));
+        Response response = request.send();
     }
 
     private String addContactIdToEndpoint(String endpoint) {
