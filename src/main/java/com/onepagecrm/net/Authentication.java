@@ -84,6 +84,10 @@ public class Authentication {
      * @return
      */
     private String calculateSignature() {
+        if (OnePageCRM.DEBUG) {
+            LOG.info("*************************************");
+            LOG.info("--- AUTHENTICATION ---");
+        }
         byte[] decodedApiKey = new byte[0];
         try {
             decodedApiKey = Base64.decodeBase64(apiKey.getBytes("UTF-8"));
@@ -93,8 +97,8 @@ public class Authentication {
         }
         String urlHash = convertStringToSha1Hash(url);
         if (OnePageCRM.DEBUG) {
-            LOG.info("URL=\'" + url + "\'");
-            LOG.info("hash(URL)=\'" + urlHash + "\'");
+            LOG.info("URL=" + url);
+            LOG.info("hash(URL)=" + urlHash);
         }
         String signature = userId + "." + timestamp + "." + type.toUpperCase() + "." + urlHash;
         if (type.equals("POST") || type.equals("PUT")) {
@@ -102,13 +106,13 @@ public class Authentication {
                 String bodyHash = convertStringToSha1Hash(body);
                 signature += "." + bodyHash;
                 if (OnePageCRM.DEBUG) {
-                    LOG.info("BODY=\'" + body + "\'");
-                    LOG.info("hash(BODY)=\'" + bodyHash + "\'");
+                    LOG.info("BODY=" + body);
+                    LOG.info("hash(BODY)=" + bodyHash);
                 }
             }
         }
         if (OnePageCRM.DEBUG) {
-            LOG.info("Signature=\'" + signature + "\'");
+            LOG.info("Signature=" + signature);
         }
         return makeHMACSHA256Signature(decodedApiKey, signature);
     }
@@ -159,7 +163,7 @@ public class Authentication {
         }
         String sha256Hash = new String(Hex.encodeHex(mac.doFinal(signatureBuffer)));
         if (OnePageCRM.DEBUG) {
-            LOG.info("hash(Signature)=\'" + sha256Hash + "\'");
+            LOG.info("hash(Signature)=" + sha256Hash);
         }
         return sha256Hash;
     }
