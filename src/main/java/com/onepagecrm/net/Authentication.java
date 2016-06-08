@@ -1,20 +1,19 @@
 package com.onepagecrm.net;
 
+import com.onepagecrm.OnePageCRM;
+import com.onepagecrm.models.User;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
+
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
-
-import javax.crypto.Mac;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
-
-import com.onepagecrm.models.User;
 
 public class Authentication {
 
@@ -85,23 +84,33 @@ public class Authentication {
      * @return
      */
     private String calculateSignature() {
-        byte[] decodedApikey = new byte[0];
+        byte[] decodedApiKey = new byte[0];
         try {
-            decodedApikey = Base64.decodeBase64(apiKey.getBytes("UTF-8"));
+            decodedApiKey = Base64.decodeBase64(apiKey.getBytes("UTF-8"));
         } catch (IOException e) {
             LOG.severe("Error decoding the ApiKey");
             LOG.severe(e.toString());
         }
         String urlHash = convertStringToSha1Hash(url);
-//        LOG.info("url=\'" + url + "\' hash=\'" + urlHash + "\'");
+        if (OnePageCRM.DEBUG) {
+            LOG.info("URL=\'" + url + "\'");
+            LOG.info("hash(URL)=\'" + urlHash + "\'");
+        }
         String signature = userId + "." + timestamp + "." + type.toUpperCase() + "." + urlHash;
         if (type.equals("POST") || type.equals("PUT")) {
             if (body != null) {
-                signature += "." + convertStringToSha1Hash(body);
+                String bodyHash = convertStringToSha1Hash(body);
+                signature += "." + bodyHash;
+                if (OnePageCRM.DEBUG) {
+                    LOG.info("BODY=\'" + body + "\'");
+                    LOG.info("hash(BODY)=\'" + bodyHash + "\'");
+                }
             }
         }
-//        LOG.info("signature=\'" + signature + "\'");
-        return makeHMACSHA256Signature(decodedApikey, signature);
+        if (OnePageCRM.DEBUG) {
+            LOG.info("Signature=\'" + signature + "\'");
+        }
+        return makeHMACSHA256Signature(decodedApiKey, signature);
     }
 
     /**
@@ -110,6 +119,7 @@ public class Authentication {
      * @param url
      * @return
      */
+    @SuppressWarnings("ConstantConditions")
     private String convertStringToSha1Hash(String url) {
         MessageDigest encoder = null;
         try {
@@ -121,8 +131,7 @@ public class Authentication {
         byte[] urlBuffer = url.getBytes(Charset.forName("UTF-8"));
         encoder.reset();
         encoder.update(urlBuffer);
-        String sha1Hash = new String(Hex.encodeHex(encoder.digest()));
-        return sha1Hash;
+        return new String(Hex.encodeHex(encoder.digest()));
     }
 
     /**
@@ -149,6 +158,9 @@ public class Authentication {
             LOG.severe(e.toString());
         }
         String sha256Hash = new String(Hex.encodeHex(mac.doFinal(signatureBuffer)));
+        if (OnePageCRM.DEBUG) {
+            LOG.info("hash(Signature)=\'" + sha256Hash + "\'");
+        }
         return sha256Hash;
     }
 
