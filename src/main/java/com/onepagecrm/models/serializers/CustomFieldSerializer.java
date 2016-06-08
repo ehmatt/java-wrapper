@@ -45,16 +45,6 @@ public class CustomFieldSerializer extends BaseSerializer {
             }
         }
         return customFields;
-//        // Re-sort the custom fields by their "position" field.
-//        List<CustomField> orderedCustomFields = new ArrayList<>();
-//        for (int i = 0; i < customFields.size(); i++) {
-//            for (int j = 0; j < customFields.size(); j++) {
-//                if (customFields.get(j).getPosition() == i) {
-//                    orderedCustomFields.add(i, customFields.get(j));
-//                }
-//            }
-//        }
-//        return orderedCustomFields;
     }
 
     public static CustomField fromJsonObject(JSONObject outerObject) {
@@ -64,18 +54,14 @@ public class CustomFieldSerializer extends BaseSerializer {
                 customField.setValue(CustomFieldValueSerializer.fromJsonObject(outerObject));
             }
             JSONObject customFieldObject = outerObject.getJSONObject(CUSTOM_FIELD_TAG);
-            String id = customFieldObject.getString(ID_TAG);
 
-            JSONArray choicesArray = customFieldObject.getJSONArray(CHOICES_TAG);
-            List<String> choices = toListOfStrings(choicesArray);
-
-            if (!choices.isEmpty()) {
-                customField.setChoices(choices);
+            if (customFieldObject.has(CHOICES_TAG)) {
+                JSONArray choicesArray = customFieldObject.getJSONArray(CHOICES_TAG);
+                List<String> choices = toListOfStrings(choicesArray);
+                if (!choices.isEmpty()) {
+                    customField.setChoices(choices);
+                }
             }
-
-            String name = customFieldObject.getString(NAME_TAG);
-            int position = customFieldObject.getInt(POSITION_TAG);
-            String type = customFieldObject.getString(TYPE_TAG);
 
             if (customFieldObject.has(REMINDER_DAYS_TAG)) {
                 if (!customFieldObject.isNull(REMINDER_DAYS_TAG)) {
@@ -88,10 +74,10 @@ public class CustomFieldSerializer extends BaseSerializer {
                 }
             }
 
-            customField.setId(id)
-                    .setName(name)
-                    .setPosition(position)
-                    .setType(type);
+            customField.setId(customFieldObject.optString(ID_TAG))
+                    .setName(customFieldObject.optString(NAME_TAG))
+                    .setPosition(customFieldObject.optInt(POSITION_TAG))
+                    .setType(customFieldObject.optString(TYPE_TAG));
 
         } catch (JSONException e) {
             LOG.severe("Error parsing CustomField from JsonObject");

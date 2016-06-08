@@ -41,7 +41,7 @@ public class CustomFieldsDriver {
             }
         }
 
-        Request.SERVER = Request.DEV_SERVER;
+        Request.SERVER = Request.DEIMOS_SERVER;
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
