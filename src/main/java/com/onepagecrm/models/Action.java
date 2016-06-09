@@ -2,6 +2,7 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
+import com.onepagecrm.models.internal.PredefinedAction;
 import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.serializers.ActionSerializer;
 import com.onepagecrm.models.serializers.DateSerializer;
@@ -9,11 +10,12 @@ import com.onepagecrm.models.serializers.PredefinedActionSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
-import com.onepagecrm.net.request.Request;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.PutRequest;
+import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -58,6 +60,17 @@ public class Action extends ApiResource implements Serializable {
     }
 
     public Action() {
+
+    }
+
+    public Action promotePredefined(PredefinedAction predefined) {
+        this.setText(predefined.getText());
+        // Add the extra days to the date of the action.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(this.date == null ? new Date() : this.date);
+        calendar.add(Calendar.DATE, predefined.getDays());
+        this.setDate(calendar.getTime());
+        return this;
     }
 
     private Action create() throws OnePageException {
