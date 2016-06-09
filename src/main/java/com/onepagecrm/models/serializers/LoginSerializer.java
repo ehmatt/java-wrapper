@@ -3,6 +3,8 @@ package com.onepagecrm.models.serializers;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.*;
 import com.onepagecrm.models.internal.ContactsCount;
+import com.onepagecrm.models.internal.PredefinedAction;
+import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.internal.Settings;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +30,7 @@ public class LoginSerializer extends BaseSerializer {
             addFiltersToAccount(responseBody);
             addContactsCountToAccount(responseBody);
             addSettingsToAccount(responseBody);
+            addPredefinedActionsToAccount(responseBody);
             return Account.loggedInUser;
 
         } catch (ClassCastException e) {
@@ -157,5 +160,24 @@ public class LoginSerializer extends BaseSerializer {
     private static void addContactsCount(JSONObject contactsCountObject) throws JSONException {
         ContactsCount contactsCounts = ContactsCountSerializer.fromJsonObject(contactsCountObject);
         Account.loggedInUser.getAccount().setContactsCount(contactsCounts);
+    }
+
+    private static void addPredefinedActionsToAccount(String responseBody) {
+        JSONObject responseObject;
+        try {
+            responseObject = new JSONObject(responseBody);
+            JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+            if (dataObject.has(PREDEFINED_ACTIONS_TAG)) {
+                addPredefinedActions(dataObject.getJSONArray(PREDEFINED_ACTIONS_TAG));
+            }
+        } catch (JSONException e) {
+            LOG.severe("Error parsing PredefinedActions array");
+            LOG.severe(e.toString());
+        }
+    }
+
+    private static void addPredefinedActions(JSONArray predefinedActionsArray) throws JSONException {
+        List<PredefinedAction> predefinedAction = PredefinedActionSerializer.fromJsonArray(predefinedActionsArray);
+        Account.loggedInUser.getAccount().setPredefinedActions(new PredefinedActionList(predefinedAction));
     }
 }

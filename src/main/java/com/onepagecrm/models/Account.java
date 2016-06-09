@@ -1,6 +1,7 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.models.internal.ContactsCount;
+import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.internal.Settings;
 import com.onepagecrm.models.internal.TeamStream;
 
@@ -23,6 +24,9 @@ public class Account implements Serializable {
 
     public TeamStream teamStream;
     public ContactsCount contactsCount;
+
+    public PredefinedActionList predefinedActions;
+
 
     // public static User switchUser(login, password) {
 
@@ -134,6 +138,15 @@ public class Account implements Serializable {
 
     public Account setContactsCount(ContactsCount contactsCount) {
         this.contactsCount = contactsCount;
+        return this;
+    }
+
+    public PredefinedActionList getPredefinedActions() {
+        return predefinedActions;
+    }
+
+    public Account setPredefinedActions(PredefinedActionList predefinedActions) {
+        this.predefinedActions = predefinedActions;
         return this;
     }
 }
