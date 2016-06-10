@@ -160,10 +160,10 @@ public class User extends ApiResource implements Serializable {
         return DealListSerializer.fromString(response.getResponseBody());
     }
 
-    public ContactList pipeline(Map<String, Object> params) throws OnePageException {
+    public DealList pipeline(Map<String, Object> params) throws OnePageException {
         Request request = new GetRequest(DEALS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-        return ContactListSerializer.fromString(response.getResponseBody());
+        return DealListSerializer.fromString(response.getResponseBody());
     }
 
     @SuppressWarnings("unchecked")
