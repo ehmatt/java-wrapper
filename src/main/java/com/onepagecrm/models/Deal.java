@@ -71,6 +71,11 @@ public class Deal extends ApiResource implements Serializable {
 //        return DealSerializer.fromStringDelete(response.getResponseBody());
     }
 
+    public void notes() throws OnePageException {
+        Request request = new GetRequest(addDealIdToEndpoint(DEALS_ENDPOINT), "?fields=notes(text,author)");
+        Response response = request.send();
+    }
+
     private String addDealIdToEndpoint(String endpoint) {
         return endpoint + "/" + this.id;
     }
