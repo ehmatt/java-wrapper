@@ -2,13 +2,12 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.*;
+import com.onepagecrm.models.internal.SalesCycleClosure;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class ContactSerializer extends BaseSerializer {
@@ -73,8 +72,19 @@ public class ContactSerializer extends BaseSerializer {
             if (contactObject.has(PHOTO_URL_TAG)) {
                 contact.setPhotoUrl(contactObject.getString(PHOTO_URL_TAG));
             }
-            if (contactObject.has(SALES_CLOSED_FOR_TAG)) {
-                // TODO : sales closed for ...
+            if (contactObject.has(CLOSED_SALES_TAG)) {
+                JSONArray closedArray = contactObject.getJSONArray(CLOSED_SALES_TAG);
+                Map<String, SalesCycleClosure> closedCycles = new HashMap<>();
+                for (int i = 0; i < closedArray.length(); i++) {
+                    JSONObject closedObject = closedArray.getJSONObject(i);
+                    String userId = closedObject.getString(USER_ID_TAG);
+                    Integer closedAtInt = closedObject.getInt(CLOSED_AT_TAG);
+                    closedCycles.put(userId, new SalesCycleClosure()
+                            .setUserId(userId)
+                            .setClosedAt(DateSerializer.fromTimestamp(String.valueOf(closedAtInt)))
+                            .setComment(closedObject.optString(COMMENT_TAG)));
+                }
+                contact.setSalesClosedFor(closedCycles.size() == 0 ? null : closedCycles);
             }
             if (contactObject.has(STARRED_TAG)) {
                 contact.setStarred(contactObject.getBoolean(STARRED_TAG));

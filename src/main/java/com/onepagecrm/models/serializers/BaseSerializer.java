@@ -82,6 +82,10 @@ public class BaseSerializer {
     public static final String PREDEFINED_ACTION_TAG = "predefined_action";
     public static final String PREDEFINED_ACTIONS_TAG = "predefined_actions";
 
+    public static final String CLOSED_SALES_TAG = "closed_sales";
+    public static final String CLOSED_AT_TAG = "closed_at";
+    public static final String COMMENT_TAG = "comment";
+
     // CALL TAGS
     public static final String CALL_TAG = "call";
     public static final String CALLS_TAG = "calls";
