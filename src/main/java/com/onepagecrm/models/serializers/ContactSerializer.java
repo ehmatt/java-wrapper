@@ -80,6 +80,7 @@ public class ContactSerializer extends BaseSerializer {
                     String userId = closedObject.getString(USER_ID_TAG);
                     Integer closedAtInt = closedObject.getInt(CLOSED_AT_TAG);
                     closedCycles.put(userId, new SalesCycleClosure()
+                            .setContactId(contact.getId())
                             .setUserId(userId)
                             .setClosedAt(DateSerializer.fromTimestamp(String.valueOf(closedAtInt)))
                             .setComment(closedObject.optString(COMMENT_TAG)));

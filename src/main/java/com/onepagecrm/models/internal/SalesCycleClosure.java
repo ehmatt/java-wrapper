@@ -8,12 +8,22 @@ import java.util.Date;
  */
 public class SalesCycleClosure implements Serializable {
 
+    private String contactId;
     private String userId;
     private Date closedAt;
     private String comment;
 
     public SalesCycleClosure() {
 
+    }
+
+    public String getContactId() {
+        return contactId;
+    }
+
+    public SalesCycleClosure setContactId(String contactId) {
+        this.contactId = contactId;
+        return this;
     }
 
     public String getUserId() {
