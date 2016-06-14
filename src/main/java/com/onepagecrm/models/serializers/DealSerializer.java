@@ -119,12 +119,12 @@ public class DealSerializer extends BaseSerializer {
                 CREATED_AT_TAG
         );
         addJsonStringValue(
-                DateSerializer.toFormattedDateTimeString(deal.getDate()),
+                DateSerializer.toFormattedDateString(deal.getDate()),
                 dealObject,
                 DATE_TAG
         );
         addJsonStringValue(
-                DateSerializer.toFormattedDateTimeString(deal.getExpectedCloseDate()),
+                DateSerializer.toFormattedDateString(deal.getExpectedCloseDate()),
                 dealObject,
                 EXPECTED_CLOSE_DATE_TAG
         );
