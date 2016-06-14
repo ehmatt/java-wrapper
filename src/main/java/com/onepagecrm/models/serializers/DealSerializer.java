@@ -22,7 +22,6 @@ public class DealSerializer extends BaseSerializer {
         try {
             JSONObject responseObject = new JSONObject(responseBody);
             JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
-
             deal = fromJsonObject(dataObject);
 
         } catch (JSONException e) {
