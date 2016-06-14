@@ -2,6 +2,7 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.CloseSalesCycle;
+import com.onepagecrm.models.internal.SalesCycleClosure;
 import com.onepagecrm.models.serializers.CloseSalesCycleSerializer;
 import com.onepagecrm.models.serializers.ContactPhotoSerializer;
 import com.onepagecrm.models.serializers.ContactSerializer;
@@ -50,7 +51,7 @@ public class Contact extends ApiResource implements Serializable {
     private String companyName;
     private String companyId;
 
-    // "sale_closed_for": [ ]
+    private Map<String, SalesCycleClosure> salesClosedFor;
 
     private List<Tag> tags;
     private List<CustomField> customFields;
@@ -347,6 +348,15 @@ public class Contact extends ApiResource implements Serializable {
 
     public Contact setCompanyId(String companyId) {
         this.companyId = companyId;
+        return this;
+    }
+
+    public Map<String, SalesCycleClosure> getSalesClosedFor() {
+        return salesClosedFor;
+    }
+
+    public Contact setSalesClosedFor(Map<String, SalesCycleClosure> salesClosedFor) {
+        this.salesClosedFor = salesClosedFor;
         return this;
     }
 
