@@ -74,6 +74,7 @@ public class Call extends ApiResource implements Serializable {
     }
 
     public Call() {
+
     }
 
     @Override

@@ -74,7 +74,7 @@ public class Note extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return null;
+        return NoteSerializer.toJsonObject(this);
     }
 
     public Note setAuthor(String author) {

@@ -12,30 +12,32 @@ import java.util.logging.Logger;
 /**
  * Created by alex on 4/25/16.
  */
-public class NoteSerializer extends BaseSerializer{
+public class NoteSerializer extends BaseSerializer {
+
+    private static final Logger LOG = Logger.getLogger(NoteSerializer.class.getName());
+
     private static final String NOTES_TAG = "notes";
     private static final String NOTE_TAG = "note";
     public static final String LINKED_DEAL_ID_TAG = "linked_deal_id";
-    private static final Logger LOG = Logger.getLogger(NoteSerializer.class.getName());
 
     public static List<Note> fromJsonString(String pResponseBody) {
-        List<Note> lNotes = new LinkedList<>();
-        try{
+        List<Note> notes = new LinkedList<>();
+        try {
             JSONObject root = new JSONObject(pResponseBody);
             JSONObject data = root.optJSONObject(DATA_TAG);
-            JSONArray notes = data.optJSONArray(NOTES_TAG);
-            for (int i=0;i<notes.length();++i){
-                JSONObject obj = notes.optJSONObject(i);
-                Note lNote= objFromJson(obj);
-                if (lNote!=null) {
-                    lNotes.add(lNote);
+            JSONArray notesArray = data.optJSONArray(NOTES_TAG);
+            for (int i = 0; i < notesArray.length(); ++i) {
+                JSONObject obj = notesArray.optJSONObject(i);
+                Note note = objFromJson(obj);
+                if (note != null) {
+                    notes.add(note);
                 }
             }
-        } catch (Exception e){
-            LOG.severe("Could not find note object tags");
+        } catch (Exception e) {
+            LOG.severe("Could not find Note object tags");
             LOG.severe(e.toString());
         }
-        return lNotes;
+        return notes;
     }
 
     public static Note fromString(String pResponseBody) {
@@ -56,15 +58,35 @@ public class NoteSerializer extends BaseSerializer{
         JSONObject lJSONObject = pObj.optJSONObject(NOTE_TAG);
         if (lJSONObject == null)
             return null;
+        return fromJsonObject(lJSONObject);
+    }
+
+    public static List<Note> fromJsonArray(JSONArray notesArray) {
+        List<Note> notes = new LinkedList<>();
+        for (int i = 0; i < notesArray.length(); ++i) {
+            JSONObject obj = notesArray.optJSONObject(i);
+            Note note = fromJsonObject(obj);
+            if (note != null) {
+                notes.add(note);
+            }
+        }
+        return notes;
+    }
+
+    public static Note fromJsonObject(JSONObject noteObject) {
+        // Fix for some objects not having name.
+        if (noteObject.has(NOTE_TAG)) {
+            noteObject = noteObject.optJSONObject(NOTE_TAG);
+        }
         Note lNote = new Note();
-        lNote.setId(lJSONObject.optString(ID_TAG));
-        lNote.setAuthor(lJSONObject.optString(AUTHOR_TAG));
-        lNote.setText(lJSONObject.optString(TEXT_TAG));
-        lNote.setContactId(lJSONObject.optString(CONTACT_ID_TAG));
-        lNote.setCreatedAt(DateSerializer.fromFormattedString(lJSONObject.optString(CREATED_AT_TAG)));
-        lNote.setDate(DateSerializer.fromFormattedString(lJSONObject.optString(DATE_TAG)));
-        if (!lJSONObject.isNull(LINKED_DEAL_ID_TAG)) {
-            lNote.setLinkedDealId(lJSONObject.optString(LINKED_DEAL_ID_TAG));
+        lNote.setId(noteObject.optString(ID_TAG));
+        lNote.setAuthor(noteObject.optString(AUTHOR_TAG));
+        lNote.setText(noteObject.optString(TEXT_TAG));
+        lNote.setContactId(noteObject.optString(CONTACT_ID_TAG));
+        lNote.setCreatedAt(DateSerializer.fromFormattedString(noteObject.optString(CREATED_AT_TAG)));
+        lNote.setDate(DateSerializer.fromFormattedString(noteObject.optString(DATE_TAG)));
+        if (!noteObject.isNull(LINKED_DEAL_ID_TAG)) {
+            lNote.setLinkedDealId(noteObject.optString(LINKED_DEAL_ID_TAG));
         }
         return lNote;
     }

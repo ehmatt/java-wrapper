@@ -22,6 +22,13 @@ import java.util.Map;
 public class Action extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -7486991046434989805L;
+
+    public static final String STATUS_ASAP = "asap";
+    public static final String STATUS_DATE = "date";
+    public static final String STATUS_DATE_TIME = "date_time";
+    public static final String STATUS_WAITING = "waiting";
+    public static final String STATUS_QUEUED = "queued";
+
     private String id;
     private String assigneeId;
     private String contactId;
@@ -30,6 +37,7 @@ public class Action extends ApiResource implements Serializable {
     private Date modifiedAt;
     private String status;
     private Date date;
+    private Date exactTime;
     private int dateColor;
 
     public static ActionList list(String assigneeId) throws OnePageException {
@@ -184,6 +192,15 @@ public class Action extends ApiResource implements Serializable {
 
     public Action setDate(Date date) {
         this.date = date;
+        return this;
+    }
+
+    public Date getExactTime() {
+        return exactTime;
+    }
+
+    public Action setExactTime(Date exactTime) {
+        this.exactTime = exactTime;
         return this;
     }
 
