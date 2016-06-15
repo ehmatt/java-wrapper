@@ -31,6 +31,7 @@ public class ContactSerializer extends BaseSerializer {
 
     public static Contact fromJsonObject(JSONObject contactsElementObject) {
         Contact contact = new Contact();
+        List<Action> actions = new LinkedList<>();
         try {
             JSONObject contactObject = contactsElementObject.getJSONObject(CONTACT_TAG);
             if (contactObject.has(ID_TAG)) {
@@ -110,8 +111,8 @@ public class ContactSerializer extends BaseSerializer {
             if (contactObject.has(TAGS_TAG)) {
                 List<String> tagNames = BaseSerializer.toListOfStrings(contactObject.getJSONArray(TAGS_TAG));
                 List<Tag> tags = new ArrayList<>();
-                for (int i = 0; i < tagNames.size(); i++) {
-                    tags.add(new Tag().setName(tagNames.get(i)));
+                for (String tagName : tagNames) {
+                    tags.add(new Tag().setName(tagName));
                 }
                 if (!tags.isEmpty()) contact.setTags(tags);
             }
@@ -145,16 +146,25 @@ public class ContactSerializer extends BaseSerializer {
                 Address address = AddressSerializer.fromJsonArray(addressArray);
                 contact.setAddress(address);
             }
+            // Next Actions.
             if (contactsElementObject.has(NEXT_ACTIONS_TAG)) {
-                JSONArray actionsArray = contactsElementObject.getJSONArray(NEXT_ACTIONS_TAG);
-                List<Action> actions = ActionSerializer.fromJsonArray(actionsArray);
-                contact.setActions(actions);
+                JSONArray nextActionsArray = contactsElementObject.getJSONArray(NEXT_ACTIONS_TAG);
+                List<Action> nextActions = ActionSerializer.fromJsonArray(nextActionsArray);
+                actions.addAll(nextActions);
             }
+            // Next Action.
             if (contactsElementObject.has(NEXT_ACTION_TAG)) {
                 JSONObject nextActionObject = contactsElementObject.getJSONObject(NEXT_ACTION_TAG);
                 Action nextAction = ActionSerializer.fromJsonObject(nextActionObject);
                 contact.setNextAction(nextAction);
             }
+            // Queued Actions.
+            if (contactsElementObject.has(QUEUED_ACTIONS_TAG)) {
+                JSONArray queuedActionsArray = contactsElementObject.getJSONArray(QUEUED_ACTIONS_TAG);
+                List<Action> queuedActions = ActionSerializer.fromJsonArray(queuedActionsArray);
+                actions.addAll(queuedActions);
+            }
+            contact.setActions(actions);
 
             return contact;
 

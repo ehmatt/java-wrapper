@@ -13,6 +13,18 @@ public class Utilities {
         return toBeChecked != null && !toBeChecked.equals("");
     }
 
+    public static String capitalize(String pInput) {
+        if (notNullOrEmpty(pInput))
+            return Character.toString(pInput.charAt(0)).toUpperCase() + pInput.substring(1);
+        return null;
+    }
+
+    public static String capitalizeFully(String pInput) {
+        if (notNullOrEmpty(pInput))
+            return capitalize(pInput.toLowerCase());
+        return null;
+    }
+
     /**
      * Get the String file contents at a given path.
      *

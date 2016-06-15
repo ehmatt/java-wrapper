@@ -65,6 +65,11 @@ public class ActionSerializer extends BaseSerializer {
             if (actionObject.has(ASSIGNEE_ID_TAG)) {
                 action.setAssigneeId(actionObject.getString(ASSIGNEE_ID_TAG));
             }
+            if (actionObject.has(CREATED_AT_TAG)) {
+                String createdAtStr = actionObject.getString(CREATED_AT_TAG);
+                Date createdAt = DateSerializer.fromFormattedString(createdAtStr);
+                action.setCreatedAt(createdAt);
+            }
             if (actionObject.has(MODIFIED_AT_TAG)) {
                 String modifiedAtStr = actionObject.getString(MODIFIED_AT_TAG);
                 Date modifiedAt = DateSerializer.fromFormattedString(modifiedAtStr);
@@ -87,7 +92,7 @@ public class ActionSerializer extends BaseSerializer {
             return action;
 
         } catch (JSONException e) {
-            LOG.severe("Error parsing contact object");
+            LOG.severe("Error parsing Action object");
             LOG.severe(e.toString());
         }
         return new Action();
@@ -99,7 +104,7 @@ public class ActionSerializer extends BaseSerializer {
             try {
                 actions.add(fromJsonObject(actionsArray.getJSONObject(i)));
             } catch (JSONException e) {
-                LOG.severe("Error parsing contact object");
+                LOG.severe("Error parsing Action array");
                 LOG.severe(e.toString());
             }
         }
@@ -113,6 +118,11 @@ public class ActionSerializer extends BaseSerializer {
             addJsonStringValue(action.getContactId(), actionObject, CONTACT_ID_TAG);
             addJsonStringValue(action.getText(), actionObject, TEXT_TAG);
             addJsonStringValue(action.getAssigneeId(), actionObject, ASSIGNEE_ID_TAG);
+            addJsonStringValue(
+                    DateSerializer.toFormattedDateTimeString(action.getCreatedAt()),
+                    actionObject,
+                    CREATED_AT_TAG
+            );
             addJsonStringValue(
                     DateSerializer.toFormattedDateTimeString(action.getModifiedAt()),
                     actionObject,
