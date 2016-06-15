@@ -4,9 +4,6 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
-import com.onepagecrm.models.serializers.ContactListSerializer;
-import com.onepagecrm.net.Response;
-import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.Request;
 import org.json.JSONException;
 
@@ -15,8 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
-
-import static com.onepagecrm.net.ApiResource.ACTION_STREAM_ENDPOINT;
 
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 03/12/2015.
@@ -63,9 +58,11 @@ public class ContactsWithDealsNotesCallsDriver {
 
         // The above did not work since params are URL encoded, changing the , ( ) characters.
 
-        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, "?fields=all,deals(all),notes(all),calls(all)");
-        Response response = request.send();
-        ContactList stream = ContactListSerializer.fromString(response.getResponseBody());
+//        Request request = new GetRequest(ACTION_STREAM_ENDPOINT, "?fields=all,deals(all),notes(all),calls(all)");
+//        Response response = request.send();
+//        ContactList stream = ContactListSerializer.fromString(response.getResponseBody());
+
+        ContactList stream = loggedInUser.actionStream();
 
         for (Contact contact : stream) {
             LOG.info("*** " + contact.getSimpleName() + " *** " +
