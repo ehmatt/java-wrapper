@@ -2,7 +2,6 @@ package com.onepagecrm.samples;
 
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Account;
 import com.onepagecrm.models.User;
 import com.onepagecrm.net.request.Request;
 

@@ -26,6 +26,7 @@ public class Action extends ApiResource implements Serializable {
     private String assigneeId;
     private String contactId;
     private String text;
+    private Date createdAt;
     private Date modifiedAt;
     private String status;
     private Date date;
@@ -147,6 +148,15 @@ public class Action extends ApiResource implements Serializable {
 
     public Action setText(String text) {
         this.text = text;
+        return this;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Action setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 

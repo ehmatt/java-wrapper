@@ -150,6 +150,17 @@ public class Contact extends ApiResource implements Serializable {
         return ContactSerializer.toJsonObject(this);
     }
 
+    public String getSimpleName() {
+        if (lastName != null && !lastName.equals("")) {
+            if (firstName != null && !firstName.equals("")) {
+                return firstName + " " + lastName.substring(0, 1) + ".";
+            } else {
+                return lastName;
+            }
+        }
+        return null;
+    }
+
     public String getFullName() {
         if (lastName != null && !lastName.equals("")) {
             if (firstName != null && !firstName.equals("")) {

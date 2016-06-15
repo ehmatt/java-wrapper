@@ -79,9 +79,12 @@ public class BaseSerializer {
     public static final String ACTION_TAG = "action";
     public static final String ACTIONS_TAG = "actions";
     public static final String DATE_COLOR_TAG = "date_color";
+    public static final String QUEUED_ACTION_TAG = "queued_action";
+    public static final String QUEUED_ACTIONS_TAG = "queued_actions";
     public static final String PREDEFINED_ACTION_TAG = "predefined_action";
     public static final String PREDEFINED_ACTIONS_TAG = "predefined_actions";
 
+    // CLOSED SALES CYCLE.
     public static final String CLOSED_SALES_TAG = "closed_sales";
     public static final String CLOSED_AT_TAG = "closed_at";
     public static final String COMMENT_TAG = "comment";
