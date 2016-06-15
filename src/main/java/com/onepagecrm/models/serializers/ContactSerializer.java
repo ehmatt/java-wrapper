@@ -75,17 +75,8 @@ public class ContactSerializer extends BaseSerializer {
             }
             if (contactObject.has(CLOSED_SALES_TAG)) {
                 JSONArray closedArray = contactObject.getJSONArray(CLOSED_SALES_TAG);
-                Map<String, SalesCycleClosure> closedCycles = new HashMap<>();
-                for (int i = 0; i < closedArray.length(); i++) {
-                    JSONObject closedObject = closedArray.getJSONObject(i);
-                    String userId = closedObject.getString(USER_ID_TAG);
-                    Integer closedAtInt = closedObject.getInt(CLOSED_AT_TAG);
-                    closedCycles.put(userId, new SalesCycleClosure()
-                            .setContactId(contact.getId())
-                            .setUserId(userId)
-                            .setClosedAt(DateSerializer.fromTimestamp(String.valueOf(closedAtInt)))
-                            .setComment(closedObject.optString(COMMENT_TAG)));
-                }
+                Map<String, SalesCycleClosure> closedCycles =
+                        ClosedSalesSerializer.mapFromJsonArray(closedArray, contact.getId());
                 contact.setSalesClosedFor(closedCycles.size() == 0 ? null : closedCycles);
             }
             if (contactObject.has(STARRED_TAG)) {
@@ -165,7 +156,24 @@ public class ContactSerializer extends BaseSerializer {
                 actions.addAll(queuedActions);
             }
             contact.setActions(actions);
-
+            // Deals.
+            if (contactsElementObject.has(DEALS_TAG)) {
+                JSONArray dealsArray = contactsElementObject.getJSONArray(DEALS_TAG);
+                List<Deal> deals = DealListSerializer.fromJsonArray(dealsArray);
+                contact.setDeals(deals);
+            }
+            // Notes.
+            if (contactsElementObject.has(NOTES_TAG)) {
+                JSONArray notesArray = contactsElementObject.getJSONArray(NOTES_TAG);
+                List<Note> notes = NoteSerializer.fromJsonArray(notesArray);
+                contact.setNotes(notes);
+            }
+            // Calls.
+            if (contactsElementObject.has(CALLS_TAG)) {
+                JSONArray callsArray = contactsElementObject.getJSONArray(CALLS_TAG);
+                List<Call> calls = CallSerializer.fromJsonArray(callsArray);
+                contact.setCalls(calls);
+            }
             return contact;
 
         } catch (JSONException e) {

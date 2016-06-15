@@ -31,10 +31,14 @@ public class DealSerializer extends BaseSerializer {
         return deal;
     }
 
-    public static Deal fromJsonObject(JSONObject dealsObject) {
+    public static Deal fromJsonObject(JSONObject dealObject) {
         Deal deal = new Deal();
         try {
-            JSONObject dealObject = dealsObject.getJSONObject(DEAL_TAG);
+            // Fix for some objects not having name.
+            if (dealObject.has(DEAL_TAG)) {
+                dealObject = dealObject.getJSONObject(DEAL_TAG);
+            }
+            // Now parse info.
             if (dealObject.has(ID_TAG)) {
                 deal.setId(dealObject.getString(ID_TAG));
             }

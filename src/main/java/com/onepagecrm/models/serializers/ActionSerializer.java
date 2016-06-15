@@ -51,8 +51,13 @@ public class ActionSerializer extends BaseSerializer {
     public static Action fromJsonObject(JSONObject actionObject) {
         Action action = new Action();
         String status = null;
-        Date date = null;
+        Date exactTime = null;
         try {
+            // Fix for some objects not having name.
+            if (actionObject.has(ACTION_TAG)) {
+                actionObject = actionObject.getJSONObject(ACTION_TAG);
+            }
+            // Now parse the info.
             if (actionObject.has(ID_TAG)) {
                 action.setId(actionObject.getString(ID_TAG));
             }
@@ -82,12 +87,18 @@ public class ActionSerializer extends BaseSerializer {
             if (actionObject.has(DATE_TAG)) {
                 if (!actionObject.isNull(DATE_TAG)) {
                     String dateStr = actionObject.getString(DATE_TAG);
-                    date = DateSerializer.fromFormattedString(dateStr);
-                    action.setDate(date);
+                    exactTime = DateSerializer.fromFormattedString(dateStr);
+                    action.setDate(exactTime);
                 }
             }
-            int dateColor = DateSerializer.getDateColour(date, status);
-            action.setDateColor(dateColor);
+            if (actionObject.has(EXACT_TIME_TAG)) {
+                if (!actionObject.isNull(EXACT_TIME_TAG)) {
+                    String exactTimeStr = String.valueOf(actionObject.getInt(EXACT_TIME_TAG));
+                    exactTime = DateSerializer.fromTimestamp(exactTimeStr);
+                    action.setExactTime(exactTime);
+                }
+            }
+            action.setDateColor(DateSerializer.getDateColour(exactTime, status));
 
             return action;
 

@@ -21,14 +21,14 @@ import java.util.logging.Logger;
 
 public class Contact extends ApiResource implements Serializable {
 
-    private static final Logger LOG = Logger.getLogger(Contact.class.getName());
+    private static final Logger LOG = Logger.getLogger(Contact.class.getSimpleName());
 
     private static final long serialVersionUID = -6073805195226829625L;
 
-    private String id;
     private int intId;
     public static int nextIntId = 1;
 
+    private String id;
     private String ownerId;
     private String firstName;
     private String lastName;
@@ -41,29 +41,23 @@ public class Contact extends ApiResource implements Serializable {
     private String status;
     private String statusId;
     private Boolean starred;
-
     private String leadSourceId;
-    // private LeadSource leadSource;
-
     private Boolean hasPendingDeal;
     private Double totalPending;
     private String type;
     private String companyName;
     private String companyId;
-
     private Map<String, SalesCycleClosure> salesClosedFor;
-
     private List<Tag> tags;
     private List<CustomField> customFields;
     private Date createdAt;
     private Date modifiedAt;
-
     private Address address;
-
     private List<Action> actions;
     private Action nextAction;
-
-    // private Address address;
+    private List<Deal> deals;
+    private List<Note> notes;
+    private List<Call> calls;
 
     public Contact save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -431,6 +425,33 @@ public class Contact extends ApiResource implements Serializable {
 
     public Contact setNextAction(Action nextAction) {
         this.nextAction = nextAction;
+        return this;
+    }
+
+    public List<Deal> getDeals() {
+        return deals;
+    }
+
+    public Contact setDeals(List<Deal> deals) {
+        this.deals = deals;
+        return this;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
+    }
+
+    public Contact setNotes(List<Note> notes) {
+        this.notes = notes;
+        return this;
+    }
+
+    public List<Call> getCalls() {
+        return calls;
+    }
+
+    public Contact setCalls(List<Call> calls) {
+        this.calls = calls;
         return this;
     }
 }

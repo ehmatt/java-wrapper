@@ -31,7 +31,6 @@ public class LeadSourceSerializer extends BaseSerializer {
     public static LeadSource fromJsonObject(JSONObject leadSourceObject) {
         LeadSource leadSource = new LeadSource();
         try {
-
             if (leadSourceObject.has(COUNTS_TAG)) {
                 leadSource.setCounts(leadSourceObject.getInt(COUNTS_TAG));
             }
