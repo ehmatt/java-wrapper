@@ -1,13 +1,11 @@
 package com.onepagecrm.models.internal;
 
+import com.onepagecrm.models.Deal;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class DealStage implements Serializable {
-
-    public static final String STATUS_WON = "Won";
-    public static final String STATUS_LOST = "Lost";
-    public static final String STATUS_PENDING = "Pending";
 
     private Integer percentage;
     private String label;
@@ -25,18 +23,18 @@ public class DealStage implements Serializable {
     }
 
     public static DealStage won() {
-        return new DealStage().setLabel(STATUS_WON);
+        return new DealStage().setLabel(Deal.STATUS_WON);
     }
 
     public static DealStage lost() {
-        return new DealStage().setLabel(STATUS_LOST);
+        return new DealStage().setLabel(Deal.STATUS_LOST);
     }
 
     public String getDisplayText() {
         if (percentage != null) {
-            return percentage + "%" + ((label == null) ? "" : " - " + label);
+            return percentage + "%" + ((label == null) ? "" : " - " + Utilities.capitalize(label));
         } else {
-            return label;
+            return Utilities.capitalize(label);
         }
     }
 
@@ -45,12 +43,12 @@ public class DealStage implements Serializable {
     }
 
     public String getStatus() {
-        if (getUniqueIdentifier().equalsIgnoreCase(STATUS_WON)) {
-            return STATUS_WON.toLowerCase();
-        } else if (getUniqueIdentifier().equalsIgnoreCase(STATUS_LOST)) {
-            return STATUS_LOST.toLowerCase();
+        if (getUniqueIdentifier().equalsIgnoreCase(Deal.STATUS_WON)) {
+            return Deal.STATUS_WON.toLowerCase();
+        } else if (getUniqueIdentifier().equalsIgnoreCase(Deal.STATUS_LOST)) {
+            return Deal.STATUS_LOST.toLowerCase();
         } else {
-            return STATUS_PENDING.toLowerCase();
+            return Deal.STATUS_PENDING.toLowerCase();
         }
     }
 
