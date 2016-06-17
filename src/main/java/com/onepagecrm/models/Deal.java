@@ -11,6 +11,10 @@ import java.util.Date;
 
 public class Deal extends ApiResource implements Serializable {
 
+    public static final String STATUS_WON = "won";
+    public static final String STATUS_LOST = "lost";
+    public static final String STATUS_PENDING = "pending";
+
     private String id;
     private Double amount;
     private String author;
