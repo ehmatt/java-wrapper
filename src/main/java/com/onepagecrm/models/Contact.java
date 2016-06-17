@@ -8,6 +8,7 @@ import com.onepagecrm.models.serializers.ContactPhotoSerializer;
 import com.onepagecrm.models.serializers.ContactSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.PutRequest;
 import com.onepagecrm.net.request.Request;
@@ -75,10 +76,16 @@ public class Contact extends ApiResource implements Serializable {
 
     private Contact update() throws OnePageException {
         Request request = new PutRequest(
-                addContactIdToEndpoint(CONTACTS_ENDPOINT),
+                addContactIdToEndpoint(CONTACTS_ENDPOINT, this.id),
                 null,
                 ContactSerializer.toJsonObject(this)
         );
+        Response response = request.send();
+        return ContactSerializer.fromString(response.getResponseBody());
+    }
+
+    public static Contact getSingleContact(String contactId) throws OnePageException {
+        Request request = new GetRequest(addContactIdToEndpoint(CONTACTS_ENDPOINT, contactId));
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
     }
@@ -87,7 +94,7 @@ public class Contact extends ApiResource implements Serializable {
         Map<String, Object> params = new HashMap<>();
         params.put("partial", true);
         Request request = new PutRequest(
-                addContactIdToEndpoint(CONTACTS_ENDPOINT),
+                addContactIdToEndpoint(CONTACTS_ENDPOINT, this.id),
                 Query.fromParams(params),
                 ContactSerializer.toJsonObject(updateValues)
         );
@@ -115,12 +122,12 @@ public class Contact extends ApiResource implements Serializable {
         Response response = request.send();
     }
 
-    private String addContactIdToEndpoint(String endpoint) {
-        return endpoint + "/" + this.id;
+    private static String addContactIdToEndpoint(String endpoint, String id) {
+        return endpoint + "/" + id;
     }
 
     private String addContactPhotoToEndpoint(String endpoint) {
-        return addContactIdToEndpoint(endpoint) + "/contact_photo";
+        return addContactIdToEndpoint(endpoint, this.id) + "/contact_photo";
     }
 
     public Contact() {

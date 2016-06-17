@@ -57,9 +57,10 @@ public abstract class Request {
 
     private static final Map<Integer, String> sUrlMap = new HashMap<>();
 
+
     static {
         sUrlMap.put(APP_SERVER, APP_URL);
-        sUrlMap.put(DEV_SERVER, DEV_URL);
+        sUrlMap.put(DEV_SERVER, DEIMOS_URL);
         sUrlMap.put(STAGING_SERVER, STAGING_URL);
         sUrlMap.put(ATLAS_SERVER, ATLAS_URL);
         sUrlMap.put(CALYPSO_SERVER, CALYPSO_URL);
