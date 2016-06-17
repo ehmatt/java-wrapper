@@ -32,9 +32,9 @@ public class DealStage implements Serializable {
 
     public String getDisplayText() {
         if (percentage != null) {
-            return percentage + "%" + ((label == null) ? "" : " - " + label);
+            return percentage + "%" + ((label == null) ? "" : " - " + Utilities.capitalize(label));
         } else {
-            return label;
+            return Utilities.capitalize(label);
         }
     }
 
