@@ -3,11 +3,13 @@ package com.onepagecrm.models.serializers;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Deal;
 import com.onepagecrm.models.DealList;
+import com.onepagecrm.models.Note;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -101,6 +103,11 @@ public class DealSerializer extends BaseSerializer {
                     Date closeDate = DateSerializer.fromFormattedString(closeDateStr);
                     deal.setCloseDate(closeDate);
                 }
+            }
+            if (dealObject.has(RELATED_NOTES_TAG)) {
+                JSONArray relatedNotes = dealObject.getJSONArray(RELATED_NOTES_TAG);
+                List<Note> notes = NoteSerializer.fromJsonArray(relatedNotes);
+                deal.setRelatedNotes(notes);
             }
         } catch (JSONException e) {
             LOG.severe("Error parsing Deal object");
