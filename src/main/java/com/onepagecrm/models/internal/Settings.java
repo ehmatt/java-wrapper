@@ -14,7 +14,7 @@ public class Settings implements Serializable {
     private List<Country> popularCountries; // *****************
     private List<DealStage> dealStages;
     private String defaultView; // *****************
-    private boolean showTidyStream; // *****************
+    private Boolean showTidyStream; // *****************
 
     public Settings() {
 
@@ -101,11 +101,15 @@ public class Settings implements Serializable {
         return this;
     }
 
-    public boolean isShowTidyStream() {
+    public Boolean getShowTidyStream() {
         return showTidyStream;
     }
 
-    public Settings setShowTidyStream(boolean showTidyStream) {
+    public boolean shouldShowTidyStream() {
+        return showTidyStream != null && showTidyStream;
+    }
+
+    public Settings setShowTidyStream(Boolean showTidyStream) {
         this.showTidyStream = showTidyStream;
         return this;
     }
