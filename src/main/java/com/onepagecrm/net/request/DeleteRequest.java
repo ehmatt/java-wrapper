@@ -34,6 +34,6 @@ public class DeleteRequest extends SignedRequest {
 
     public void authenticate() {
         setRequestBody();
-        authData = new Authentication(Account.loggedInUser, Request.GET, endpointUrl, requestBody);
+        authData = new Authentication(Account.loggedInUser, Request.DELETE, endpointUrl, requestBody);
     }
 }

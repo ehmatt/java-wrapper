@@ -9,6 +9,7 @@ import com.onepagecrm.models.serializers.ContactPhotoSerializer;
 import com.onepagecrm.models.serializers.ContactSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.DeleteRequest;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.PutRequest;
 import com.onepagecrm.net.request.Request;
@@ -80,7 +81,7 @@ public class Contact extends ApiResource implements Serializable {
 
     private Contact update() throws OnePageException {
         Request request = new PutRequest(
-                addContactIdToEndpoint(CONTACTS_ENDPOINT),
+                addIdToEndpoint(CONTACTS_ENDPOINT),
                 null,
                 ContactSerializer.toJsonObject(this)
         );
@@ -92,7 +93,7 @@ public class Contact extends ApiResource implements Serializable {
         Map<String, Object> params = new HashMap<>();
         params.put("partial", true);
         Request request = new PutRequest(
-                addContactIdToEndpoint(CONTACTS_ENDPOINT),
+                addIdToEndpoint(CONTACTS_ENDPOINT),
                 Query.fromParams(params),
                 ContactSerializer.toJsonObject(updateValues)
         );
@@ -120,12 +121,20 @@ public class Contact extends ApiResource implements Serializable {
         Response response = request.send();
     }
 
-    private String addContactIdToEndpoint(String endpoint) {
+    public void delete() throws OnePageException {
+        new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT), null).send();
+    }
+
+    public void undoDeletion() throws OnePageException {
+        new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT), "?undo=1").send();
+    }
+
+    private String addIdToEndpoint(String endpoint) {
         return endpoint + "/" + this.id;
     }
 
     private String addContactPhotoToEndpoint(String endpoint) {
-        return addContactIdToEndpoint(endpoint) + "/contact_photo";
+        return addIdToEndpoint(endpoint) + "/contact_photo";
     }
 
     public Contact() {
