@@ -13,7 +13,7 @@ public class AlphabeticalIndices {
     static {
         letters = new String[]{
                 //"ALL",
-                //"#",
+                //"1",
                 "A",
                 "B",
                 "C",
@@ -92,7 +92,7 @@ public class AlphabeticalIndices {
     static {
         letterToIndexMap = new LinkedHashMap<>();
         letterToIndexMap.put("ALL", 0);
-        letterToIndexMap.put("#", 1);
+        letterToIndexMap.put("1", 1);
         for (int i = 0; i < letters.length; i++) {
             letterToIndexMap.put(letters[i], indexes[i]);
         }
@@ -103,7 +103,7 @@ public class AlphabeticalIndices {
     static {
         indexToLetterMap = new LinkedHashMap<>();
         indexToLetterMap.put(0, "ALL");
-        indexToLetterMap.put(1, "#");
+        indexToLetterMap.put(1, "1");
         for (int i = 0; i < indexes.length; i++) {
             indexToLetterMap.put(indexes[i], letters[i]);
         }
@@ -115,7 +115,7 @@ public class AlphabeticalIndices {
             if (letterMap.containsKey(upperCaseLetter)) {
                 return upperCaseLetter;
             } else {
-                return "#";
+                return "1";
             }
         }
         return null;
