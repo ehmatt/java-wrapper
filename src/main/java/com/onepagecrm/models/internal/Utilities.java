@@ -13,15 +13,21 @@ public class Utilities {
         return toBeChecked != null && !toBeChecked.equals("");
     }
 
-    public static String capitalize(String pInput) {
-        if (notNullOrEmpty(pInput))
-            return Character.toString(pInput.charAt(0)).toUpperCase() + pInput.substring(1);
+    public static String capitalize(String word) {
+        if (notNullOrEmpty(word))
+            return Character.toString(word.charAt(0)).toUpperCase() + word.substring(1);
         return null;
     }
 
-    public static String capitalizeFully(String pInput) {
-        if (notNullOrEmpty(pInput))
-            return capitalize(pInput.toLowerCase());
+    public static String capitalizeFully(String word) {
+        if (notNullOrEmpty(word))
+            return capitalize(word.toLowerCase());
+        return null;
+    }
+
+    public static String firstCapitalized(String word) {
+        if (notNullOrEmpty(word))
+            return word.substring(0, 1).toUpperCase();
         return null;
     }
 
