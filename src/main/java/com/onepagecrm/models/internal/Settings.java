@@ -8,7 +8,7 @@ public class Settings implements Serializable {
     private Reminder reminder;
     private String timeZone; // *****************
     private String dateFormat; // *****************
-    private int listingSize;
+    private Integer listingSize;
     private String currency; // *****************
     private String currencySymbol;
     private List<Country> popularCountries; // *****************
@@ -47,11 +47,11 @@ public class Settings implements Serializable {
         return this;
     }
 
-    public int getListingSize() {
+    public Integer getListingSize() {
         return listingSize;
     }
 
-    public Settings setListingSize(int listingSize) {
+    public Settings setListingSize(Integer listingSize) {
         this.listingSize = listingSize;
         return this;
     }
