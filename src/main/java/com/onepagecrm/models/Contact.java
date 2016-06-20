@@ -26,6 +26,9 @@ public class Contact extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -6073805195226829625L;
 
+    public static final String TYPE_INDIVIDUAL = "individual";
+    public static final String TYPE_COMPANY = "company";
+
     private int intId;
     public static int nextIntId = 1;
 
