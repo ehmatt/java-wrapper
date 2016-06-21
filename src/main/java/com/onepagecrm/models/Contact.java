@@ -1,6 +1,7 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.internal.AlphabeticalIndices;
 import com.onepagecrm.models.internal.CloseSalesCycle;
 import com.onepagecrm.models.internal.SalesCycleClosure;
 import com.onepagecrm.models.serializers.CloseSalesCycleSerializer;
@@ -8,6 +9,7 @@ import com.onepagecrm.models.serializers.ContactPhotoSerializer;
 import com.onepagecrm.models.serializers.ContactSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.DeleteRequest;
 import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.PutRequest;
@@ -26,6 +28,9 @@ public class Contact extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -6073805195226829625L;
 
+    public static final String TYPE_INDIVIDUAL = "individual";
+    public static final String TYPE_COMPANY = "company";
+
     private int intId;
     public static int nextIntId = 1;
 
@@ -33,6 +38,7 @@ public class Contact extends ApiResource implements Serializable {
     private String ownerId;
     private String firstName;
     private String lastName;
+    private String alphaIndex;
     private String photoUrl;
     private String jobTitle;
     private String background;
@@ -76,7 +82,7 @@ public class Contact extends ApiResource implements Serializable {
 
     private Contact update() throws OnePageException {
         Request request = new PutRequest(
-                addContactIdToEndpoint(CONTACTS_ENDPOINT, this.id),
+                addIdToEndpoint(CONTACTS_ENDPOINT, this.id),
                 null,
                 ContactSerializer.toJsonObject(this)
         );
@@ -94,7 +100,7 @@ public class Contact extends ApiResource implements Serializable {
         Map<String, Object> params = new HashMap<>();
         params.put("partial", true);
         Request request = new PutRequest(
-                addContactIdToEndpoint(CONTACTS_ENDPOINT, this.id),
+                addIdToEndpoint(CONTACTS_ENDPOINT, this.id),
                 Query.fromParams(params),
                 ContactSerializer.toJsonObject(updateValues)
         );
@@ -122,12 +128,19 @@ public class Contact extends ApiResource implements Serializable {
         Response response = request.send();
     }
 
-    private static String addContactIdToEndpoint(String endpoint, String id) {
+    private static String addIdToEndpoint(String endpoint, String id) {
         return endpoint + "/" + id;
+
+    public void delete() throws OnePageException {
+        new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT), null).send();
+    }
+
+    public void undoDeletion() throws OnePageException {
+        new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id), "?undo=1").send();
     }
 
     private String addContactPhotoToEndpoint(String endpoint) {
-        return addContactIdToEndpoint(endpoint, this.id) + "/contact_photo";
+        return addIdToEndpoint(endpoint, this.id) + "/contact_photo";
     }
 
     public Contact() {
@@ -217,7 +230,12 @@ public class Contact extends ApiResource implements Serializable {
 
     public Contact setLastName(String lastName) {
         this.lastName = lastName;
+        this.alphaIndex = AlphabeticalIndices.getIndex(lastName);
         return this;
+    }
+
+    public String getAlphaIndex() {
+        return alphaIndex;
     }
 
     public String getPhotoUrl() {
