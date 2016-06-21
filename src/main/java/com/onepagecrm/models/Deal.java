@@ -8,6 +8,7 @@ import com.onepagecrm.net.request.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Deal extends ApiResource implements Serializable {
 
@@ -32,8 +33,10 @@ public class Deal extends ApiResource implements Serializable {
     private Double totalAmount;
     private Date modifiedAt;
     private Boolean hasRelatedNotes;
+	private List<Note> relatedNotes;
     private Date closeDate;
 //    private List<Attachment> attachments;
+
 
     public Deal save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -75,9 +78,10 @@ public class Deal extends ApiResource implements Serializable {
 //        return DealSerializer.fromStringDelete(response.getResponseBody());
     }
 
-    public void notes() throws OnePageException {
+    public Deal dealWithNotes() throws OnePageException {
         Request request = new GetRequest(addDealIdToEndpoint(DEALS_ENDPOINT), "?fields=notes(text,author)");
         Response response = request.send();
+        return DealSerializer.fromString(response.getResponseBody());
     }
 
     private String addDealIdToEndpoint(String endpoint) {
@@ -243,4 +247,12 @@ public class Deal extends ApiResource implements Serializable {
         this.closeDate = closeDate;
         return this;
     }
+
+	public List<Note> getRelatedNotes() {
+		return relatedNotes;
+	}
+
+	public void setRelatedNotes(List<Note> pRelatedNotes) {
+		relatedNotes = pRelatedNotes;
+	}
 }

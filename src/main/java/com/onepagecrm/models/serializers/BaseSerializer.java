@@ -182,6 +182,7 @@ public class BaseSerializer {
     public static final String STAGE_TAG = "stage";
     public static final String TOTAL_AMOUNT_TAG = "total_amount";
     public static final String HAS_RELATED_NOTES_TAG = "has_related_notes";
+    public static final String RELATED_NOTES_TAG = "related_notes";
     public static final String CLOSE_DATE_TAG = "close_date";
     public static final String DEAL_ID_TAG = "deal_id";
     public static final String DEAL_STAGE_TAG = "deal_stage";
