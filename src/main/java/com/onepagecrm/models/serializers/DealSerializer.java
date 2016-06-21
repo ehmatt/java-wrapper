@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -104,16 +105,27 @@ public class DealSerializer extends BaseSerializer {
                     deal.setCloseDate(closeDate);
                 }
             }
-            if (dealObject.has(RELATED_NOTES_TAG)) {
-                JSONArray relatedNotes = dealObject.getJSONArray(RELATED_NOTES_TAG);
-                List<Note> notes = NoteSerializer.fromJsonArray(relatedNotes);
-                deal.setRelatedNotes(notes);
-            }
         } catch (JSONException e) {
             LOG.severe("Error parsing Deal object");
             LOG.severe(e.toString());
         }
         return deal;
+    }
+
+    public static List<Note> getNotesFromString(String pResponseBody) {
+        List<Note> notes = new ArrayList<>();
+        try {
+            JSONObject responseObject = new JSONObject(pResponseBody);
+            JSONObject dataObject = responseObject.getJSONObject("data");
+            if (dataObject.has("related_notes")) {
+                JSONArray relatedNotes = dataObject.getJSONArray("related_notes");
+                notes = NoteSerializer.fromJsonArray(relatedNotes);
+            }
+        } catch(JSONException e) {
+                    LOG.severe("Error parsing Deal object from response body");
+                    LOG.severe(e.toString());
+        }
+        return notes;
     }
 
     public static String toJsonObject(Deal deal) {
