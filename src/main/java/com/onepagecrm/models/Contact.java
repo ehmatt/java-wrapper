@@ -91,7 +91,7 @@ public class Contact extends ApiResource implements Serializable {
     }
 
     public static Contact getSingleContact(String contactId) throws OnePageException {
-        Request request = new GetRequest(addContactIdToEndpoint(CONTACTS_ENDPOINT, contactId));
+        Request request = new GetRequest(addIdToEndpoint(CONTACTS_ENDPOINT, contactId));
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
     }
@@ -130,9 +130,10 @@ public class Contact extends ApiResource implements Serializable {
 
     private static String addIdToEndpoint(String endpoint, String id) {
         return endpoint + "/" + id;
+    }
 
     public void delete() throws OnePageException {
-        new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT), null).send();
+        new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id), null).send();
     }
 
     public void undoDeletion() throws OnePageException {
