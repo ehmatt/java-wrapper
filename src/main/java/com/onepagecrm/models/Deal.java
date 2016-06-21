@@ -37,6 +37,7 @@ public class Deal extends ApiResource implements Serializable {
     private Date closeDate;
 //    private List<Attachment> attachments;
 
+
     public Deal save() throws OnePageException {
         return this.isValid() ? update() : create();
     }
