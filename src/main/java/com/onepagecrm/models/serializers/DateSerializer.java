@@ -24,6 +24,7 @@ public class DateSerializer extends BaseSerializer {
     public static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
     public static SimpleDateFormat friendlyDateFormat = new SimpleDateFormat("MMM dd");
     public static SimpleDateFormat friendlyDateAndYearFormat = new SimpleDateFormat("MMM dd, yyyy");
+    public static SimpleDateFormat friendlyDateTimeAndYearFormat = new SimpleDateFormat("HH:mm MMM dd, yyyy");
 
     private static final String ASAP = "ASAP";
     private static final String TODAY = "TODAY";
@@ -84,6 +85,13 @@ public class DateSerializer extends BaseSerializer {
     public static String toFormattedDateAndYearString(Date date) {
         if (date != null) {
             return friendlyDateAndYearFormat.format(date);
+        }
+        return null;
+    }
+
+    public static String toFormattedDateTimeAndYearString(Date date) {
+        if (date != null) {
+            return friendlyDateTimeAndYearFormat.format(date);
         }
         return null;
     }
