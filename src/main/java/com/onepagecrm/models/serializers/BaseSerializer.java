@@ -163,7 +163,15 @@ public class BaseSerializer {
     public static final String CODE_TAG = "code";
     public static final String PHONE_PREFIX_TAG = "phone_prefix";
     public static final String CURRENCY_TAG = "currency";
+
+    // SETTINGS TAGS
+    public static final String TIME_ZONE_TAG = "time_zone";
+    public static final String DATE_FORMAT_TAG = "date_format";
+    public static final String LISTING_SIZE_TAG = "listing_size";
+    public static final String POPULAR_COUNTRIES_TAG = "popular_countries";
     public static final String CURRENCY_SYMBOL_TAG = "currency_symbol";
+    public static final String DEFAULT_CONTACT_TYPE_TAG = "default_contact_type";
+    public static final String SHOW_TIDY_STREAM_TAG = "show_tidy_stream";
 
     // DEALS TAGS
     public static final String DEAL_TAG = "deal";

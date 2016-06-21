@@ -8,13 +8,13 @@ public class Settings implements Serializable {
     private Reminder reminder;
     private String timeZone; // *****************
     private String dateFormat; // *****************
-    private int listingSize;
+    private Integer listingSize;
     private String currency; // *****************
     private String currencySymbol;
     private List<Country> popularCountries; // *****************
     private List<DealStage> dealStages;
     private String defaultView; // *****************
-    private boolean showTidyStream; // *****************
+    private Boolean showTidyStream; // *****************
 
     public Settings() {
 
@@ -47,11 +47,11 @@ public class Settings implements Serializable {
         return this;
     }
 
-    public int getListingSize() {
+    public Integer getListingSize() {
         return listingSize;
     }
 
-    public Settings setListingSize(int listingSize) {
+    public Settings setListingSize(Integer listingSize) {
         this.listingSize = listingSize;
         return this;
     }
@@ -101,11 +101,15 @@ public class Settings implements Serializable {
         return this;
     }
 
-    public boolean isShowTidyStream() {
+    public Boolean getShowTidyStream() {
         return showTidyStream;
     }
 
-    public Settings setShowTidyStream(boolean showTidyStream) {
+    public boolean shouldShowTidyStream() {
+        return showTidyStream != null && showTidyStream;
+    }
+
+    public Settings setShowTidyStream(Boolean showTidyStream) {
         this.showTidyStream = showTidyStream;
         return this;
     }
