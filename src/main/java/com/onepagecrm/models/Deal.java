@@ -2,11 +2,16 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.serializers.DealSerializer;
+import com.onepagecrm.models.serializers.NoteSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -78,10 +83,16 @@ public class Deal extends ApiResource implements Serializable {
 //        return DealSerializer.fromStringDelete(response.getResponseBody());
     }
 
-    public Deal dealWithNotes() throws OnePageException {
+    public List<Note> getNotesRelatedToDeal() throws OnePageException {
+        List<Note> notes = new ArrayList<>();
         Request request = new GetRequest(addDealIdToEndpoint(DEALS_ENDPOINT), "?fields=notes(text,author)");
         Response response = request.send();
-        return DealSerializer.fromString(response.getResponseBody());
+        Deal deal = DealSerializer.fromString(response.getResponseBody());
+
+        if (deal.hasRelatedNotes) {
+	        notes = DealSerializer.getNotesFromString(response.getResponseBody());
+        }
+	    return notes;
     }
 
     private String addDealIdToEndpoint(String endpoint) {
@@ -255,4 +266,5 @@ public class Deal extends ApiResource implements Serializable {
 	public void setRelatedNotes(List<Note> pRelatedNotes) {
 		relatedNotes = pRelatedNotes;
 	}
+
 }
