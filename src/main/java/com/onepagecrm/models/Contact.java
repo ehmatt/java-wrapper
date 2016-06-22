@@ -144,6 +144,18 @@ public class Contact extends ApiResource implements Serializable {
         return addIdToEndpoint(endpoint, this.id) + "/contact_photo";
     }
 
+    public Contact starContact() throws OnePageException {
+        Request request = new PutRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/" + "star");
+        Response response = request.send();
+        return ContactSerializer.fromString(response.getResponseBody());
+    }
+
+    public Contact unStarContact() throws OnePageException {
+        Request request = new PutRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/" + "unstar");
+        Response response = request.send();
+        return ContactSerializer.fromString(response.getResponseBody());
+    }
+
     public Contact() {
         this.intId = nextIntId;
         nextIntId++;
