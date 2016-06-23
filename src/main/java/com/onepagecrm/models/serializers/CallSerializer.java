@@ -114,7 +114,7 @@ public class CallSerializer extends BaseSerializer {
         lCall.setTime(DateSerializer.fromNumString(callObject.optString(CALL_TIME_INT_TAG)));
         lCall.setContactId(callObject.optString(CONTACT_ID_TAG));
         lCall.setRecordingLink(callObject.optString(RECORDING_LINK_TAG));
-        lCall.setCreatedAt(DateSerializer.fromCallFormattedString(callObject.optString(CREATED_AT_TAG)));
+        lCall.setCreatedAt(DateSerializer.fromFormattedString(callObject.optString(CREATED_AT_TAG)));
         lCall.setModifiedAt(DateSerializer.fromFormattedString(callObject.optString(MODIFIED_AT_TAG)));
         return lCall;
     }
