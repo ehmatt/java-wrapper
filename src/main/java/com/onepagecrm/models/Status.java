@@ -1,11 +1,11 @@
 package com.onepagecrm.models;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.onepagecrm.models.internal.TeamCount;
 import com.onepagecrm.models.serializers.StatusSerializer;
 import com.onepagecrm.net.ApiResource;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class Status extends ApiResource implements Serializable {
 
@@ -14,9 +14,9 @@ public class Status extends ApiResource implements Serializable {
     private String status;
     private String text;
     private String description;
-    private int counts;
-    private int totalCount;
-    private int actionStreamCount;
+    private Integer count;
+    private Integer totalCount;
+    private Integer actionStreamCount;
     private List<TeamCount> teamCounts;
 
     public Status() {
@@ -74,12 +74,12 @@ public class Status extends ApiResource implements Serializable {
         return this;
     }
 
-    public int getCounts() {
-        return counts;
+    public Integer getCount() {
+        return count;
     }
 
-    public Status setCounts(int counts) {
-        this.counts = counts;
+    public Status setCount(Integer count) {
+        this.count = count;
         return this;
     }
 
@@ -87,16 +87,16 @@ public class Status extends ApiResource implements Serializable {
         return totalCount;
     }
 
-    public Status setTotalCount(int totalCount) {
+    public Status setTotalCount(Integer totalCount) {
         this.totalCount = totalCount;
         return this;
     }
 
-    public int getActionStreamCount() {
+    public Integer getActionStreamCount() {
         return actionStreamCount;
     }
 
-    public Status setActionStreamCount(int actionStreamCount) {
+    public Status setActionStreamCount(Integer actionStreamCount) {
         this.actionStreamCount = actionStreamCount;
         return this;
     }

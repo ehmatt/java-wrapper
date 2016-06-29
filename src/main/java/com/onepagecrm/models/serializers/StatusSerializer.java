@@ -32,20 +32,8 @@ public class StatusSerializer extends BaseSerializer {
     public static Status fromJsonObject(JSONObject statusObject) {
         Status status = new Status();
         try {
-            if (statusObject.has(COUNTS_TAG)) {
-                status.setCounts(statusObject.getInt(COUNTS_TAG));
-            }
-            if (statusObject.has(TOTAL_COUNT_TAG)) {
-                status.setTotalCount(statusObject.getInt(TOTAL_COUNT_TAG));
-            }
-            if (statusObject.has(TEAM_COUNTS_TAG)) {
-                status.setTeamCounts(TeamCountsSerializer.fromJsonArray(statusObject.getJSONArray(TEAM_COUNTS_TAG)));
-            }
             if (statusObject.has(ID_TAG)) {
                 status.setId(statusObject.getString(ID_TAG));
-            }
-            if (statusObject.has(COLOR_TAG)) {
-                status.setColor(statusObject.getString(COLOR_TAG));
             }
             if (statusObject.has(STATUS_TAG)) {
                 status.setStatus(statusObject.getString(STATUS_TAG));
@@ -56,8 +44,20 @@ public class StatusSerializer extends BaseSerializer {
             if (statusObject.has(DESCRIPTION_TAG)) {
                 status.setDescription(statusObject.getString(DESCRIPTION_TAG));
             }
+            if (statusObject.has(COLOR_TAG)) {
+                status.setColor(statusObject.getString(COLOR_TAG));
+            }
+            if (statusObject.has(COUNTS_TAG)) {
+                status.setCount(statusObject.getInt(COUNTS_TAG));
+            }
+            if (statusObject.has(TOTAL_COUNT_TAG)) {
+                status.setTotalCount(statusObject.getInt(TOTAL_COUNT_TAG));
+            }
             if (statusObject.has(ACTION_STREAM_COUNT_TAG)) {
                 status.setActionStreamCount(statusObject.getInt(ACTION_STREAM_COUNT_TAG));
+            }
+            if (statusObject.has(TEAM_COUNTS_TAG)) {
+                status.setTeamCounts(TeamCountsSerializer.fromJsonArray(statusObject.getJSONArray(TEAM_COUNTS_TAG)));
             }
             return status;
         } catch (JSONException e) {
@@ -69,8 +69,14 @@ public class StatusSerializer extends BaseSerializer {
 
     public static String toJsonObject(Status status) {
         JSONObject statusObject = new JSONObject();
-        addJsonIntValue(status.getCounts(), statusObject, COUNTS_TAG);
-        addJsonIntValue(status.getTotalCount(), statusObject, TOTAL_COUNT_TAG);
+        addJsonStringValue(status.getId(), statusObject, ID_TAG);
+        addJsonStringValue(status.getStatus(), statusObject, STATUS_TAG);
+        addJsonStringValue(status.getText(), statusObject, TEXT_TAG);
+        addJsonStringValue(status.getDescription(), statusObject, DESCRIPTION_TAG);
+        addJsonStringValue(status.getColor(), statusObject, COLOR_TAG);
+        addJsonIntegerValue(status.getCount(), statusObject, COUNTS_TAG);
+        addJsonIntegerValue(status.getTotalCount(), statusObject, TOTAL_COUNT_TAG);
+        addJsonIntegerValue(status.getActionStreamCount(), statusObject, ACTION_STREAM_COUNT_TAG);
 
         try {
             JSONArray teamCountsArray = new JSONArray(TeamCountsSerializer.toJsonArray(status.getTeamCounts()));
@@ -80,12 +86,6 @@ public class StatusSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
 
-        addJsonStringValue(status.getId(), statusObject, ID_TAG);
-        addJsonStringValue(status.getColor(), statusObject, COLOR_TAG);
-        addJsonStringValue(status.getStatus(), statusObject, STATUS_TAG);
-        addJsonStringValue(status.getText(), statusObject, TEXT_TAG);
-        addJsonStringValue(status.getDescription(), statusObject, DESCRIPTION_TAG);
-        addJsonIntValue(status.getActionStreamCount(), statusObject, ACTION_STREAM_COUNT_TAG);
         return statusObject.toString();
     }
 
