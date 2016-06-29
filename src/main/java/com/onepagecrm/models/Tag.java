@@ -19,8 +19,8 @@ public class Tag extends BaseResource implements Serializable {
     private static final String TAGS_ENDPOINT = ApiResource.TAGS_ENDPOINT;
 
     private String name;
-    private Integer counts;
-    private Integer totalCounts;
+    private Integer count;
+    private Integer totalCount;
     private Integer actionStreamCount;
 
     public static List<Tag> list() throws OnePageException {
@@ -59,8 +59,8 @@ public class Tag extends BaseResource implements Serializable {
 
     public Tag(Tag tag) {
         this.name = tag.getName();
-        this.counts = tag.getCounts();
-        this.totalCounts = tag.getTotalCounts();
+        this.count = tag.getCount();
+        this.totalCount = tag.getTotalCount();
         this.actionStreamCount = tag.getActionStreamCount();
     }
 
@@ -95,21 +95,21 @@ public class Tag extends BaseResource implements Serializable {
         return this;
     }
 
-    public Integer getCounts() {
-        return counts;
+    public Integer getCount() {
+        return count;
     }
 
-    public Tag setCounts(Integer counts) {
-        this.counts = counts;
+    public Tag setCount(Integer count) {
+        this.count = count;
         return this;
     }
 
-    public Integer getTotalCounts() {
-        return totalCounts;
+    public Integer getTotalCount() {
+        return totalCount;
     }
 
-    public Tag setTotalCounts(Integer totalCounts) {
-        this.totalCounts = totalCounts;
+    public Tag setTotalCount(Integer totalCount) {
+        this.totalCount = totalCount;
         return this;
     }
 

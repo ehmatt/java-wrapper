@@ -124,10 +124,10 @@ public class TagSerializer extends BaseSerializer {
                 tag.setName(tagObject.getString(NAME_TAG));
             }
             if (tagObject.has(COUNTS_TAG)) {
-                tag.setCounts(tagObject.getInt(COUNTS_TAG));
+                tag.setCount(tagObject.getInt(COUNTS_TAG));
             }
             if (tagObject.has(TOTAL_COUNT_TAG)) {
-                tag.setTotalCounts(tagObject.getInt(TOTAL_COUNT_TAG));
+                tag.setTotalCount(tagObject.getInt(TOTAL_COUNT_TAG));
             }
             if (tagObject.has(ACTION_STREAM_COUNT_TAG)) {
                 tag.setActionStreamCount(tagObject.getInt(ACTION_STREAM_COUNT_TAG));
@@ -143,8 +143,8 @@ public class TagSerializer extends BaseSerializer {
         if (tag.getName() != null) {
             JSONObject tagObject = new JSONObject();
             addJsonStringValue(tag.getName(), tagObject, NAME_TAG);
-            addJsonIntegerValue(tag.getCounts(), tagObject, COUNTS_TAG);
-            addJsonIntegerValue(tag.getTotalCounts(), tagObject, TOTAL_COUNT_TAG);
+            addJsonIntegerValue(tag.getCount(), tagObject, COUNTS_TAG);
+            addJsonIntegerValue(tag.getTotalCount(), tagObject, TOTAL_COUNT_TAG);
             addJsonIntegerValue(tag.getActionStreamCount(), tagObject, ACTION_STREAM_COUNT_TAG);
             return tagObject.toString();
         }
