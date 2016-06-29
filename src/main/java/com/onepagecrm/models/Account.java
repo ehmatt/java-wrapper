@@ -3,7 +3,7 @@ package com.onepagecrm.models;
 import com.onepagecrm.models.internal.ContactsCount;
 import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.internal.Settings;
-import com.onepagecrm.models.internal.TeamStream;
+import com.onepagecrm.models.internal.StreamCount;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,11 +22,10 @@ public class Account implements Serializable {
     public List<Status> statuses;
     public List<LeadSource> leadSources;
 
-    public TeamStream teamStream;
+    public StreamCount streamCount;
     public ContactsCount contactsCount;
 
     public PredefinedActionList predefinedActions;
-
 
     // public static User switchUser(login, password) {
 
@@ -123,12 +122,12 @@ public class Account implements Serializable {
         return this;
     }
 
-    public TeamStream getTeamStream() {
-        return teamStream;
+    public StreamCount getStreamCount() {
+        return streamCount;
     }
 
-    public Account setTeamStream(TeamStream teamStream) {
-        this.teamStream = teamStream;
+    public Account setStreamCount(StreamCount streamCount) {
+        this.streamCount = streamCount;
         return this;
     }
 

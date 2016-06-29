@@ -2,10 +2,7 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.*;
-import com.onepagecrm.models.internal.ContactsCount;
-import com.onepagecrm.models.internal.PredefinedAction;
-import com.onepagecrm.models.internal.PredefinedActionList;
-import com.onepagecrm.models.internal.Settings;
+import com.onepagecrm.models.internal.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +26,7 @@ public class LoginSerializer extends BaseSerializer {
             addLeadSourcesToAccount(responseBody);
             addFiltersToAccount(responseBody);
             addContactsCountToAccount(responseBody);
+            addStreamCountToAccount(responseBody);
             addSettingsToAccount(responseBody);
             addPredefinedActionsToAccount(responseBody);
             return Account.loggedInUser;
@@ -160,6 +158,24 @@ public class LoginSerializer extends BaseSerializer {
     private static void addContactsCount(JSONObject contactsCountObject) throws JSONException {
         ContactsCount contactsCounts = ContactsCountSerializer.fromJsonObject(contactsCountObject);
         Account.loggedInUser.getAccount().setContactsCount(contactsCounts);
+    }
+
+    private static void addStreamCountToAccount(String responseBody) {
+        JSONObject responseObject;
+        try {
+            responseObject = new JSONObject(responseBody);
+            if (responseObject.has(TEAM_STREAM_TAG)) {
+                addStreamCount(responseObject.getJSONObject(TEAM_STREAM_TAG));
+            }
+        } catch (JSONException e) {
+            LOG.severe("Error parsing StreamCount object");
+            LOG.severe(e.toString());
+        }
+    }
+
+    private static void addStreamCount(JSONObject streamCountObject) throws JSONException {
+        StreamCount streamCount = StreamCountSerializer.fromJsonObject(streamCountObject);
+        Account.loggedInUser.getAccount().setStreamCount(streamCount);
     }
 
     private static void addPredefinedActionsToAccount(String responseBody) {
