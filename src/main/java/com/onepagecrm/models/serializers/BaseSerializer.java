@@ -188,6 +188,9 @@ public class BaseSerializer {
     public static final String DEAL_STAGE_TAG = "deal_stage";
     public static final String DEAL_STAGES_TAG = "deal_stages";
     public static final String LABEL_TAG = "label";
+    public static final String CONTACT_INFO_TAG = "contact_info";
+    public static final String CONTACT_NAME_TAG = "contact_name";
+    public static final String COMPANY_TAG = "company";
 
     // NOTES
     public static final String NOTE_TAG = "note";
