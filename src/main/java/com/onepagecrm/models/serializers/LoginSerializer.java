@@ -29,6 +29,7 @@ public class LoginSerializer extends BaseSerializer {
             addStreamCountToAccount(responseBody);
             addSettingsToAccount(responseBody);
             addPredefinedActionsToAccount(responseBody);
+            updateTeamCounters();
             return Account.loggedInUser;
 
         } catch (ClassCastException e) {
@@ -195,5 +196,23 @@ public class LoginSerializer extends BaseSerializer {
     private static void addPredefinedActions(JSONArray predefinedActionsArray) throws JSONException {
         List<PredefinedAction> predefinedAction = PredefinedActionSerializer.fromJsonArray(predefinedActionsArray);
         Account.loggedInUser.getAccount().setPredefinedActions(new PredefinedActionList(predefinedAction));
+    }
+
+    private static void updateTeamCounters() {
+        List<User> team = Account.loggedInUser.getAccount().getTeam();
+        StreamCount streamCount = Account.loggedInUser.getAccount().getStreamCount();
+        ContactsCount contactsCount = Account.loggedInUser.getAccount().getContactsCount();
+        if (contactsCount != null && contactsCount.getCounts().get("all") != null) {
+            int totalAccountContacts = contactsCount.getCounts().get("all").getTotalCount();
+            for (User user : team) {
+                user.setAllCount(totalAccountContacts);
+                user.setStreamCount(
+                        (streamCount.getUsers().get(user.getId()) == null) ? null :
+                                streamCount.getUsers().get(user.getId()).getCounts());
+                user.setContactsCount(
+                        (contactsCount.getCounts().get(user.getId()) == null) ? null :
+                                contactsCount.getCounts().get(user.getId()).getTotalCount());
+            }
+        }
     }
 }

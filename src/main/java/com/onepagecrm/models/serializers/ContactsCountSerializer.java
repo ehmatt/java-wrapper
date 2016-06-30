@@ -25,7 +25,7 @@ public class ContactsCountSerializer extends BaseSerializer {
                 JSONObject allObject = contactsCountObject.getJSONObject(ALL_TAG);
                 CountMap accountTotals = CountMapSerializer.fromJsonObject(allObject);
                 accountTotals.setAccount(true);
-                counts.put(null, accountTotals);
+                counts.put("all", accountTotals);
             }
             if (contactsCountObject.has(USERS_TAG)) {
                 JSONArray usersArray = contactsCountObject.getJSONArray(USERS_TAG);

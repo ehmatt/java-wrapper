@@ -54,6 +54,7 @@ public class Driver {
         LOG.info("User's Call Results : " + loggedInUser.getAccount().callResults);
         LOG.info("User's Filters : " + loggedInUser.getAccount().filters);
         LOG.info("User's ContactsCounts : " + loggedInUser.getAccount().contactsCount);
+        LOG.info("User's StreamCount : " + loggedInUser.getAccount().streamCount);
         LOG.info("User's Predefined Actions : " + loggedInUser.getAccount().predefinedActions);
     }
 }
