@@ -2,13 +2,9 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.serializers.DealSerializer;
-import com.onepagecrm.models.serializers.NoteSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.*;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,7 +34,7 @@ public class Deal extends ApiResource implements Serializable {
     private Double totalAmount;
     private Date modifiedAt;
     private Boolean hasRelatedNotes;
-	private List<Note> relatedNotes;
+    private List<Note> relatedNotes;
     private Date closeDate;
 //    private List<Attachment> attachments;
 
@@ -89,9 +85,9 @@ public class Deal extends ApiResource implements Serializable {
         Deal deal = DealSerializer.fromString(response.getResponseBody());
 
         if (deal.hasRelatedNotes) {
-	        notes = DealSerializer.getNotesFromString(response.getResponseBody());
+            notes = DealSerializer.getNotesFromString(response.getResponseBody());
         }
-	    return notes;
+        return notes;
     }
 
     private String addDealIdToEndpoint(String endpoint) {
@@ -262,19 +258,19 @@ public class Deal extends ApiResource implements Serializable {
         return contactInfo == null ? new ContactInfo() : contactInfo;
     }
 
-    public Deal setContactInfo(ContactInfo pContactInfo) {
-        contactInfo = pContactInfo;
+    public Deal setContactInfo(ContactInfo contactInfo) {
+        this.contactInfo = contactInfo;
         return this;
     }
 
-	public List<Note> getRelatedNotes() {
-		return relatedNotes;
-	}
+    public List<Note> getRelatedNotes() {
+        return relatedNotes;
+    }
 
-	public Deal setRelatedNotes(List<Note> pRelatedNotes) {
-		relatedNotes = pRelatedNotes;
+    public Deal setRelatedNotes(List<Note> pRelatedNotes) {
+        relatedNotes = pRelatedNotes;
         return this;
-	}
+    }
 
     public static class ContactInfo implements Serializable {
         private String contactName;
@@ -284,8 +280,8 @@ public class Deal extends ApiResource implements Serializable {
             return contactName;
         }
 
-        public ContactInfo setContactName(String pContactName) {
-            contactName = pContactName;
+        public ContactInfo setContactName(String contactName) {
+            this.contactName = contactName;
             return this;
         }
 
@@ -293,8 +289,8 @@ public class Deal extends ApiResource implements Serializable {
             return company;
         }
 
-        public ContactInfo setCompany(String pCompany) {
-            company = pCompany;
+        public ContactInfo setCompany(String company) {
+            this.company = company;
             return this;
         }
     }
