@@ -267,8 +267,8 @@ public class Deal extends ApiResource implements Serializable {
         return relatedNotes;
     }
 
-    public Deal setRelatedNotes(List<Note> pRelatedNotes) {
-        relatedNotes = pRelatedNotes;
+    public Deal setRelatedNotes(List<Note> relatedNotes) {
+        this.relatedNotes = relatedNotes;
         return this;
     }
 
