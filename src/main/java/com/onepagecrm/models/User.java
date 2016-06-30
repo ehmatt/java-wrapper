@@ -34,6 +34,10 @@ public class User extends ApiResource implements Serializable {
     private Sales sales;
     public Account account;
 
+    private Integer allCount;
+    private Integer streamCount;
+    private Integer contactsCount;
+
     public static User login(String username, String password) throws OnePageException {
         Request request = new LoginRequest(username, password);
         Response response = request.send();
@@ -323,6 +327,33 @@ public class User extends ApiResource implements Serializable {
 
     public User setAccount(Account account) {
         this.account = account;
+        return this;
+    }
+
+    public Integer getAllCount() {
+        return allCount;
+    }
+
+    public User setAllCount(Integer allCount) {
+        this.allCount = allCount;
+        return this;
+    }
+
+    public Integer getStreamCount() {
+        return streamCount;
+    }
+
+    public User setStreamCount(Integer streamCount) {
+        this.streamCount = streamCount;
+        return this;
+    }
+
+    public Integer getContactsCount() {
+        return contactsCount;
+    }
+
+    public User setContactsCount(Integer contactsCount) {
+        this.contactsCount = contactsCount;
         return this;
     }
 }

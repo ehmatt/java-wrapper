@@ -11,9 +11,9 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class Driver {
+public class StreamCountDriver {
 
-    private static final Logger LOG = Logger.getLogger(Driver.class.getName());
+    private static final Logger LOG = Logger.getLogger(StreamCountDriver.class.getName());
 
     public static void main(String[] args) throws OnePageException {
         Properties prop = new Properties();
@@ -54,7 +54,7 @@ public class Driver {
         LOG.info("User's Call Results : " + loggedInUser.getAccount().callResults);
         LOG.info("User's Filters : " + loggedInUser.getAccount().filters);
         LOG.info("User's ContactsCounts : " + loggedInUser.getAccount().contactsCount);
-        LOG.info("User's StreamCount : " + loggedInUser.getAccount().streamCount);
+        LOG.info("User's StreamCounts : " + loggedInUser.getAccount().streamCount);
         LOG.info("User's Predefined Actions : " + loggedInUser.getAccount().predefinedActions);
     }
 }

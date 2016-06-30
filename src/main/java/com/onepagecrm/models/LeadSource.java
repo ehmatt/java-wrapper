@@ -11,8 +11,9 @@ public class LeadSource extends ApiResource implements Serializable {
 
     private String id;
     private String text;
-    private int counts;
-    private int totalCount;
+    private Integer count;
+    private Integer totalCount;
+    private Integer actionStreamCount;
     private List<TeamCount> teamCounts;
 
     public LeadSource() {
@@ -43,21 +44,30 @@ public class LeadSource extends ApiResource implements Serializable {
         return this;
     }
 
-    public int getCounts() {
-        return counts;
+    public Integer getCount() {
+        return count;
     }
 
-    public LeadSource setCounts(int counts) {
-        this.counts = counts;
+    public LeadSource setCount(Integer count) {
+        this.count = count;
         return this;
     }
 
-    public int getTotalCount() {
+    public Integer getTotalCount() {
         return totalCount;
     }
 
-    public LeadSource setTotalCount(int totalCount) {
+    public LeadSource setTotalCount(Integer totalCount) {
         this.totalCount = totalCount;
+        return this;
+    }
+
+    public Integer getActionStreamCount() {
+        return actionStreamCount;
+    }
+
+    public LeadSource setActionStreamCount(Integer actionStreamCount) {
+        this.actionStreamCount = actionStreamCount;
         return this;
     }
 

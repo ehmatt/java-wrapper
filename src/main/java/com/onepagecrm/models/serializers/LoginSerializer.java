@@ -2,10 +2,7 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.*;
-import com.onepagecrm.models.internal.ContactsCount;
-import com.onepagecrm.models.internal.PredefinedAction;
-import com.onepagecrm.models.internal.PredefinedActionList;
-import com.onepagecrm.models.internal.Settings;
+import com.onepagecrm.models.internal.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,19 +21,29 @@ public class LoginSerializer extends BaseSerializer {
         try {
             parsedResponse = (String) BaseSerializer.fromString(responseBody);
             Account.loggedInUser = UserSerializer.fromString(parsedResponse);
-            addTagsToAccount(responseBody);
-            addStatusesToAccount(responseBody);
-            addLeadSourcesToAccount(responseBody);
-            addFiltersToAccount(responseBody);
-            addContactsCountToAccount(responseBody);
-            addSettingsToAccount(responseBody);
-            addPredefinedActionsToAccount(responseBody);
+            updateLoginOnlyResources(responseBody);
+            updateDynamicResources(responseBody);
             return Account.loggedInUser;
 
         } catch (ClassCastException e) {
             exception = (OnePageException) BaseSerializer.fromString(responseBody);
             throw exception;
         }
+    }
+
+    public static void updateLoginOnlyResources(String responseBody) {
+        addFiltersToAccount(responseBody);
+        addSettingsToAccount(responseBody);
+        addPredefinedActionsToAccount(responseBody);
+    }
+
+    public static void updateDynamicResources(String responseBody) {
+        addLeadSourcesToAccount(responseBody);
+        addStatusesToAccount(responseBody);
+        addTagsToAccount(responseBody);
+        addContactsCountToAccount(responseBody);
+        addStreamCountToAccount(responseBody);
+        updateTeamCounters();
     }
 
     private static void addSettingsToAccount(String responseBody) {
@@ -162,6 +169,24 @@ public class LoginSerializer extends BaseSerializer {
         Account.loggedInUser.getAccount().setContactsCount(contactsCounts);
     }
 
+    private static void addStreamCountToAccount(String responseBody) {
+        JSONObject responseObject;
+        try {
+            responseObject = new JSONObject(responseBody);
+            if (responseObject.has(TEAM_STREAM_TAG)) {
+                addStreamCount(responseObject.getJSONObject(TEAM_STREAM_TAG));
+            }
+        } catch (JSONException e) {
+            LOG.severe("Error parsing StreamCount object");
+            LOG.severe(e.toString());
+        }
+    }
+
+    private static void addStreamCount(JSONObject streamCountObject) throws JSONException {
+        StreamCount streamCount = StreamCountSerializer.fromJsonObject(streamCountObject);
+        Account.loggedInUser.getAccount().setStreamCount(streamCount);
+    }
+
     private static void addPredefinedActionsToAccount(String responseBody) {
         JSONObject responseObject;
         try {
@@ -179,5 +204,23 @@ public class LoginSerializer extends BaseSerializer {
     private static void addPredefinedActions(JSONArray predefinedActionsArray) throws JSONException {
         List<PredefinedAction> predefinedAction = PredefinedActionSerializer.fromJsonArray(predefinedActionsArray);
         Account.loggedInUser.getAccount().setPredefinedActions(new PredefinedActionList(predefinedAction));
+    }
+
+    private static void updateTeamCounters() {
+        List<User> team = Account.team;
+        StreamCount streamCount = Account.loggedInUser.getAccount().getStreamCount();
+        ContactsCount contactsCount = Account.loggedInUser.getAccount().getContactsCount();
+        if (contactsCount != null && contactsCount.getCounts().get(Account.USER_ID) != null) {
+            int totalAccountContacts = contactsCount.getCounts().get(Account.USER_ID).getTotalCount();
+            for (User user : team) {
+                user.setAllCount(totalAccountContacts);
+                user.setStreamCount(
+                        (streamCount.getCounts().get(user.getId()) == null) ? null :
+                                streamCount.getCounts().get(user.getId()).getCount());
+                user.setContactsCount(
+                        (contactsCount.getCounts().get(user.getId()) == null) ? null :
+                                contactsCount.getCounts().get(user.getId()).getTotalCount());
+            }
+        }
     }
 }

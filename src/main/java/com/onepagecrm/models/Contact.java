@@ -7,6 +7,7 @@ import com.onepagecrm.models.internal.SalesCycleClosure;
 import com.onepagecrm.models.serializers.CloseSalesCycleSerializer;
 import com.onepagecrm.models.serializers.ContactPhotoSerializer;
 import com.onepagecrm.models.serializers.ContactSerializer;
+import com.onepagecrm.models.serializers.LoginSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.*;
@@ -73,7 +74,10 @@ public class Contact extends ApiResource implements Serializable {
                 ContactSerializer.toJsonObject(this)
         );
         Response response = request.send();
-        return ContactSerializer.fromString(response.getResponseBody());
+        String responseBody = response.getResponseBody();
+        Contact contact = ContactSerializer.fromString(responseBody);
+        LoginSerializer.updateDynamicResources(responseBody);
+        return contact;
     }
 
     private Contact update() throws OnePageException {
@@ -83,7 +87,10 @@ public class Contact extends ApiResource implements Serializable {
                 ContactSerializer.toJsonObject(this)
         );
         Response response = request.send();
-        return ContactSerializer.fromString(response.getResponseBody());
+        String responseBody = response.getResponseBody();
+        Contact contact = ContactSerializer.fromString(responseBody);
+        LoginSerializer.updateDynamicResources(responseBody);
+        return contact;
     }
 
     public static Contact getSingleContact(String contactId) throws OnePageException {
@@ -101,7 +108,10 @@ public class Contact extends ApiResource implements Serializable {
                 ContactSerializer.toJsonObject(updateValues)
         );
         Response response = request.send();
-        return ContactSerializer.fromString(response.getResponseBody());
+        String responseBody = response.getResponseBody();
+        Contact contact = ContactSerializer.fromString(responseBody);
+        LoginSerializer.updateDynamicResources(responseBody);
+        return contact;
     }
 
     public Contact addPhoto(String base64EncodedImageString) throws OnePageException {
@@ -130,12 +140,17 @@ public class Contact extends ApiResource implements Serializable {
     public void delete() throws OnePageException {
         Request request = new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id), null);
         Response response = request.send();
+        String responseBody = response.getResponseBody();
+        LoginSerializer.updateDynamicResources(responseBody);
     }
 
     public Contact undoDeletion() throws OnePageException {
         Request request = new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id), "?undo=1");
         Response response = request.send();
-        return ContactSerializer.fromString(response.getResponseBody());
+        String responseBody = response.getResponseBody();
+        Contact contact = ContactSerializer.fromString(responseBody);
+        LoginSerializer.updateDynamicResources(responseBody);
+        return contact;
     }
 
     public Contact starContact() throws OnePageException {

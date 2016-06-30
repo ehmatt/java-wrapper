@@ -31,20 +31,23 @@ public class LeadSourceSerializer extends BaseSerializer {
     public static LeadSource fromJsonObject(JSONObject leadSourceObject) {
         LeadSource leadSource = new LeadSource();
         try {
-            if (leadSourceObject.has(COUNTS_TAG)) {
-                leadSource.setCounts(leadSourceObject.getInt(COUNTS_TAG));
-            }
-            if (leadSourceObject.has(TOTAL_COUNT_TAG)) {
-                leadSource.setTotalCount(leadSourceObject.getInt(TOTAL_COUNT_TAG));
-            }
-            if (leadSourceObject.has(TEAM_COUNTS_TAG)) {
-                leadSource.setTeamCounts(TeamCountsSerializer.fromJsonArray(leadSourceObject.getJSONArray(TEAM_COUNTS_TAG)));
-            }
             if (leadSourceObject.has(ID_TAG)) {
                 leadSource.setId(leadSourceObject.getString(ID_TAG));
             }
             if (leadSourceObject.has(TEXT_TAG)) {
                 leadSource.setText(leadSourceObject.getString(TEXT_TAG));
+            }
+            if (leadSourceObject.has(COUNTS_TAG)) {
+                leadSource.setCount(leadSourceObject.getInt(COUNTS_TAG));
+            }
+            if (leadSourceObject.has(TOTAL_COUNT_TAG)) {
+                leadSource.setTotalCount(leadSourceObject.getInt(TOTAL_COUNT_TAG));
+            }
+            if (leadSourceObject.has(ACTION_STREAM_COUNT_TAG)) {
+                leadSource.setActionStreamCount(leadSourceObject.getInt(ACTION_STREAM_COUNT_TAG));
+            }
+            if (leadSourceObject.has(TEAM_COUNTS_TAG)) {
+                leadSource.setTeamCounts(TeamCountsSerializer.fromJsonArray(leadSourceObject.getJSONArray(TEAM_COUNTS_TAG)));
             }
             return leadSource;
         } catch (JSONException e) {
@@ -56,8 +59,11 @@ public class LeadSourceSerializer extends BaseSerializer {
 
     public static String toJsonObject(LeadSource leadSource) {
         JSONObject leadSourceObject = new JSONObject();
-        addJsonIntValue(leadSource.getCounts(), leadSourceObject, COUNTS_TAG);
-        addJsonIntValue(leadSource.getTotalCount(), leadSourceObject, TOTAL_COUNT_TAG);
+        addJsonStringValue(leadSource.getId(), leadSourceObject, ID_TAG);
+        addJsonStringValue(leadSource.getText(), leadSourceObject, TEXT_TAG);
+        addJsonIntegerValue(leadSource.getCount(), leadSourceObject, COUNTS_TAG);
+        addJsonIntegerValue(leadSource.getTotalCount(), leadSourceObject, TOTAL_COUNT_TAG);
+        addJsonIntegerValue(leadSource.getActionStreamCount(), leadSourceObject, ACTION_STREAM_COUNT_TAG);
 
         try {
             JSONArray teamCountsArray = new JSONArray(TeamCountsSerializer.toJsonArray(leadSource.getTeamCounts()));
@@ -67,8 +73,6 @@ public class LeadSourceSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
 
-        addJsonStringValue(leadSource.getId(), leadSourceObject, ID_TAG);
-        addJsonStringValue(leadSource.getText(), leadSourceObject, TEXT_TAG);
         return leadSourceObject.toString();
     }
 

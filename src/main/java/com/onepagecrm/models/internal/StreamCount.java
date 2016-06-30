@@ -3,20 +3,20 @@ package com.onepagecrm.models.internal;
 import java.io.Serializable;
 import java.util.Map;
 
-public class ContactsCount implements Serializable {
+public class StreamCount implements Serializable {
 
-    private Map<String, CountMap> counts;
+    private Map<String, TeamCount> counts;
 
     @Override
     public String toString() {
         return counts.toString();
     }
 
-    public Map<String, CountMap> getCounts() {
+    public Map<String, TeamCount> getCounts() {
         return counts;
     }
 
-    public ContactsCount setCounts(Map<String, CountMap> counts) {
+    public StreamCount setCounts(Map<String, TeamCount> counts) {
         this.counts = counts;
         return this;
     }

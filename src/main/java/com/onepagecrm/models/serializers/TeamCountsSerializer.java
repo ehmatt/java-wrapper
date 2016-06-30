@@ -35,7 +35,7 @@ public class TeamCountsSerializer extends BaseSerializer {
                 teamCount.setUserId(teamCountObject.getString(USER_ID_TAG));
             }
             if (teamCountObject.has(COUNTS_TAG)) {
-                teamCount.setCounts(teamCountObject.getInt(COUNTS_TAG));
+                teamCount.setCount(teamCountObject.getInt(COUNTS_TAG));
             }
         } catch (JSONException e) {
             LOG.severe("Error parsing TeamCount object");
@@ -47,7 +47,7 @@ public class TeamCountsSerializer extends BaseSerializer {
     public static String toJsonObject(TeamCount teamCount) {
         JSONObject teamCountObject = new JSONObject();
         addJsonStringValue(teamCount.getUserId(), teamCountObject, USER_ID_TAG);
-        addJsonIntValue(teamCount.getCounts(), teamCountObject, COUNTS_TAG);
+        addJsonIntValue(teamCount.getCount(), teamCountObject, COUNTS_TAG);
         return teamCountObject.toString();
     }
 
