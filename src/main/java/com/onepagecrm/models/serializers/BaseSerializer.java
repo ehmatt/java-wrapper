@@ -241,6 +241,7 @@ public class BaseSerializer {
     public static final String TEAM_STREAM_TAG = "team_stream";
     public static final String STREAM_COUNT_TAG = "stream_count";
     public static final String COUNT_TAG = "count";
+    public static final String ALL_COUNT_TAG = "all_count";
 
     /**
      * Method used to parse the base/start of response.
