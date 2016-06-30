@@ -1,17 +1,17 @@
 package com.onepagecrm.models.internal;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Map;
 
 public class ContactsCount implements Serializable {
 
-    private List<CountMap> counts;
+    private Map<String, CountMap> counts;
 
-    public List<CountMap> getCounts() {
+    public Map<String, CountMap> getCounts() {
         return counts;
     }
 
-    public ContactsCount setCounts(List<CountMap> counts) {
+    public ContactsCount setCounts(Map<String, CountMap> counts) {
         this.counts = counts;
         return this;
     }

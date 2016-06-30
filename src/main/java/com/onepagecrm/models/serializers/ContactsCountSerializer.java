@@ -6,8 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -19,13 +19,13 @@ public class ContactsCountSerializer extends BaseSerializer {
 
     public static ContactsCount fromJsonObject(JSONObject contactsCountObject) {
         ContactsCount contactsCount = new ContactsCount();
-        List<CountMap> counts = new ArrayList<>();
+        Map<String, CountMap> counts = new HashMap<>();
         try {
             if (contactsCountObject.has(ALL_TAG)) {
                 JSONObject allObject = contactsCountObject.getJSONObject(ALL_TAG);
                 CountMap accountTotals = CountMapSerializer.fromJsonObject(allObject);
                 accountTotals.setAccount(true);
-                counts.add(0, accountTotals);
+                counts.put(null, accountTotals);
             }
             if (contactsCountObject.has(USERS_TAG)) {
                 JSONArray usersArray = contactsCountObject.getJSONArray(USERS_TAG);
@@ -33,10 +33,11 @@ public class ContactsCountSerializer extends BaseSerializer {
                     JSONObject userObject = usersArray.getJSONObject(i);
                     CountMap userCounts = CountMapSerializer.fromJsonObject(userObject);
                     userCounts.setAccount(false);
-                    counts.add((i + 1), userCounts);
+                    counts.put(userCounts.getUserId(), userCounts);
                 }
             }
             return contactsCount.setCounts(counts);
+
         } catch (JSONException e) {
             LOG.severe("Error parsing ContactsCount object");
             LOG.severe(e.toString());
