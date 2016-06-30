@@ -83,7 +83,7 @@ public class Status extends ApiResource implements Serializable {
         return this;
     }
 
-    public int getTotalCount() {
+    public Integer getTotalCount() {
         return totalCount;
     }
 
