@@ -5,18 +5,14 @@ import java.io.Serializable;
 public class TeamCount implements Serializable {
 
     private String userId;
-    private int counts;
+    private Integer count;
 
-    public TeamCount() {
-    }
-
-    public TeamCount(String userId, int counts) {
-        this.userId = userId;
-        this.counts = counts;
-    }
-
+    @Override
     public String toString() {
-        return "userId=\'" + userId + "\', counts=\'" + counts;
+        return "TeamCount{" +
+                "userId='" + userId + '\'' +
+                ", count=" + count +
+                '}';
     }
 
     public String getUserId() {
@@ -28,12 +24,12 @@ public class TeamCount implements Serializable {
         return this;
     }
 
-    public int getCounts() {
-        return counts;
+    public Integer getCount() {
+        return count;
     }
 
-    public TeamCount setCounts(int counts) {
-        this.counts = counts;
+    public TeamCount setCount(Integer count) {
+        this.count = count;
         return this;
     }
 }

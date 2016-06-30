@@ -10,6 +10,8 @@ import java.util.List;
 
 public class Account implements Serializable {
 
+    public static final String USER_ID = "account_id";
+
     public static List<User> team;
     public static User loggedInUser;
     public static Settings settings;

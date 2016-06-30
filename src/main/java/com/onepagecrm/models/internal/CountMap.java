@@ -35,15 +35,12 @@ public class CountMap implements Serializable {
     private Integer y;
     private Integer z;
     private Integer totalCount;
-
-    private boolean account;
     private String userId;
 
     @Override
     public String toString() {
         return "CountMap{" +
-                "account=" + account +
-                ", userId='" + userId + '\'' +
+                "userId='" + userId + '\'' +
                 ", totalCount=" + totalCount +
                 '}';
     }
@@ -297,15 +294,6 @@ public class CountMap implements Serializable {
 
     public CountMap setTotalCount(Integer totalCount) {
         this.totalCount = totalCount;
-        return this;
-    }
-
-    public boolean isAccount() {
-        return account;
-    }
-
-    public CountMap setAccount(boolean account) {
-        this.account = account;
         return this;
     }
 

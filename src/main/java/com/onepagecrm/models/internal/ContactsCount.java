@@ -7,6 +7,11 @@ public class ContactsCount implements Serializable {
 
     private Map<String, CountMap> counts;
 
+    @Override
+    public String toString() {
+        return counts.toString();
+    }
+
     public Map<String, CountMap> getCounts() {
         return counts;
     }
@@ -14,10 +19,5 @@ public class ContactsCount implements Serializable {
     public ContactsCount setCounts(Map<String, CountMap> counts) {
         this.counts = counts;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return counts.toString();
     }
 }

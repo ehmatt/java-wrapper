@@ -5,32 +5,19 @@ import java.util.Map;
 
 public class StreamCount implements Serializable {
 
-    private Map<String, TeamCount> users;
-    private Integer all;
+    private Map<String, TeamCount> counts;
 
-    public StreamCount() {
-
-    }
-
+    @Override
     public String toString() {
-        return "users=\'" + users + "\', all=\'" + all;
+        return counts.toString();
     }
 
-    public Map<String, TeamCount> getUsers() {
-        return users;
+    public Map<String, TeamCount> getCounts() {
+        return counts;
     }
 
-    public StreamCount setUsers(Map<String, TeamCount> users) {
-        this.users = users;
-        return this;
-    }
-
-    public Integer getAll() {
-        return all;
-    }
-
-    public StreamCount setAll(Integer all) {
-        this.all = all;
+    public StreamCount setCounts(Map<String, TeamCount> counts) {
+        this.counts = counts;
         return this;
     }
 }

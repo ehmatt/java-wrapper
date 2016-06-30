@@ -1,5 +1,6 @@
 package com.onepagecrm.models.serializers;
 
+import com.onepagecrm.models.Account;
 import com.onepagecrm.models.internal.ContactsCount;
 import com.onepagecrm.models.internal.CountMap;
 import org.json.JSONArray;
@@ -24,15 +25,13 @@ public class ContactsCountSerializer extends BaseSerializer {
             if (contactsCountObject.has(ALL_TAG)) {
                 JSONObject allObject = contactsCountObject.getJSONObject(ALL_TAG);
                 CountMap accountTotals = CountMapSerializer.fromJsonObject(allObject);
-                accountTotals.setAccount(true);
-                counts.put("all", accountTotals);
+                counts.put(Account.USER_ID, accountTotals);
             }
             if (contactsCountObject.has(USERS_TAG)) {
                 JSONArray usersArray = contactsCountObject.getJSONArray(USERS_TAG);
                 for (int i = 0; i < usersArray.length(); i++) {
                     JSONObject userObject = usersArray.getJSONObject(i);
                     CountMap userCounts = CountMapSerializer.fromJsonObject(userObject);
-                    userCounts.setAccount(false);
                     counts.put(userCounts.getUserId(), userCounts);
                 }
             }

@@ -1,5 +1,6 @@
 package com.onepagecrm.models.serializers;
 
+import com.onepagecrm.models.Account;
 import com.onepagecrm.models.internal.StreamCount;
 import com.onepagecrm.models.internal.TeamCount;
 import org.json.JSONArray;
@@ -19,20 +20,23 @@ public class StreamCountSerializer extends BaseSerializer {
 
     public static StreamCount fromJsonObject(JSONObject streamCountObject) {
         StreamCount streamCount = new StreamCount();
-        Map<String, TeamCount> userCounts = new HashMap<>();
+        Map<String, TeamCount> counts = new HashMap<>();
         try {
             if (streamCountObject.has(ALL_TAG)) {
-                streamCount.setAll(streamCountObject.getInt(ALL_TAG));
+                TeamCount accountTotals = new TeamCount()
+                        .setUserId(Account.USER_ID)
+                        .setCount(streamCountObject.getInt(ALL_TAG));
+                counts.put(Account.USER_ID, accountTotals);
             }
             if (streamCountObject.has(USERS_TAG)) {
                 JSONArray usersArray = streamCountObject.getJSONArray(USERS_TAG);
                 for (int i = 0; i < usersArray.length(); i++) {
                     JSONObject userObject = usersArray.getJSONObject(i);
                     TeamCount count = TeamCountsSerializer.fromJsonObject(userObject);
-                    userCounts.put(count.getUserId(), count);
+                    counts.put(count.getUserId(), count);
                 }
             }
-            return streamCount.setUsers(userCounts);
+            return streamCount.setCounts(counts);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing StreamCount object");
