@@ -21,21 +21,29 @@ public class LoginSerializer extends BaseSerializer {
         try {
             parsedResponse = (String) BaseSerializer.fromString(responseBody);
             Account.loggedInUser = UserSerializer.fromString(parsedResponse);
-            addTagsToAccount(responseBody);
-            addStatusesToAccount(responseBody);
-            addLeadSourcesToAccount(responseBody);
-            addFiltersToAccount(responseBody);
-            addContactsCountToAccount(responseBody);
-            addStreamCountToAccount(responseBody);
-            addSettingsToAccount(responseBody);
-            addPredefinedActionsToAccount(responseBody);
-            updateTeamCounters();
+            updateLoginOnlyResources(responseBody);
+            updateDynamicResources(responseBody);
             return Account.loggedInUser;
 
         } catch (ClassCastException e) {
             exception = (OnePageException) BaseSerializer.fromString(responseBody);
             throw exception;
         }
+    }
+
+    public static void updateLoginOnlyResources(String responseBody) {
+        addFiltersToAccount(responseBody);
+        addSettingsToAccount(responseBody);
+        addPredefinedActionsToAccount(responseBody);
+    }
+
+    public static void updateDynamicResources(String responseBody) {
+        addLeadSourcesToAccount(responseBody);
+        addStatusesToAccount(responseBody);
+        addTagsToAccount(responseBody);
+        addContactsCountToAccount(responseBody);
+        addStreamCountToAccount(responseBody);
+        updateTeamCounters();
     }
 
     private static void addSettingsToAccount(String responseBody) {

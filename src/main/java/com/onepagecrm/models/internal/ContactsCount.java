@@ -15,4 +15,9 @@ public class ContactsCount implements Serializable {
         this.counts = counts;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return counts.toString();
+    }
 }

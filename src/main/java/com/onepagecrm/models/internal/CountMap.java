@@ -39,6 +39,15 @@ public class CountMap implements Serializable {
     private boolean account;
     private String userId;
 
+    @Override
+    public String toString() {
+        return "CountMap{" +
+                "account=" + account +
+                ", userId='" + userId + '\'' +
+                ", totalCount=" + totalCount +
+                '}';
+    }
+
     public Integer getOne() {
         return one;
     }
