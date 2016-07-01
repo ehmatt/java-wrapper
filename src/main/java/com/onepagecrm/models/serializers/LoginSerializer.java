@@ -206,20 +206,23 @@ public class LoginSerializer extends BaseSerializer {
         Account.loggedInUser.getAccount().setPredefinedActions(new PredefinedActionList(predefinedAction));
     }
 
+    @SuppressWarnings("AccessStaticViaInstance")
     private static void updateTeamCounters() {
-        List<User> team = Account.team;
-        StreamCount streamCount = Account.loggedInUser.getAccount().getStreamCount();
-        ContactsCount contactsCount = Account.loggedInUser.getAccount().getContactsCount();
-        if (contactsCount != null && contactsCount.getCounts().get(Account.USER_ID) != null) {
-            int totalAccountContacts = contactsCount.getCounts().get(Account.USER_ID).getTotalCount();
-            for (User user : team) {
-                user.setAllCount(totalAccountContacts);
-                user.setStreamCount(
-                        (streamCount.getCounts().get(user.getId()) == null) ? null :
-                                streamCount.getCounts().get(user.getId()).getCount());
-                user.setContactsCount(
-                        (contactsCount.getCounts().get(user.getId()) == null) ? null :
-                                contactsCount.getCounts().get(user.getId()).getTotalCount());
+        if (Account.loggedInUser != null && Account.loggedInUser.getAccount() != null) {
+            List<User> team = Account.loggedInUser.getAccount().getTeam();
+            StreamCount streamCount = Account.loggedInUser.getAccount().getStreamCount();
+            ContactsCount contactsCount = Account.loggedInUser.getAccount().getContactsCount();
+            if (contactsCount != null && contactsCount.getCounts().get(Account.USER_ID) != null) {
+                int totalAccountContacts = contactsCount.getCounts().get(Account.USER_ID).getTotalCount();
+                for (User user : team) {
+                    user.setAllCount(totalAccountContacts);
+                    user.setStreamCount(
+                            (streamCount.getCounts().get(user.getId()) == null) ? null :
+                                    streamCount.getCounts().get(user.getId()).getCount());
+                    user.setContactsCount(
+                            (contactsCount.getCounts().get(user.getId()) == null) ? null :
+                                    contactsCount.getCounts().get(user.getId()).getTotalCount());
+                }
             }
         }
     }
