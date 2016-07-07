@@ -15,19 +15,23 @@ public class ActionSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ActionSerializer.class.getName());
 
-    public static Action fromString(String pResponseBody) {
-        Action action = new Action();
+    public static Action fromString(String responseBody) throws OnePageException {
+        String parsedResponse;
+        OnePageException exception;
         try {
-            JSONObject responseObject = new JSONObject(pResponseBody);
-            JSONObject data = responseObject.optJSONObject(DATA_TAG);
-            JSONObject actionObj = data.optJSONObject(ACTION_TAG);
-            action = fromJsonObject(actionObj);
+            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(parsedResponse);
+            JSONObject actionObject = responseObject.optJSONObject(ACTION_TAG);
+            return fromJsonObject(actionObject);
+
+        } catch (ClassCastException e) {
+            exception = (OnePageException) BaseSerializer.fromString(responseBody);
+            throw exception;
         } catch (JSONException e) {
             LOG.severe("Could not find action object tags");
             LOG.severe(e.toString());
+            return new Action();
         }
-
-        return action;
     }
 
 
