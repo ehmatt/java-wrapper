@@ -1,5 +1,6 @@
 package com.onepagecrm.samples;
 
+import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Account;
 import com.onepagecrm.models.Contact;
@@ -40,7 +41,7 @@ public class ParseUpdatedCountersDriver {
             }
         }
 
-        Request.SERVER = Request.DEIMOS_SERVER;
+        OnePageCRM.setServer(Request.DEIMOS_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),

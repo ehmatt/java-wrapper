@@ -1,5 +1,6 @@
 package com.onepagecrm.net.request;
 
+import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.models.serializers.BaseSerializer;
 import com.onepagecrm.net.Response;
 
@@ -36,8 +37,6 @@ public abstract class Request {
     public static final int LOCAL_DEV_SERVER = 13;
     public static final int NETWORK_DEV_SERVER = 14;
     public static final int MOCK_REQUEST_SERVER = 15;
-
-    public static int SERVER = DEV_SERVER;
 
     protected static final String APP_URL = "https://app.onepagecrm.com/api/v3/";
     protected static final String DEV_URL = "http://dev.onepagecrm.com/api/v3/";
@@ -110,14 +109,12 @@ public abstract class Request {
     protected static final String X_AUTH = "X-OnePageCRM-AUTH";
     protected static final String X_SOURCE = "X-OnePageCRM-SOURCE";
 
-    public static String SOURCE = "java-client";
-
     protected HttpURLConnection connection;
 
     public abstract void setType();
 
     public void setEndpointUrl(String endpoint) {
-        endpointUrl = sUrlMap.get(SERVER) + endpoint + format;
+        endpointUrl = sUrlMap.get(OnePageCRM.SERVER) + endpoint + format;
     }
 
     /**
@@ -126,7 +123,7 @@ public abstract class Request {
      * @return
      */
     public Response send() {
-        boolean mockingRequest = (SERVER == MOCK_REQUEST_SERVER);
+        boolean mockingRequest = (OnePageCRM.SERVER == MOCK_REQUEST_SERVER);
         if (!mockingRequest) {
             setupAndConnect();
             setRequestMethod();

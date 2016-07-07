@@ -1,5 +1,6 @@
 package com.onepagecrm.net.request;
 
+import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.net.Authentication;
 
 public abstract class SignedRequest extends Request {
@@ -16,8 +17,8 @@ public abstract class SignedRequest extends Request {
             LOG.info("X_TS=" + Integer.toString(authData.getUnixTime()));
             connection.setRequestProperty(X_AUTH, authData.getSignature());
             LOG.info("X_AUTH=" + authData.getSignature());
-            connection.setRequestProperty(X_SOURCE, SOURCE);
-            LOG.info("X_SOURCE=" + SOURCE);
+            connection.setRequestProperty(X_SOURCE, OnePageCRM.SOURCE);
+            LOG.info("X_SOURCE=" + OnePageCRM.SOURCE);
         }
     }
 

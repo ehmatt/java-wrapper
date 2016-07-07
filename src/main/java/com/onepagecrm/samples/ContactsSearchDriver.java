@@ -1,5 +1,6 @@
 package com.onepagecrm.samples;
 
+import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.User;
 import com.onepagecrm.net.request.Request;
@@ -40,7 +41,7 @@ public class ContactsSearchDriver {
             }
         }
 
-        Request.SERVER = Request.DEV_SERVER;
+        OnePageCRM.setServer(Request.DEV_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),

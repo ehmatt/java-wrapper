@@ -2,6 +2,7 @@ package com.onepagecrm.samples;
 
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.Action;
 import com.onepagecrm.models.User;
 import com.onepagecrm.net.request.Request;
 
@@ -11,9 +12,9 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class DebugDriver {
+public class CreateQaWhenNoNaDriver {
 
-    private static final Logger LOG = Logger.getLogger(DebugDriver.class.getName());
+    private static final Logger LOG = Logger.getLogger(CreateQaWhenNoNaDriver.class.getName());
 
     public static void main(String[] args) throws OnePageException {
         Properties prop = new Properties();
@@ -39,17 +40,19 @@ public class DebugDriver {
             }
         }
 
-        OnePageCRM.setDEBUG(true);
-        OnePageCRM.setServer(Request.DEV_SERVER);
+        OnePageCRM.setServer(Request.APP_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
                 prop.getProperty("password"));
 
-        loggedInUser.actionStream();
+        LOG.info("Logged in User : " + loggedInUser);
 
-        loggedInUser.contacts();
-
-        loggedInUser.pipeline();
+        new Action()
+                .setText("Shouldn't be added")
+                .setStatus("queued")
+                .setContactId("5774e13c00d4afe3fb314f58")
+                .setAssigneeId("556cb8b61787fa02e000047e")
+                .save();
     }
 }
