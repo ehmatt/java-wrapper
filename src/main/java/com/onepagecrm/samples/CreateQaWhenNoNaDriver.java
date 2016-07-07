@@ -39,7 +39,7 @@ public class CreateQaWhenNoNaDriver {
             }
         }
 
-        Request.SERVER = Request.STAGING_SERVER;
+        Request.SERVER = Request.APP_SERVER;
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
@@ -50,8 +50,8 @@ public class CreateQaWhenNoNaDriver {
         new Action()
                 .setText("Shouldn't be added")
                 .setStatus("queued")
-                .setContactId("55acc4ed6f6e653fdc00004a")
-                .setAssigneeId("559cd1866f6e656707000001")
+                .setContactId("5774e13c00d4afe3fb314f58")
+                .setAssigneeId("556cb8b61787fa02e000047e")
                 .save();
     }
 }
