@@ -1,5 +1,6 @@
 package com.onepagecrm.samples;
 
+import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Action;
 import com.onepagecrm.models.User;
@@ -39,7 +40,7 @@ public class CreateQaWhenNoNaDriver {
             }
         }
 
-        Request.SERVER = Request.APP_SERVER;
+        OnePageCRM.setServer(Request.APP_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),

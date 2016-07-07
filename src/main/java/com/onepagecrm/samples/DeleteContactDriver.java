@@ -1,5 +1,6 @@
 package com.onepagecrm.samples;
 
+import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
@@ -40,7 +41,7 @@ public class DeleteContactDriver {
             }
         }
 
-        Request.SERVER = Request.DEIMOS_SERVER;
+        OnePageCRM.setServer(Request.DEIMOS_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),

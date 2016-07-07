@@ -1,5 +1,6 @@
 package com.onepagecrm.samples;
 
+import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.User;
@@ -43,7 +44,7 @@ public class ContactPartialDriver {
             }
         }
 
-        Request.SERVER = Request.DEV_SERVER;
+        OnePageCRM.setServer(Request.DEV_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
