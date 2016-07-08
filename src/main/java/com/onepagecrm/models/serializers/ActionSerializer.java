@@ -141,7 +141,7 @@ public class ActionSerializer extends BaseSerializer {
             );
             addJsonStringValue(action.getStatus(), actionObject, STATUS_TAG);
             addJsonStringValue(
-                    DateSerializer.toFormattedDateString(action.getDate()),
+                    DateSerializer.toFormattedDateTimeString(action.getDate()),
                     actionObject,
                     DATE_TAG
             );
