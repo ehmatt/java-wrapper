@@ -1,6 +1,8 @@
 package com.onepagecrm.samples;
 
+import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.Account;
 import com.onepagecrm.models.User;
 import com.onepagecrm.net.request.Request;
 
@@ -38,13 +40,13 @@ public class SettingsEndpoint {
             }
         }
 
-        Request.SERVER = Request.DEIMOS_SERVER;
+        OnePageCRM.setServer(Request.DEIMOS_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
                 prop.getProperty("password"));
 
         LOG.info("Logged in User : " + loggedInUser);
-        LOG.info("Settings : " + loggedInUser.getAccount().getSettings());
+        LOG.info("Settings : " + Account.settings);
     }
 }
