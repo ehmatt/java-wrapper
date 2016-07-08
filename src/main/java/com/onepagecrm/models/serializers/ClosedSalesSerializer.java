@@ -18,7 +18,7 @@ public class ClosedSalesSerializer extends BaseSerializer {
         return new SalesCycleClosure()
                 .setUserId(closureObject.optString(USER_ID_TAG))
                 .setClosedAt(DateSerializer.fromTimestamp(String.valueOf(closureObject.optInt(CLOSED_AT_TAG))))
-                .setComment(closureObject.optString(COMMENT_TAG))
+                .setComment((closureObject.isNull(COMMENT_TAG) ? null : closureObject.optString(COMMENT_TAG)))
                 .setContactId(contactId);
     }
 
