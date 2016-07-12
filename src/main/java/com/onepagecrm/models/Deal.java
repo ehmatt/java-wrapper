@@ -1,15 +1,15 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.internal.Paginator;
+import com.onepagecrm.models.serializers.DealListSerializer;
 import com.onepagecrm.models.serializers.DealSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Deal extends ApiResource implements Serializable {
 
@@ -40,6 +40,23 @@ public class Deal extends ApiResource implements Serializable {
 
     public Deal save() throws OnePageException {
         return this.isValid() ? update() : create();
+    }
+
+    public static DealList list(String contactId) throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("contact_id", contactId);
+        GetRequest getRequest = new GetRequest(DEALS_ENDPOINT, Query.fromParams(params));
+        Response response = getRequest.send();
+        return DealListSerializer.fromString(response.getResponseBody());
+    }
+
+
+    public static DealList list(String contactId, Paginator pPaginator) throws OnePageException {
+        Map<String, Object> params = Query.params(pPaginator);
+        params.put("contact_id", contactId);
+        GetRequest getRequest = new GetRequest(DEALS_ENDPOINT, Query.fromParams(params));
+        Response response = getRequest.send();
+        return DealListSerializer.fromString(response.getResponseBody());
     }
 
     private Deal create() throws OnePageException {
