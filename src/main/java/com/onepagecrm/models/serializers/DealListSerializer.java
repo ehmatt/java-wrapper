@@ -3,6 +3,7 @@ package com.onepagecrm.models.serializers;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Deal;
 import com.onepagecrm.models.DealList;
+import com.onepagecrm.models.internal.Paginator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,8 +31,11 @@ public class DealListSerializer extends BaseSerializer {
 
         try {
             parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONArray dealsArray = new JSONObject(parsedResponse).getJSONArray(DEALS_TAG);
+            JSONObject responseObject = new JSONObject(parsedResponse);
+            JSONArray dealsArray = responseObject.getJSONArray(DEALS_TAG);
             deals = fromJsonArray(dealsArray);
+            Paginator paginator = RequestMetadataSerializer.fromJsonObject(responseObject);
+            deals.setPaginator(paginator);
 
         } catch (ClassCastException e) {
             exception = (OnePageException) BaseSerializer.fromString(responseBody);
