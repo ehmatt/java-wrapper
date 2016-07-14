@@ -10,37 +10,38 @@ import java.util.Map;
  * Created by mahasamatman on 13.07.16.
  */
 public class NoteList extends ResourceList<Note> implements Serializable {
-	private String contactId;
+    
+    private String contactId;
 
-	public NoteList() {
-		super(null);
-	}
+    public NoteList() {
+        super(null);
+    }
 
-	public NoteList(List<Note> list, String pContactId) {
-		super(list);
-		contactId = pContactId;
-	}
+    public NoteList(List<Note> list, String contactId) {
+        super(list);
+        this.contactId = contactId;
+    }
 
-	public NoteList(List<Note> list) {
-		super(list);
-	}
+    public NoteList(List<Note> list) {
+        super(list);
+    }
 
-	public String getContactId() {
-		return contactId;
-	}
+    public String getContactId() {
+        return contactId;
+    }
 
-	public void setContactId(String pContactId) {
-		contactId = pContactId;
-	}
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
+    }
 
-	@Override
-	public List<Note> nextPage(Map<String, Object> params) throws OnePageException {
-		this.paginator.getNextPageNo();
-		return Note.list(contactId, paginator);
-	}
+    @Override
+    public List<Note> nextPage(Map<String, Object> params) throws OnePageException {
+        this.paginator.getNextPageNo();
+        return Note.list(contactId, paginator);
+    }
 
-	@Override
-	public List<Note> refresh(Map<String, Object> params) throws OnePageException {
-		return null;
-	}
+    @Override
+    public List<Note> refresh(Map<String, Object> params) throws OnePageException {
+        return null;
+    }
 }
