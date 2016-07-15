@@ -50,7 +50,7 @@ public class CreateQaWhenNoNaDriver {
 
         new Action()
                 .setText("Shouldn't be added")
-                .setStatus("queued")
+                .setStatus(Action.Status.QUEUED)
                 .setContactId("5774e13c00d4afe3fb314f58")
                 .setAssigneeId("556cb8b61787fa02e000047e")
                 .save();

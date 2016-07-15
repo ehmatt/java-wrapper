@@ -51,7 +51,7 @@ public class ActionDateTimeDriver {
 
         new Action()
                 .setText("This one will be added")
-                .setStatus("date_time")
+                .setStatus(Action.Status.DATE_TIME)
                 .setDate(new Date())
                 .setContactId("5774e13c00d4afe3fb314f58")
                 .setAssigneeId(loggedInUser.getId())
@@ -59,7 +59,7 @@ public class ActionDateTimeDriver {
 
         new Action()
                 .setText("Should throw exception")
-                .setStatus("time")
+                .setStatus(Action.Status.DATE_TIME)
                 .setContactId("5774e13c00d4afe3fb314f58")
                 .setAssigneeId(loggedInUser.getId())
                 .save();

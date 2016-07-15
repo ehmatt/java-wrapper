@@ -22,12 +22,42 @@ import java.util.Map;
 public class Action extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -7486991046434989805L;
+    private static final String STATUS_ASAP = "asap";
+    private static final String STATUS_DATE = "date";
+    private static final String STATUS_DATE_TIME = "date_time";
+    private static final String STATUS_WAITING = "waiting";
+    private static final String STATUS_QUEUED = "queued";
 
-    public static final String STATUS_ASAP = "asap";
-    public static final String STATUS_DATE = "date";
-    public static final String STATUS_DATE_TIME = "date_time";
-    public static final String STATUS_WAITING = "waiting";
-    public static final String STATUS_QUEUED = "queued";
+    public enum Status {ASAP(STATUS_ASAP), DATE(STATUS_DATE), DATE_TIME(STATUS_DATE_TIME), WAITING(STATUS_WAITING), QUEUED(STATUS_QUEUED);
+        private String status;
+
+        Status(String pStatus) {
+            status = pStatus;
+        }
+
+        @Override
+        public String toString() {
+            return status;
+        }
+
+        public static Status fromString(String string) {
+            switch (string) {
+                case STATUS_ASAP:
+                    return ASAP;
+                case STATUS_DATE:
+                    return DATE;
+                case STATUS_DATE_TIME:
+                    return DATE_TIME;
+                case STATUS_WAITING:
+                    return WAITING;
+                case STATUS_QUEUED:
+                    return QUEUED;
+                default:
+                    return null;
+            }
+        }
+
+    }
 
     private String id;
     private String assigneeId;
@@ -35,7 +65,7 @@ public class Action extends ApiResource implements Serializable {
     private String text;
     private Date createdAt;
     private Date modifiedAt;
-    private String status;
+    private Status status;
     private Date date;
     private Date exactTime;
     private int dateColor;
@@ -177,11 +207,11 @@ public class Action extends ApiResource implements Serializable {
         return this;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public Action setStatus(String status) {
+    public Action setStatus(Status status) {
         this.status = status;
         return this;
     }
@@ -210,7 +240,7 @@ public class Action extends ApiResource implements Serializable {
             return DateSerializer.toFriendlyDateString(this.date).toUpperCase();
         } else if (this.status != null) {
             // Return status (uppercase).
-            return this.status.toUpperCase();
+            return this.status.toString().toUpperCase();
         } else {
             // This is needed to correctly display contacts w/out NA's in Action Stream.
             return null;

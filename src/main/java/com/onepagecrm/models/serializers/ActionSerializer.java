@@ -86,7 +86,7 @@ public class ActionSerializer extends BaseSerializer {
             }
             if (actionObject.has(STATUS_TAG)) {
                 status = actionObject.getString(STATUS_TAG);
-                action.setStatus(status);
+                action.setStatus(Action.Status.fromString(status));
             }
             if (actionObject.has(DATE_TAG)) {
                 if (!actionObject.isNull(DATE_TAG)) {
@@ -143,12 +143,29 @@ public class ActionSerializer extends BaseSerializer {
                     actionObject,
                     MODIFIED_AT_TAG
             );
-            addJsonStringValue(action.getStatus(), actionObject, STATUS_TAG);
-            addJsonStringValue(
-                    DateSerializer.toFormattedDateTimeString(action.getDate()),
-                    actionObject,
-                    DATE_TAG
-            );
+            addJsonStringValue(action.getStatus().toString(), actionObject, STATUS_TAG);
+            switch (action.getStatus()) {
+                case ASAP:
+                    break;
+                case DATE:
+                    addJsonStringValue(
+                            DateSerializer.toFormattedDateString(action.getDate()),
+                            actionObject,
+                            DATE_TAG
+                    );
+                    break;
+                case DATE_TIME:
+                    addJsonStringValue(
+                            DateSerializer.toFormattedDateTimeString(action.getDate()),
+                            actionObject,
+                            DATE_TAG
+                    );
+                    break;
+                case WAITING:
+                    break;
+                case QUEUED:
+                    break;
+            }
         }
         return actionObject.toString();
     }
