@@ -128,13 +128,14 @@ public class Contact extends ApiResource implements Serializable {
         return this;
     }
 
-    public void closeSalesCycle(CloseSalesCycle closeSalesCycle) {
+    public Contact closeSalesCycle(CloseSalesCycle closeSalesCycle) throws OnePageException {
         Request request = new PutRequest(
                 CLOSE_SALES_CYCLE_ENDPOINT.replace("{id}", this.getId()),
                 null,
                 CloseSalesCycleSerializer.toJsonObject(closeSalesCycle)
         );
         Response response = request.send();
+        return ContactSerializer.fromString(response.getResponseBody());
     }
 
     public void delete() throws OnePageException {
