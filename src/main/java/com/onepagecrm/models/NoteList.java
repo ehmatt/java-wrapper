@@ -10,7 +10,7 @@ import java.util.Map;
  * Created by mahasamatman on 13.07.16.
  */
 public class NoteList extends ResourceList<Note> implements Serializable {
-    
+
     private String contactId;
 
     public NoteList() {
