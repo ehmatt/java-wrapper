@@ -174,6 +174,7 @@ public class BaseSerializer {
     public static final String SHOW_TIDY_STREAM_TAG = "show_tidy_stream";
 
     // DEALS TAGS
+    public static final String PIPELINE_SORT_TAG = "pipeline_sort";
     public static final String DEAL_TAG = "deal";
     public static final String DEALS_TAG = "deals";
     public static final String AMOUNT_TAG = "amount";
