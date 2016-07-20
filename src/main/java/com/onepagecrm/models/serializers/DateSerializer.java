@@ -176,7 +176,7 @@ public class DateSerializer extends BaseSerializer {
 
     public static Long toTimestamp(Date date) {
         if (date != null) {
-            return date.getTime();
+            return date.getTime() / 1000;
         }
         return null;
     }
