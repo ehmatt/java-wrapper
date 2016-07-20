@@ -40,7 +40,7 @@ public class DebugDriver {
         }
 
         OnePageCRM.setDEBUG(true);
-        OnePageCRM.setServer(Request.DEV_SERVER);
+        OnePageCRM.setServer(Request.APP_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),

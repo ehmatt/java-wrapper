@@ -2,23 +2,25 @@ package com.onepagecrm.samples;
 
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Action;
+import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.User;
-import com.onepagecrm.models.serializers.DateSerializer;
 import com.onepagecrm.net.request.Request;
+import org.json.JSONException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class ActionDateTimeDriver {
+/**
+ * Created by Cillian Myles <cillian@onepagecrm.com> on 03/12/2015.
+ */
+public class AddContactAltCharsDriver {
 
-    private static final Logger LOG = Logger.getLogger(ActionDateTimeDriver.class.getName());
+    private static final Logger LOG = Logger.getLogger(Driver.class.getName());
 
-    public static void main(String[] args) throws OnePageException {
+    public static void main(String[] args) throws OnePageException, JSONException {
         Properties prop = new Properties();
         InputStream input = null;
 
@@ -50,16 +52,9 @@ public class ActionDateTimeDriver {
 
         LOG.info("Logged in User : " + loggedInUser);
 
-        // Fri, 01 Jul 2016 08:00:00 GMT = 1467360000 = Fri, 01 Jul 2016 9:00:00 AM (IST)
-        Date firstJulyAt9Am = DateSerializer.fromTimestamp(String.valueOf(1467360000));
-
-        new Action()
-                .setText("This one will be added")
-                .setStatus(Action.Status.DATE_TIME)
-                .setDate(firstJulyAt9Am)
-                .setExactTime(firstJulyAt9Am)
-                .setContactId("5774e13c00d4afe3fb314f58")
-                .setAssigneeId(loggedInUser.getId())
+        new Contact()
+                .setFirstName("ľščťžýáíé")
+                .setLastName("ľščťžýáíé")
                 .save();
     }
 }
