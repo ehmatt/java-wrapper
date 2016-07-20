@@ -10,6 +10,7 @@ public class Country implements Serializable {
     private String code;
     private String currency;
     private String prefix;
+    private Integer popularity;
 
     @Override
     public String toString() {
@@ -52,6 +53,15 @@ public class Country implements Serializable {
 
     public Country setPrefix(String prefix) {
         this.prefix = prefix;
+        return this;
+    }
+
+    public Integer getPopularity() {
+        return popularity;
+    }
+
+    public Country setPopularity(Integer popularity) {
+        this.popularity = popularity;
         return this;
     }
 }

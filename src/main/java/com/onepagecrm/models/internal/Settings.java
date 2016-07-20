@@ -6,15 +6,15 @@ import java.util.List;
 public class Settings implements Serializable {
 
     private Reminder reminder;
-    private String timeZone; // *****************
-    private String dateFormat; // *****************
+    private String timeZone;
+    private String dateFormat;
     private Integer listingSize;
-    private String currency; // *****************
+    private String currency;
     private String currencySymbol;
-    private List<Country> popularCountries; // *****************
+    private List<Country> popularCountries;
     private List<DealStage> dealStages;
-    private String defaultView; // *****************
-    private Boolean showTidyStream; // *****************
+    private String defaultView;
+    private Boolean showTidyStream;
 
     public Settings() {
 
