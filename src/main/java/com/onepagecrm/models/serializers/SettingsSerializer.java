@@ -29,11 +29,13 @@ public class SettingsSerializer extends BaseSerializer {
     private static List<Country> fromPopularCountryArray(JSONArray choicesArray) {
         List<Country> countries = new LinkedList<>();
         List<String> countryCodes = BaseSerializer.toListOfStrings(choicesArray);
+        int lastIndex = countryCodes.size() - 1;
         for (int i = 0; i < countryCodes.size(); i++) {
             Country country = new Country()
-                    .setCode(countryCodes.get(i))
+                    .setCode(countryCodes.get(lastIndex))
                     .setPopularity(i);
             countries.add(i, country);
+            lastIndex--;
         }
         return countries;
     }
