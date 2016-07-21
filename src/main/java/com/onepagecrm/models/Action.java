@@ -22,6 +22,7 @@ import java.util.Map;
 public class Action extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -7486991046434989805L;
+
     private static final String STATUS_ASAP = "asap";
     private static final String STATUS_DATE = "date";
     private static final String STATUS_DATE_TIME = "date_time";

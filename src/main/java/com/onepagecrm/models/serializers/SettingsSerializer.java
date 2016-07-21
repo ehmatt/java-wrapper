@@ -32,8 +32,8 @@ public class SettingsSerializer extends BaseSerializer {
         int lastIndex = countryCodes.size() - 1;
         for (int i = 0; i < countryCodes.size(); i++) {
             Country country = new Country()
-                    .setCode(countryCodes.get(lastIndex))
-                    .setPopularity(i);
+                    .setCode(countryCodes.get(i))
+                    .setPopularity(lastIndex);
             countries.add(i, country);
             lastIndex--;
         }
