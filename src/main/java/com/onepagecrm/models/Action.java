@@ -22,6 +22,7 @@ import java.util.Map;
 public class Action extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -7486991046434989805L;
+
     private static final String STATUS_ASAP = "asap";
     private static final String STATUS_DATE = "date";
     private static final String STATUS_DATE_TIME = "date_time";
@@ -29,7 +30,8 @@ public class Action extends ApiResource implements Serializable {
     private static final String STATUS_QUEUED = "queued";
     private static final String STATUS_DONE = "done";
 
-    public enum Status {ASAP(STATUS_ASAP), DATE(STATUS_DATE), DATE_TIME(STATUS_DATE_TIME), WAITING(STATUS_WAITING), QUEUED(STATUS_QUEUED),
+    public enum Status {
+        ASAP(STATUS_ASAP), DATE(STATUS_DATE), DATE_TIME(STATUS_DATE_TIME), WAITING(STATUS_WAITING), QUEUED(STATUS_QUEUED),
         DONE("done");
         private String status;
 

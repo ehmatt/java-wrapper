@@ -164,6 +164,7 @@ public class BaseSerializer {
     public static final String CODE_TAG = "code";
     public static final String PHONE_PREFIX_TAG = "phone_prefix";
     public static final String CURRENCY_TAG = "currency";
+    public static final String POPULARITY_TAG = "popularity";
 
     // SETTINGS TAGS
     public static final String TIME_ZONE_TAG = "time_zone";

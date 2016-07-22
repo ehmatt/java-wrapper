@@ -10,13 +10,26 @@ public class Country implements Serializable {
     private String code;
     private String currency;
     private String prefix;
+    private Integer popularity;
+
+    public Country() {
+
+    }
 
     @Override
     public String toString() {
         return CountrySerializer.toJsonObject(this);
     }
 
-    public Country() {
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof Country) {
+            Country toBeCompared = (Country) object;
+            if (this.getCode() != null && toBeCompared.getCode() != null) {
+                return this.getCode().equals(toBeCompared.getCode());
+            }
+        }
+        return false;
     }
 
     public String getName() {
@@ -52,6 +65,15 @@ public class Country implements Serializable {
 
     public Country setPrefix(String prefix) {
         this.prefix = prefix;
+        return this;
+    }
+
+    public Integer getPopularity() {
+        return popularity;
+    }
+
+    public Country setPopularity(Integer popularity) {
+        this.popularity = popularity;
         return this;
     }
 }

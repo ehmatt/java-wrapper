@@ -81,6 +81,7 @@ public class CountrySerializer extends BaseSerializer {
         addJsonStringValue(country.getCode(), countryObject, CODE_TAG);
         addJsonStringValue(country.getPrefix(), countryObject, PHONE_PREFIX_TAG);
         addJsonStringValue(country.getCurrency(), countryObject, CURRENCY_TAG);
+        addJsonIntegerValue(country.getPopularity(), countryObject, POPULARITY_TAG);
         return countryObject.toString();
     }
 
