@@ -163,7 +163,7 @@ public class ActionSerializer extends BaseSerializer {
                     addJsonLongValue(
                             DateSerializer.toTimestamp(action.getExactTime()),
                             actionObject,
-                            EXACT_TIME_INT_TAG
+                            EXACT_TIME_TAG
                     );
                     break;
                 case WAITING:
