@@ -12,19 +12,24 @@ public class DateSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(DateSerializer.class.getName());
 
+    public static TimeZone timeZone = TimeZone.getTimeZone("UTC");
     public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    public static SimpleDateFormat dateTimeFormat;
-
-    static {
-        dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        dateTimeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-    }
-
+    public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     public static SimpleDateFormat dateCallTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
     public static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
     public static SimpleDateFormat friendlyDateFormat = new SimpleDateFormat("MMM dd");
     public static SimpleDateFormat friendlyDateAndYearFormat = new SimpleDateFormat("MMM dd, yyyy");
     public static SimpleDateFormat friendlyDateTimeAndYearFormat = new SimpleDateFormat("HH:mm MMM dd, yyyy");
+
+    static {
+        dateFormat.setTimeZone(timeZone);
+        dateTimeFormat.setTimeZone(timeZone);
+        dateCallTimeFormat.setTimeZone(timeZone);
+        timeFormat.setTimeZone(timeZone);
+        friendlyDateFormat.setTimeZone(timeZone);
+        friendlyDateAndYearFormat.setTimeZone(timeZone);
+        friendlyDateTimeAndYearFormat.setTimeZone(timeZone);
+    }
 
     private static final String ASAP = "ASAP";
     private static final String TODAY = "TODAY";
