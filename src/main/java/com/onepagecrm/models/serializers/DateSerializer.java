@@ -12,7 +12,7 @@ public class DateSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(DateSerializer.class.getName());
 
-    public static TimeZone timeZone = TimeZone.getTimeZone("UTC");
+    public static TimeZone defaultTimeZone = TimeZone.getTimeZone("UTC");
     public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     public static SimpleDateFormat dateCallTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
@@ -22,13 +22,7 @@ public class DateSerializer extends BaseSerializer {
     public static SimpleDateFormat friendlyDateTimeAndYearFormat = new SimpleDateFormat("HH:mm MMM dd, yyyy");
 
     static {
-        dateFormat.setTimeZone(timeZone);
-        dateTimeFormat.setTimeZone(timeZone);
-        dateCallTimeFormat.setTimeZone(timeZone);
-        timeFormat.setTimeZone(timeZone);
-        friendlyDateFormat.setTimeZone(timeZone);
-        friendlyDateAndYearFormat.setTimeZone(timeZone);
-        friendlyDateTimeAndYearFormat.setTimeZone(timeZone);
+        setTimeZone(defaultTimeZone);
     }
 
     private static final String ASAP = "ASAP";
@@ -39,11 +33,14 @@ public class DateSerializer extends BaseSerializer {
     private static final int TODAY_COLOR = OPCRMColors.FLAG_ORANGE;
     private static final int FUTURE_WAITING_COLOR = OPCRMColors.FLAG_GREY_BROWN;
 
-    public static Long dateInMillis(Date date) {
-        if (date != null) {
-            return date.getTime();
-        }
-        return null;
+    public static void setTimeZone(final TimeZone timeZone) {
+        dateFormat.setTimeZone(timeZone);
+        dateTimeFormat.setTimeZone(timeZone);
+        dateCallTimeFormat.setTimeZone(timeZone);
+        timeFormat.setTimeZone(timeZone);
+        friendlyDateFormat.setTimeZone(timeZone);
+        friendlyDateAndYearFormat.setTimeZone(timeZone);
+        friendlyDateTimeAndYearFormat.setTimeZone(timeZone);
     }
 
     public static Date fromFormattedString(String dateStr) {
@@ -182,6 +179,13 @@ public class DateSerializer extends BaseSerializer {
     public static Long toTimestamp(Date date) {
         if (date != null) {
             return date.getTime() / 1000;
+        }
+        return null;
+    }
+
+    public static Long dateInMillis(Date date) {
+        if (date != null) {
+            return date.getTime();
         }
         return null;
     }
