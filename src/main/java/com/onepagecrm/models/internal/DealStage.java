@@ -63,8 +63,8 @@ public class DealStage implements Serializable {
     public boolean equals(Object object) {
         if (object instanceof DealStage) {
             DealStage toCompare = (DealStage) object;
-            if (this.getUniqueIdentifier() != null && toCompare.getUniqueIdentifier() != null) {
-                return this.getUniqueIdentifier().equals(toCompare.getUniqueIdentifier());
+            if (this.getDisplayText() != null && toCompare.getDisplayText() != null) {
+                return this.getDisplayText().equals(toCompare.getDisplayText());
             }
         }
         return false;
