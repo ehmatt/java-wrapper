@@ -182,11 +182,4 @@ public class DateSerializer extends BaseSerializer {
         }
         return null;
     }
-
-    public static Long dateInMillis(Date date) {
-        if (date != null) {
-            return date.getTime();
-        }
-        return null;
-    }
 }
