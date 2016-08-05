@@ -59,7 +59,7 @@ public abstract class Request {
 
     static {
         sUrlMap.put(APP_SERVER, APP_URL);
-        sUrlMap.put(DEV_SERVER, DEV_URL);
+        sUrlMap.put(DEV_SERVER, DEIMOS_URL);
         sUrlMap.put(STAGING_SERVER, STAGING_URL);
         sUrlMap.put(ATLAS_SERVER, ATLAS_URL);
         sUrlMap.put(CALYPSO_SERVER, CALYPSO_URL);
@@ -219,7 +219,6 @@ public abstract class Request {
                 break;
             case DELETE:
                 try {
-                    connection.setDoOutput(true);
                     connection.setRequestMethod(DELETE);
                 } catch (ProtocolException e) {
                     LOG.severe("Could not set request as DELETE successfully");
