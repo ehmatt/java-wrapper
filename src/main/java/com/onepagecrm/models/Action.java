@@ -9,10 +9,7 @@ import com.onepagecrm.models.serializers.DateSerializer;
 import com.onepagecrm.models.serializers.PredefinedActionSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
-import com.onepagecrm.net.request.GetRequest;
-import com.onepagecrm.net.request.PostRequest;
-import com.onepagecrm.net.request.PutRequest;
-import com.onepagecrm.net.request.Request;
+import com.onepagecrm.net.request.*;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -122,6 +119,11 @@ public class Action extends ApiResource implements Serializable {
         Request request = new PostRequest(ACTIONS_ENDPOINT, null, ActionSerializer.toJsonObject(this));
         Response response = request.send();
         return ActionSerializer.fromString(response.getResponseBody());
+    }
+
+    public void delete() throws OnePageException {
+        Request request = new DeleteRequest(ACTIONS_ENDPOINT + "/" + this.getId());
+        Response response = request.send();
     }
 
     private Action update() throws OnePageException {
