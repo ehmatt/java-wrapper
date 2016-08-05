@@ -28,6 +28,14 @@ public class DealFabricator extends BaseFabricator {
         return list().get(0);
     }
 
+    public static Deal won() {
+        return list().get(12);
+    }
+
+    public static Deal lost() {
+        return list().get(10);
+    }
+
     public static DealList list() {
         // Create a list of Deals.
         DealList deals = new DealList();
