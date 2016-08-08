@@ -145,7 +145,7 @@ public class User extends ApiResource implements Serializable {
     }
 
     private ContactList getContacts(final String endpoint, String query) throws OnePageException {
-        query += "&fields=all,deals(all),notes(all),calls(all)";
+        query += "&" + Contact.EXTRA_FIELDS;
         Request request = new GetRequest(endpoint, query);
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
