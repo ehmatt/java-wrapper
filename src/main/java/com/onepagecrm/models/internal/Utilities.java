@@ -5,6 +5,7 @@ import org.apache.commons.codec.binary.Base64;
 import java.io.*;
 import java.util.logging.Logger;
 
+@SuppressWarnings("WeakerAccess")
 public class Utilities {
 
     private static final Logger LOG = Logger.getLogger(Utilities.class.getName());
@@ -55,16 +56,6 @@ public class Utilities {
         return null;
     }
 
-    public static String stripHtml(String input) {
-        if (notNullOrEmpty(input))
-            return input
-                    .replace("<b>", "")
-                    .replace("</b>", "")
-                    .replace("<i>", "")
-                    .replace("</i>", "");
-        return null;
-    }
-
     public static String stripBbCode(String input) {
         if (notNullOrEmpty(input))
             return input
@@ -72,6 +63,16 @@ public class Utilities {
                     .replace("[/b]", "")
                     .replace("[i]", "")
                     .replace("[/i]", "");
+        return null;
+    }
+
+    public static String stripHtml(String input) {
+        if (notNullOrEmpty(input))
+            return input
+                    .replace("<b>", "")
+                    .replace("</b>", "")
+                    .replace("<i>", "")
+                    .replace("</i>", "");
         return null;
     }
 
