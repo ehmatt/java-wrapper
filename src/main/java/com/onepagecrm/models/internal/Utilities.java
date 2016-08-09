@@ -5,9 +5,12 @@ import org.apache.commons.codec.binary.Base64;
 import java.io.*;
 import java.util.logging.Logger;
 
+@SuppressWarnings("WeakerAccess")
 public class Utilities {
 
     private static final Logger LOG = Logger.getLogger(Utilities.class.getName());
+
+    /* Text Utilities */
 
     public static boolean notNullOrEmpty(String toBeChecked) {
         return toBeChecked != null && !toBeChecked.equals("");
@@ -30,6 +33,50 @@ public class Utilities {
             return word.substring(0, 1).toUpperCase();
         return null;
     }
+
+    /* Specifically for Notes, Calls, Deals */
+
+    public static String bbCodeToHtml(String input) {
+        if (notNullOrEmpty(input))
+            return input
+                    .replace("[b]", "<b>")
+                    .replace("[/b]", "</b>")
+                    .replace("[i]", "<i>")
+                    .replace("[/i]", "</i>");
+        return null;
+    }
+
+    public static String htmlToBbCode(String input) {
+        if (notNullOrEmpty(input))
+            return input
+                    .replace("<b>", "[b]")
+                    .replace("</b>", "[/b]")
+                    .replace("<i>", "[i]")
+                    .replace("</i>", "[/i]");
+        return null;
+    }
+
+    public static String stripBbCode(String input) {
+        if (notNullOrEmpty(input))
+            return input
+                    .replace("[b]", "")
+                    .replace("[/b]", "")
+                    .replace("[i]", "")
+                    .replace("[/i]", "");
+        return null;
+    }
+
+    public static String stripHtml(String input) {
+        if (notNullOrEmpty(input))
+            return input
+                    .replace("<b>", "")
+                    .replace("</b>", "")
+                    .replace("<i>", "")
+                    .replace("</i>", "");
+        return null;
+    }
+
+    /* File Utilities */
 
     /**
      * Get the String file contents at a given path.
