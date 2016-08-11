@@ -105,13 +105,13 @@ public class DealSerializer extends BaseSerializer {
                     deal.setCloseDate(closeDate);
                 }
             }
-            if(dealObject.has(CONTACT_INFO_TAG)) {
+            if (dealObject.has(CONTACT_INFO_TAG)) {
                 JSONObject contactInfoObj = dealObject.getJSONObject(CONTACT_INFO_TAG);
                 Deal.ContactInfo contactInfo = new Deal.ContactInfo();
                 if (contactInfoObj.has(CONTACT_NAME_TAG)) {
                     contactInfo.setContactName(contactInfoObj.getString(CONTACT_NAME_TAG));
                 }
-                if(contactInfoObj.has(COMPANY_TAG)) {
+                if (contactInfoObj.has(COMPANY_TAG)) {
                     contactInfo.setCompany(contactInfoObj.getString(COMPANY_TAG));
                 }
                 deal.setContactInfo(contactInfo);
@@ -132,9 +132,9 @@ public class DealSerializer extends BaseSerializer {
                 JSONArray relatedNotes = dataObject.getJSONArray("related_notes");
                 notes = NoteSerializer.fromJsonArray(relatedNotes);
             }
-        } catch(JSONException e) {
-                    LOG.severe("Error parsing Deal object from response body");
-                    LOG.severe(e.toString());
+        } catch (JSONException e) {
+            LOG.severe("Error parsing Deal object from response body");
+            LOG.severe(e.toString());
         }
         return notes;
     }
@@ -174,7 +174,7 @@ public class DealSerializer extends BaseSerializer {
         );
         addJsonBooleanValue(deal.getHasRelatedNotes(), dealObject, HAS_RELATED_NOTES_TAG);
         addJsonStringValue(
-                DateSerializer.toFormattedDateTimeString(deal.getCloseDate()),
+                DateSerializer.toFormattedDateString(deal.getCloseDate()),
                 dealObject,
                 CLOSE_DATE_TAG
         );
