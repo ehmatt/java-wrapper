@@ -29,6 +29,7 @@ public class BaseSerializer {
     public static final String USER_TAG = "user";
     public static final String FIRST_NAME_TAG = "first_name";
     public static final String LAST_NAME_TAG = "last_name";
+    public static final String LETTER_TAG = "letter";
     public static final String COMPANY_NAME_TAG = "company_name";
     public static final String PHOTO_URL_TAG = "photo_url";
     public static final String BCC_EMAIL_TAG = "bcc_email";
