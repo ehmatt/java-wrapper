@@ -1,7 +1,6 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.internal.AlphabeticalIndices;
 import com.onepagecrm.models.internal.CloseSalesCycle;
 import com.onepagecrm.models.internal.SalesCycleClosure;
 import com.onepagecrm.models.serializers.CloseSalesCycleSerializer;
@@ -37,7 +36,7 @@ public class Contact extends ApiResource implements Serializable {
     private String ownerId;
     private String firstName;
     private String lastName;
-    private String alphaIndex;
+    private String letter;
     private String photoUrl;
     private String jobTitle;
     private String background;
@@ -263,12 +262,16 @@ public class Contact extends ApiResource implements Serializable {
 
     public Contact setLastName(String lastName) {
         this.lastName = lastName;
-        this.alphaIndex = AlphabeticalIndices.getIndex(lastName);
         return this;
     }
 
-    public String getAlphaIndex() {
-        return alphaIndex;
+    public String getLetter() {
+        return letter;
+    }
+
+    public Contact setLetter(String letter) {
+        this.letter = letter;
+        return this;
     }
 
     public String getPhotoUrl() {

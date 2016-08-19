@@ -52,6 +52,9 @@ public class ContactSerializer extends BaseSerializer {
             if (contactObject.has(LAST_NAME_TAG)) {
                 contact.setLastName(contactObject.getString(LAST_NAME_TAG));
             }
+            if (contactObject.has(LETTER_TAG)) {
+                contact.setLetter(contactObject.getString(LETTER_TAG));
+            }
             if (contactObject.has(OWNER_ID_TAG)) {
                 contact.setOwnerId(contactObject.getString(OWNER_ID_TAG));
             }
