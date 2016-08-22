@@ -13,8 +13,11 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class Tag extends BaseResource implements Serializable {
+
+    private static final Logger LOG = Logger.getLogger(Tag.class.getSimpleName());
 
     private static final String TAGS_ENDPOINT = ApiResource.TAGS_ENDPOINT;
 
@@ -51,7 +54,7 @@ public class Tag extends BaseResource implements Serializable {
     }
 
     private String addNameToEndpoint(String endpoint) {
-        return endpoint + "/" + this.name;
+        return endpoint + "/" + this.name.replace(" ", "%20");
     }
 
     public Tag() {
