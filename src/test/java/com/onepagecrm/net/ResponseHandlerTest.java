@@ -1,7 +1,7 @@
 package com.onepagecrm.net;
 
 import com.onepagecrm.BaseTest;
-import com.onepagecrm.exceptions.AuthenticationExpection;
+import com.onepagecrm.exceptions.AuthenticationException;
 import com.onepagecrm.exceptions.BadRequestException;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Call;
@@ -117,7 +117,7 @@ public class ResponseHandlerTest extends BaseTest {
         } catch (OnePageException exception) {
             // We are expecting this Exception to be thrown.
             assertTrue("No auth token response misinterpreted",
-                    exception instanceof AuthenticationExpection);
+                    exception instanceof AuthenticationException);
         }
     }
 
@@ -297,7 +297,7 @@ public class ResponseHandlerTest extends BaseTest {
         } catch (OnePageException exception) {
             // We are expecting this Exception to be thrown.
             assertTrue("No auth token response misinterpreted",
-                    exception instanceof AuthenticationExpection);
+                    exception instanceof AuthenticationException);
         }
     }
 
@@ -364,7 +364,7 @@ public class ResponseHandlerTest extends BaseTest {
         } catch (OnePageException exception) {
             // We are expecting this Exception to be thrown.
             assertTrue("No auth token response misinterpreted",
-                    exception instanceof AuthenticationExpection);
+                    exception instanceof AuthenticationException);
         }
     }
 
