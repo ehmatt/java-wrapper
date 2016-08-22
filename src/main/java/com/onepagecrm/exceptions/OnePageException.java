@@ -22,7 +22,7 @@ package com.onepagecrm.exceptions;
  * 500 	Internal Server Error.
  */
 
-import java.util.List;
+import java.util.Map;
 
 public class OnePageException extends Exception {
 
@@ -30,9 +30,10 @@ public class OnePageException extends Exception {
     private int status;
     private String message;
     private String errorMessage;
-    private List<String> errors;
+    private Map<String, String> errors;
 
     public OnePageException() {
+
     }
 
     public OnePageException(String message) {
@@ -80,11 +81,11 @@ public class OnePageException extends Exception {
         return this;
     }
 
-    public List<String> getErrors() {
+    public Map<String, String> getErrors() {
         return errors;
     }
 
-    public OnePageException setErrors(List<String> errors) {
+    public OnePageException setErrors(Map<String, String> errors) {
         this.errors = errors;
         return this;
     }
