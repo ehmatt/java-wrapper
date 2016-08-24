@@ -51,6 +51,10 @@ public class CallResult extends BaseResource implements Serializable {
         return !id.equals(ID_LEFT_MESSAGE) && !id.equals(ID_NO_ANSWER) && !id.equals(ID_OTHER);
     }
 
+    public String getDisplayableText() {
+        return (isConversation() ? "Conversation - " : "") + display;
+    }
+
     public String getText() {
         return text;
     }
@@ -61,7 +65,7 @@ public class CallResult extends BaseResource implements Serializable {
     }
 
     public String getDisplay() {
-        return (isConversation() ? "Conversation - " : "") + display;
+        return display;
     }
 
     public CallResult setDisplay(String display) {
