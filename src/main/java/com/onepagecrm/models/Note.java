@@ -46,7 +46,7 @@ public class Note extends ApiResource implements Serializable {
     }
 
     public static NoteList list() throws OnePageException {
-        GetRequest request = new GetRequest(NOTES_ENDPOINT);
+        Request request = new GetRequest(NOTES_ENDPOINT);
         Response response = request.send();
         return NoteSerializer.fromJsonString(response.getResponseBody());
     }
