@@ -17,191 +17,191 @@ import java.util.Map;
 
 public class Call extends ApiResource implements Serializable {
 
-	private String id;
-	private String author;
-	private CallResult callResult;
-	private Date time;
-	private String contactId;
-	private Date createdAt;
-	private String phoneNumber;
-	private Date modifiedAt;
-	private String via;
-	private String recordingLink;
-	private List<Attachment> attachments;
-	private String mText;
+    private String id;
+    private String author;
+    private CallResult callResult;
+    private Date time;
+    private String contactId;
+    private Date createdAt;
+    private String phoneNumber;
+    private Date modifiedAt;
+    private String via;
+    private String recordingLink;
+    private List<Attachment> attachments;
+    private String mText;
 
-	public static CallList list(String contactId) throws OnePageException {
-		Map<String, Object> params = new HashMap<>();
-		params.put("contact_id", contactId);
-		GetRequest getRequest = new GetRequest(CALLS_ENDPOINT, Query.fromParams(params));
-		Response response = getRequest.send();
-		CallList calls = CallSerializer.listFromString(response.getResponseBody());
-		calls.setContactId(contactId);
-		return calls;
-	}
+    public static CallList list(String contactId) throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("contact_id", contactId);
+        GetRequest getRequest = new GetRequest(CALLS_ENDPOINT, Query.fromParams(params));
+        Response response = getRequest.send();
+        CallList calls = CallSerializer.listFromString(response.getResponseBody());
+        calls.setContactId(contactId);
+        return calls;
+    }
 
-	public static CallList list(String contactId, Paginator paginator) throws OnePageException {
-		Map<String, Object> params = Query.params(paginator);
-		params.put("contact_id", contactId);
-		GetRequest getRequest = new GetRequest(CALLS_ENDPOINT, Query.fromParams(params));
-		Response response = getRequest.send();
-		CallList calls = CallSerializer.listFromString(response.getResponseBody());
-		calls.setContactId(contactId);
-		return calls;
-	}
+    public static CallList list(String contactId, Paginator paginator) throws OnePageException {
+        Map<String, Object> params = Query.params(paginator);
+        params.put("contact_id", contactId);
+        GetRequest getRequest = new GetRequest(CALLS_ENDPOINT, Query.fromParams(params));
+        Response response = getRequest.send();
+        CallList calls = CallSerializer.listFromString(response.getResponseBody());
+        calls.setContactId(contactId);
+        return calls;
+    }
 
-	public static List<Call> list() throws OnePageException {
-		GetRequest getRequest = new GetRequest(CALLS_ENDPOINT);
-		Response response = getRequest.send();
-		return CallSerializer.listFromString(response.getResponseBody());
-	}
+    public static List<Call> list() throws OnePageException {
+        GetRequest getRequest = new GetRequest(CALLS_ENDPOINT);
+        Response response = getRequest.send();
+        return CallSerializer.listFromString(response.getResponseBody());
+    }
 
-	public Call save() throws OnePageException {
-		return this.isValid() ? update() : create();
-	}
+    public Call save() throws OnePageException {
+        return this.isValid() ? update() : create();
+    }
 
-	private Call update() throws OnePageException {
-		PutRequest updateRequest = new PutRequest(
-				addCallIdToEndpoint(CALLS_ENDPOINT),
-				null,
-				CallSerializer.toJsonObject(this)
-		);
-		Response response = updateRequest.send();
-		return CallSerializer.fromString(response.getResponseBody());
-	}
+    private Call update() throws OnePageException {
+        PutRequest updateRequest = new PutRequest(
+                addCallIdToEndpoint(CALLS_ENDPOINT),
+                null,
+                CallSerializer.toJsonObject(this)
+        );
+        Response response = updateRequest.send();
+        return CallSerializer.fromString(response.getResponseBody());
+    }
 
-	private Call create() throws OnePageException {
-		Map<String, Object> params = new HashMap<>();
-		params.put("contact_id", contactId);
-		PostRequest createRequest = new PostRequest(
-				CALLS_ENDPOINT,
-				Query.fromParams(params),
-				CallSerializer.toJsonObject(this)
-		);
-		Response response = createRequest.send();
-		return CallSerializer.fromString(response.getResponseBody());
-	}
+    private Call create() throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("contact_id", contactId);
+        PostRequest createRequest = new PostRequest(
+                CALLS_ENDPOINT,
+                Query.fromParams(params),
+                CallSerializer.toJsonObject(this)
+        );
+        Response response = createRequest.send();
+        return CallSerializer.fromString(response.getResponseBody());
+    }
 
-	private String addCallIdToEndpoint(String endpoint) {
-		return endpoint + "/" + this.id;
-	}
+    private String addCallIdToEndpoint(String endpoint) {
+        return endpoint + "/" + this.id;
+    }
 
-	public Call() {
+    public Call() {
 
-	}
+    }
 
-	@Override
-	public String getId() {
-		return this.id;
-	}
+    @Override
+    public String getId() {
+        return this.id;
+    }
 
-	@Override
-	public Call setId(String id) {
-		this.id = id;
-		return this;
-	}
+    @Override
+    public Call setId(String id) {
+        this.id = id;
+        return this;
+    }
 
-	@Override
-	public String toString() {
-		return CallSerializer.toJsonObject(this);
-	}
+    @Override
+    public String toString() {
+        return CallSerializer.toJsonObject(this);
+    }
 
-	public String getAuthor() {
-		return author;
-	}
+    public String getAuthor() {
+        return author;
+    }
 
-	public Call setAuthor(String author) {
-		this.author = author;
-		return this;
-	}
+    public Call setAuthor(String author) {
+        this.author = author;
+        return this;
+    }
 
-	public CallResult getCallResult() {
-		return callResult;
-	}
+    public CallResult getCallResult() {
+        return callResult;
+    }
 
-	public Call setCallResult(CallResult callResult) {
-		this.callResult = callResult;
-		return this;
-	}
+    public Call setCallResult(CallResult callResult) {
+        this.callResult = callResult;
+        return this;
+    }
 
-	public Date getTime() {
-		return time;
-	}
+    public Date getTime() {
+        return time;
+    }
 
-	public Call setTime(Date time) {
-		this.time = time;
-		return this;
-	}
+    public Call setTime(Date time) {
+        this.time = time;
+        return this;
+    }
 
-	public String getContactId() {
-		return contactId;
-	}
+    public String getContactId() {
+        return contactId;
+    }
 
-	public Call setContactId(String contactId) {
-		this.contactId = contactId;
-		return this;
-	}
+    public Call setContactId(String contactId) {
+        this.contactId = contactId;
+        return this;
+    }
 
-	public Date getCreatedAt() {
-		return createdAt;
-	}
+    public Date getCreatedAt() {
+        return createdAt;
+    }
 
-	public Call setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-		return this;
-	}
+    public Call setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	public Call setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-		return this;
-	}
+    public Call setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
 
-	public Date getModifiedAt() {
-		return modifiedAt;
-	}
+    public Date getModifiedAt() {
+        return modifiedAt;
+    }
 
-	public Call setModifiedAt(Date modifiedAt) {
-		this.modifiedAt = modifiedAt;
-		return this;
-	}
+    public Call setModifiedAt(Date modifiedAt) {
+        this.modifiedAt = modifiedAt;
+        return this;
+    }
 
-	public String getVia() {
-		return via;
-	}
+    public String getVia() {
+        return via;
+    }
 
-	public Call setVia(String via) {
-		this.via = via;
-		return this;
-	}
+    public Call setVia(String via) {
+        this.via = via;
+        return this;
+    }
 
-	public String getRecordingLink() {
-		return recordingLink;
-	}
+    public String getRecordingLink() {
+        return recordingLink;
+    }
 
-	public Call setRecordingLink(String recordingLink) {
-		this.recordingLink = recordingLink;
-		return this;
-	}
+    public Call setRecordingLink(String recordingLink) {
+        this.recordingLink = recordingLink;
+        return this;
+    }
 
-	public List<Attachment> getAttachments() {
-		return attachments;
-	}
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
 
-	public Call setAttachments(List<Attachment> attachments) {
-		this.attachments = attachments;
-		return this;
-	}
+    public Call setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+        return this;
+    }
 
-	public String getText() {
-		return mText;
-	}
+    public String getText() {
+        return mText;
+    }
 
-	public Call setText(String pText) {
-		mText = pText;
-		return this;
-	}
+    public Call setText(String pText) {
+        mText = pText;
+        return this;
+    }
 }
