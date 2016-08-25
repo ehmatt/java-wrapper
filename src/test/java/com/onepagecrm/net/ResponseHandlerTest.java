@@ -320,7 +320,7 @@ public class ResponseHandlerTest extends BaseTest {
 
             assertTrue("Success message misinterpreted", call.isValid());
             assertTrue(call.getId().equals("559689cb9b79b24686000025"));
-            assertTrue(("" + call.getTime().getTime() + "").equals("1435929035"));
+            assertTrue(("" + DateSerializer.toTimestamp(call.getTime()) + "").equals("1435929035"));
             assertTrue(call.getVia().equals("unknown"));
             assertTrue(call.getContactId().equals("55804f6b1787fa72b400002e"));
 

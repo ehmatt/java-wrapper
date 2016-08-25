@@ -52,7 +52,6 @@ public class CallSerializer extends BaseSerializer {
         addJsonStringValue(call.getVia(), callObject, VIA_TAG);
         addJsonStringValue(call.getAuthor(), callObject, AUTHOR_TAG);
         addJsonStringValue(call.getPhoneNumber(), callObject, PHONE_NUMBER_TAG);
-//        addJsonStringValue(call.getAttachments(), callObject, ATTACHMENTS_TAG);
         return callObject.toString();
     }
 
@@ -103,24 +102,27 @@ public class CallSerializer extends BaseSerializer {
         if (callObject.has(CALL_TAG)) {
             callObject = callObject.optJSONObject(CALL_TAG);
         }
-        Call lCall = new Call();
-        lCall.setId(callObject.optString(ID_TAG));
-        lCall.setVia(callObject.optString(VIA_TAG));
-        lCall.setAuthor(callObject.optString(AUTHOR_TAG));
-        lCall.setPhoneNumber(callObject.optString(PHONE_NUMBER_TAG));
-        lCall.setText(callObject.optString(TEXT_TAG));
+        // Get the result if exists.
         String callResultId = callObject.optString(CALL_RESULT_TAG);
-        for (CallResult lCallResult : Account.loggedInUser.getAccount().getCallResults()) {
-            if (lCallResult.getId().equals(callResultId)) {
-                lCall.setCallResult(lCallResult);
+        CallResult callResult = null;
+        for (CallResult result : Account.loggedInUser.getAccount().getCallResults()) {
+            if (result.getId().equals(callResultId)) {
+                callResult = result;
             }
         }
-        lCall.setTime(DateSerializer.fromNumString(callObject.optString(CALL_TIME_INT_TAG)));
-        lCall.setContactId(callObject.optString(CONTACT_ID_TAG));
-        lCall.setRecordingLink(callObject.optString(RECORDING_LINK_TAG));
-        lCall.setCreatedAt(DateSerializer.fromFormattedString(callObject.optString(CREATED_AT_TAG)));
-        lCall.setModifiedAt(DateSerializer.fromFormattedString(callObject.optString(MODIFIED_AT_TAG)));
-        return lCall;
+        // Get other fields.
+        return new Call()
+                .setCallResult(callResult)
+                .setId(callObject.optString(ID_TAG))
+                .setVia(callObject.optString(VIA_TAG))
+                .setAuthor(callObject.optString(AUTHOR_TAG))
+                .setPhoneNumber(callObject.optString(PHONE_NUMBER_TAG))
+                .setText(callObject.optString(TEXT_TAG))
+                .setTime(DateSerializer.fromTimestamp(callObject.optString(CALL_TIME_INT_TAG)))
+                .setContactId(callObject.optString(CONTACT_ID_TAG))
+                .setRecordingLink(callObject.optString(RECORDING_LINK_TAG))
+                .setCreatedAt(DateSerializer.fromFormattedString(callObject.optString(CREATED_AT_TAG)))
+                .setModifiedAt(DateSerializer.fromFormattedString(callObject.optString(MODIFIED_AT_TAG)));
     }
 
     public static List<Call> fromJsonArray(JSONArray callsArray) {
