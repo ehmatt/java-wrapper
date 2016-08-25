@@ -56,7 +56,6 @@ public class User extends ApiResource implements Serializable {
         return getContacts(ACTION_STREAM_ENDPOINT, Query.fromParams(params));
     }
 
-    @SuppressWarnings("unchecked")
     public ContactList actionStream(Map<String, Object> params, Paginator paginator) throws OnePageException {
         String query = Query.fromMaps(params, Query.params(paginator));
         return getContacts(ACTION_STREAM_ENDPOINT, query);
@@ -90,7 +89,6 @@ public class User extends ApiResource implements Serializable {
         return getContacts(CONTACTS_ENDPOINT, Query.fromParams(params));
     }
 
-    @SuppressWarnings("unchecked")
     public ContactList contacts(Map<String, Object> params, Paginator paginator) throws OnePageException {
         String query = Query.fromMaps(params, Query.params(paginator));
         return getContacts(CONTACTS_ENDPOINT, query);
@@ -112,7 +110,10 @@ public class User extends ApiResource implements Serializable {
         return getContacts(CONTACTS_ENDPOINT, Query.queryLetter(paginator, letter, true));
     }
 
-    @SuppressWarnings("unchecked")
+    public ContactList teamStream(Map<String, Object> params) throws OnePageException {
+        return getContacts(TEAM_STREAM_ENDPOINT, Query.fromParams(params));
+    }
+
     public ContactList teamStream(Map<String, Object> params, Paginator paginator) throws OnePageException {
         String query = Query.fromMaps(params, Query.params(paginator));
         return getContacts(TEAM_STREAM_ENDPOINT, query);
@@ -136,7 +137,6 @@ public class User extends ApiResource implements Serializable {
         return DealListSerializer.fromString(response.getResponseBody());
     }
 
-    @SuppressWarnings("unchecked")
     public DealList pipeline(Map<String, Object> params, Paginator paginator) throws OnePageException {
         String query = Query.fromMaps(params, Query.params(paginator));
         Request request = new GetRequest(DEALS_ENDPOINT, query);
