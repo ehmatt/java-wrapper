@@ -28,8 +28,8 @@ public class Note extends ApiResource implements Serializable {
     public static NoteList list(String contactId) throws OnePageException {
         Map<String, Object> params = new HashMap<>();
         params.put("contact_id", contactId);
-        GetRequest getRequest = new GetRequest(NOTES_ENDPOINT, Query.fromParams(params));
-        Response response = getRequest.send();
+        Request request = new GetRequest(NOTES_ENDPOINT, Query.fromParams(params));
+        Response response = request.send();
         NoteList notes = NoteSerializer.fromJsonString(response.getResponseBody());
         notes.setContactId(contactId);
         return notes;
@@ -38,8 +38,8 @@ public class Note extends ApiResource implements Serializable {
     public static NoteList list(String contactId, Paginator paginator) throws OnePageException {
         Map<String, Object> params = Query.params(paginator);
         params.put("contact_id", contactId);
-        GetRequest getRequest = new GetRequest(NOTES_ENDPOINT, Query.fromParams(params));
-        Response response = getRequest.send();
+        Request request = new GetRequest(NOTES_ENDPOINT, Query.fromParams(params));
+        Response response = request.send();
         NoteList notes = NoteSerializer.fromJsonString(response.getResponseBody());
         notes.setContactId(contactId);
         return notes;
@@ -47,8 +47,8 @@ public class Note extends ApiResource implements Serializable {
 
     public static NoteList list() throws OnePageException {
         GetRequest request = new GetRequest(NOTES_ENDPOINT);
-        Response lResponse = request.send();
-        return NoteSerializer.fromJsonString(lResponse.getResponseBody());
+        Response response = request.send();
+        return NoteSerializer.fromJsonString(response.getResponseBody());
     }
 
     public Note save() throws OnePageException {

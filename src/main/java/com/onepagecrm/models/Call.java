@@ -8,6 +8,7 @@ import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.PutRequest;
+import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -33,8 +34,8 @@ public class Call extends ApiResource implements Serializable {
     public static CallList list(String contactId) throws OnePageException {
         Map<String, Object> params = new HashMap<>();
         params.put("contact_id", contactId);
-        GetRequest getRequest = new GetRequest(CALLS_ENDPOINT, Query.fromParams(params));
-        Response response = getRequest.send();
+        Request request = new GetRequest(CALLS_ENDPOINT, Query.fromParams(params));
+        Response response = request.send();
         CallList calls = CallSerializer.listFromString(response.getResponseBody());
         calls.setContactId(contactId);
         return calls;
@@ -43,16 +44,16 @@ public class Call extends ApiResource implements Serializable {
     public static CallList list(String contactId, Paginator paginator) throws OnePageException {
         Map<String, Object> params = Query.params(paginator);
         params.put("contact_id", contactId);
-        GetRequest getRequest = new GetRequest(CALLS_ENDPOINT, Query.fromParams(params));
-        Response response = getRequest.send();
+        Request request = new GetRequest(CALLS_ENDPOINT, Query.fromParams(params));
+        Response response = request.send();
         CallList calls = CallSerializer.listFromString(response.getResponseBody());
         calls.setContactId(contactId);
         return calls;
     }
 
     public static List<Call> list() throws OnePageException {
-        GetRequest getRequest = new GetRequest(CALLS_ENDPOINT);
-        Response response = getRequest.send();
+        Request request = new GetRequest(CALLS_ENDPOINT);
+        Response response = request.send();
         return CallSerializer.listFromString(response.getResponseBody());
     }
 
@@ -61,24 +62,24 @@ public class Call extends ApiResource implements Serializable {
     }
 
     private Call update() throws OnePageException {
-        PutRequest updateRequest = new PutRequest(
+        Request request = new PutRequest(
                 addCallIdToEndpoint(CALLS_ENDPOINT),
                 null,
                 CallSerializer.toJsonObject(this)
         );
-        Response response = updateRequest.send();
+        Response response = request.send();
         return CallSerializer.fromString(response.getResponseBody());
     }
 
     private Call create() throws OnePageException {
         Map<String, Object> params = new HashMap<>();
         params.put("contact_id", contactId);
-        PostRequest createRequest = new PostRequest(
+        Request request = new PostRequest(
                 CALLS_ENDPOINT,
                 Query.fromParams(params),
                 CallSerializer.toJsonObject(this)
         );
-        Response response = createRequest.send();
+        Response response = request.send();
         return CallSerializer.fromString(response.getResponseBody());
     }
 
