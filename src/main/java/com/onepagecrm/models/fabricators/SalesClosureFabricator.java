@@ -15,6 +15,7 @@ public class SalesClosureFabricator extends BaseFabricator {
         return new SalesCycleClosure()
                 .setUserId("559cd1866f6e656707000001")
                 .setComment("My closing comment")
+                .setContactId("56fa81ea9007ba07fc00003e")
                 .setClosedAt(DateSerializer.fromTimestamp("1462261876"));
     }
 
@@ -24,6 +25,7 @@ public class SalesClosureFabricator extends BaseFabricator {
         calls.add(new SalesCycleClosure()
                 .setUserId("561b937f9007ba4cc200004e")
                 .setComment("John's comment")
+                .setContactId("56fa81ea9007ba07fc00003e")
                 .setClosedAt(DateSerializer.fromTimestamp("1462261859"))
         );
         return calls;
