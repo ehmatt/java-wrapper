@@ -44,7 +44,7 @@ public class ContactPartialDriver {
             }
         }
 
-        OnePageCRM.setServer(Request.DEV_SERVER);
+        OnePageCRM.setServer(Request.APP_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
