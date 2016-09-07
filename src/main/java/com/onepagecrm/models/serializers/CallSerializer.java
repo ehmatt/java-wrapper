@@ -117,13 +117,15 @@ public class CallSerializer extends BaseSerializer {
                     .setId(callResultId)
                     .setText(callObject.optString(TEXT_TAG));
         }
+        String phoneNumber =
+                callObject.isNull(PHONE_NUMBER_TAG) ? null : callObject.optString(PHONE_NUMBER_TAG);
         // Get other fields.
         return new Call()
                 .setCallResult(callResult)
                 .setId(callObject.optString(ID_TAG))
                 .setVia(callObject.optString(VIA_TAG))
                 .setAuthor(callObject.optString(AUTHOR_TAG))
-                .setPhoneNumber(callObject.optString(PHONE_NUMBER_TAG))
+                .setPhoneNumber(phoneNumber)
                 .setText(callObject.optString(TEXT_TAG))
                 .setTime(DateSerializer.fromTimestamp(callObject.optString(CALL_TIME_INT_TAG)))
                 .setContactId(callObject.optString(CONTACT_ID_TAG))
