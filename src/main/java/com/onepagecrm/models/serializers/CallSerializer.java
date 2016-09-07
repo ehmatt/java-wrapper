@@ -108,7 +108,14 @@ public class CallSerializer extends BaseSerializer {
         for (CallResult result : Account.loggedInUser.getAccount().getCallResults()) {
             if (result.getId().equals(callResultId)) {
                 callResult = result;
+                break;
             }
+        }
+        // If no exact matching id, create fresh object.
+        if (callResult == null) {
+            callResult = new CallResult()
+                    .setId(callResultId)
+                    .setText(callObject.optString(TEXT_TAG));
         }
         // Get other fields.
         return new Call()
