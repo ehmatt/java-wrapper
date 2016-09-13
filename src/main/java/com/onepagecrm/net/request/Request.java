@@ -100,8 +100,6 @@ public abstract class Request {
     private static final String CONTENT_TYPE = "application/json";
 
     private static final String USER_AGENT_TAG = "User-Agent";
-    private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) "
-            + "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36";
 
     protected static final String X_UID = "X-OnePageCRM-UID";
     protected static final String X_TS = "X-OnePageCRM-TS";
@@ -241,8 +239,9 @@ public abstract class Request {
      * SignedRequest to include auth headers.
      */
     public void setRequestHeaders() {
+        String userAgent = System.getProperty("http.agent");
         connection.setRequestProperty(ACCEPTS_TAG, ACCEPTS);
-        connection.setRequestProperty(USER_AGENT_TAG, USER_AGENT);
+        connection.setRequestProperty(USER_AGENT_TAG, userAgent);
         connection.setRequestProperty(CONTENT_TYPE_TAG, CONTENT_TYPE);
 
         LOG.info("*************************************");
@@ -297,6 +296,7 @@ public abstract class Request {
         getResponseMessage();
         getResponseBody();
 
+        LOG.info("User-Agent: " + connection.getRequestProperty(USER_AGENT_TAG));
         LOG.info("--- RESPONSE ---");
         LOG.info("Code: " + response.getResponseCode());
         LOG.info("Message: " + response.getResponseMessage());
