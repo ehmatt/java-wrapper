@@ -34,29 +34,31 @@ public class CallSerializer extends BaseSerializer {
             LOG.severe("Error parsing Call from JSON.");
             LOG.severe(e.toString());
         }
+
         return new Call();
     }
 
-    public static CallList listFromString(String responseBody) {
+    public static CallList listFromString(String responseBody) throws OnePageException {
         CallList calls = new CallList();
+        OnePageException exception;
+
         try {
             JSONObject responseObject = new JSONObject(responseBody);
             JSONObject dataObject = responseObject.optJSONObject(DATA_TAG);
             JSONArray callsArray = dataObject.optJSONArray(CALLS_TAG);
             Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
             calls.setPaginator(paginator);
+            calls.setList(fromJsonArray(callsArray));
 
-            for (int i = 0; i < callsArray.length(); ++i) {
-                JSONObject callObject = callsArray.optJSONObject(i);
-                Call call = fromJsonObject(callObject);
-                if (call != null) {
-                    calls.add(call);
-                }
-            }
+        } catch (ClassCastException e) {
+            exception = (OnePageException) BaseSerializer.fromString(responseBody);
+            throw exception;
+
         } catch (Exception e) {
             LOG.severe("Error parsing CallList from JSON.");
             LOG.severe(e.toString());
         }
+
         return calls;
     }
 
@@ -130,7 +132,7 @@ public class CallSerializer extends BaseSerializer {
             try {
                 callsArray.put(new JSONObject(toJsonObject(calls.get(i))));
             } catch (JSONException e) {
-                LOG.severe("Error creating JSONObject out of Call");
+                LOG.severe("Error creating JSON out of Call(s).");
                 LOG.severe(e.toString());
             }
         }

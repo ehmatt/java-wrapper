@@ -1,5 +1,6 @@
 package com.onepagecrm.models.serializers;
 
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Note;
 import com.onepagecrm.models.NoteList;
 import com.onepagecrm.models.internal.Paginator;
@@ -18,41 +19,47 @@ public class NoteSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(NoteSerializer.class.getName());
 
-    public static Note fromString(String responseBody) {
-        Note note = new Note();
+    public static Note fromString(String responseBody) throws OnePageException {
+        OnePageException exception;
+
         try {
             JSONObject responseObject = new JSONObject(responseBody);
             JSONObject dataObject = responseObject.optJSONObject(DATA_TAG);
             return fromJsonObject(dataObject);
+
+        } catch (ClassCastException e) {
+            exception = (OnePageException) BaseSerializer.fromString(responseBody);
+            throw exception;
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Note from JSON.");
             LOG.severe(e.toString());
         }
 
-        return note;
+        return new Note();
     }
 
-    public static NoteList listFromString(String responseBody) {
+    public static NoteList listFromString(String responseBody) throws OnePageException {
         NoteList notes = new NoteList();
+        OnePageException exception;
+
         try {
             JSONObject responseObject = new JSONObject(responseBody);
             JSONObject dataObject = responseObject.optJSONObject(DATA_TAG);
             JSONArray notesArray = dataObject.optJSONArray(NOTES_TAG);
             Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
             notes.setPaginator(paginator);
+            notes.setList(fromJsonArray(notesArray));
 
-            for (int i = 0; i < notesArray.length(); ++i) {
-                JSONObject noteObject = notesArray.optJSONObject(i);
-                Note note = fromJsonObject(noteObject);
-                if (note != null) {
-                    notes.add(note);
-                }
-            }
+        } catch (ClassCastException e) {
+            exception = (OnePageException) BaseSerializer.fromString(responseBody);
+            throw exception;
+
         } catch (Exception e) {
             LOG.severe("Error parsing NoteList from JSON.");
             LOG.severe(e.toString());
         }
+
         return notes;
     }
 
@@ -104,7 +111,7 @@ public class NoteSerializer extends BaseSerializer {
             try {
                 notesArray.put(new JSONObject(toJsonObject(notes.get(i))));
             } catch (JSONException e) {
-                LOG.severe("Error creating JSONObject out of Note");
+                LOG.severe("Error creating JSON out of Note(s).");
                 LOG.severe(e.toString());
             }
         }
