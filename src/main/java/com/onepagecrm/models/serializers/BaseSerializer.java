@@ -102,6 +102,8 @@ public class BaseSerializer {
     public static final String VIA_TAG = "via";
     public static final String AUTHOR_TAG = "author";
     public static final String ATTACHMENTS_TAG = "attachment";
+    public static final java.lang.String PHONE_NUMBER_TAG = "phone_number";
+    public static final java.lang.String RECORDING_LINK_TAG = "recording_link";
 
     // 201 RESPONSE TAGS
     public static final String STATUS_TAG = "status";
@@ -199,6 +201,7 @@ public class BaseSerializer {
     // NOTES
     public static final String NOTE_TAG = "note";
     public static final String NOTES_TAG = "notes";
+    public static final String LINKED_DEAL_ID_TAG = "linked_deal_id";
 
     // FILTERS TAGS
     public static final String FILTER_TAG = "filter";

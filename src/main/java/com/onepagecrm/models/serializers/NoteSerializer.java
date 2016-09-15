@@ -18,61 +18,40 @@ public class NoteSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(NoteSerializer.class.getName());
 
-    private static final String NOTES_TAG = "notes";
-    private static final String NOTE_TAG = "note";
-    public static final String LINKED_DEAL_ID_TAG = "linked_deal_id";
-
-    public static NoteList fromJsonString(String pResponseBody) {
-        NoteList notes = new NoteList();
-        try {
-            JSONObject root = new JSONObject(pResponseBody);
-            JSONObject data = root.optJSONObject(DATA_TAG);
-            JSONArray notesArray = data.optJSONArray(NOTES_TAG);
-            Paginator paginator = RequestMetadataSerializer.fromJsonObject(data);
-            notes.setPaginator(paginator);
-            for (int i = 0; i < notesArray.length(); ++i) {
-                JSONObject obj = notesArray.optJSONObject(i);
-                Note note = objFromJson(obj);
-                if (note != null) {
-                    notes.add(note);
-                }
-            }
-        } catch (Exception e) {
-            LOG.severe("Could not find Note object tags");
-            LOG.severe(e.toString());
-        }
-        return notes;
-    }
-
-    public static Note fromString(String pResponseBody) {
+    public static Note fromString(String responseBody) {
         Note note = new Note();
         try {
-            JSONObject responseObject = new JSONObject(pResponseBody);
-            JSONObject data = responseObject.optJSONObject(DATA_TAG);
-            note = objFromJson(data);
+            JSONObject responseObject = new JSONObject(responseBody);
+            JSONObject dataObject = responseObject.optJSONObject(DATA_TAG);
+            return fromJsonObject(dataObject);
+
         } catch (JSONException e) {
-            LOG.severe("Could not find note object tags");
+            LOG.severe("Error parsing Note from JSON.");
             LOG.severe(e.toString());
         }
 
         return note;
     }
 
-    private static Note objFromJson(JSONObject pObj) {
-        JSONObject lJSONObject = pObj.optJSONObject(NOTE_TAG);
-        if (lJSONObject == null)
-            return null;
-        return fromJsonObject(lJSONObject);
-    }
+    public static NoteList listFromString(String responseBody) {
+        NoteList notes = new NoteList();
+        try {
+            JSONObject responseObject = new JSONObject(responseBody);
+            JSONObject dataObject = responseObject.optJSONObject(DATA_TAG);
+            JSONArray notesArray = dataObject.optJSONArray(NOTES_TAG);
+            Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
+            notes.setPaginator(paginator);
 
-    public static List<Note> fromJsonArray(JSONArray notesArray) {
-        List<Note> notes = new LinkedList<>();
-        for (int i = 0; i < notesArray.length(); ++i) {
-            JSONObject obj = notesArray.optJSONObject(i);
-            Note note = fromJsonObject(obj);
-            if (note != null) {
-                notes.add(note);
+            for (int i = 0; i < notesArray.length(); ++i) {
+                JSONObject noteObject = notesArray.optJSONObject(i);
+                Note note = fromJsonObject(noteObject);
+                if (note != null) {
+                    notes.add(note);
+                }
             }
+        } catch (Exception e) {
+            LOG.severe("Error parsing NoteList from JSON.");
+            LOG.severe(e.toString());
         }
         return notes;
     }
@@ -95,15 +74,40 @@ public class NoteSerializer extends BaseSerializer {
         return note;
     }
 
-    public static String toJsonObject(Note pNote) {
+    public static List<Note> fromJsonArray(JSONArray notesArray) {
+        List<Note> notes = new LinkedList<>();
+        for (int i = 0; i < notesArray.length(); ++i) {
+            JSONObject noteObject = notesArray.optJSONObject(i);
+            Note note = fromJsonObject(noteObject);
+            if (note != null) {
+                notes.add(note);
+            }
+        }
+        return notes;
+    }
+
+    public static String toJsonObject(Note note) {
         JSONObject noteObject = new JSONObject();
-        addJsonStringValue(pNote.getId(), noteObject, ID_TAG);
-        addJsonStringValue(pNote.getAuthor(), noteObject, AUTH_KEY_TAG);
-        addJsonStringValue(pNote.getText(), noteObject, TEXT_TAG);
-        addJsonStringValue(pNote.getContactId(), noteObject, CONTACT_ID_TAG);
-        addJsonStringValue(DateSerializer.toFormattedDateTimeString(pNote.getCreatedAt()), noteObject, CREATED_AT_TAG);
-        addJsonStringValue(DateSerializer.toFormattedDateString(pNote.getDate()), noteObject, DATE_TAG);
-        addJsonStringValue(pNote.getLinkedDealId(), noteObject, LINKED_DEAL_ID_TAG);
+        addJsonStringValue(note.getId(), noteObject, ID_TAG);
+        addJsonStringValue(note.getAuthor(), noteObject, AUTH_KEY_TAG);
+        addJsonStringValue(note.getText(), noteObject, TEXT_TAG);
+        addJsonStringValue(note.getContactId(), noteObject, CONTACT_ID_TAG);
+        addJsonStringValue(DateSerializer.toFormattedDateTimeString(note.getCreatedAt()), noteObject, CREATED_AT_TAG);
+        addJsonStringValue(DateSerializer.toFormattedDateString(note.getDate()), noteObject, DATE_TAG);
+        addJsonStringValue(note.getLinkedDealId(), noteObject, LINKED_DEAL_ID_TAG);
         return noteObject.toString();
+    }
+
+    public static String toJsonArray(List<Note> notes) {
+        JSONArray notesArray = new JSONArray();
+        for (int i = 0; i < notes.size(); i++) {
+            try {
+                notesArray.put(new JSONObject(toJsonObject(notes.get(i))));
+            } catch (JSONException e) {
+                LOG.severe("Error creating JSONObject out of Note");
+                LOG.severe(e.toString());
+            }
+        }
+        return notesArray.toString();
     }
 }
