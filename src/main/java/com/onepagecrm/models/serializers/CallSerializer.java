@@ -3,9 +3,7 @@ package com.onepagecrm.models.serializers;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Account;
 import com.onepagecrm.models.Call;
-import com.onepagecrm.models.CallList;
 import com.onepagecrm.models.CallResult;
-import com.onepagecrm.models.internal.Paginator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,31 +35,6 @@ public class CallSerializer extends BaseSerializer {
         }
 
         return new Call();
-    }
-
-    public static CallList listFromString(String responseBody) throws OnePageException {
-        CallList calls = new CallList();
-        String parsedResponse;
-        OnePageException exception;
-
-        try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONObject responseObject = new JSONObject(parsedResponse);
-            JSONArray callsArray = responseObject.optJSONArray(CALLS_TAG);
-            Paginator paginator = RequestMetadataSerializer.fromJsonObject(responseObject);
-            calls.setPaginator(paginator);
-            calls.setList(fromJsonArray(callsArray));
-
-        } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
-
-        } catch (Exception e) {
-            LOG.severe("Error parsing CallList from JSON.");
-            LOG.severe(e.toString());
-        }
-
-        return calls;
     }
 
     public static Call fromJsonObject(JSONObject callObject) {
