@@ -17,24 +17,20 @@ public class CallSerializer extends BaseSerializer {
     private static final Logger LOG = Logger.getLogger(CallSerializer.class.getName());
 
     public static Call fromString(String responseBody) throws OnePageException {
-        String parsedResponse;
-        OnePageException exception;
-
+        Call call = new Call();
         try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
             JSONObject responseObject = new JSONObject(parsedResponse);
             return fromJsonObject(responseObject);
 
         } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
+            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Call from JSON.");
             LOG.severe(e.toString());
         }
-
-        return new Call();
+        return call;
     }
 
     public static Call fromJsonObject(JSONObject callObject) {

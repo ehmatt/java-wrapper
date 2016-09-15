@@ -17,10 +17,12 @@ public class ContactSerializer extends BaseSerializer {
     public static Contact fromString(String responseBody) throws OnePageException {
         Contact contact = new Contact();
         try {
-            JSONObject responseObject = new JSONObject(responseBody);
-            JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(parsedResponse);
+            return fromJsonObject(responseObject);
 
-            contact = fromJsonObject(dataObject);
+        } catch (ClassCastException e) {
+            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Contact object from response body");

@@ -17,11 +17,9 @@ public class CallListSerializer extends BaseSerializer {
 
     public static CallList fromString(String responseBody) throws OnePageException {
         CallList calls = new CallList();
-        String parsedResponse;
-        OnePageException exception;
 
         try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
             JSONObject responseObject = new JSONObject(parsedResponse);
             JSONArray callsArray = responseObject.optJSONArray(CALLS_TAG);
             Paginator paginator = RequestMetadataSerializer.fromJsonObject(responseObject);
@@ -29,8 +27,7 @@ public class CallListSerializer extends BaseSerializer {
             calls.setList(CallSerializer.fromJsonArray(callsArray));
 
         } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
+            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (Exception e) {
             LOG.severe("Error parsing CallList from JSON.");

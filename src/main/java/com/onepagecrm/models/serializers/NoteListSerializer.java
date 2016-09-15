@@ -17,11 +17,9 @@ public class NoteListSerializer extends BaseSerializer {
 
     public static NoteList fromString(String responseBody) throws OnePageException {
         NoteList notes = new NoteList();
-        String parsedResponse;
-        OnePageException exception;
 
         try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
             JSONObject responseObject = new JSONObject(parsedResponse);
             JSONArray notesArray = responseObject.optJSONArray(NOTES_TAG);
             Paginator paginator = RequestMetadataSerializer.fromJsonObject(responseObject);
@@ -29,8 +27,7 @@ public class NoteListSerializer extends BaseSerializer {
             notes.setList(NoteSerializer.fromJsonArray(notesArray));
 
         } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
+            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (Exception e) {
             LOG.severe("Error parsing NoteList from JSON.");

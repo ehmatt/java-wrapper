@@ -18,24 +18,20 @@ public class NoteSerializer extends BaseSerializer {
     private static final Logger LOG = Logger.getLogger(NoteSerializer.class.getName());
 
     public static Note fromString(String responseBody) throws OnePageException {
-        String parsedResponse;
-        OnePageException exception;
-
+        Note note = new Note();
         try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
             JSONObject responseObject = new JSONObject(parsedResponse);
             return fromJsonObject(responseObject);
 
         } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
+            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Note from JSON.");
             LOG.severe(e.toString());
         }
-
-        return new Note();
+        return note;
     }
 
     public static Note fromJsonObject(JSONObject noteObject) {
