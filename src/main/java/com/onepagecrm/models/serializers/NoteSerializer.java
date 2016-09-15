@@ -20,12 +20,13 @@ public class NoteSerializer extends BaseSerializer {
     private static final Logger LOG = Logger.getLogger(NoteSerializer.class.getName());
 
     public static Note fromString(String responseBody) throws OnePageException {
+        String parsedResponse;
         OnePageException exception;
 
         try {
-            JSONObject responseObject = new JSONObject(responseBody);
-            JSONObject dataObject = responseObject.optJSONObject(DATA_TAG);
-            return fromJsonObject(dataObject);
+            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(parsedResponse);
+            return fromJsonObject(responseObject);
 
         } catch (ClassCastException e) {
             exception = (OnePageException) BaseSerializer.fromString(responseBody);
@@ -41,13 +42,14 @@ public class NoteSerializer extends BaseSerializer {
 
     public static NoteList listFromString(String responseBody) throws OnePageException {
         NoteList notes = new NoteList();
+        String parsedResponse;
         OnePageException exception;
 
         try {
-            JSONObject responseObject = new JSONObject(responseBody);
-            JSONObject dataObject = responseObject.optJSONObject(DATA_TAG);
-            JSONArray notesArray = dataObject.optJSONArray(NOTES_TAG);
-            Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
+            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(parsedResponse);
+            JSONArray notesArray = responseObject.optJSONArray(NOTES_TAG);
+            Paginator paginator = RequestMetadataSerializer.fromJsonObject(responseObject);
             notes.setPaginator(paginator);
             notes.setList(fromJsonArray(notesArray));
 

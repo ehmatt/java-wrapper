@@ -19,12 +19,13 @@ public class CallSerializer extends BaseSerializer {
     private static final Logger LOG = Logger.getLogger(CallSerializer.class.getName());
 
     public static Call fromString(String responseBody) throws OnePageException {
+        String parsedResponse;
         OnePageException exception;
 
         try {
-            JSONObject responseObject = new JSONObject(responseBody);
-            JSONObject dataObject = responseObject.optJSONObject(DATA_TAG);
-            return fromJsonObject(dataObject);
+            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(parsedResponse);
+            return fromJsonObject(responseObject);
 
         } catch (ClassCastException e) {
             exception = (OnePageException) BaseSerializer.fromString(responseBody);
@@ -40,13 +41,14 @@ public class CallSerializer extends BaseSerializer {
 
     public static CallList listFromString(String responseBody) throws OnePageException {
         CallList calls = new CallList();
+        String parsedResponse;
         OnePageException exception;
 
         try {
-            JSONObject responseObject = new JSONObject(responseBody);
-            JSONObject dataObject = responseObject.optJSONObject(DATA_TAG);
-            JSONArray callsArray = dataObject.optJSONArray(CALLS_TAG);
-            Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
+            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(parsedResponse);
+            JSONArray callsArray = responseObject.optJSONArray(CALLS_TAG);
+            Paginator paginator = RequestMetadataSerializer.fromJsonObject(responseObject);
             calls.setPaginator(paginator);
             calls.setList(fromJsonArray(callsArray));
 
