@@ -2,6 +2,7 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
+import com.onepagecrm.models.serializers.CallListSerializer;
 import com.onepagecrm.models.serializers.CallSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
@@ -36,7 +37,7 @@ public class Call extends ApiResource implements Serializable {
         params.put("contact_id", contactId);
         Request request = new GetRequest(CALLS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-        CallList calls = CallSerializer.listFromString(response.getResponseBody());
+        CallList calls = CallListSerializer.fromString(response.getResponseBody());
         calls.setContactId(contactId);
         return calls;
     }
@@ -46,15 +47,15 @@ public class Call extends ApiResource implements Serializable {
         params.put("contact_id", contactId);
         Request request = new GetRequest(CALLS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-        CallList calls = CallSerializer.listFromString(response.getResponseBody());
+        CallList calls = CallListSerializer.fromString(response.getResponseBody());
         calls.setContactId(contactId);
         return calls;
     }
 
-    public static List<Call> list() throws OnePageException {
+    public static CallList list() throws OnePageException {
         Request request = new GetRequest(CALLS_ENDPOINT);
         Response response = request.send();
-        return CallSerializer.listFromString(response.getResponseBody());
+        return CallListSerializer.fromString(response.getResponseBody());
     }
 
     public Call save() throws OnePageException {

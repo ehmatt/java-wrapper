@@ -24,11 +24,9 @@ public class ContactListSerializer extends BaseSerializer {
      */
     public static ContactList fromString(String responseBody) throws OnePageException {
         ContactList contacts = new ContactList();
-        String parsedResponse;
-        OnePageException exception;
 
         try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
             JSONObject responseObject = new JSONObject(parsedResponse);
             JSONArray contactsArray = responseObject.getJSONArray(CONTACTS_TAG);
             contacts = fromJsonArray(contactsArray);
@@ -36,13 +34,13 @@ public class ContactListSerializer extends BaseSerializer {
             contacts.setPaginator(paginator);
 
         } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
+            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Contacts array from response body");
             LOG.severe(e.toString());
         }
+        
         return contacts;
     }
 
