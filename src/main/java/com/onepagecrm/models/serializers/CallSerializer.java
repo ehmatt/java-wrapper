@@ -3,9 +3,7 @@ package com.onepagecrm.models.serializers;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Account;
 import com.onepagecrm.models.Call;
-import com.onepagecrm.models.CallList;
 import com.onepagecrm.models.CallResult;
-import com.onepagecrm.models.internal.Paginator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,26 +16,70 @@ public class CallSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CallSerializer.class.getName());
 
-    private static final java.lang.String PHONE_NUMBER_TAG = "phone_number";
-    private static final java.lang.String RECORDING_LINK_TAG = "recording_link";
-
     public static Call fromString(String responseBody) throws OnePageException {
-        OnePageException exception;
-
+        Call call = new Call();
         try {
-            JSONObject responseObject = new JSONObject(responseBody);
-            JSONObject data = responseObject.optJSONObject(DATA_TAG);
-            return CallSerializer.objFromJson(data);
+            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(parsedResponse);
+            return fromJsonObject(responseObject);
 
         } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
+            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (JSONException e) {
-            LOG.severe("Could not find call tag");
+            LOG.severe("Error parsing Call from JSON.");
             LOG.severe(e.toString());
         }
-        return new Call();
+        return call;
+    }
+
+    public static Call fromJsonObject(JSONObject callObject) {
+        // Fix for some objects not having name.
+        if (callObject.has(CALL_TAG)) {
+            callObject = callObject.optJSONObject(CALL_TAG);
+        }
+        // Get the result if exists.
+        String callResultId = callObject.optString(CALL_RESULT_TAG);
+        CallResult callResult = null;
+        for (CallResult result : Account.loggedInUser.getAccount().getCallResults()) {
+            if (result.getId().equals(callResultId)) {
+                callResult = result;
+                break;
+            }
+        }
+        // If no exact matching id, create fresh object.
+        if (callResult == null) {
+            callResult = new CallResult()
+                    .setId(callResultId)
+                    .setText(callObject.optString(TEXT_TAG));
+        }
+        String phoneNumber =
+                callObject.isNull(PHONE_NUMBER_TAG) ? null : callObject.optString(PHONE_NUMBER_TAG);
+        // Get other fields.
+        return new Call()
+                .setCallResult(callResult)
+                .setId(callObject.optString(ID_TAG))
+                .setVia(callObject.optString(VIA_TAG))
+                .setAuthor(callObject.optString(AUTHOR_TAG))
+                .setPhoneNumber(phoneNumber)
+                .setText(callObject.optString(TEXT_TAG))
+                .setTime(DateSerializer.fromTimestamp(callObject.optString(CALL_TIME_INT_TAG)))
+                .setContactId(callObject.optString(CONTACT_ID_TAG))
+                .setRecordingLink(callObject.optString(RECORDING_LINK_TAG))
+                .setCreatedAt(DateSerializer.fromFormattedString(callObject.optString(CREATED_AT_TAG)))
+                .setModifiedAt(DateSerializer.fromFormattedString(callObject.optString(MODIFIED_AT_TAG)));
+    }
+
+    public static List<Call> fromJsonArray(JSONArray callsArray) {
+        List<Call> calls = new LinkedList<>();
+        for (int i = 0; i < callsArray.length(); ++i) {
+            JSONObject callObject = callsArray.optJSONObject(i);
+            Call call = fromJsonObject(callObject);
+            if (call != null) {
+                calls.add(call);
+            }
+        }
+        return calls;
     }
 
     public static String toJsonObject(Call call) {
@@ -61,79 +103,10 @@ public class CallSerializer extends BaseSerializer {
             try {
                 callsArray.put(new JSONObject(toJsonObject(calls.get(i))));
             } catch (JSONException e) {
-                LOG.severe("Error creating JSONObject out of Call");
+                LOG.severe("Error creating JSON out of Call(s).");
                 LOG.severe(e.toString());
             }
         }
         return callsArray.toString();
-    }
-
-    public static CallList listFromString(String pResponseBody) {
-        CallList callsList = new CallList();
-        try {
-            JSONObject root = new JSONObject(pResponseBody);
-            JSONObject data = root.optJSONObject(DATA_TAG);
-            JSONArray calls = data.optJSONArray(CALLS_TAG);
-            Paginator paginator = RequestMetadataSerializer.fromJsonObject(data);
-            callsList.setPaginator(paginator);
-            for (int i = 0; i < calls.length(); ++i) {
-                JSONObject obj = calls.optJSONObject(i);
-                Call lCall = objFromJson(obj);
-                if (lCall != null) {
-                    callsList.add(lCall);
-                }
-            }
-        } catch (Exception e) {
-            LOG.severe(e.toString());
-        }
-        return callsList;
-    }
-
-    private static Call objFromJson(JSONObject pObj) {
-        JSONObject lObject = pObj.optJSONObject("call");
-        if (lObject != null) {
-            return fromJsonObject(lObject);
-        }
-        return null;
-    }
-
-    public static Call fromJsonObject(JSONObject callObject) {
-        // Fix for some objects not having name.
-        if (callObject.has(CALL_TAG)) {
-            callObject = callObject.optJSONObject(CALL_TAG);
-        }
-        // Get the result if exists.
-        String callResultId = callObject.optString(CALL_RESULT_TAG);
-        CallResult callResult = null;
-        for (CallResult result : Account.loggedInUser.getAccount().getCallResults()) {
-            if (result.getId().equals(callResultId)) {
-                callResult = result;
-            }
-        }
-        // Get other fields.
-        return new Call()
-                .setCallResult(callResult)
-                .setId(callObject.optString(ID_TAG))
-                .setVia(callObject.optString(VIA_TAG))
-                .setAuthor(callObject.optString(AUTHOR_TAG))
-                .setPhoneNumber(callObject.optString(PHONE_NUMBER_TAG))
-                .setText(callObject.optString(TEXT_TAG))
-                .setTime(DateSerializer.fromTimestamp(callObject.optString(CALL_TIME_INT_TAG)))
-                .setContactId(callObject.optString(CONTACT_ID_TAG))
-                .setRecordingLink(callObject.optString(RECORDING_LINK_TAG))
-                .setCreatedAt(DateSerializer.fromFormattedString(callObject.optString(CREATED_AT_TAG)))
-                .setModifiedAt(DateSerializer.fromFormattedString(callObject.optString(MODIFIED_AT_TAG)));
-    }
-
-    public static List<Call> fromJsonArray(JSONArray callsArray) {
-        List<Call> calls = new LinkedList<>();
-        for (int i = 0; i < callsArray.length(); ++i) {
-            JSONObject obj = callsArray.optJSONObject(i);
-            Call call = fromJsonObject(obj);
-            if (call != null) {
-                calls.add(call);
-            }
-        }
-        return calls;
     }
 }

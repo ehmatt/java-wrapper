@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -26,11 +27,9 @@ public class DealListSerializer extends BaseSerializer {
      */
     public static DealList fromString(String responseBody) throws OnePageException {
         DealList deals = new DealList();
-        String parsedResponse;
-        OnePageException exception;
 
         try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
             JSONObject responseObject = new JSONObject(parsedResponse);
             JSONArray dealsArray = responseObject.getJSONArray(DEALS_TAG);
             deals = fromJsonArray(dealsArray);
@@ -38,8 +37,7 @@ public class DealListSerializer extends BaseSerializer {
             deals.setPaginator(paginator);
 
         } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
+            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing deals array from response body");
@@ -56,7 +54,7 @@ public class DealListSerializer extends BaseSerializer {
      * @return
      */
     public static DealList fromJsonArray(JSONArray dealsArray) {
-        ArrayList<Deal> deals = new ArrayList<>();
+        List<Deal> deals = new ArrayList<>();
         try {
             for (int i = 0; i < dealsArray.length(); i++) {
                 JSONObject dealObject = dealsArray.getJSONObject(i);

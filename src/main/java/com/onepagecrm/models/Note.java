@@ -2,6 +2,7 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
+import com.onepagecrm.models.serializers.NoteListSerializer;
 import com.onepagecrm.models.serializers.NoteSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
@@ -30,7 +31,7 @@ public class Note extends ApiResource implements Serializable {
         params.put("contact_id", contactId);
         Request request = new GetRequest(NOTES_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-        NoteList notes = NoteSerializer.fromJsonString(response.getResponseBody());
+        NoteList notes = NoteListSerializer.fromString(response.getResponseBody());
         notes.setContactId(contactId);
         return notes;
     }
@@ -40,7 +41,7 @@ public class Note extends ApiResource implements Serializable {
         params.put("contact_id", contactId);
         Request request = new GetRequest(NOTES_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-        NoteList notes = NoteSerializer.fromJsonString(response.getResponseBody());
+        NoteList notes = NoteListSerializer.fromString(response.getResponseBody());
         notes.setContactId(contactId);
         return notes;
     }
@@ -48,7 +49,7 @@ public class Note extends ApiResource implements Serializable {
     public static NoteList list() throws OnePageException {
         Request request = new GetRequest(NOTES_ENDPOINT);
         Response response = request.send();
-        return NoteSerializer.fromJsonString(response.getResponseBody());
+        return NoteListSerializer.fromString(response.getResponseBody());
     }
 
     public Note save() throws OnePageException {
@@ -58,13 +59,21 @@ public class Note extends ApiResource implements Serializable {
     private Note create() throws OnePageException {
         Map<String, Object> params = new HashMap<>();
         params.put("contact_id", contactId);
-        Request request = new PostRequest(NOTES_ENDPOINT, Query.fromParams(params), NoteSerializer.toJsonObject(this));
+        Request request = new PostRequest(
+                NOTES_ENDPOINT,
+                Query.fromParams(params),
+                NoteSerializer.toJsonObject(this)
+        );
         Response response = request.send();
         return NoteSerializer.fromString(response.getResponseBody());
     }
 
     private Note update() throws OnePageException {
-        Request request = new PutRequest(addNoteIdToEndpoint(NOTES_ENDPOINT), null, NoteSerializer.toJsonObject(this));
+        Request request = new PutRequest(
+                addNoteIdToEndpoint(NOTES_ENDPOINT),
+                null,
+                NoteSerializer.toJsonObject(this)
+        );
         Response response = request.send();
         return NoteSerializer.fromString(response.getResponseBody());
     }

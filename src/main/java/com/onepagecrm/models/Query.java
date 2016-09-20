@@ -3,13 +3,18 @@ package com.onepagecrm.models;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.serializers.BaseSerializer;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @SuppressWarnings("WeakerAccess")
 public class Query {
+
+    private final static Logger LOG = Logger.getLogger(Query.class.getSimpleName());
 
     public static String fromParams(Map<String, Object> params) {
         return "?" + BaseSerializer.encodeParams(params);
@@ -27,14 +32,21 @@ public class Query {
     }
 
     @SafeVarargs
-    public static String fromMaps(Map<String, Object>... pParams) {
-        List<String> vals = new LinkedList<>();
-        for (Map<String, Object> param : pParams) {
+    public static String fromMaps(Map<String, Object>... paramsArray) {
+        List<String> values = new LinkedList<>();
+        for (Map<String, Object> param : paramsArray) {
             for (String key : param.keySet()) {
-                vals.add(String.format("%s=%s", key, param.get(key)));
+                try {
+                    String encodeKey = URLEncoder.encode(key, "UTF-8");
+                    String encodeValue = URLEncoder.encode(String.valueOf(param.get(key)), "UTF-8");
+                    values.add(String.format("%s=%s", encodeKey, encodeValue));
+                } catch (UnsupportedEncodingException e) {
+                    LOG.severe("Error encoding url params : " + param.toString());
+                    LOG.severe(e.toString());
+                }
             }
         }
-        return "?" + join("&", vals);
+        return "?" + join("&", values);
     }
 
     public static String join(CharSequence delimiter, List<String> tokens) {
