@@ -95,7 +95,10 @@ public class Contact extends ApiResource implements Serializable {
     }
 
     public static Contact getSingleContact(String contactId) throws OnePageException {
-        Request request = new GetRequest(addIdToEndpoint(CONTACTS_ENDPOINT, contactId));
+        Request request = new GetRequest(
+                addIdToEndpoint(CONTACTS_ENDPOINT, contactId),
+                "?" + EXTRA_FIELDS
+        );
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
     }
@@ -105,7 +108,7 @@ public class Contact extends ApiResource implements Serializable {
         params.put("partial", true);
         Request request = new PutRequest(
                 addIdToEndpoint(CONTACTS_ENDPOINT, this.id),
-                Query.fromParams(params),
+                Query.fromParams(params) + "&" + EXTRA_FIELDS,
                 ContactSerializer.toJsonObject(updateValues)
         );
         Response response = request.send();

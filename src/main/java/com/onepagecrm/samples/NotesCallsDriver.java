@@ -2,7 +2,8 @@ package com.onepagecrm.samples;
 
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Account;
+import com.onepagecrm.models.Call;
+import com.onepagecrm.models.Note;
 import com.onepagecrm.models.User;
 import com.onepagecrm.net.request.Request;
 
@@ -12,9 +13,9 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class Driver {
+public class NotesCallsDriver {
 
-    private static final Logger LOG = Logger.getLogger(Driver.class.getName());
+    private static final Logger LOG = Logger.getLogger(NotesCallsDriver.class.getName());
 
     public static void main(String[] args) throws OnePageException {
         Properties prop = new Properties();
@@ -48,14 +49,7 @@ public class Driver {
 
         LOG.info("Logged in User : " + loggedInUser);
 
-        LOG.info("User's Team : " + Account.team);
-        LOG.info("User's Statuses : " + loggedInUser.getAccount().statuses);
-        LOG.info("User's Lead Sources : " + loggedInUser.getAccount().leadSources);
-        LOG.info("User's Custom Fields : " + loggedInUser.getAccount().customFields);
-        LOG.info("User's Call Results : " + loggedInUser.getAccount().callResults);
-        LOG.info("User's Filters : " + loggedInUser.getAccount().filters);
-        LOG.info("User's ContactsCounts : " + loggedInUser.getAccount().contactsCount);
-        LOG.info("User's StreamCount : " + loggedInUser.getAccount().streamCount);
-        LOG.info("User's Predefined Actions : " + loggedInUser.getAccount().predefinedActions);
+        Note.list();
+        Call.list();
     }
 }

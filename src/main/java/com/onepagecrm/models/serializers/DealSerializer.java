@@ -23,9 +23,12 @@ public class DealSerializer extends BaseSerializer {
     public static Deal fromString(String responseBody) throws OnePageException {
         Deal deal = new Deal();
         try {
-            JSONObject responseObject = new JSONObject(responseBody);
-            JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
-            deal = fromJsonObject(dataObject);
+            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(parsedResponse);
+            return fromJsonObject(responseObject);
+
+        } catch (ClassCastException e) {
+            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Deal object from response body");
