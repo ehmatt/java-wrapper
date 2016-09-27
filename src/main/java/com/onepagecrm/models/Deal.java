@@ -36,7 +36,6 @@ public class Deal extends ApiResource implements Serializable {
     private Boolean hasRelatedNotes;
     private List<Note> relatedNotes;
     private Date closeDate;
-//    private List<Attachment> attachments;
 
     public Deal save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -100,8 +99,7 @@ public class Deal extends ApiResource implements Serializable {
         Request request = new GetRequest(addDealIdToEndpoint(DEALS_ENDPOINT), "?fields=notes(text,author)");
         Response response = request.send();
         Deal deal = DealSerializer.fromString(response.getResponseBody());
-
-        if (deal.hasRelatedNotes) {
+        if (deal.hasRelatedNotes()) {
             notes = DealSerializer.getNotesFromString(response.getResponseBody());
         }
         return notes;
@@ -255,6 +253,10 @@ public class Deal extends ApiResource implements Serializable {
 
     public Boolean getHasRelatedNotes() {
         return hasRelatedNotes;
+    }
+
+    public boolean hasRelatedNotes() {
+        return hasRelatedNotes != null && hasRelatedNotes;
     }
 
     public Deal setHasRelatedNotes(Boolean hasRelatedNotes) {
