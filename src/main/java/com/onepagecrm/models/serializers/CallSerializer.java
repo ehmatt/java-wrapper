@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -41,7 +42,9 @@ public class CallSerializer extends BaseSerializer {
         // Get the result if exists.
         String callResultId = callObject.optString(CALL_RESULT_TAG);
         CallResult callResult = null;
-        for (CallResult result : Account.loggedInUser.getAccount().getCallResults()) {
+        List<CallResult> callResults = (Account.loggedInUser != null && Account.loggedInUser.isValid()) ?
+                Account.loggedInUser.getAccount().getCallResults() : new ArrayList<CallResult>();
+        for (CallResult result : callResults) {
             if (result.getId().equals(callResultId)) {
                 callResult = result;
                 break;
