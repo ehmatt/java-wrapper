@@ -56,91 +56,48 @@ public class ContactFabricator extends BaseFabricator {
     }
 
     public static ContactList actionStream() {
-        ContactList contacts = new ContactList();
-        String path = OnePageCRM.ASSET_PATH + "action_stream_page_1.json";
-        String response = Utilities.getResourceContents(path);
-        if (response != null) {
-            try {
-                contacts = ContactListSerializer.fromString(response);
-            } catch (OnePageException e) {
-                LOG.severe("Problem creating contact list from JSON file.");
-                LOG.severe(e.toString());
-            }
-        }
-        return contacts;
+        return fromPath("action_stream_page_1.json");
+    }
+
+    public static ContactList actionStreamPage2() {
+        return fromPath("action_stream_page_2.json");
+    }
+
+    public static ContactList actionStreamPage3() {
+        return fromPath("action_stream_page_3.json");
     }
 
     public static ContactList actionStreamPartial() {
         return actionStream().subList(0, 3);
     }
 
-    public static ContactList actionStreamPage2() {
-        ContactList contacts = new ContactList();
-        String path = OnePageCRM.ASSET_PATH + "action_stream_page_2.json";
-        String response = Utilities.getResourceContents(path);
-        if (response != null) {
-            try {
-                contacts = ContactListSerializer.fromString(response);
-            } catch (OnePageException e) {
-                LOG.severe("Problem creating contact list from JSON file.");
-                LOG.severe(e.toString());
-            }
-        }
-        return contacts;
-    }
-
-    public static ContactList actionStreamPage3() {
-        ContactList contacts = new ContactList();
-        String path = OnePageCRM.ASSET_PATH + "action_stream_page_3.json";
-        String response = Utilities.getResourceContents(path);
-        if (response != null) {
-            try {
-                contacts = ContactListSerializer.fromString(response);
-            } catch (OnePageException e) {
-                LOG.severe("Problem creating contact list from JSON file.");
-                LOG.severe(e.toString());
-            }
-        }
-        return contacts;
+    public static ContactList actionStreamFilterTag() {
+        return fromPath("action_stream_filter_tag.json");
     }
 
     public static ContactList contacts() {
-        ContactList contacts = new ContactList();
-        String path = OnePageCRM.ASSET_PATH + "contacts_page_1.json";
-        String response = Utilities.getResourceContents(path);
-        if (response != null) {
-            try {
-                contacts = ContactListSerializer.fromString(response);
-            } catch (OnePageException e) {
-                LOG.severe("Problem creating contact list from JSON file.");
-                LOG.severe(e.toString());
-            }
-        }
-        return contacts;
+        return fromPath("contacts_page_1.json");
+    }
+
+    public static ContactList contactsPage2() {
+        return fromPath("contacts_page_2.json");
+    }
+
+    public static ContactList contactsPage3() {
+        return fromPath("contacts_page_3.json");
     }
 
     public static ContactList contactsPartial() {
         return contacts().subList(0, 3);
     }
 
-    public static ContactList contactsPage2() {
-        ContactList contacts = new ContactList();
-        String path = OnePageCRM.ASSET_PATH + "contacts_page_2.json";
-        String response = Utilities.getResourceContents(path);
-        if (response != null) {
-            try {
-                contacts = ContactListSerializer.fromString(response);
-            } catch (OnePageException e) {
-                LOG.severe("Problem creating contact list from JSON file.");
-                LOG.severe(e.toString());
-            }
-        }
-        return contacts;
+    public static ContactList contactsFilterTag() {
+        return fromPath("contacts_filter_tag.json");
     }
 
-    public static ContactList contactsPage3() {
+    private static ContactList fromPath(String fileName) {
         ContactList contacts = new ContactList();
-        String path = OnePageCRM.ASSET_PATH + "contacts_page_3.json";
+        String path = OnePageCRM.ASSET_PATH + fileName;
         String response = Utilities.getResourceContents(path);
         if (response != null) {
             try {
