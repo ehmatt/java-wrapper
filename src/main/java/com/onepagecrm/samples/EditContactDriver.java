@@ -66,8 +66,8 @@ public class EditContactDriver {
             contact.setCompanyName("OnePageCRM");
             contact.setBackground("Java is very verbose, we met in college.");
             contact.setOwnerId(loggedInUser.getId());
-            contact.setStatusId(loggedInUser.getAccount().statuses.get(1).getId());
-            contact.setLeadSourceId(loggedInUser.getAccount().leadSources.get(1).getId());
+            contact.setStatusId(loggedInUser.getAccount().statuses.get(0).getId());
+            contact.setLeadSourceId(loggedInUser.getAccount().leadSources.get(0).getId());
             contact.setStarred(true);
 
             Address address = new Address();
@@ -177,6 +177,11 @@ public class EditContactDriver {
             otherUrl.setType("Other");
             otherUrl.setValue("www.other.com");
             urls.add(otherUrl);
+
+            Url xing = new Url();
+            xing.setType("Xing");
+            xing.setValue("www.xing.com");
+            urls.add(xing);
 
             // Add list of urls to our Contact.
             contact.setUrls(urls);
