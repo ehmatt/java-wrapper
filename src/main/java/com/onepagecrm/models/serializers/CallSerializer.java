@@ -1,14 +1,12 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Account;
 import com.onepagecrm.models.Call;
 import com.onepagecrm.models.CallResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -42,8 +40,7 @@ public class CallSerializer extends BaseSerializer {
         // Get the result if exists.
         String callResultId = callObject.optString(CALL_RESULT_TAG);
         CallResult callResult = null;
-        List<CallResult> callResults = (Account.loggedInUser != null && Account.loggedInUser.isValid()) ?
-                Account.loggedInUser.getAccount().getCallResults() : new ArrayList<CallResult>();
+        List<CallResult> callResults = CallResultSerializer.getFromLoggedUser();
         for (CallResult result : callResults) {
             if (result.getId().equals(callResultId)) {
                 callResult = result;
