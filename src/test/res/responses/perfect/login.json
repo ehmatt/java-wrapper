@@ -289,6 +289,22 @@
         "period": "days"
       }
     ],
+    "predefined_actions": [
+      {
+        "predefined_action": {
+          "id": "559cd1a46f6e656707000033",
+          "text": "#1 Email [Firstname] introducing our company",
+          "days": 3
+        }
+      },
+      {
+        "predefined_action": {
+          "id": "559cd1a46f6e656707000034",
+          "text": "#2 Call [Firstname] after sending intro email",
+          "days": 3
+        }
+      }
+    ],
     "contact_titles": [
       "Mr",
       "Mrs",
