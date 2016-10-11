@@ -1,306 +1,29 @@
 {
   "status": 0,
   "message": "OK",
-  "timestamp": 1459259240,
+  "timestamp": 1475586934,
   "data": {
     "contacts": [
       {
         "contact": {
-          "id": "56fa81ea9007ba07fc000034",
-          "company_name": "Quazymore Architects",
-          "company_id": "56fa81ea9007ba07fc000036",
-          "type": "individual",
-          "created_at": "2016-03-29T13:23:54.807Z",
-          "custom_fields": [],
-          "background": "I met Jane at the annuall Eco Conference in Florida. Her company currently provides solar panels (along with a lot of other stuff) to the State Goverments of California, Nevada, Oregon, Arizona and Utah for capital building projects. Her current supplier is crazy expensive! I've asked to be able to tender for their next order.",
-          "emails": [
-            {
-              "type": "work",
-              "value": "jane.doe@acme.com"
-            }
-          ],
-          "first_name": "Jane",
-          "job_title": "",
-          "last_name": "Doe",
-          "lead_source_id": "",
-          "owner_id": "559cd1866f6e656707000001",
-          "pending_deal": false,
-          "phones": [
-            {
-              "type": "work",
-              "value": "312 34 4491223"
-            }
-          ],
-          "sales_closed_for": [],
-          "status": "Customer",
-          "status_id": "559cd1a06f6e656707000007",
-          "tags": [],
-          "total_pendings": 0,
-          "modified_at": "2016-03-29T13:23:54.910Z",
-          "urls": [],
-          "address_list": [
-            {
-              "address": "25 Mason Street",
-              "city": "San Francisco",
-              "state": "CA",
-              "zip_code": "94102",
-              "country_code": "US"
-            }
-          ],
-          "starred": false,
-          "photo_url": "",
-          "lead_source_name": ""
-        },
-        "next_actions": [
-          {
-            "id": "56fa81ea9007ba07fc000035",
-            "contact_id": "56fa81ea9007ba07fc000034",
-            "text": "Contact Jane to confirm she has received our deal",
-            "assignee_id": "559cd1866f6e656707000001",
-            "status": "date",
-            "date": "2016-03-29"
-          }
-        ],
-        "next_action": {
-          "id": "56fa81ea9007ba07fc000035",
-          "contact_id": "56fa81ea9007ba07fc000034",
-          "text": "Contact Jane to confirm she has received our deal",
-          "assignee_id": "559cd1866f6e656707000001",
-          "status": "date",
-          "date": "2016-03-29"
-        }
-      },
-      {
-        "contact": {
-          "id": "56fa81eb9007ba07fc00004d",
-          "company_name": "Big Company Inc.",
-          "company_id": "56fa81eb9007ba07fc00004f",
-          "type": "individual",
-          "created_at": "2016-03-29T13:23:55.044Z",
-          "custom_fields": [],
-          "background": "I met Jane at the annuall Eco Conference in Florida. Her company currently provides solar panels (along with a lot of other stuff) to the State Goverments of California, Nevada, Oregon, Arizona and Utah for capital building projects. Her current supplier is crazy expensive! I've asked to be able to tender for their next order.",
-          "emails": [
-            {
-              "type": "work",
-              "value": "jane.doe@acme.com"
-            }
-          ],
-          "first_name": "Jane",
-          "job_title": "Manager",
-          "last_name": "Doe",
-          "lead_source_id": "",
-          "owner_id": "559cd1866f6e656707000001",
-          "pending_deal": false,
-          "phones": [
-            {
-              "type": "work",
-              "value": "312 34 4491223"
-            }
-          ],
-          "sales_closed_for": [],
-          "status": "Customer",
-          "status_id": "559cd1a06f6e656707000007",
-          "tags": [],
-          "total_pendings": 0,
-          "modified_at": "2016-03-29T13:23:55.118Z",
-          "urls": [],
-          "address_list": [
-            {
-              "address": "25 Mason Street",
-              "city": "San Francisco",
-              "state": "CA",
-              "zip_code": "94102",
-              "country_code": "TT"
-            }
-          ],
-          "starred": false,
-          "photo_url": "",
-          "lead_source_name": ""
-        },
-        "next_actions": [
-          {
-            "id": "56fa81eb9007ba07fc00004e",
-            "contact_id": "56fa81eb9007ba07fc00004d",
-            "text": "Contact Jane to confirm she has received our deal..",
-            "assignee_id": "559cd1866f6e656707000001",
-            "status": "date",
-            "date": "2016-03-29"
-          }
-        ],
-        "next_action": {
-          "id": "56fa81eb9007ba07fc00004e",
-          "contact_id": "56fa81eb9007ba07fc00004d",
-          "text": "Contact Jane to confirm she has received our deal..",
-          "assignee_id": "559cd1866f6e656707000001",
-          "status": "date",
-          "date": "2016-03-29"
-        }
-      },
-      {
-        "contact": {
-          "id": "56fa81eb9007ba07fc000061",
-          "company_name": "Big Company Inc.",
-          "company_id": "56fa81eb9007ba07fc00004f",
-          "type": "individual",
-          "created_at": "2016-03-29T13:23:55.198Z",
-          "custom_fields": [],
-          "background": "Test",
-          "emails": [
-            {
-              "type": "work",
-              "value": "dy@biginc.com"
-            }
-          ],
-          "first_name": "Dorian",
-          "job_title": "Lead of Test Automation",
-          "last_name": "Yeats",
-          "lead_source_id": "other",
-          "owner_id": "559cd1866f6e656707000001",
-          "pending_deal": false,
-          "phones": [
-            {
-              "type": "work",
-              "value": "853334444"
-            }
-          ],
-          "sales_closed_for": [],
-          "status": "Lead",
-          "status_id": "559cd19f6f6e656707000005",
-          "tags": [],
-          "total_pendings": 0,
-          "modified_at": "2016-03-29T13:23:55.213Z",
-          "urls": [
-            {
-              "type": "website",
-              "value": "www.biginc.com"
-            }
-          ],
-          "address_list": [
-            {
-              "address": "",
-              "city": "",
-              "state": "",
-              "zip_code": "",
-              "country_code": "AE"
-            }
-          ],
-          "starred": false,
-          "photo_url": "",
-          "lead_source_name": "Other"
-        },
-        "next_actions": [
-          {
-            "id": "56fa81eb9007ba07fc000062",
-            "contact_id": "56fa81eb9007ba07fc000061",
-            "text": "Test next action",
-            "assignee_id": "559cd1866f6e656707000001",
-            "status": "date",
-            "date": "2016-03-29"
-          }
-        ],
-        "next_action": {
-          "id": "56fa81eb9007ba07fc000062",
-          "contact_id": "56fa81eb9007ba07fc000061",
-          "text": "Test next action",
-          "assignee_id": "559cd1866f6e656707000001",
-          "status": "date",
-          "date": "2016-03-29"
-        }
-      },
-      {
-        "contact": {
-          "id": "56fa81eb9007ba07fc000071",
-          "company_name": "Apple",
-          "company_id": "56fa81eb9007ba07fc000073",
-          "type": "individual",
-          "created_at": "2016-03-29T13:23:55.416Z",
-          "custom_fields": [],
-          "background": "Background",
-          "emails": [
-            {
-              "type": "work",
-              "value": "ljenkins@apple.com"
-            }
-          ],
-          "first_name": "Leroy",
-          "job_title": "iOS Tester",
-          "last_name": "Jenkins",
-          "lead_source_id": "word_of_mouth",
-          "owner_id": "559cd1866f6e656707000001",
-          "pending_deal": false,
-          "phones": [
-            {
-              "type": "work",
-              "value": "853334444"
-            }
-          ],
-          "sales_closed_for": [],
-          "status": "Prospect",
-          "status_id": "559cd1a06f6e656707000006",
-          "tags": [],
-          "total_pendings": 0,
-          "modified_at": "2016-03-29T13:23:55.583Z",
-          "urls": [
-            {
-              "type": "website",
-              "value": "www.web.com"
-            }
-          ],
-          "address_list": [
-            {
-              "address": "",
-              "city": "",
-              "state": "",
-              "zip_code": "",
-              "country_code": "US"
-            }
-          ],
-          "starred": false,
-          "photo_url": "",
-          "lead_source_name": "Word of mouth"
-        },
-        "next_actions": [
-          {
-            "id": "56fa81eb9007ba07fc000072",
-            "contact_id": "56fa81eb9007ba07fc000071",
-            "text": "Think of better next action..",
-            "assignee_id": "559cd1866f6e656707000001",
-            "status": "date",
-            "date": "2016-03-29"
-          }
-        ],
-        "next_action": {
-          "id": "56fa81eb9007ba07fc000072",
-          "contact_id": "56fa81eb9007ba07fc000071",
-          "text": "Think of better next action..",
-          "assignee_id": "559cd1866f6e656707000001",
-          "status": "date",
-          "date": "2016-03-29"
-        }
-      },
-      {
-        "contact": {
           "id": "56fa81eb9007ba07fc00006a",
-          "company_name": "",
-          "type": "individual",
-          "created_at": "2016-03-29T13:23:55.325Z",
-          "custom_fields": [],
-          "background": "Background",
-          "emails": [],
           "first_name": "Cillian",
-          "job_title": "",
           "last_name": "Bloggs",
-          "lead_source_id": "",
+          "job_title": "",
+          "company_id": "",
+          "company_name": "",
+          "company_size": 0,
           "owner_id": "559cd1866f6e656707000001",
-          "pending_deal": false,
-          "phones": [],
-          "sales_closed_for": [],
           "status": "Lead",
           "status_id": "559cd19f6f6e656707000005",
           "tags": [],
+          "starred": false,
+          "background": "Background",
+          "lead_source_id": "",
+          "pending_deal": false,
           "total_pendings": 0,
-          "modified_at": "2016-03-29T13:23:55.376Z",
-          "urls": [],
+          "photo_url": "",
+          "custom_fields": [],
           "address_list": [
             {
               "address": "",
@@ -310,48 +33,80 @@
               "country_code": ""
             }
           ],
-          "starred": false,
-          "photo_url": "",
-          "lead_source_name": ""
+          "letter": "b",
+          "urls": [],
+          "phones": [],
+          "emails": [],
+          "sales_closed_for": [],
+          "closed_sales": [],
+          "created_at": "2016-03-29T13:23:55Z",
+          "modified_at": "2016-04-25T13:56:44Z",
+          "title": ""
         },
         "next_actions": [
           {
             "id": "56fa81eb9007ba07fc00006b",
+            "assignee_id": "559cd1866f6e656707000001",
             "contact_id": "56fa81eb9007ba07fc00006a",
             "text": "Call Cillian",
-            "assignee_id": "559cd1866f6e656707000001",
-            "status": "waiting"
+            "status": "waiting",
+            "done": false,
+            "created_at": "2016-03-29T13:23:55Z",
+            "modified_at": "2016-03-29T13:23:55Z"
           }
         ],
         "next_action": {
           "id": "56fa81eb9007ba07fc00006b",
+          "assignee_id": "559cd1866f6e656707000001",
           "contact_id": "56fa81eb9007ba07fc00006a",
           "text": "Call Cillian",
-          "assignee_id": "559cd1866f6e656707000001",
-          "status": "waiting"
-        }
+          "status": "waiting",
+          "done": false,
+          "created_at": "2016-03-29T13:23:55Z",
+          "modified_at": "2016-03-29T13:23:55Z"
+        },
+        "queued_actions": [],
+        "next_action_conflicts": [],
+        "deals": [],
+        "notes": [],
+        "calls": []
       },
       {
         "contact": {
           "id": "56fa81ea9007ba07fc000040",
+          "first_name": "Joe",
+          "last_name": "Bloggs",
+          "job_title": "",
+          "company_id": "56fbc7869007ba0c9f000014",
           "company_name": "Cregmore Adams Inc.",
-          "company_id": "56e69fb59007ba2aed00008a",
-          "type": "individual",
-          "created_at": "2016-03-29T13:23:54.931Z",
-          "custom_fields": [],
+          "company_size": 2,
+          "owner_id": "559cd1866f6e656707000001",
+          "status": "Prospect",
+          "status_id": "559cd1a06f6e656707000006",
+          "tags": [],
+          "starred": false,
           "background": "Originally met Joe at the Eco Friendly Expo 2009. He owns 6 hardware stores in New Jersey.",
-          "emails": [
+          "lead_source_id": "",
+          "pending_deal": false,
+          "total_pendings": 0,
+          "photo_url": "",
+          "custom_fields": [],
+          "address_list": [
             {
-              "type": "work",
-              "value": "jbloggs@bigcompany.co.uk"
+              "address": "94 Steuben Street",
+              "city": "East Orange",
+              "state": "NJ",
+              "zip_code": "07018-4206",
+              "country_code": "US"
             }
           ],
-          "first_name": "Joe",
-          "job_title": "",
-          "last_name": "Bloggs",
-          "lead_source_id": "",
-          "owner_id": "559cd1866f6e656707000001",
-          "pending_deal": false,
+          "letter": "b",
+          "urls": [
+            {
+              "type": "linkedin",
+              "value": "http://www.linkedin.com/pub/joe-bloggs/68/b52/374"
+            }
+          ],
           "phones": [
             {
               "type": "work",
@@ -362,87 +117,105 @@
               "value": "+1 213 555 1307"
             }
           ],
+          "emails": [
+            {
+              "type": "work",
+              "value": "jbloggs@bigcompany.co.uk"
+            }
+          ],
           "sales_closed_for": [],
-          "status": "Prospect",
-          "status_id": "559cd1a06f6e656707000006",
-          "tags": [],
-          "total_pendings": 0,
-          "modified_at": "2016-03-29T13:23:54.994Z",
-          "urls": [
-            {
-              "type": "linkedin",
-              "value": "http://www.linkedin.com/pub/joe-bloggs/68/b52/374"
-            }
-          ],
-          "address_list": [
-            {
-              "address": "94 Steuben Street",
-              "city": "East Orange",
-              "state": "NJ",
-              "zip_code": "07018-4206",
-              "country_code": "US"
-            }
-          ],
-          "starred": false,
-          "photo_url": "",
-          "lead_source_name": ""
+          "closed_sales": [],
+          "created_at": "2016-03-29T13:23:54Z",
+          "modified_at": "2016-04-05T07:35:59Z",
+          "title": ""
         },
         "next_actions": [
           {
             "id": "56fa81ea9007ba07fc000041",
+            "assignee_id": "559cd1866f6e656707000001",
             "contact_id": "56fa81ea9007ba07fc000040",
             "text": "Call Joe to see if he wants to reorder",
-            "assignee_id": "559cd1866f6e656707000001",
-            "status": "waiting"
+            "status": "waiting",
+            "done": false,
+            "created_at": "2016-03-29T13:23:54Z",
+            "modified_at": "2016-03-29T13:23:54Z"
           }
         ],
         "next_action": {
           "id": "56fa81ea9007ba07fc000041",
+          "assignee_id": "559cd1866f6e656707000001",
           "contact_id": "56fa81ea9007ba07fc000040",
           "text": "Call Joe to see if he wants to reorder",
-          "assignee_id": "559cd1866f6e656707000001",
-          "status": "waiting"
+          "status": "waiting",
+          "done": false,
+          "created_at": "2016-03-29T13:23:54Z",
+          "modified_at": "2016-03-29T13:23:54Z"
+        },
+        "queued_actions": [],
+        "next_action_conflicts": [],
+        "deals": [],
+        "notes": [
+          {
+            "id": "56fa81ea9007ba07fc000043",
+            "author": "Cillian M.",
+            "contact_id": "56fa81ea9007ba07fc000040",
+            "text": "Just got our first order from Joe!! Details of the order to be confirmed. Reason we got it.. cause we were cheaper than the rest!!!",
+            "date": "2016-03-29",
+            "attachments": [],
+            "linked_deal_id": "",
+            "created_at": "2016-03-29T13:23:54Z",
+            "modified_at": "2016-10-04T13:05:18Z"
+          },
+          {
+            "id": "56fa81ea9007ba07fc000046",
+            "author": "Cillian M.",
+            "contact_id": "56fa81ea9007ba07fc000040",
+            "text": "I rang Joe to confirm his order. He confirmed an order for 16 solar panels for his store in Burlington. He amended his order for the store in Salem from 12 to 24 due to an ?۪unprecedented demand?۪ for eco products.",
+            "date": "2016-03-29",
+            "attachments": [],
+            "linked_deal_id": "",
+            "created_at": "2016-03-29T13:23:54Z",
+            "modified_at": "2016-10-04T13:05:33Z"
+          }
+        ],
+        "calls": [],
+        "company": {
+          "id": "56fbc7869007ba0c9f000014",
+          "name": "Cregmore Adams Inc.",
+          "description": "",
+          "phone": "",
+          "url": "",
+          "company_fields": [],
+          "synced_status_id": "559cd1a06f6e656707000006",
+          "address": {
+            "address": null,
+            "city": null,
+            "state": null,
+            "zip_code": null,
+            "country_code": null
+          }
         }
       },
       {
         "contact": {
           "id": "56fa81eb9007ba07fc00006d",
-          "company_name": "Lannister Inc.",
-          "company_id": "56fa81eb9007ba07fc00006f",
-          "type": "individual",
-          "created_at": "2016-03-29T13:23:55.388Z",
-          "custom_fields": [],
-          "emails": [
-            {
-              "type": "work",
-              "value": "tyrrion@lannisterinc.com"
-            }
-          ],
           "first_name": "Tyrrion",
-          "job_title": "The Imp",
           "last_name": "Lannister",
-          "lead_source_id": "other",
+          "job_title": "The Imp",
+          "company_id": "56fd40b49007ba716f00000c",
+          "company_name": "Lannister Inc.",
+          "company_size": 1,
           "owner_id": "559cd1866f6e656707000001",
-          "pending_deal": false,
-          "phones": [
-            {
-              "type": "work",
-              "value": "853334444"
-            }
-          ],
-          "sales_closed_for": [],
           "status": "Lead",
           "status_id": "559cd19f6f6e656707000005",
           "tags": [],
-          "total_pendings": 0,
-          "modified_at": "2016-03-29T13:23:55.403Z",
-          "urls": [
-            {
-              "type": "website",
-              "value": "www.lannisterinc.com"
-            }
-          ],
+          "starred": false,
           "background": "",
+          "lead_source_id": "other",
+          "pending_deal": false,
+          "total_pendings": 0,
+          "photo_url": "",
+          "custom_fields": [],
           "address_list": [
             {
               "address": "123",
@@ -452,124 +225,95 @@
               "country_code": ""
             }
           ],
-          "starred": false,
-          "photo_url": "",
-          "lead_source_name": "Other"
+          "letter": "l",
+          "urls": [
+            {
+              "type": "website",
+              "value": "www.lannisterinc.com"
+            }
+          ],
+          "phones": [
+            {
+              "type": "work",
+              "value": "853334444"
+            }
+          ],
+          "emails": [
+            {
+              "type": "work",
+              "value": "tyrrion@lannisterinc.com"
+            }
+          ],
+          "sales_closed_for": [],
+          "closed_sales": [],
+          "created_at": "2016-03-29T13:23:55Z",
+          "modified_at": "2016-04-26T07:46:30Z",
+          "title": ""
         },
         "next_actions": [
           {
             "id": "56fa81eb9007ba07fc00006e",
+            "assignee_id": "559cd1866f6e656707000001",
             "contact_id": "56fa81eb9007ba07fc00006d",
             "text": "Call to see if he wants to buy",
-            "assignee_id": "559cd1866f6e656707000001",
-            "status": "waiting"
+            "status": "waiting",
+            "done": false,
+            "created_at": "2016-03-29T13:23:55Z",
+            "modified_at": "2016-03-29T13:23:55Z"
           }
         ],
         "next_action": {
           "id": "56fa81eb9007ba07fc00006e",
+          "assignee_id": "559cd1866f6e656707000001",
           "contact_id": "56fa81eb9007ba07fc00006d",
           "text": "Call to see if he wants to buy",
-          "assignee_id": "559cd1866f6e656707000001",
-          "status": "waiting"
-        }
-      },
-      {
-        "contact": {
-          "id": "56fa81ea9007ba07fc000049",
-          "company_name": "Bloggs",
-          "company_id": "56fa81ea9007ba07fc00004b",
-          "type": "individual",
-          "created_at": "2016-03-29T13:23:54.999Z",
-          "custom_fields": [],
-          "background": "Background",
-          "emails": [
-            {
-              "type": "work",
-              "value": "Bloggs"
-            }
-          ],
-          "first_name": "John",
-          "job_title": "Bloggs",
-          "last_name": "Bloggs",
-          "lead_source_id": "other",
-          "owner_id": "559cd1866f6e656707000001",
-          "pending_deal": false,
-          "phones": [
-            {
-              "type": "work",
-              "value": "851112223"
-            }
-          ],
-          "sales_closed_for": [],
-          "status": "Lead",
-          "status_id": "559cd19f6f6e656707000005",
-          "tags": [],
-          "total_pendings": 0,
-          "modified_at": "2016-03-29T13:23:55.032Z",
-          "urls": [
-            {
-              "type": "twitter",
-              "value": "Bloggs"
-            }
-          ],
-          "address_list": [
-            {
-              "address": "Bloggs",
-              "city": "Bloggs",
-              "state": "Bloggs",
-              "zip_code": "Bloggs",
-              "country_code": "AE"
-            }
-          ],
-          "starred": false,
-          "photo_url": "",
-          "lead_source_name": "Other"
+          "status": "waiting",
+          "done": false,
+          "created_at": "2016-03-29T13:23:55Z",
+          "modified_at": "2016-03-29T13:23:55Z"
         },
-        "next_actions": [
-          {
-            "id": "56fa81ea9007ba07fc00004a",
-            "contact_id": "56fa81ea9007ba07fc000049",
-            "text": "Call to see if he wants to reorder",
-            "assignee_id": "559cd1866f6e656707000001",
-            "status": "waiting"
+        "queued_actions": [],
+        "next_action_conflicts": [],
+        "deals": [],
+        "notes": [],
+        "calls": [],
+        "company": {
+          "id": "56fd40b49007ba716f00000c",
+          "name": "Lannister Inc.",
+          "description": "",
+          "phone": "",
+          "url": "",
+          "company_fields": [],
+          "synced_status_id": "559cd19f6f6e656707000005",
+          "address": {
+            "address": null,
+            "city": null,
+            "state": null,
+            "zip_code": null,
+            "country_code": null
           }
-        ],
-        "next_action": {
-          "id": "56fa81ea9007ba07fc00004a",
-          "contact_id": "56fa81ea9007ba07fc000049",
-          "text": "Call to see if he wants to reorder",
-          "assignee_id": "559cd1866f6e656707000001",
-          "status": "waiting"
         }
       },
       {
         "contact": {
           "id": "56fa81eb9007ba07fc000067",
-          "company_name": "",
-          "type": "individual",
-          "created_at": "2016-03-29T13:23:55.239Z",
-          "custom_fields": [],
-          "background": "Background",
-          "emails": [],
           "first_name": "Mary",
-          "job_title": "",
           "last_name": "Smith",
-          "lead_source_id": "",
+          "job_title": "",
+          "company_id": "",
+          "company_name": "",
+          "company_size": 0,
           "owner_id": "559cd1866f6e656707000001",
-          "pending_deal": false,
-          "phones": [
-            {
-              "type": "work",
-              "value": "91333333"
-            }
-          ],
-          "sales_closed_for": [],
           "status": "Lead",
           "status_id": "559cd19f6f6e656707000005",
           "tags": [],
+          "starred": false,
+          "background": "Background",
+          "lead_source_id": "",
+          "pending_deal": false,
           "total_pendings": 0,
-          "modified_at": "2016-03-29T13:23:55.314Z",
-          "urls": [],
+          "photo_url": "",
+          "custom_fields": [],
           "address_list": [
             {
               "address": "",
@@ -579,30 +323,79 @@
               "country_code": ""
             }
           ],
-          "starred": false,
-          "photo_url": "",
-          "lead_source_name": ""
+          "letter": "s",
+          "urls": [],
+          "phones": [
+            {
+              "type": "work",
+              "value": "91333333"
+            }
+          ],
+          "emails": [],
+          "sales_closed_for": [],
+          "closed_sales": [],
+          "created_at": "2016-03-29T13:23:55Z",
+          "modified_at": "2016-04-22T14:55:16Z",
+          "title": ""
         },
         "next_actions": [
           {
             "id": "56fa81eb9007ba07fc000068",
+            "assignee_id": "559cd1866f6e656707000001",
             "contact_id": "56fa81eb9007ba07fc000067",
             "text": "Call to see if she wants to reorder",
-            "assignee_id": "559cd1866f6e656707000001",
-            "status": "waiting"
+            "status": "waiting",
+            "done": false,
+            "created_at": "2016-03-29T13:23:55Z",
+            "modified_at": "2016-03-29T13:23:55Z"
           }
         ],
         "next_action": {
           "id": "56fa81eb9007ba07fc000068",
+          "assignee_id": "559cd1866f6e656707000001",
           "contact_id": "56fa81eb9007ba07fc000067",
           "text": "Call to see if she wants to reorder",
-          "assignee_id": "559cd1866f6e656707000001",
-          "status": "waiting"
-        }
+          "status": "waiting",
+          "done": false,
+          "created_at": "2016-03-29T13:23:55Z",
+          "modified_at": "2016-03-29T13:23:55Z"
+        },
+        "queued_actions": [],
+        "next_action_conflicts": [],
+        "deals": [],
+        "notes": [],
+        "calls": []
       },
       {
         "contact": {
-          "id": "56fa81ea9007ba07fc000031",
+          "id": "56fa81ea9007ba07fc00003e",
+          "first_name": "Mark",
+          "last_name": "Roche",
+          "job_title": "",
+          "company_id": "56fd40b49007ba716f000007",
+          "company_name": "Roche Inc.",
+          "company_size": 2,
+          "owner_id": "559cd1866f6e656707000001",
+          "status": "Lead",
+          "status_id": "559cd19f6f6e656707000005",
+          "tags": [],
+          "starred": false,
+          "background": "",
+          "lead_source_id": "",
+          "pending_deal": false,
+          "total_pendings": 0,
+          "photo_url": "",
+          "custom_fields": [],
+          "address_list": [
+            {
+              "address": "",
+              "city": "",
+              "state": "",
+              "zip_code": "",
+              "country_code": ""
+            }
+          ],
+          "letter": "r",
           "urls": [],
           "phones": [
             {
@@ -611,24 +404,72 @@
             }
           ],
           "emails": [],
-          "status": "Lead",
-          "status_id": "559cd19f6f6e656707000005",
-          "total_pendings": 0,
-          "sales_closed_for": [],
-          "tags": [],
-          "custom_fields": [],
+          "sales_closed_for": [
+            "561b937f9007ba4cc200004e",
+            "559cd1866f6e656707000001"
+          ],
+          "closed_sales": [
+            {
+              "user_id": "561b937f9007ba4cc200004e",
+              "closed_at": 1462261859,
+              "comment": "Closed"
+            },
+            {
+              "user_id": "559cd1866f6e656707000001",
+              "closed_at": 1462261876,
+              "comment": "This is the comment"
+            }
+          ],
+          "created_at": "2016-03-29T13:23:54Z",
+          "modified_at": "2016-08-29T13:06:11Z",
+          "title": ""
+        },
+        "next_actions": [],
+        "next_action": {},
+        "queued_actions": [],
+        "next_action_conflicts": [],
+        "deals": [],
+        "notes": [],
+        "calls": [],
+        "company": {
+          "id": "56fd40b49007ba716f000007",
+          "name": "Roche Inc.",
+          "description": "",
+          "phone": "",
+          "url": "",
+          "company_fields": [],
+          "synced_status_id": "559cd19f6f6e656707000005",
+          "address": {
+            "address": null,
+            "city": null,
+            "state": null,
+            "zip_code": null,
+            "country_code": null
+          }
+        }
+      },
+      {
+        "contact": {
+          "id": "56fa81ea9007ba07fc00000b",
+          "first_name": "Pawel",
+          "last_name": "S",
+          "job_title": "CTO",
+          "company_id": "56fd40b49007ba716f000004",
+          "company_name": "OnePageCRM",
+          "company_size": 3,
           "owner_id": "559cd1866f6e656707000001",
-          "type": "individual",
-          "pending_deal": false,
-          "first_name": "John",
-          "last_name": "Roche",
-          "job_title": "",
-          "company_name": "Roche Inc.",
-          "lead_source_id": "",
-          "company_id": "56fa81ea9007ba07fc000033",
-          "modified_at": "2016-03-29T13:23:54.789Z",
-          "created_at": "2016-03-29T13:23:54.789Z",
+          "status": "Inactive",
+          "status_id": "559cd1a06f6e656707000008",
+          "tags": [
+            "AndroidTagTest"
+          ],
+          "starred": true,
           "background": "",
+          "lead_source_id": "",
+          "pending_deal": false,
+          "total_pendings": 0,
+          "photo_url": "https://onepagecrm-ud2-us-west-1.s3-us-west-1.amazonaws.com/56fa81ea9007ba07fc00000b/1464254267000/5746bf3b9007ba70753e5911.png",
+          "custom_fields": [],
           "address_list": [
             {
               "address": "",
@@ -638,17 +479,366 @@
               "country_code": ""
             }
           ],
-          "starred": false,
-          "photo_url": "",
-          "lead_source_name": ""
+          "letter": "s",
+          "urls": [
+            {
+              "type": "website",
+              "value": "www.onepagecrm.com"
+            }
+          ],
+          "phones": [
+            {
+              "type": "work",
+              "value": "873973829"
+            }
+          ],
+          "emails": [],
+          "sales_closed_for": [
+            "559cd1866f6e656707000001"
+          ],
+          "closed_sales": [
+            {
+              "user_id": "559cd1866f6e656707000001",
+              "closed_at": 1475577334,
+              "comment": "No longer active"
+            }
+          ],
+          "created_at": "2016-03-29T13:23:54Z",
+          "modified_at": "2016-10-04T10:44:48Z",
+          "title": ""
         },
         "next_actions": [],
-        "next_action": {}
+        "next_action": {},
+        "queued_actions": [],
+        "next_action_conflicts": [],
+        "deals": [
+          {
+            "id": "5763cb0e9007ba55814d587e",
+            "contact_id": "56fa81ea9007ba07fc00000b",
+            "owner_id": "559cd1866f6e656707000001",
+            "owner": {
+              "id": "559cd1866f6e656707000001",
+              "name": "Cillian Myles",
+              "email": "cillian.college+dev@gmail.com"
+            },
+            "name": "First deal",
+            "text": "",
+            "date": "2016-06-17",
+            "contact_info": {
+              "contact_name": "Pawel S",
+              "company": "OnePageCRM"
+            },
+            "author": "Cillian M.",
+            "amount": 200,
+            "months": 1,
+            "total_amount": 200,
+            "status": "lost",
+            "has_related_notes": false,
+            "attachments": [],
+            "created_at": "2016-06-17T10:03:58Z",
+            "modified_at": "2016-10-04T10:35:05Z",
+            "close_date": "2016-10-04"
+          },
+          {
+            "id": "573c9af99007ba720038d4fb",
+            "contact_id": "56fa81ea9007ba07fc00000b",
+            "owner_id": "559cd1866f6e656707000001",
+            "owner": {
+              "id": "559cd1866f6e656707000001",
+              "name": "Cillian Myles",
+              "email": "cillian.college+dev@gmail.com"
+            },
+            "name": "App",
+            "text": "Note",
+            "date": "2016-05-18",
+            "contact_info": {
+              "contact_name": "Pawel S",
+              "company": "OnePageCRM"
+            },
+            "author": "Cillian M.",
+            "amount": 5.99,
+            "months": 1,
+            "total_amount": 5.99,
+            "status": "lost",
+            "has_related_notes": false,
+            "attachments": [],
+            "created_at": "2016-05-18T16:40:25Z",
+            "modified_at": "2016-10-04T10:35:09Z",
+            "close_date": "2016-10-04"
+          },
+          {
+            "id": "5763b77e9007ba127834763d",
+            "contact_id": "56fa81ea9007ba07fc00000b",
+            "owner_id": "559cd1866f6e656707000001",
+            "owner": {
+              "id": "559cd1866f6e656707000001",
+              "name": "Cillian Myles",
+              "email": "cillian.college+dev@gmail.com"
+            },
+            "name": "Totally lost deal",
+            "text": "",
+            "date": "2016-06-17",
+            "contact_info": {
+              "contact_name": "Pawel S",
+              "company": "OnePageCRM"
+            },
+            "author": "Cillian M.",
+            "amount": 18000,
+            "months": 1,
+            "total_amount": 18000,
+            "status": "lost",
+            "has_related_notes": false,
+            "attachments": [],
+            "created_at": "2016-06-17T08:40:30Z",
+            "modified_at": "2016-06-17T08:40:40Z",
+            "close_date": "2016-06-17"
+          },
+          {
+            "id": "5763b7699007ba1278347638",
+            "contact_id": "56fa81ea9007ba07fc00000b",
+            "owner_id": "559cd1866f6e656707000001",
+            "owner": {
+              "id": "559cd1866f6e656707000001",
+              "name": "Cillian Myles",
+              "email": "cillian.college+dev@gmail.com"
+            },
+            "name": "Totally won deal",
+            "text": "",
+            "date": "2016-06-17",
+            "contact_info": {
+              "contact_name": "Pawel S",
+              "company": "OnePageCRM"
+            },
+            "author": "Cillian M.",
+            "amount": 24000,
+            "months": 1,
+            "total_amount": 24000,
+            "status": "won",
+            "has_related_notes": false,
+            "attachments": [],
+            "created_at": "2016-06-17T08:40:09Z",
+            "modified_at": "2016-06-17T08:40:09Z",
+            "close_date": "2016-01-01"
+          }
+        ],
+        "notes": [],
+        "calls": [
+          {
+            "id": "56fa81ea9007ba07fc000011",
+            "author": "Cillian M.",
+            "text": "Test",
+            "call_result": "interested",
+            "call_time_int": 1439497800,
+            "contact_id": "56fa81ea9007ba07fc00000b",
+            "via": "unknown",
+            "phone_number": null,
+            "recording_link": "",
+            "attachments": [],
+            "created_at": "2016-03-29T13:23:54Z",
+            "modified_at": "2016-03-29T13:23:54Z"
+          },
+          {
+            "id": "56fa81ea9007ba07fc00000f",
+            "author": "Cillian M.",
+            "text": "2",
+            "call_result": "not_interested",
+            "call_time_int": 1439497200,
+            "contact_id": "56fa81ea9007ba07fc00000b",
+            "via": "unknown",
+            "phone_number": null,
+            "recording_link": "",
+            "attachments": [],
+            "created_at": "2016-03-29T13:23:54Z",
+            "modified_at": "2016-03-29T13:23:54Z"
+          }
+        ],
+        "company": {
+          "id": "56fd40b49007ba716f000004",
+          "name": "OnePageCRM",
+          "description": "",
+          "phone": "",
+          "url": "",
+          "company_fields": [],
+          "synced_status_id": null,
+          "address": {
+            "address": null,
+            "city": null,
+            "state": null,
+            "zip_code": null,
+            "country_code": null
+          }
+        }
+      },
+      {
+        "contact": {
+          "id": "57459d5f9007ba5ef3eea802",
+          "first_name": "",
+          "last_name": "",
+          "job_title": "",
+          "company_id": "56fd40b49007ba716f00000a",
+          "company_name": "Big Company Inc.",
+          "company_size": 3,
+          "owner_id": "559cd1866f6e656707000001",
+          "status": "Lead",
+          "status_id": "559cd19f6f6e656707000005",
+          "tags": [],
+          "starred": false,
+          "background": "Updated background",
+          "lead_source_id": "",
+          "pending_deal": true,
+          "total_pendings": 28.99,
+          "photo_url": "",
+          "custom_fields": [],
+          "address_list": [
+            {
+              "address": "",
+              "city": "",
+              "state": "",
+              "zip_code": "",
+              "country_code": ""
+            }
+          ],
+          "letter": "b",
+          "urls": [],
+          "phones": [],
+          "emails": [],
+          "sales_closed_for": [],
+          "closed_sales": [],
+          "created_at": "2016-05-25T12:41:03Z",
+          "modified_at": "2016-07-05T08:59:32Z",
+          "title": ""
+        },
+        "next_actions": [],
+        "next_action": {},
+        "queued_actions": [],
+        "next_action_conflicts": [],
+        "deals": [
+          {
+            "id": "5763c46e9007ba2fec9aff87",
+            "contact_id": "57459d5f9007ba5ef3eea802",
+            "owner_id": "559cd1866f6e656707000001",
+            "owner": {
+              "id": "559cd1866f6e656707000001",
+              "name": "Cillian Myles",
+              "email": "cillian.college+dev@gmail.com"
+            },
+            "name": "Should be first",
+            "text": "",
+            "date": "2016-06-17",
+            "contact_info": {
+              "contact_name": " ",
+              "company": "Big Company Inc."
+            },
+            "author": "Cillian M.",
+            "amount": 28.99,
+            "months": 1,
+            "total_amount": 28.99,
+            "status": "pending",
+            "has_related_notes": false,
+            "attachments": [],
+            "created_at": "2016-06-17T09:35:42Z",
+            "modified_at": "2016-06-17T09:35:42Z",
+            "stage": 10,
+            "expected_close_date": "2016-06-01"
+          },
+          {
+            "id": "5763c4109007ba2fec9aff67",
+            "contact_id": "57459d5f9007ba5ef3eea802",
+            "owner_id": "559cd1866f6e656707000001",
+            "owner": {
+              "id": "559cd1866f6e656707000001",
+              "name": "Cillian Myles",
+              "email": "cillian.college+dev@gmail.com"
+            },
+            "name": "New deal",
+            "text": "",
+            "date": "2016-06-17",
+            "contact_info": {
+              "contact_name": " ",
+              "company": "Big Company Inc."
+            },
+            "author": "Cillian M.",
+            "amount": 99,
+            "months": 1,
+            "total_amount": 99,
+            "status": "won",
+            "has_related_notes": false,
+            "attachments": [],
+            "created_at": "2016-06-17T09:34:08Z",
+            "modified_at": "2016-06-17T09:34:08Z",
+            "close_date": "2016-06-17"
+          }
+        ],
+        "notes": [],
+        "calls": [],
+        "company": {
+          "id": "56fd40b49007ba716f00000a",
+          "name": "Big Company Inc.",
+          "description": "",
+          "phone": "",
+          "url": "",
+          "company_fields": [],
+          "synced_status_id": null,
+          "address": {
+            "address": null,
+            "city": null,
+            "state": null,
+            "zip_code": null,
+            "country_code": null
+          }
+        }
+      },
+      {
+        "contact": {
+          "id": "5757e0839007ba495af89b87",
+          "first_name": "Cillían",
+          "last_name": "Myles",
+          "job_title": "",
+          "company_id": "",
+          "company_name": "",
+          "company_size": 0,
+          "owner_id": "559cd1866f6e656707000001",
+          "status": "Lead",
+          "status_id": "559cd19f6f6e656707000005",
+          "tags": [],
+          "starred": false,
+          "background": "",
+          "lead_source_id": "",
+          "pending_deal": false,
+          "total_pendings": 0,
+          "photo_url": "",
+          "custom_fields": [],
+          "address_list": [
+            {
+              "address": "",
+              "city": "",
+              "state": "",
+              "zip_code": "",
+              "country_code": ""
+            }
+          ],
+          "letter": "m",
+          "urls": [],
+          "phones": [],
+          "emails": [],
+          "sales_closed_for": [],
+          "closed_sales": [],
+          "created_at": "2016-06-08T09:08:19Z",
+          "modified_at": "2016-06-08T09:08:19Z",
+          "title": ""
+        },
+        "next_actions": [],
+        "next_action": {},
+        "queued_actions": [],
+        "next_action_conflicts": [],
+        "deals": [],
+        "notes": [],
+        "calls": []
       }
     ],
-    "total_count": 21,
+    "total_count": 18,
     "page": 2,
-    "max_page": 3,
+    "max_page": 2,
     "per_page": 10
   }
 }
