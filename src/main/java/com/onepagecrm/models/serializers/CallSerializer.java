@@ -41,10 +41,12 @@ public class CallSerializer extends BaseSerializer {
         String callResultId = callObject.optString(CALL_RESULT_TAG);
         CallResult callResult = null;
         List<CallResult> callResults = CallResultSerializer.getFromLoggedUser();
-        for (CallResult result : callResults) {
-            if (result.getId().equals(callResultId)) {
-                callResult = result;
-                break;
+        if (callResults != null && !callResults.isEmpty()) {
+            for (CallResult result : callResults) {
+                if (result.getId().equals(callResultId)) {
+                    callResult = result;
+                    break;
+                }
             }
         }
         // If no exact matching id, create fresh object.
