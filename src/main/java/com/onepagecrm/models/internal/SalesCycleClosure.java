@@ -3,6 +3,8 @@ package com.onepagecrm.models.internal;
 import java.io.Serializable;
 import java.util.Date;
 
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
+
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 13/06/2016.
  */
@@ -15,6 +17,27 @@ public class SalesCycleClosure implements Serializable {
 
     public SalesCycleClosure() {
 
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || !(object instanceof SalesCycleClosure)) {
+            return false;
+        }
+        SalesCycleClosure toCompare = (SalesCycleClosure) object;
+        if (!notNullOrEmpty(userId) || !notNullOrEmpty(toCompare.getUserId())) {
+            return false;
+        }
+        if (!userId.equals(toCompare.getUserId())) {
+            return false;
+        }
+
+        boolean lBothNull = contactId == null && toCompare.getContactId() == null;
+        boolean lSameNonNull = notNullOrEmpty(contactId)
+                && notNullOrEmpty(toCompare.getContactId())
+                && contactId.equals(toCompare.getContactId());
+
+        return lBothNull || lSameNonNull;
     }
 
     public String getContactId() {
