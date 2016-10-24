@@ -1,7 +1,7 @@
 package com.onepagecrm.samples;
 
 import com.onepagecrm.OnePageCRM;
-import com.onepagecrm.net.request.GoogleLoginRequest;
+import com.onepagecrm.models.User;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
@@ -43,8 +43,7 @@ public class API329Driver {
 
         OnePageCRM.setServer(Request.DEV_SERVER);
 
-        final String oauthCode = "4/BxhylUmoVASDT3B2VAMQcGbigyIN3v_x5xyxHpdokWc";
-        Request googleLogin = new GoogleLoginRequest(oauthCode);
-        googleLogin.send();
+        final String oauthCode = "4/hBCg7Ori8Z9KnNq_5hQ7AiNbf9JkALsFSBq62cWAsYs";
+        User.googleLogin(oauthCode);
     }
 }

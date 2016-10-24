@@ -51,6 +51,12 @@ public class User extends ApiResource implements Serializable {
         return LoginSerializer.fromString(response.getResponseBody());
     }
 
+    public User bootstrap() throws OnePageException {
+        Request request = new GetRequest(BOOTSTRAP_ENDPOINT);
+        Response response = request.send();
+        return LoginSerializer.fromString(response.getResponseBody());
+    }
+
     public ContactList actionStream() throws OnePageException {
         return getContacts(ACTION_STREAM_ENDPOINT, Query.queryDefault());
     }
