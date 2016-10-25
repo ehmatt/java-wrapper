@@ -40,7 +40,7 @@ public class Driver {
             }
         }
 
-        OnePageCRM.setServer(Request.APP_SERVER);
+        OnePageCRM.setServer(Request.DEV_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
@@ -57,5 +57,7 @@ public class Driver {
         LOG.info("User's ContactsCounts : " + loggedInUser.getAccount().contactsCount);
         LOG.info("User's StreamCount : " + loggedInUser.getAccount().streamCount);
         LOG.info("User's Predefined Actions : " + loggedInUser.getAccount().predefinedActions);
+
+        loggedInUser.bootstrap();
     }
 }
