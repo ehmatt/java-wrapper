@@ -1,5 +1,6 @@
 package com.onepagecrm.models.internal;
 
+import com.onepagecrm.models.serializers.PredefinedActionSerializer;
 import com.onepagecrm.net.ApiResource;
 
 import java.io.Serializable;
@@ -30,7 +31,7 @@ public class PredefinedAction extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return null;
+        return PredefinedActionSerializer.toJsonObject(this);
     }
 
     public String getText() {
