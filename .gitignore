@@ -46,3 +46,6 @@ local.properties
 
 # Output folders
 out/
+
+#Mac
+.DS_Store

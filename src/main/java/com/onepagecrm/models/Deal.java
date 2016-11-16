@@ -50,10 +50,27 @@ public class Deal extends ApiResource implements Serializable {
         return DealListSerializer.fromString(response.getResponseBody());
     }
 
-
     public static DealList list(String contactId, Paginator paginator) throws OnePageException {
         Map<String, Object> params = Query.params(paginator);
         params.put("contact_id", contactId);
+        GetRequest getRequest = new GetRequest(DEALS_ENDPOINT, Query.fromParams(params));
+        Response response = getRequest.send();
+        return DealListSerializer.fromString(response.getResponseBody());
+    }
+
+    public static DealList list(String contactId, String status) throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("contact_id", contactId);
+        params.put("status", status);
+        GetRequest getRequest = new GetRequest(DEALS_ENDPOINT, Query.fromParams(params));
+        Response response = getRequest.send();
+        return DealListSerializer.fromString(response.getResponseBody());
+    }
+
+    public static DealList list(String contactId, Paginator paginator, String status) throws OnePageException {
+        Map<String, Object> params = Query.params(paginator);
+        params.put("contact_id", contactId);
+        params.put("status", status);
         GetRequest getRequest = new GetRequest(DEALS_ENDPOINT, Query.fromParams(params));
         Response response = getRequest.send();
         return DealListSerializer.fromString(response.getResponseBody());
