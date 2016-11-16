@@ -250,6 +250,13 @@ public class BaseSerializer {
     public static final String COUNT_TAG = "count";
     public static final String ALL_COUNT_TAG = "all_count";
 
+    // DEVICES
+    public static final String DEVICE_ID_TAG = "device_id";
+    public static final String FCM_DEVICE_TAG = "fcm_device";
+    public static final String FCM_DEVICES_TAG = "fcm_devices";
+    public static final String ACTION_WITH_TIME_TAG = "action_with_time";
+    public static final String SUBSCRIBED_AT_TAG = "subscribed_at";
+
     /**
      * Method used to parse the base/start of response.
      *
