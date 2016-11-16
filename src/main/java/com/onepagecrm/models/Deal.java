@@ -6,10 +6,19 @@ import com.onepagecrm.models.serializers.DealListSerializer;
 import com.onepagecrm.models.serializers.DealSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
-import com.onepagecrm.net.request.*;
+import com.onepagecrm.net.request.DeleteRequest;
+import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.request.PatchRequest;
+import com.onepagecrm.net.request.PostRequest;
+import com.onepagecrm.net.request.PutRequest;
+import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Deal extends ApiResource implements Serializable {
 
@@ -41,23 +50,6 @@ public class Deal extends ApiResource implements Serializable {
         return this.isValid() ? update() : create();
     }
 
-    public static DealList list(String contactId) throws OnePageException {
-        Map<String, Object> params = new HashMap<>();
-        params.put("contact_id", contactId);
-        GetRequest getRequest = new GetRequest(DEALS_ENDPOINT, Query.fromParams(params));
-        Response response = getRequest.send();
-        return DealListSerializer.fromString(response.getResponseBody());
-    }
-
-
-    public static DealList list(String contactId, Paginator paginator) throws OnePageException {
-        Map<String, Object> params = Query.params(paginator);
-        params.put("contact_id", contactId);
-        GetRequest getRequest = new GetRequest(DEALS_ENDPOINT, Query.fromParams(params));
-        Response response = getRequest.send();
-        return DealListSerializer.fromString(response.getResponseBody());
-    }
-
     private Deal create() throws OnePageException {
         Request request = new PostRequest(
                 DEALS_ENDPOINT,
@@ -76,6 +68,54 @@ public class Deal extends ApiResource implements Serializable {
         );
         Response response = request.send();
         return DealSerializer.fromString(response.getResponseBody());
+    }
+
+    public static DealList list(String contactId) throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("contact_id", contactId);
+        return getDeals(params);
+    }
+
+    public static DealList list(String contactId, Paginator paginator) throws OnePageException {
+        Map<String, Object> params = Query.params(paginator);
+        params.put("contact_id", contactId);
+        return getDeals(params);
+    }
+
+    public static DealList list(String contactId, String status) throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("contact_id", contactId);
+        params.put("status", status);
+        return getDeals(params);
+    }
+
+    public static DealList list(String contactId, Paginator paginator, String status) throws OnePageException {
+        Map<String, Object> params = Query.params(paginator);
+        params.put("contact_id", contactId);
+        params.put("status", status);
+        return getDeals(params);
+    }
+
+    public static DealList list(Map<String, Object> params) throws OnePageException {
+        return getDeals(params);
+    }
+
+    public static DealList list(String contactId, Map<String, Object> params) throws OnePageException {
+        params.put("contact_id", contactId);
+        return getDeals(params);
+    }
+
+    public static DealList list(String contactId, Paginator paginator, Map<String, Object> params) throws OnePageException {
+        Map<String, Object> tempParams = Query.params(paginator);
+        tempParams.put("contact_id", contactId);
+        tempParams.putAll(params);
+        return getDeals(tempParams);
+    }
+
+    private static DealList getDeals(Map<String, Object> params) throws OnePageException {
+        GetRequest getRequest = new GetRequest(DEALS_ENDPOINT, Query.fromParams(params));
+        Response response = getRequest.send();
+        return DealListSerializer.fromString(response.getResponseBody());
     }
 
     public Deal partial() throws OnePageException {
