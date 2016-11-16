@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
+
 public class Contact extends ApiResource implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(Contact.class.getSimpleName());
@@ -200,34 +202,46 @@ public class Contact extends ApiResource implements Serializable {
     }
 
     public String getSimpleName() {
-        if (lastName != null && !lastName.equals("")) {
-            if (firstName != null && !firstName.equals("")) {
-                return firstName + " " + lastName.substring(0, 1) + ".";
-            } else {
-                return lastName;
-            }
+        String simple = "";
+        if (notNullOrEmpty(firstName)) {
+            simple += firstName;
+        }
+        if (notNullOrEmpty(lastName)) {
+            simple += " ";
+            simple += lastName.substring(0, 1) + ".";
+        }
+        if (notNullOrEmpty(simple)) {
+            return simple;
         }
         return null;
     }
 
     public String getFullName() {
-        if (lastName != null && !lastName.equals("")) {
-            if (firstName != null && !firstName.equals("")) {
-                return firstName + " " + lastName;
-            } else {
-                return lastName;
-            }
+        String full = "";
+        if (notNullOrEmpty(firstName)) {
+            full += firstName;
+        }
+        if (notNullOrEmpty(lastName)) {
+            full += " ";
+            full += lastName;
+        }
+        if (notNullOrEmpty(full)) {
+            return full;
         }
         return null;
     }
 
     public String getFullAlphaName() {
-        if (lastName != null && !lastName.equals("")) {
-            if (firstName != null && !firstName.equals("")) {
-                return lastName + ", " + firstName;
-            } else {
-                return lastName;
-            }
+        String fullAlpha = "";
+        if (notNullOrEmpty(lastName)) {
+            fullAlpha += lastName;
+        }
+        if (notNullOrEmpty(firstName)) {
+            fullAlpha += " ";
+            fullAlpha += firstName;
+        }
+        if (notNullOrEmpty(fullAlpha)) {
+            return fullAlpha;
         }
         return null;
     }
