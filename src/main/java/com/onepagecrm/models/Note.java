@@ -6,6 +6,7 @@ import com.onepagecrm.models.serializers.NoteListSerializer;
 import com.onepagecrm.models.serializers.NoteSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.DeleteRequest;
 import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.PutRequest;
@@ -25,32 +26,6 @@ public class Note extends ApiResource implements Serializable {
     private Date createdAt;
     private Date date;
     private String linkedDealId;
-
-    public static NoteList list(String contactId) throws OnePageException {
-        Map<String, Object> params = new HashMap<>();
-        params.put("contact_id", contactId);
-        Request request = new GetRequest(NOTES_ENDPOINT, Query.fromParams(params));
-        Response response = request.send();
-        NoteList notes = NoteListSerializer.fromString(response.getResponseBody());
-        notes.setContactId(contactId);
-        return notes;
-    }
-
-    public static NoteList list(String contactId, Paginator paginator) throws OnePageException {
-        Map<String, Object> params = Query.params(paginator);
-        params.put("contact_id", contactId);
-        Request request = new GetRequest(NOTES_ENDPOINT, Query.fromParams(params));
-        Response response = request.send();
-        NoteList notes = NoteListSerializer.fromString(response.getResponseBody());
-        notes.setContactId(contactId);
-        return notes;
-    }
-
-    public static NoteList list() throws OnePageException {
-        Request request = new GetRequest(NOTES_ENDPOINT);
-        Response response = request.send();
-        return NoteListSerializer.fromString(response.getResponseBody());
-    }
 
     public Note save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -76,6 +51,37 @@ public class Note extends ApiResource implements Serializable {
         );
         Response response = request.send();
         return NoteSerializer.fromString(response.getResponseBody());
+    }
+
+    public void delete() throws OnePageException {
+        Request request = new DeleteRequest(addNoteIdToEndpoint(DEALS_ENDPOINT));
+        request.send();
+    }
+
+    public static NoteList list(String contactId) throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("contact_id", contactId);
+        Request request = new GetRequest(NOTES_ENDPOINT, Query.fromParams(params));
+        Response response = request.send();
+        NoteList notes = NoteListSerializer.fromString(response.getResponseBody());
+        notes.setContactId(contactId);
+        return notes;
+    }
+
+    public static NoteList list(String contactId, Paginator paginator) throws OnePageException {
+        Map<String, Object> params = Query.params(paginator);
+        params.put("contact_id", contactId);
+        Request request = new GetRequest(NOTES_ENDPOINT, Query.fromParams(params));
+        Response response = request.send();
+        NoteList notes = NoteListSerializer.fromString(response.getResponseBody());
+        notes.setContactId(contactId);
+        return notes;
+    }
+
+    public static NoteList list() throws OnePageException {
+        Request request = new GetRequest(NOTES_ENDPOINT);
+        Response response = request.send();
+        return NoteListSerializer.fromString(response.getResponseBody());
     }
 
     private String addNoteIdToEndpoint(String endpoint) {

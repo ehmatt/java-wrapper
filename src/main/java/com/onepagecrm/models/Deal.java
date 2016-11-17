@@ -20,11 +20,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("unused")
 public class Deal extends ApiResource implements Serializable {
 
     public static final String STATUS_WON = "won";
     public static final String STATUS_LOST = "lost";
     public static final String STATUS_PENDING = "pending";
+    public static final String RELATED_NOTES_FIELDS = "?fields=notes(text,author)";
 
     private String id;
     private Double amount;
@@ -130,13 +132,12 @@ public class Deal extends ApiResource implements Serializable {
 
     public void delete() throws OnePageException {
         Request request = new DeleteRequest(addDealIdToEndpoint(DEALS_ENDPOINT));
-        Response response = request.send();
-//        return DealSerializer.fromStringDelete(response.getResponseBody());
+        request.send();
     }
 
     public List<Note> getNotesRelatedToDeal() throws OnePageException {
         List<Note> notes = new ArrayList<>();
-        Request request = new GetRequest(addDealIdToEndpoint(DEALS_ENDPOINT), "?fields=notes(text,author)");
+        Request request = new GetRequest(addDealIdToEndpoint(DEALS_ENDPOINT), RELATED_NOTES_FIELDS);
         Response response = request.send();
         Deal deal = DealSerializer.fromString(response.getResponseBody());
         if (deal.hasRelatedNotes()) {

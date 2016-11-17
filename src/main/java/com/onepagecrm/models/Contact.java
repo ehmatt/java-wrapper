@@ -9,7 +9,11 @@ import com.onepagecrm.models.serializers.ContactSerializer;
 import com.onepagecrm.models.serializers.LoginSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
-import com.onepagecrm.net.request.*;
+import com.onepagecrm.net.request.DeleteRequest;
+import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.request.PostRequest;
+import com.onepagecrm.net.request.PutRequest;
+import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,6 +24,7 @@ import java.util.logging.Logger;
 
 import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class Contact extends ApiResource implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(Contact.class.getSimpleName());
