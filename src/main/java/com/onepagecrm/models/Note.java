@@ -54,7 +54,7 @@ public class Note extends ApiResource implements Serializable {
     }
 
     public void delete() throws OnePageException {
-        Request request = new DeleteRequest(addNoteIdToEndpoint(DEALS_ENDPOINT));
+        Request request = new DeleteRequest(addNoteIdToEndpoint(NOTES_ENDPOINT));
         request.send();
     }
 
