@@ -1,7 +1,9 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.Paginator;
+import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.models.serializers.NoteListSerializer;
 import com.onepagecrm.models.serializers.NoteSerializer;
 import com.onepagecrm.net.ApiResource;
@@ -53,9 +55,10 @@ public class Note extends ApiResource implements Serializable {
         return NoteSerializer.fromString(response.getResponseBody());
     }
 
-    public void delete() throws OnePageException {
+    public DeleteResult delete() throws OnePageException {
         Request request = new DeleteRequest(addNoteIdToEndpoint(NOTES_ENDPOINT));
-        request.send();
+        Response response = request.send();
+        return DeleteResultSerializer.fromString(this.id, response.getResponseBody());
     }
 
     public static NoteList list(String contactId) throws OnePageException {

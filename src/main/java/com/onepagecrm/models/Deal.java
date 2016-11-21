@@ -1,9 +1,11 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.serializers.DealListSerializer;
 import com.onepagecrm.models.serializers.DealSerializer;
+import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.DeleteRequest;
@@ -130,9 +132,10 @@ public class Deal extends ApiResource implements Serializable {
         return DealSerializer.fromString(response.getResponseBody());
     }
 
-    public void delete() throws OnePageException {
+    public DeleteResult delete() throws OnePageException {
         Request request = new DeleteRequest(addDealIdToEndpoint(DEALS_ENDPOINT));
-        request.send();
+        Response response = request.send();
+        return DeleteResultSerializer.fromString(this.id, response.getResponseBody());
     }
 
     public List<Note> getNotesRelatedToDeal() throws OnePageException {

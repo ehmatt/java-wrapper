@@ -2,10 +2,12 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.CloseSalesCycle;
+import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.SalesCycleClosure;
 import com.onepagecrm.models.serializers.CloseSalesCycleSerializer;
 import com.onepagecrm.models.serializers.ContactPhotoSerializer;
 import com.onepagecrm.models.serializers.ContactSerializer;
+import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.models.serializers.LoginSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
@@ -149,11 +151,12 @@ public class Contact extends ApiResource implements Serializable {
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
-    public void delete() throws OnePageException {
+    public DeleteResult delete() throws OnePageException {
         Request request = new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id), null);
         Response response = request.send();
-        String responseBody = response.getResponseBody();
+        final String responseBody = response.getResponseBody();
         LoginSerializer.updateDynamicResources(responseBody);
+        return DeleteResultSerializer.fromString(this.id, responseBody);
     }
 
     public Contact undoDeletion() throws OnePageException {

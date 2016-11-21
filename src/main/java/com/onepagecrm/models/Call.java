@@ -1,9 +1,11 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.serializers.CallListSerializer;
 import com.onepagecrm.models.serializers.CallSerializer;
+import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.DeleteRequest;
@@ -59,9 +61,10 @@ public class Call extends ApiResource implements Serializable {
         return CallSerializer.fromString(response.getResponseBody());
     }
 
-    public void delete() throws OnePageException {
+    public DeleteResult delete() throws OnePageException {
         Request request = new DeleteRequest(addCallIdToEndpoint(CALLS_ENDPOINT));
-        request.send();
+        Response response = request.send();
+        return DeleteResultSerializer.fromString(this.id, response.getResponseBody());
     }
 
     public static CallList list(String contactId) throws OnePageException {
