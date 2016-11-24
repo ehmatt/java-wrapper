@@ -26,12 +26,19 @@ public class UserFabricatorTest extends BaseTest {
 
     public void testList_correctValues() {
         List<User> users = UserFabricator.list();
-        assertEquals("Should be 2 users", users.size(), 2);
-
+        assertEquals("Should be 3 users", users.size(), 3);
         for (int i = 0; i < users.size(); i++) {
-            User user = users.get(i);
-            if (i == 0) validateSingle(user);
-            else validateSecond(user);
+            switch (i) {
+                case 0:
+                    validateSingle(users.get(i));
+                    break;
+                case 1:
+                    validateSecond(users.get(i));
+                    break;
+                case 2:
+                    validateThird(users.get(i));
+                    break;
+            }
         }
     }
 
@@ -44,7 +51,8 @@ public class UserFabricatorTest extends BaseTest {
         assertEquals("Myles", user.getLastName());
         assertEquals("559cd1866f6e656707000000@users.onepagecrm.com", user.getBccEmail());
         assertEquals("Myles Inc.", user.getCompanyName());
-        assertEquals("", user.getPhotoUrl());
+        assertEquals("https://onepagecrm-ud2-us-west-1.s3-us-west-1.amazonaws.com/" +
+                "559cd1866f6e656707000001/1467713634000/577b88629007ba32a088880a.png", user.getPhotoUrl());
     }
 
     private void validateSecond(User user) {
@@ -54,7 +62,18 @@ public class UserFabricatorTest extends BaseTest {
         assertEquals("John", user.getFirstName());
         assertEquals("Smith", user.getLastName());
         assertEquals(null, user.getBccEmail());
-        assertEquals("", user.getCompanyName());
+        assertEquals("Myles Inc.", user.getCompanyName());
+        assertEquals("", user.getPhotoUrl());
+    }
+
+    private void validateThird(User user) {
+        assertFalse("Contact shouldn't be valid.", user.isValid());
+        assertEquals("57ee83949007ba7e312b1959", user.getId());
+        assertEquals(null, user.getAuthKey());
+        assertEquals("David", user.getFirstName());
+        assertEquals("Smith", user.getLastName());
+        assertEquals(null, user.getBccEmail());
+        assertEquals("Myles Inc.", user.getCompanyName());
         assertEquals("", user.getPhotoUrl());
     }
 }

@@ -1,11 +1,14 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.serializers.CallListSerializer;
 import com.onepagecrm.models.serializers.CallSerializer;
+import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.DeleteRequest;
 import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.PutRequest;
@@ -32,32 +35,6 @@ public class Call extends ApiResource implements Serializable {
     private List<Attachment> attachments;
     private String mText;
 
-    public static CallList list(String contactId) throws OnePageException {
-        Map<String, Object> params = new HashMap<>();
-        params.put("contact_id", contactId);
-        Request request = new GetRequest(CALLS_ENDPOINT, Query.fromParams(params));
-        Response response = request.send();
-        CallList calls = CallListSerializer.fromString(response.getResponseBody());
-        calls.setContactId(contactId);
-        return calls;
-    }
-
-    public static CallList list(String contactId, Paginator paginator) throws OnePageException {
-        Map<String, Object> params = Query.params(paginator);
-        params.put("contact_id", contactId);
-        Request request = new GetRequest(CALLS_ENDPOINT, Query.fromParams(params));
-        Response response = request.send();
-        CallList calls = CallListSerializer.fromString(response.getResponseBody());
-        calls.setContactId(contactId);
-        return calls;
-    }
-
-    public static CallList list() throws OnePageException {
-        Request request = new GetRequest(CALLS_ENDPOINT);
-        Response response = request.send();
-        return CallListSerializer.fromString(response.getResponseBody());
-    }
-
     public Call save() throws OnePageException {
         return this.isValid() ? update() : create();
     }
@@ -82,6 +59,38 @@ public class Call extends ApiResource implements Serializable {
         );
         Response response = request.send();
         return CallSerializer.fromString(response.getResponseBody());
+    }
+
+    public DeleteResult delete() throws OnePageException {
+        Request request = new DeleteRequest(addCallIdToEndpoint(CALLS_ENDPOINT));
+        Response response = request.send();
+        return DeleteResultSerializer.fromString(this.id, response.getResponseBody());
+    }
+
+    public static CallList list(String contactId) throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("contact_id", contactId);
+        Request request = new GetRequest(CALLS_ENDPOINT, Query.fromParams(params));
+        Response response = request.send();
+        CallList calls = CallListSerializer.fromString(response.getResponseBody());
+        calls.setContactId(contactId);
+        return calls;
+    }
+
+    public static CallList list(String contactId, Paginator paginator) throws OnePageException {
+        Map<String, Object> params = Query.params(paginator);
+        params.put("contact_id", contactId);
+        Request request = new GetRequest(CALLS_ENDPOINT, Query.fromParams(params));
+        Response response = request.send();
+        CallList calls = CallListSerializer.fromString(response.getResponseBody());
+        calls.setContactId(contactId);
+        return calls;
+    }
+
+    public static CallList list() throws OnePageException {
+        Request request = new GetRequest(CALLS_ENDPOINT);
+        Response response = request.send();
+        return CallListSerializer.fromString(response.getResponseBody());
     }
 
     private String addCallIdToEndpoint(String endpoint) {

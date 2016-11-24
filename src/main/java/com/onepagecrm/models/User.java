@@ -11,6 +11,7 @@ import com.onepagecrm.models.serializers.UserSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.request.GoogleLoginRequest;
 import com.onepagecrm.net.request.LoginRequest;
 import com.onepagecrm.net.request.Request;
 
@@ -40,6 +41,18 @@ public class User extends ApiResource implements Serializable {
 
     public static User login(String username, String password) throws OnePageException {
         Request request = new LoginRequest(username, password);
+        Response response = request.send();
+        return LoginSerializer.fromString(response.getResponseBody());
+    }
+
+    public static User googleLogin(String authCode) throws OnePageException {
+        Request request = new GoogleLoginRequest(authCode);
+        Response response = request.send();
+        return LoginSerializer.fromString(response.getResponseBody());
+    }
+
+    public User bootstrap() throws OnePageException {
+        Request request = new GetRequest(BOOTSTRAP_ENDPOINT);
         Response response = request.send();
         return LoginSerializer.fromString(response.getResponseBody());
     }

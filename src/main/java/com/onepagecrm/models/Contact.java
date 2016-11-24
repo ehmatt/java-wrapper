@@ -2,14 +2,20 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.CloseSalesCycle;
+import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.SalesCycleClosure;
 import com.onepagecrm.models.serializers.CloseSalesCycleSerializer;
 import com.onepagecrm.models.serializers.ContactPhotoSerializer;
 import com.onepagecrm.models.serializers.ContactSerializer;
+import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.models.serializers.LoginSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
-import com.onepagecrm.net.request.*;
+import com.onepagecrm.net.request.DeleteRequest;
+import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.request.PostRequest;
+import com.onepagecrm.net.request.PutRequest;
+import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,6 +24,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
+
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class Contact extends ApiResource implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(Contact.class.getSimpleName());
@@ -142,11 +151,12 @@ public class Contact extends ApiResource implements Serializable {
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
-    public void delete() throws OnePageException {
+    public DeleteResult delete() throws OnePageException {
         Request request = new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id), null);
         Response response = request.send();
-        String responseBody = response.getResponseBody();
+        final String responseBody = response.getResponseBody();
         LoginSerializer.updateDynamicResources(responseBody);
+        return DeleteResultSerializer.fromString(this.id, responseBody);
     }
 
     public Contact undoDeletion() throws OnePageException {
@@ -200,34 +210,46 @@ public class Contact extends ApiResource implements Serializable {
     }
 
     public String getSimpleName() {
-        if (lastName != null && !lastName.equals("")) {
-            if (firstName != null && !firstName.equals("")) {
-                return firstName + " " + lastName.substring(0, 1) + ".";
-            } else {
-                return lastName;
-            }
+        String simple = "";
+        if (notNullOrEmpty(firstName)) {
+            simple += firstName;
+        }
+        if (notNullOrEmpty(lastName)) {
+            simple += " ";
+            simple += lastName.substring(0, 1) + ".";
+        }
+        if (notNullOrEmpty(simple)) {
+            return simple;
         }
         return null;
     }
 
     public String getFullName() {
-        if (lastName != null && !lastName.equals("")) {
-            if (firstName != null && !firstName.equals("")) {
-                return firstName + " " + lastName;
-            } else {
-                return lastName;
-            }
+        String full = "";
+        if (notNullOrEmpty(firstName)) {
+            full += firstName;
+        }
+        if (notNullOrEmpty(lastName)) {
+            full += " ";
+            full += lastName;
+        }
+        if (notNullOrEmpty(full)) {
+            return full;
         }
         return null;
     }
 
     public String getFullAlphaName() {
-        if (lastName != null && !lastName.equals("")) {
-            if (firstName != null && !firstName.equals("")) {
-                return lastName + ", " + firstName;
-            } else {
-                return lastName;
-            }
+        String fullAlpha = "";
+        if (notNullOrEmpty(lastName)) {
+            fullAlpha += lastName;
+        }
+        if (notNullOrEmpty(firstName)) {
+            fullAlpha += " ";
+            fullAlpha += firstName;
+        }
+        if (notNullOrEmpty(fullAlpha)) {
+            return fullAlpha;
         }
         return null;
     }

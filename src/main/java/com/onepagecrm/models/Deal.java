@@ -1,21 +1,34 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.serializers.DealListSerializer;
 import com.onepagecrm.models.serializers.DealSerializer;
+import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
-import com.onepagecrm.net.request.*;
+import com.onepagecrm.net.request.DeleteRequest;
+import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.request.PatchRequest;
+import com.onepagecrm.net.request.PostRequest;
+import com.onepagecrm.net.request.PutRequest;
+import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+@SuppressWarnings("unused")
 public class Deal extends ApiResource implements Serializable {
 
     public static final String STATUS_WON = "won";
     public static final String STATUS_LOST = "lost";
     public static final String STATUS_PENDING = "pending";
+    public static final String RELATED_NOTES_FIELDS = "?fields=notes(text,author)";
 
     private String id;
     private Double amount;
@@ -36,27 +49,9 @@ public class Deal extends ApiResource implements Serializable {
     private Boolean hasRelatedNotes;
     private List<Note> relatedNotes;
     private Date closeDate;
-//    private List<Attachment> attachments;
 
     public Deal save() throws OnePageException {
         return this.isValid() ? update() : create();
-    }
-
-    public static DealList list(String contactId) throws OnePageException {
-        Map<String, Object> params = new HashMap<>();
-        params.put("contact_id", contactId);
-        GetRequest getRequest = new GetRequest(DEALS_ENDPOINT, Query.fromParams(params));
-        Response response = getRequest.send();
-        return DealListSerializer.fromString(response.getResponseBody());
-    }
-
-
-    public static DealList list(String contactId, Paginator paginator) throws OnePageException {
-        Map<String, Object> params = Query.params(paginator);
-        params.put("contact_id", contactId);
-        GetRequest getRequest = new GetRequest(DEALS_ENDPOINT, Query.fromParams(params));
-        Response response = getRequest.send();
-        return DealListSerializer.fromString(response.getResponseBody());
     }
 
     private Deal create() throws OnePageException {
@@ -79,6 +74,54 @@ public class Deal extends ApiResource implements Serializable {
         return DealSerializer.fromString(response.getResponseBody());
     }
 
+    public static DealList list(String contactId) throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("contact_id", contactId);
+        return getDeals(params);
+    }
+
+    public static DealList list(String contactId, Paginator paginator) throws OnePageException {
+        Map<String, Object> params = Query.params(paginator);
+        params.put("contact_id", contactId);
+        return getDeals(params);
+    }
+
+    public static DealList list(String contactId, String status) throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("contact_id", contactId);
+        params.put("status", status);
+        return getDeals(params);
+    }
+
+    public static DealList list(String contactId, Paginator paginator, String status) throws OnePageException {
+        Map<String, Object> params = Query.params(paginator);
+        params.put("contact_id", contactId);
+        params.put("status", status);
+        return getDeals(params);
+    }
+
+    public static DealList list(Map<String, Object> params) throws OnePageException {
+        return getDeals(params);
+    }
+
+    public static DealList list(String contactId, Map<String, Object> params) throws OnePageException {
+        params.put("contact_id", contactId);
+        return getDeals(params);
+    }
+
+    public static DealList list(String contactId, Paginator paginator, Map<String, Object> params) throws OnePageException {
+        Map<String, Object> tempParams = Query.params(paginator);
+        tempParams.put("contact_id", contactId);
+        tempParams.putAll(params);
+        return getDeals(tempParams);
+    }
+
+    private static DealList getDeals(Map<String, Object> params) throws OnePageException {
+        GetRequest getRequest = new GetRequest(DEALS_ENDPOINT, Query.fromParams(params));
+        Response response = getRequest.send();
+        return DealListSerializer.fromString(response.getResponseBody());
+    }
+
     public Deal partial() throws OnePageException {
         Request request = new PatchRequest(
                 addDealIdToEndpoint(DEALS_ENDPOINT),
@@ -89,19 +132,18 @@ public class Deal extends ApiResource implements Serializable {
         return DealSerializer.fromString(response.getResponseBody());
     }
 
-    public void delete() throws OnePageException {
+    public DeleteResult delete() throws OnePageException {
         Request request = new DeleteRequest(addDealIdToEndpoint(DEALS_ENDPOINT));
         Response response = request.send();
-//        return DealSerializer.fromStringDelete(response.getResponseBody());
+        return DeleteResultSerializer.fromString(this.id, response.getResponseBody());
     }
 
     public List<Note> getNotesRelatedToDeal() throws OnePageException {
         List<Note> notes = new ArrayList<>();
-        Request request = new GetRequest(addDealIdToEndpoint(DEALS_ENDPOINT), "?fields=notes(text,author)");
+        Request request = new GetRequest(addDealIdToEndpoint(DEALS_ENDPOINT), RELATED_NOTES_FIELDS);
         Response response = request.send();
         Deal deal = DealSerializer.fromString(response.getResponseBody());
-
-        if (deal.hasRelatedNotes) {
+        if (deal.hasRelatedNotes()) {
             notes = DealSerializer.getNotesFromString(response.getResponseBody());
         }
         return notes;
@@ -255,6 +297,10 @@ public class Deal extends ApiResource implements Serializable {
 
     public Boolean getHasRelatedNotes() {
         return hasRelatedNotes;
+    }
+
+    public boolean hasRelatedNotes() {
+        return hasRelatedNotes != null && hasRelatedNotes;
     }
 
     public Deal setHasRelatedNotes(Boolean hasRelatedNotes) {

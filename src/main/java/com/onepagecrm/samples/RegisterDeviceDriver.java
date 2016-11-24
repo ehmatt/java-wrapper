@@ -2,19 +2,20 @@ package com.onepagecrm.samples;
 
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Account;
 import com.onepagecrm.models.User;
+import com.onepagecrm.models.internal.Device;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class Driver {
+public class RegisterDeviceDriver {
 
-    private static final Logger LOG = Logger.getLogger(Driver.class.getName());
+    private static final Logger LOG = Logger.getLogger(RegisterDeviceDriver.class.getName());
 
     public static void main(String[] args) throws OnePageException {
         Properties prop = new Properties();
@@ -42,22 +43,17 @@ public class Driver {
 
         OnePageCRM.setServer(Request.DEV_SERVER);
 
-        User loggedInUser = User.login(
+        User.login(
                 prop.getProperty("username"),
                 prop.getProperty("password"));
 
-        LOG.info("Logged in User : " + loggedInUser);
+        // Register the device.
+        final String firebaseToken = "d7sIgbT9wsg:APA91bFQvHUxKdLWzEKfwZpWzwQ0qQFoDElh-wThQDFVojYXD69WBhvsLoqKOb2KNQj47ZCzQ0qLB5Al34HUmASzYxBkQGtmTBQGHw7tv2lO2hwlUSzRF8HEfZVSGHsXircLhCtSIrq4";
+        Device phone = new Device().setDeviceId(firebaseToken).register();
+        LOG.info("Registered device : " + phone);
 
-        LOG.info("User's Team : " + Account.team);
-        LOG.info("User's Statuses : " + loggedInUser.getAccount().statuses);
-        LOG.info("User's Lead Sources : " + loggedInUser.getAccount().leadSources);
-        LOG.info("User's Custom Fields : " + loggedInUser.getAccount().customFields);
-        LOG.info("User's Call Results : " + loggedInUser.getAccount().callResults);
-        LOG.info("User's Filters : " + loggedInUser.getAccount().filters);
-        LOG.info("User's ContactsCounts : " + loggedInUser.getAccount().contactsCount);
-        LOG.info("User's StreamCount : " + loggedInUser.getAccount().streamCount);
-        LOG.info("User's Predefined Actions : " + loggedInUser.getAccount().predefinedActions);
-
-        loggedInUser.bootstrap();
+        // List current devices.
+        List<Device> devices = Device.list();
+        LOG.info("Device list : " + devices);
     }
 }

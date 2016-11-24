@@ -368,26 +368,28 @@ public abstract class Request {
             try {
                 br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             } catch (IOException e) {
-                LOG.severe("Could not open input stream to get " + "response body of POST request");
+                LOG.severe("Could not open input stream to get response body of POST request");
                 LOG.severe(e.toString());
             }
         } else {
             br = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
         }
         String output;
-        try {
-            while ((output = br.readLine()) != null) {
-                responseBody += output;
+        if (br != null) {
+            try {
+                while ((output = br.readLine()) != null) {
+                    responseBody += output;
+                }
+            } catch (IOException e) {
+                LOG.severe("Could not read line using buffered reader");
+                LOG.severe(e.toString());
             }
-        } catch (IOException e) {
-            LOG.severe("Could not read line using buffered reader");
-            LOG.severe(e.toString());
-        }
-        try {
-            br.close();
-        } catch (IOException e) {
-            LOG.severe("Could not close buffered reader");
-            LOG.severe(e.toString());
+            try {
+                br.close();
+            } catch (IOException e) {
+                LOG.severe("Could not close buffered reader");
+                LOG.severe(e.toString());
+            }
         }
         return responseBody;
     }

@@ -1,14 +1,25 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.*;
-import com.onepagecrm.models.internal.*;
+import com.onepagecrm.models.Account;
+import com.onepagecrm.models.Filter;
+import com.onepagecrm.models.LeadSource;
+import com.onepagecrm.models.Status;
+import com.onepagecrm.models.Tag;
+import com.onepagecrm.models.User;
+import com.onepagecrm.models.internal.ContactsCount;
+import com.onepagecrm.models.internal.PredefinedAction;
+import com.onepagecrm.models.internal.PredefinedActionList;
+import com.onepagecrm.models.internal.Settings;
+import com.onepagecrm.models.internal.StreamCount;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
 import java.util.logging.Logger;
+
+import static com.onepagecrm.models.Account.loggedInUser;
 
 public class LoginSerializer extends BaseSerializer {
 
@@ -20,10 +31,10 @@ public class LoginSerializer extends BaseSerializer {
 
         try {
             parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            Account.loggedInUser = UserSerializer.fromString(parsedResponse);
+            loggedInUser = UserSerializer.fromString(parsedResponse);
             updateLoginOnlyResources(responseBody);
             updateDynamicResources(responseBody);
-            return Account.loggedInUser;
+            return loggedInUser;
 
         } catch (ClassCastException e) {
             exception = (OnePageException) BaseSerializer.fromString(responseBody);
@@ -61,7 +72,7 @@ public class LoginSerializer extends BaseSerializer {
 
     private static void addSettings(JSONObject settingsObject) {
         Settings settings = SettingsSerializer.fromJsonObject(settingsObject);
-        Account.loggedInUser.getAccount().setSettings(settings);
+        loggedInUser.getAccount().setSettings(settings);
     }
 
     public static String toJsonObject(String username, String password) {
@@ -93,7 +104,7 @@ public class LoginSerializer extends BaseSerializer {
         List<Tag> tags = TagSerializer.fromJsonArray(
                 tagsObject.getJSONArray(TAGS_TAG)
         );
-        Account.loggedInUser.getAccount().setTags(tags);
+        loggedInUser.getAccount().setTags(tags);
     }
 
     private static void addStatusesToAccount(String responseBody) {
@@ -111,7 +122,7 @@ public class LoginSerializer extends BaseSerializer {
 
     private static void addStatuses(JSONArray statusesArray) throws JSONException {
         List<Status> statuses = StatusSerializer.fromJsonArray(statusesArray);
-        Account.loggedInUser.getAccount().setStatuses(statuses);
+        loggedInUser.getAccount().setStatuses(statuses);
     }
 
     private static void addLeadSourcesToAccount(String responseBody) {
@@ -129,7 +140,7 @@ public class LoginSerializer extends BaseSerializer {
 
     private static void addLeadSources(JSONArray leadSourceArray) throws JSONException {
         List<LeadSource> leadSources = LeadSourceSerializer.fromJsonArray(leadSourceArray);
-        Account.loggedInUser.getAccount().setLeadSources(leadSources);
+        loggedInUser.getAccount().setLeadSources(leadSources);
     }
 
     private static void addFiltersToAccount(String responseBody) {
@@ -148,7 +159,7 @@ public class LoginSerializer extends BaseSerializer {
 
     private static void addFilters(JSONArray filterArray) throws JSONException {
         List<Filter> filters = FilterSerializer.fromJsonArray(filterArray);
-        Account.loggedInUser.getAccount().setFilters(filters);
+        loggedInUser.getAccount().setFilters(filters);
     }
 
     private static void addContactsCountToAccount(String responseBody) {
@@ -166,7 +177,7 @@ public class LoginSerializer extends BaseSerializer {
 
     private static void addContactsCount(JSONObject contactsCountObject) throws JSONException {
         ContactsCount contactsCounts = ContactsCountSerializer.fromJsonObject(contactsCountObject);
-        Account.loggedInUser.getAccount().setContactsCount(contactsCounts);
+        loggedInUser.getAccount().setContactsCount(contactsCounts);
     }
 
     private static void addStreamCountToAccount(String responseBody) {
@@ -184,7 +195,7 @@ public class LoginSerializer extends BaseSerializer {
 
     private static void addStreamCount(JSONObject streamCountObject) throws JSONException {
         StreamCount streamCount = StreamCountSerializer.fromJsonObject(streamCountObject);
-        Account.loggedInUser.getAccount().setStreamCount(streamCount);
+        loggedInUser.getAccount().setStreamCount(streamCount);
     }
 
     private static void addPredefinedActionsToAccount(String responseBody) {
@@ -203,16 +214,18 @@ public class LoginSerializer extends BaseSerializer {
 
     private static void addPredefinedActions(JSONArray predefinedActionsArray) throws JSONException {
         List<PredefinedAction> predefinedAction = PredefinedActionSerializer.fromJsonArray(predefinedActionsArray);
-        Account.loggedInUser.getAccount().setPredefinedActions(new PredefinedActionList(predefinedAction));
+        loggedInUser.getAccount().setPredefinedActions(new PredefinedActionList(predefinedAction));
     }
 
     @SuppressWarnings("AccessStaticViaInstance")
     private static void updateTeamCounters() {
-        if (Account.loggedInUser != null && Account.loggedInUser.getAccount() != null) {
-            List<User> team = Account.loggedInUser.getAccount().getTeam();
-            StreamCount streamCount = Account.loggedInUser.getAccount().getStreamCount();
-            ContactsCount contactsCount = Account.loggedInUser.getAccount().getContactsCount();
-            if (contactsCount != null && contactsCount.getCounts().get(Account.USER_ID) != null) {
+        if (loggedInUser != null && loggedInUser.getAccount() != null && loggedInUser.getAccount().getTeam() != null) {
+            final List<User> team = loggedInUser.getAccount().getTeam();
+            final StreamCount streamCount = loggedInUser.getAccount().getStreamCount();
+            final ContactsCount contactsCount = loggedInUser.getAccount().getContactsCount();
+            final boolean streamOk = streamCount != null && streamCount.getCounts().get(Account.USER_ID) != null;
+            final boolean contactsOk = contactsCount != null && contactsCount.getCounts().get(Account.USER_ID) != null;
+            if (streamOk && contactsOk) {
                 int totalAccountContacts = contactsCount.getCounts().get(Account.USER_ID).getTotalCount();
                 for (User user : team) {
                     user.setAllCount(totalAccountContacts);
