@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -46,6 +47,7 @@ public class LoginSerializer extends BaseSerializer {
         addFiltersToAccount(responseBody);
         addSettingsToAccount(responseBody);
         addPredefinedActionsToAccount(responseBody);
+        addContactTitlesToAccount(responseBody);
     }
 
     public static void updateDynamicResources(String responseBody) {
@@ -215,6 +217,25 @@ public class LoginSerializer extends BaseSerializer {
     private static void addPredefinedActions(JSONArray predefinedActionsArray) throws JSONException {
         List<PredefinedAction> predefinedAction = PredefinedActionSerializer.fromJsonArray(predefinedActionsArray);
         loggedInUser.getAccount().setPredefinedActions(new PredefinedActionList(predefinedAction));
+    }
+
+    private static void addContactTitlesToAccount(String responseBody) {
+        JSONObject responseObject;
+        try {
+            responseObject = new JSONObject(responseBody);
+            JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+            if (dataObject.has(CONTACT_TITLES)) {
+                addContactTitles(dataObject.getJSONArray(CONTACT_TITLES));
+            }
+        } catch (JSONException e) {
+            LOG.severe("Error parsing contact titles array");
+            LOG.severe(e.toString());
+        }
+    }
+
+    private static void addContactTitles(JSONArray contactTitlesArray) throws JSONException {
+        String[] titlesArray = BaseSerializer.toArrayOfStrings(contactTitlesArray);
+        loggedInUser.getAccount().setContactTitles(Arrays.asList(titlesArray));
     }
 
     @SuppressWarnings("AccessStaticViaInstance")

@@ -83,10 +83,6 @@ public class Action extends ApiResource implements Serializable {
     private Date exactTime;
     private int dateColor;
 
-    public Action() {
-
-    }
-
     public Action save() throws OnePageException {
         return isValid() ? update() : create();
     }
@@ -162,6 +158,10 @@ public class Action extends ApiResource implements Serializable {
         calendar.add(Calendar.DATE, predefined.getDays());
         this.setDate(calendar.getTime());
         return this;
+    }
+
+    public Action() {
+
     }
 
     @Override
