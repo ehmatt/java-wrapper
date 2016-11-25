@@ -41,9 +41,9 @@ public class BaseSerializer {
     public static final String CONTACTS_TAG = "contacts";
     public static final String CONTACT_TAG = "contact";
     public static final String ID_TAG = "id";
-    public static final String CONTACT_TITLES = "contact_titles";
-    public static final String CONTACT_TITLE = "contact_title";
-    public static final String TITLE = "title";
+    public static final String CONTACT_TITLES_TAG = "contact_titles";
+    public static final String CONTACT_TITLE_TAG = "contact_title";
+    public static final String TITLE_TAG = "title";
     public static final String COMPANY_ID_TAG = "company_id";
     public static final String JOB_TITLE_TAG = "job_title";
     public static final String OWNER_ID_TAG = "owner_id";
