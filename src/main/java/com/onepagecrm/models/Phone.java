@@ -51,8 +51,7 @@ public class Phone extends BaseResource implements Serializable {
 
     public String getPhoneString() {
         if (type.isEmpty()) return value;
-        else
-            return String.format("%s (%s)", value, Utilities.capitalize(type));
+        else return String.format("%s (%s)", value, Utilities.capitalize(type));
     }
 
     public String getType() {
