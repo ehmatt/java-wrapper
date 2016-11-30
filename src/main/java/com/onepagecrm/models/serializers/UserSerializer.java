@@ -57,6 +57,10 @@ public class UserSerializer extends BaseSerializer {
         }
     }
 
+    public static User fromJsonObject(JSONObject userObject) {
+        return fromJsonObject(userObject, new User());
+    }
+
     public static User fromJsonObject(JSONObject userObject, User user) {
         try {
             if (userObject.has(ID_TAG)) {
@@ -80,43 +84,17 @@ public class UserSerializer extends BaseSerializer {
             if (userObject.has(BCC_EMAIL_TAG)) {
                 user.setBccEmail(userObject.getString(BCC_EMAIL_TAG));
             }
+            if (userObject.has(ACCOUNT_RIGHTS_TAG)) {
+                JSONArray accountRightsArray = userObject.getJSONArray(ACCOUNT_RIGHTS_TAG);
+                List<String> accountRights = BaseSerializer.toListOfStrings(accountRightsArray);
+                user.setAccountRights(accountRights);
+            }
             return user;
         } catch (JSONException e) {
             LOG.severe("Error parsing user JSON object");
             LOG.severe(e.toString());
             return new User();
         }
-    }
-
-    public static User fromJsonObject(JSONObject userObject) {
-        User user = new User();
-        try {
-            if (userObject.has(ID_TAG)) {
-                user.setId(userObject.getString(ID_TAG));
-            }
-            if (userObject.has(FIRST_NAME_TAG)) {
-                user.setFirstName(userObject.getString(FIRST_NAME_TAG));
-            }
-            if (userObject.has(LAST_NAME_TAG)) {
-                user.setLastName(userObject.getString(LAST_NAME_TAG));
-            }
-            if (userObject.has(EMAIL_TAG)) {
-                user.setEmail(userObject.getString(EMAIL_TAG));
-            }
-            if (userObject.has(COMPANY_NAME_TAG)) {
-                user.setCompanyName(userObject.getString(COMPANY_NAME_TAG));
-            }
-            if (userObject.has(PHOTO_URL_TAG)) {
-                user.setPhotoUrl(userObject.getString(PHOTO_URL_TAG));
-            }
-            if (userObject.has(BCC_EMAIL_TAG)) {
-                user.setBccEmail(userObject.getString(BCC_EMAIL_TAG));
-            }
-        } catch (JSONException e) {
-            LOG.severe("Error parsing user JSON object");
-            LOG.severe(e.toString());
-        }
-        return user;
     }
 
     public static List<User> fromJsonArray(JSONArray teamArray) {

@@ -260,6 +260,16 @@ public class BaseSerializer {
     public static final String ACTION_WITH_TIME_TAG = "action_with_time";
     public static final String SUBSCRIBED_AT_TAG = "subscribed_at";
 
+    // ACCOUNT RIGHTS
+    public static String ACCOUNT_OWNER_TAG = "account_owner";
+    public static String ADMIN_TAG = "admin";
+    public static String ACTIVITY_TAG = "activity";
+    public static String EDIT_TARGET_TAG = "edit_target";
+    public static String DELETE_CONTACTS_TAG = "delete_contacts";
+    public static String PIPELINE_TAG = "pipeline";
+    public static String EXPORT_TAG = "export";
+    public static String PRIVATE_CONTACTS_TAG = "private_contacts";
+
     /**
      * Method used to parse the base/start of response.
      *

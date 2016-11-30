@@ -4,6 +4,7 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.internal.Sales;
+import com.onepagecrm.models.serializers.BaseSerializer;
 import com.onepagecrm.models.serializers.ContactListSerializer;
 import com.onepagecrm.models.serializers.DealListSerializer;
 import com.onepagecrm.models.serializers.LoginSerializer;
@@ -16,6 +17,7 @@ import com.onepagecrm.net.request.LoginRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("WeakerAccess")
@@ -38,6 +40,8 @@ public class User extends ApiResource implements Serializable {
     private Integer allCount;
     private Integer streamCount;
     private Integer contactsCount;
+
+    private List<String> accountRights;
 
     public static User login(String username, String password) throws OnePageException {
         Request request = new LoginRequest(username, password);
@@ -253,6 +257,18 @@ public class User extends ApiResource implements Serializable {
         return null;
     }
 
+    public boolean hasRight(String right) {
+        return isAdmin() || isOwner() || accountRights != null && accountRights.contains(right);
+    }
+
+    public boolean isAdmin() {
+        return accountRights != null && accountRights.contains(BaseSerializer.ACCOUNT_OWNER_TAG);
+    }
+
+    public boolean isOwner() {
+        return accountRights != null && accountRights.contains(BaseSerializer.ADMIN_TAG);
+    }
+
     public String getAuthKey() {
         return authKey;
     }
@@ -367,6 +383,15 @@ public class User extends ApiResource implements Serializable {
 
     public User setContactsCount(Integer contactsCount) {
         this.contactsCount = contactsCount;
+        return this;
+    }
+
+    public List<String> getAccountRights() {
+        return accountRights;
+    }
+
+    public User setAccountRights(List<String> accountRights) {
+        this.accountRights = accountRights;
         return this;
     }
 }
