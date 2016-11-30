@@ -1,5 +1,6 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.models.serializers.PhoneSerializer;
 
 import java.io.Serializable;
@@ -46,6 +47,12 @@ public class Phone extends BaseResource implements Serializable {
             }
         }
         return false;
+    }
+
+    public String getPhoneString() {
+        if (type.isEmpty()) return value;
+        else
+            return String.format("%s (%s)", value, Utilities.capitalize(type));
     }
 
     public String getType() {
