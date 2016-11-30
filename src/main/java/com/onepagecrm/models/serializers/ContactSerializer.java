@@ -1,13 +1,28 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.*;
+import com.onepagecrm.models.Action;
+import com.onepagecrm.models.Address;
+import com.onepagecrm.models.Call;
+import com.onepagecrm.models.Contact;
+import com.onepagecrm.models.ContactList;
+import com.onepagecrm.models.CustomField;
+import com.onepagecrm.models.Deal;
+import com.onepagecrm.models.Email;
+import com.onepagecrm.models.Note;
+import com.onepagecrm.models.Phone;
+import com.onepagecrm.models.Tag;
+import com.onepagecrm.models.Url;
 import com.onepagecrm.models.internal.SalesCycleClosure;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class ContactSerializer extends BaseSerializer {
@@ -47,6 +62,9 @@ public class ContactSerializer extends BaseSerializer {
             }
             if (contactObject.has(TYPE_TAG)) {
                 contact.setType(contactObject.getString(TYPE_TAG));
+            }
+            if (contactObject.has(TITLE_TAG)) {
+                contact.setTitle(contactObject.getString(TITLE_TAG));
             }
             if (contactObject.has(FIRST_NAME_TAG)) {
                 contact.setFirstName(contactObject.getString(FIRST_NAME_TAG));
@@ -240,6 +258,7 @@ public class ContactSerializer extends BaseSerializer {
 
         addJsonStringValue(contact.getId(), contactObject, ID_TAG);
         addJsonStringValue(contact.getType(), contactObject, TYPE_TAG);
+        addJsonStringValue(contact.getTitle(), contactObject, TITLE_TAG);
         addJsonStringValue(contact.getFirstName(), contactObject, FIRST_NAME_TAG);
         addJsonStringValue(contact.getLastName(), contactObject, LAST_NAME_TAG);
         addJsonStringValue(contact.getCompanyName(), contactObject, COMPANY_NAME_TAG);

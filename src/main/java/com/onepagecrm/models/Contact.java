@@ -43,6 +43,7 @@ public class Contact extends ApiResource implements Serializable {
 
     private String id;
     private String ownerId;
+    private String title;
     private String firstName;
     private String lastName;
     private String letter;
@@ -269,6 +270,15 @@ public class Contact extends ApiResource implements Serializable {
 
     public Contact setOwnerId(String ownerId) {
         this.ownerId = ownerId;
+        return this;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Contact setTitle(String title) {
+        this.title = title;
         return this;
     }
 
