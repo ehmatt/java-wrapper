@@ -49,7 +49,7 @@ public class RegisterDeviceDriver {
 
         // Register the device.
         final String firebaseToken = "d7sIgbT9wsg:APA91bFQvHUxKdLWzEKfwZpWzwQ0qQFoDElh-wThQDFVojYXD69WBhvsLoqKOb2KNQj47ZCzQ0qLB5Al34HUmASzYxBkQGtmTBQGHw7tv2lO2hwlUSzRF8HEfZVSGHsXircLhCtSIrq4";
-        Device phone = new Device().setDeviceId(firebaseToken).register();
+        Device phone = new Device().setDeviceId(firebaseToken).setDeviceType(Device.TYPE_ANDROID).register();
         LOG.info("Registered device : " + phone);
 
         // List current devices.
