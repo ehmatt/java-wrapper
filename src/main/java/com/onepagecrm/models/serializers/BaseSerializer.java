@@ -259,6 +259,7 @@ public class BaseSerializer {
     public static final String FCM_DEVICES_TAG = "fcm_devices";
     public static final String ACTION_WITH_TIME_TAG = "action_with_time";
     public static final String SUBSCRIBED_AT_TAG = "subscribed_at";
+    public static final String DEVICE_TYPE_TAG = "device_type";
 
     // ACCOUNT RIGHTS
     public static String ACCOUNT_OWNER_TAG = "account_owner";

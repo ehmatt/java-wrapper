@@ -17,10 +17,14 @@ import java.util.List;
  */
 public class Device extends ApiResource {
 
+    public static final String TYPE_ANDROID = "android_app";
+    public static final String TYPE_IOS = "ios_app";
+
     private String id;
     private String deviceId;
     private Boolean actionWithTime;
     private Date subscribedAt;
+    private String deviceType;
 
     public static List<Device> list() throws OnePageException {
         Request request = new GetRequest(DEVICE_ENDPOINT);
@@ -82,6 +86,15 @@ public class Device extends ApiResource {
 
     public Device setSubscribedAt(Date subscribedAt) {
         this.subscribedAt = subscribedAt;
+        return this;
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public Device setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
         return this;
     }
 }
