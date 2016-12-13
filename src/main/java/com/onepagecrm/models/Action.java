@@ -30,7 +30,9 @@ public class Action extends ApiResource implements Serializable {
     private static final String STATUS_DATE_TIME = "date_time";
     private static final String STATUS_WAITING = "waiting";
     private static final String STATUS_QUEUED = "queued";
+    private static final String STATUS_QUEUED_WITH_DATE = "queued_with_date";
     private static final String STATUS_DONE = "done";
+    private static final String STATUS_OTHER = "other"; // Catch all.
 
     public enum Status {
         ASAP(STATUS_ASAP),
@@ -38,7 +40,9 @@ public class Action extends ApiResource implements Serializable {
         DATE_TIME(STATUS_DATE_TIME),
         WAITING(STATUS_WAITING),
         QUEUED(STATUS_QUEUED),
-        DONE(STATUS_DONE);
+        QUEUED_WITH_DATE(STATUS_QUEUED_WITH_DATE),
+        DONE(STATUS_DONE),
+        OTHER(STATUS_OTHER);
 
         private String status;
 
@@ -64,10 +68,12 @@ public class Action extends ApiResource implements Serializable {
                     return WAITING;
                 case STATUS_QUEUED:
                     return QUEUED;
+                case STATUS_QUEUED_WITH_DATE:
+                    return QUEUED_WITH_DATE;
                 case STATUS_DONE:
                     return DONE;
                 default:
-                    return null;
+                    return OTHER;
             }
         }
     }
