@@ -52,6 +52,7 @@ public class CompanySerializer extends BaseSerializer {
                 .setTotalWonAmount(companyObject.optDouble(TOTAL_WON_AMOUNT_TAG))
                 .setPendingDealsCount(companyObject.optInt(PENDING_DEALS_COUNT_TAG))
                 .setTotalPendingAmount(companyObject.optDouble(TOTAL_PENDING_AMOUNT_TAG))
+                .setContactsCount(companyObject.optInt(CONTACTS_COUNT_TAG))
                 .setContacts(ContactListSerializer.fromJsonArray(companyObject.optJSONArray(CONTACTS_TAG)));
     }
 
@@ -76,11 +77,18 @@ public class CompanySerializer extends BaseSerializer {
         addJsonStringValue(company.getUrl(), companyObject, URL_TAG);
         addJsonStringValue(CustomFieldSerializer.toJsonArray(company.getCompanyFields()), companyObject, COMPANY_FIELDS_TAG); // TODO - custom fields??
         addJsonStringValue(company.getSyncedStatusId(), companyObject, SYNCED_STATUS_ID_TAG);
-        addJsonStringValue(AddressSerializer.toJsonObject(company.getAddress()), companyObject, ADDRESS_TAG);
+        try {
+            JSONObject addressArray = new JSONObject(AddressSerializer.toJsonObject(company.getAddress()));
+            addJsonObject(addressArray, companyObject, ADDRESS_TAG);
+        } catch (JSONException e) {
+            LOG.severe("Error creating Address object while constructing Company object");
+            LOG.severe(e.toString());
+        }
         addJsonIntegerValue(company.getWonDealsCount(), companyObject, WON_DEALS_COUNT_TAG);
         addJsonDoubleValue(company.getTotalWonAmount(), companyObject, TOTAL_WON_AMOUNT_TAG);
         addJsonIntegerValue(company.getPendingDealsCount(), companyObject, PENDING_DEALS_COUNT_TAG);
         addJsonDoubleValue(company.getTotalPendingAmount(), companyObject, TOTAL_PENDING_AMOUNT_TAG);
+        addJsonIntegerValue(company.getContactsCount(), companyObject, CONTACTS_COUNT_TAG);
         try {
             JSONArray contactsArray = new JSONArray(ContactSerializer.toJsonArray(company.getContacts()));
             addJsonArray(contactsArray, companyObject, CONTACTS_TAG);
