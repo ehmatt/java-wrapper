@@ -1,9 +1,17 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.serializers.CompanySerializer;
 import com.onepagecrm.net.ApiResource;
+import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.request.PostRequest;
+import com.onepagecrm.net.request.PutRequest;
+import com.onepagecrm.net.request.Request;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
@@ -25,6 +33,59 @@ public class Company extends ApiResource {
     private Integer contactsCount;
     private List<Contact> contacts;
 
+    public Company save() throws OnePageException {
+        return this.isValid() ? update() : create();
+    }
+
+    private Company create() throws OnePageException {
+        Request request = new PostRequest(
+                COMPANIES_ENDPOINT,
+                null,
+                CompanySerializer.toJsonObject(this)
+        );
+        Response response = request.send();
+        String responseBody = response.getResponseBody();
+        return CompanySerializer.fromString(responseBody);
+    }
+
+    private Company update() throws OnePageException {
+        Request request = new PutRequest(
+                addIdToEndpoint(COMPANIES_ENDPOINT, this.id),
+                null,
+                CompanySerializer.toJsonObject(this)
+        );
+        Response response = request.send();
+        String responseBody = response.getResponseBody();
+        return CompanySerializer.fromString(responseBody);
+    }
+
+    public static Company getSingleCompany(String contactId) throws OnePageException {
+        Request request = new GetRequest(
+                addIdToEndpoint(COMPANIES_ENDPOINT, contactId),
+                null
+        );
+        Response response = request.send();
+        String responseBody = response.getResponseBody();
+        return CompanySerializer.fromString(responseBody);
+    }
+
+    public Company partialUpdate(Company updateValues) throws OnePageException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("partial", true);
+        Request request = new PutRequest(
+                addIdToEndpoint(COMPANIES_ENDPOINT, this.id),
+                Query.fromParams(params),
+                CompanySerializer.toJsonObject(updateValues)
+        );
+        Response response = request.send();
+        String responseBody = response.getResponseBody();
+        return CompanySerializer.fromString(responseBody);
+    }
+
+    private static String addIdToEndpoint(String endpoint, String id) {
+        return endpoint + "/" + id;
+    }
+
     @Override
     public String getId() {
         return id;
@@ -38,7 +99,7 @@ public class Company extends ApiResource {
 
     @Override
     public String toString() {
-        return return CompanySerializer.toJsonObject(this);
+        return CompanySerializer.toJsonObject(this);
     }
 
     public String getName() {

@@ -168,6 +168,29 @@ public class User extends ApiResource implements Serializable {
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
+    public CompanyList companies() throws OnePageException {
+        return getCompanies(Query.queryDefault());
+    }
+
+    public CompanyList companies(Paginator paginator) throws OnePageException {
+        return getCompanies(Query.query(paginator));
+    }
+
+    public CompanyList companies(Map<String, Object> params) throws OnePageException {
+        return getCompanies(Query.fromParams(params));
+    }
+
+    public CompanyList companies(Map<String, Object> params, Paginator paginator) throws OnePageException {
+        String query = Query.fromMaps(params, Query.params(paginator));
+        return getCompanies(query);
+    }
+
+    private CompanyList getCompanies(String query) throws OnePageException {
+        Request request = new GetRequest(COMPANIES_ENDPOINT, query);
+        Response response = request.send();
+        return CompanyListSerializer.fromString(response.getResponseBody());
+    }
+
     public ActionList actions(Paginator paginator) throws OnePageException {
         return Action.list(this.id, paginator);
     }

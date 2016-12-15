@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+@SuppressWarnings("WeakerAccess")
 public class BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(BaseSerializer.class.getName());

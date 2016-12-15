@@ -16,13 +16,13 @@ public class CompanyList extends ResourceList<Company> implements Serializable {
     private static final Logger LOG = Logger.getLogger(CompanyList.class.getName());
 
     @Override
-    public List<Company> nextPage(Map<String, Object> params) throws OnePageException {
+    public CompanyList nextPage(Map<String, Object> params) throws OnePageException {
         this.paginator.getNextPageNo();
         return Account.loggedInUser.companies(params, paginator);
     }
 
     @Override
-    public List<Company> refresh(Map<String, Object> params) throws OnePageException {
+    public CompanyList refresh(Map<String, Object> params) throws OnePageException {
         CompanyList list = Account.loggedInUser.companies(params, (paginator = new Paginator()));
         this.setList(list);
         return this;

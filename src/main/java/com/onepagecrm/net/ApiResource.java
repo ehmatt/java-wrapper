@@ -4,6 +4,7 @@ import com.onepagecrm.models.BaseResource;
 
 import java.io.Serializable;
 
+@SuppressWarnings("WeakerAccess")
 public abstract class ApiResource extends BaseResource implements Serializable {
 
     public static final String CHARSET = "UTF-8";
@@ -24,6 +25,7 @@ public abstract class ApiResource extends BaseResource implements Serializable {
     public static final String NOTES_ENDPOINT = "notes";
     public static final String BOOTSTRAP_ENDPOINT = "bootstrap";
     public static final String DEVICE_ENDPOINT = "firebase";
+    public static final String COMPANIES_ENDPOINT = "companies";
 
     public abstract String getId();
 
