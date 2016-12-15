@@ -31,7 +31,7 @@ public class Company extends ApiResource {
     private Integer pendingDealsCount;
     private Double totalPendingAmount;
     private Integer contactsCount;
-    private List<Contact> contacts;
+    private ContactList contacts;
 
     public Company save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -59,9 +59,9 @@ public class Company extends ApiResource {
         return CompanySerializer.fromString(responseBody);
     }
 
-    public static Company getSingleCompany(String contactId) throws OnePageException {
+    public static Company getSingleCompany(String companyId) throws OnePageException {
         Request request = new GetRequest(
-                addIdToEndpoint(COMPANIES_ENDPOINT, contactId),
+                addIdToEndpoint(COMPANIES_ENDPOINT, companyId),
                 null
         );
         Response response = request.send();
@@ -210,11 +210,11 @@ public class Company extends ApiResource {
         return this;
     }
 
-    public List<Contact> getContacts() {
+    public ContactList getContacts() {
         return contacts;
     }
 
-    public Company setContacts(List<Contact> contacts) {
+    public Company setContacts(ContactList contacts) {
         this.contacts = contacts;
         return this;
     }

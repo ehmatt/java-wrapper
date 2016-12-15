@@ -5,6 +5,7 @@ import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.internal.Sales;
 import com.onepagecrm.models.serializers.BaseSerializer;
+import com.onepagecrm.models.serializers.CompanyListSerializer;
 import com.onepagecrm.models.serializers.ContactListSerializer;
 import com.onepagecrm.models.serializers.DealListSerializer;
 import com.onepagecrm.models.serializers.LoginSerializer;

@@ -2,7 +2,7 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
-import com.onepagecrm.models.serializers.CompanySerializer;
+import com.onepagecrm.models.serializers.CompanyListSerializer;
 
 import java.io.Serializable;
 import java.util.List;
@@ -52,6 +52,6 @@ public class CompanyList extends ResourceList<Company> implements Serializable {
     }
 
     public String toString() {
-        return CompanySerializer.toJsonArray(this);
+        return CompanyListSerializer.toJsonArray(this);
     }
 }
