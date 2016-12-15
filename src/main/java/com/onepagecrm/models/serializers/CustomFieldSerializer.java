@@ -13,7 +13,7 @@ public class CustomFieldSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CustomFieldSerializer.class.getName());
 
-    public static List<CustomField> fromString(String responseBody) {
+    public static List<CustomField> fromString(String responseBody, String cfType) {
         List<CustomField> customFields = new ArrayList<>();
         try {
             JSONObject responseObject = new JSONObject(responseBody);
@@ -23,7 +23,7 @@ public class CustomFieldSerializer extends BaseSerializer {
             if (status == 0 && message.equalsIgnoreCase(OK_TAG)) {
                 JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
                 JSONArray customFieldsArray = dataObject.getJSONArray(CUSTOM_FIELDS_TAG);
-                customFields = fromJsonArray(customFieldsArray);
+                customFields = fromJsonArray(customFieldsArray, cfType);
             }
         } catch (JSONException e) {
             LOG.severe("Error parsing CustomField's from response body");
@@ -32,12 +32,12 @@ public class CustomFieldSerializer extends BaseSerializer {
         return customFields;
     }
 
-    public static List<CustomField> fromJsonArray(JSONArray customFieldArray) {
+    public static List<CustomField> fromJsonArray(JSONArray customFieldArray, String cfType) {
         List<CustomField> customFields = new ArrayList<>();
         for (int i = 0; i < customFieldArray.length(); i++) {
             try {
                 JSONObject outerObject = customFieldArray.getJSONObject(i);
-                CustomField customField = fromJsonObject(outerObject);
+                CustomField customField = fromJsonObject(outerObject, cfType);
                 customFields.add(customField);
             } catch (JSONException e) {
                 LOG.severe("Error parsing CustomField's from JsonArray");
@@ -47,7 +47,7 @@ public class CustomFieldSerializer extends BaseSerializer {
         return customFields;
     }
 
-    public static CustomField fromJsonObject(JSONObject outerObject) {
+    public static CustomField fromJsonObject(JSONObject outerObject, String cfType) {
         CustomField customField = new CustomField();
         try {
             if (outerObject.has(VALUE_TAG)) {
@@ -68,13 +68,13 @@ public class CustomFieldSerializer extends BaseSerializer {
                     int reminderDays = customFieldObject.getInt(REMINDER_DAYS_TAG);
                     customField.setReminderDays(reminderDays);
                 } else {
-                    // TODO : review this.
                     // Does it make sense to set this to -1 when null returned??
                     customField.setReminderDays(-1);
                 }
             }
 
-            customField.setId(customFieldObject.optString(ID_TAG))
+            customField.setCfType(cfType)
+                    .setId(customFieldObject.optString(ID_TAG))
                     .setName(customFieldObject.optString(NAME_TAG))
                     .setPosition(customFieldObject.optInt(POSITION_TAG))
                     .setType(customFieldObject.optString(TYPE_TAG));
@@ -96,7 +96,7 @@ public class CustomFieldSerializer extends BaseSerializer {
             // Adds empty array with key.
             customFieldObject.put(CHOICES_TAG, choicesArray);
             // Adds no array when it's empty.
-//            addJsonArray(choicesArray, customFieldObject, CHOICES_TAG);
+            //addJsonArray(choicesArray, customFieldObject, CHOICES_TAG);
         } catch (JSONException e) {
             LOG.severe("Error creating JSONArray out of CustomField choices");
             LOG.severe(e.toString());

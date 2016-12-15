@@ -73,6 +73,7 @@ public class Contact extends ApiResource implements Serializable {
     private List<Deal> deals;
     private List<Note> notes;
     private List<Call> calls;
+    private Company company;
 
     public Contact save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -548,6 +549,15 @@ public class Contact extends ApiResource implements Serializable {
 
     public Contact setCalls(List<Call> calls) {
         this.calls = calls;
+        return this;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public Contact setCompany(Company company) {
+        this.company = company;
         return this;
     }
 }

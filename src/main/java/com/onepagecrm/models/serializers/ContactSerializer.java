@@ -133,7 +133,8 @@ public class ContactSerializer extends BaseSerializer {
             // Add Custom Fields.
             if (contactObject.has(CUSTOM_FIELDS_TAG)) {
                 JSONArray customFieldsArray = contactObject.getJSONArray(CUSTOM_FIELDS_TAG);
-                List<CustomField> customFields = CustomFieldSerializer.fromJsonArray(customFieldsArray);
+                List<CustomField> customFields =
+                        CustomFieldSerializer.fromJsonArray(customFieldsArray, CustomField.CF_TYPE_CONTACT);
                 if (!customFields.isEmpty()) contact.setCustomFields(customFields);
             }
             // Add Phones.
@@ -196,6 +197,11 @@ public class ContactSerializer extends BaseSerializer {
                 JSONArray callsArray = contactsElementObject.getJSONArray(CALLS_TAG);
                 List<Call> calls = CallSerializer.fromJsonArray(callsArray);
                 contact.setCalls(calls);
+            }
+            // Company.
+            if (contactObject.has(COMPANY_TAG)) {
+                JSONObject companyObject = contactObject.optJSONObject(COMPANY_TAG);
+                contact.setCompany(CompanySerializer.fromJsonObject(companyObject));
             }
             return contact;
 
@@ -328,6 +334,15 @@ public class ContactSerializer extends BaseSerializer {
             }
         }
         addJsonArray(BaseSerializer.toJsonStringArray(tagNames), contactObject, TAGS_TAG);
+
+        // Serialize Company.
+        try {
+            JSONObject companyObject = new JSONObject(CompanySerializer.toJsonObject(contact.getCompany()));
+            addJsonObject(companyObject, contactObject, COMPANY_TAG);
+        } catch (JSONException e) {
+            LOG.severe("Error creating Company object while constructing Contact object");
+            LOG.severe(e.toString());
+        }
 
         return contactObject.toString();
     }

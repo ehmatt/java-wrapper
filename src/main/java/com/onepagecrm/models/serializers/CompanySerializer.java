@@ -2,6 +2,7 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Company;
+import com.onepagecrm.models.CustomField;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,7 +46,9 @@ public class CompanySerializer extends BaseSerializer {
                 .setDescription(companyObject.optString(DESCRIPTION_TAG))
                 .setPhone(companyObject.optString(PHONE_TAG))
                 .setUrl(companyObject.optString(URL_TAG))
-                .setCompanyFields(CustomFieldSerializer.fromJsonArray(companyObject.optJSONArray(COMPANY_FIELDS_TAG))) // TODO - custom fields??
+                .setCompanyFields(
+                        CustomFieldSerializer.fromJsonArray(companyObject.optJSONArray(COMPANY_FIELDS_TAG),
+                                CustomField.CF_TYPE_COMPANY)) // TODO - custom fields??
                 .setSyncedStatusId(companyObject.optString(SYNCED_STATUS_ID_TAG))
                 .setAddress(AddressSerializer.fromJsonObject(companyObject.optJSONObject(ADDRESS_TAG)))
                 .setWonDealsCount(companyObject.optInt(WON_DEALS_COUNT_TAG))
