@@ -1,5 +1,6 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.models.serializers.CompanySerializer;
 import com.onepagecrm.net.ApiResource;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class Company extends ApiResource {
 
     @Override
     public String toString() {
-        return null; // TODO - call serializer!
+        return return CompanySerializer.toJsonObject(this);
     }
 
     public String getName() {
