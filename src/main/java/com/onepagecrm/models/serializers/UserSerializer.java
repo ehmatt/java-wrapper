@@ -31,9 +31,11 @@ public class UserSerializer extends BaseSerializer {
                     .setAuthKey(authKey)
                     .setAccountType(accountType);
 
-            user.setAccount(new Account().setCustomFields(
-                    CustomFieldSerializer.fromJsonArray(
-                            dataObject.getJSONArray(CUSTOM_FIELDS_TAG), CustomField.CF_TYPE_CONTACT)));
+            user.setAccount(new Account()
+                    .setCustomFields(CustomFieldSerializer.fromJsonArray(
+                            dataObject.getJSONArray(CUSTOM_FIELDS_TAG), CustomField.CF_TYPE_CONTACT))
+                    .setCompanyFields(CustomFieldSerializer.fromJsonArray(
+                            dataObject.getJSONArray(COMPANY_FIELDS_TAG), CustomField.CF_TYPE_COMPANY)));
 
             user = addCallResults(dataObject, user);
 

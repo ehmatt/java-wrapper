@@ -3,8 +3,6 @@ package com.onepagecrm.samples;
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Account;
-import com.onepagecrm.models.Contact;
-import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
 import com.onepagecrm.net.request.Request;
 
@@ -54,6 +52,7 @@ public class Driver {
         LOG.info("User's Statuses : " + loggedInUser.getAccount().statuses);
         LOG.info("User's Lead Sources : " + loggedInUser.getAccount().leadSources);
         LOG.info("User's Custom Fields : " + loggedInUser.getAccount().customFields);
+        LOG.info("User's Company Fields : " + loggedInUser.getAccount().companyFields);
         LOG.info("User's Call Results : " + loggedInUser.getAccount().callResults);
         LOG.info("User's Filters : " + loggedInUser.getAccount().filters);
         LOG.info("User's ContactsCounts : " + loggedInUser.getAccount().contactsCount);
@@ -61,10 +60,5 @@ public class Driver {
         LOG.info("User's Predefined Actions : " + loggedInUser.getAccount().predefinedActions);
         LOG.info("User's Contact Titles : " + loggedInUser.getAccount().contactTitles);
         LOG.info("User's Account Rights : " + loggedInUser.getAccountRights());
-
-        ContactList stream = loggedInUser.actionStream();
-        for (Contact contact : stream) {
-            LOG.info("Stream[" + stream.indexOf(contact) + "] : " + contact);
-        }
     }
 }
