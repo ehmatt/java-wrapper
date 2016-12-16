@@ -46,9 +46,8 @@ public class CompanySerializer extends BaseSerializer {
                 .setDescription(companyObject.optString(DESCRIPTION_TAG))
                 .setPhone(companyObject.optString(PHONE_TAG))
                 .setUrl(companyObject.optString(URL_TAG))
-                .setCompanyFields(
-                        CustomFieldSerializer.fromJsonArray(companyObject.optJSONArray(COMPANY_FIELDS_TAG),
-                                CustomField.CF_TYPE_COMPANY)) // TODO - custom fields??
+                .setCompanyFields(CustomFieldSerializer.fromJsonArray(companyObject.optJSONArray(COMPANY_FIELDS_TAG),
+                        CustomField.CF_TYPE_COMPANY))
                 .setSyncedStatusId(companyObject.optString(SYNCED_STATUS_ID_TAG))
                 .setAddress(AddressSerializer.fromJsonObject(companyObject.optJSONObject(ADDRESS_TAG)))
                 .setWonDealsCount(companyObject.optInt(WON_DEALS_COUNT_TAG))
@@ -56,16 +55,17 @@ public class CompanySerializer extends BaseSerializer {
                 .setPendingDealsCount(companyObject.optInt(PENDING_DEALS_COUNT_TAG))
                 .setTotalPendingAmount(companyObject.optDouble(TOTAL_PENDING_AMOUNT_TAG))
                 .setContactsCount(companyObject.optInt(CONTACTS_COUNT_TAG))
-                .setContacts(ContactListSerializer.fromJsonArray(companyObject.optJSONArray(CONTACTS_TAG)));
+                //.setContacts(ContactListSerializer.fromJsonObject(companyObject))
+                ;
     }
 
     public static List<Company> fromJsonArray(JSONArray companiesArray) {
         List<Company> companies = new ArrayList<>();
         for (int i = 0; i < companiesArray.length(); ++i) {
-            JSONObject callObject = companiesArray.optJSONObject(i);
-            Company call = fromJsonObject(callObject);
-            if (call != null) {
-                companies.add(call);
+            JSONObject companyObject = companiesArray.optJSONObject(i);
+            Company company = fromJsonObject(companyObject);
+            if (company != null) {
+                companies.add(company);
             }
         }
         return companies;
@@ -78,7 +78,7 @@ public class CompanySerializer extends BaseSerializer {
         addJsonStringValue(company.getDescription(), companyObject, DESCRIPTION_TAG);
         addJsonStringValue(company.getPhone(), companyObject, PHONE_TAG);
         addJsonStringValue(company.getUrl(), companyObject, URL_TAG);
-        addJsonStringValue(CustomFieldSerializer.toJsonArray(company.getCompanyFields()), companyObject, COMPANY_FIELDS_TAG); // TODO - custom fields??
+        addJsonStringValue(CustomFieldSerializer.toJsonArray(company.getCompanyFields()), companyObject, COMPANY_FIELDS_TAG);
         addJsonStringValue(company.getSyncedStatusId(), companyObject, SYNCED_STATUS_ID_TAG);
         try {
             JSONObject addressArray = new JSONObject(AddressSerializer.toJsonObject(company.getAddress()));

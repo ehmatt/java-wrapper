@@ -70,6 +70,7 @@ public class CustomField extends ApiResource implements Serializable {
     }
 
     public CustomField() {
+
     }
 
     public CustomField(CustomField customField) {

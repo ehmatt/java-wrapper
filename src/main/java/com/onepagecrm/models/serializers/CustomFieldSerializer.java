@@ -1,6 +1,7 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.models.CustomField;
+import com.onepagecrm.models.internal.Utilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+@SuppressWarnings("WeakerAccess")
 public class CustomFieldSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CustomFieldSerializer.class.getName());
@@ -22,7 +24,8 @@ public class CustomFieldSerializer extends BaseSerializer {
 
             if (status == 0 && message.equalsIgnoreCase(OK_TAG)) {
                 JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
-                JSONArray customFieldsArray = dataObject.getJSONArray(CUSTOM_FIELDS_TAG);
+                final String customFieldsTag = getTagPlural(cfType);
+                JSONArray customFieldsArray = dataObject.getJSONArray(customFieldsTag);
                 customFields = fromJsonArray(customFieldsArray, cfType);
             }
         } catch (JSONException e) {
@@ -49,11 +52,13 @@ public class CustomFieldSerializer extends BaseSerializer {
 
     public static CustomField fromJsonObject(JSONObject outerObject, String cfType) {
         CustomField customField = new CustomField();
+
         try {
             if (outerObject.has(VALUE_TAG)) {
                 customField.setValue(CustomFieldValueSerializer.fromJsonObject(outerObject));
             }
-            JSONObject customFieldObject = outerObject.getJSONObject(CUSTOM_FIELD_TAG);
+            final String customFieldTag = getTagSingle(cfType);
+            JSONObject customFieldObject = outerObject.getJSONObject(customFieldTag);
 
             if (customFieldObject.has(CHOICES_TAG)) {
                 JSONArray choicesArray = customFieldObject.getJSONArray(CHOICES_TAG);
@@ -147,5 +152,27 @@ public class CustomFieldSerializer extends BaseSerializer {
 
     private static String getChoicesJsonArray(CustomField customField) {
         return toJsonStringArray(customField.getChoices()).toString();
+    }
+
+    public static String getTagSingle(String cfType) {
+        if (!Utilities.notNullOrEmpty(cfType)) return null;
+        switch (cfType) {
+            case CustomField.CF_TYPE_COMPANY:
+                return BaseSerializer.COMPANY_FIELD_TAG;
+            case CustomField.CF_TYPE_CONTACT:
+                return BaseSerializer.CUSTOM_FIELD_TAG;
+        }
+        return "";
+    }
+
+    public static String getTagPlural(String cfType) {
+        if (!Utilities.notNullOrEmpty(cfType)) return null;
+        switch (cfType) {
+            case CustomField.CF_TYPE_COMPANY:
+                return BaseSerializer.COMPANY_FIELDS_TAG;
+            case CustomField.CF_TYPE_CONTACT:
+                return BaseSerializer.CUSTOM_FIELDS_TAG;
+        }
+        return "";
     }
 }

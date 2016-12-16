@@ -274,6 +274,7 @@ public class BaseSerializer {
 
     // COMPANIES
     public static final String COMPANIES_TAG = "companies";
+    public static final String COMPANY_FIELD_TAG = "company_field";
     public static final String COMPANY_FIELDS_TAG = "company_fields";
     public static final String SYNCED_STATUS_ID_TAG = "synced_status_id";
     public static final String WON_DEALS_COUNT_TAG = "won_deals_count";

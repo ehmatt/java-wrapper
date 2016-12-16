@@ -9,6 +9,7 @@ import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.PutRequest;
 import com.onepagecrm.net.request.Request;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ import java.util.Map;
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
  */
-public class Company extends ApiResource {
+public class Company extends ApiResource implements Serializable {
 
     private String id;
     private String name;
