@@ -3,6 +3,8 @@ package com.onepagecrm.samples;
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Account;
+import com.onepagecrm.models.Contact;
+import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
 import com.onepagecrm.net.request.Request;
 
@@ -40,7 +42,7 @@ public class Driver {
             }
         }
 
-        OnePageCRM.setServer(Request.DEV_SERVER);
+        OnePageCRM.setServer(Request.APP_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
@@ -59,5 +61,10 @@ public class Driver {
         LOG.info("User's Predefined Actions : " + loggedInUser.getAccount().predefinedActions);
         LOG.info("User's Contact Titles : " + loggedInUser.getAccount().contactTitles);
         LOG.info("User's Account Rights : " + loggedInUser.getAccountRights());
+
+        ContactList stream = loggedInUser.actionStream();
+        for (Contact contact : stream) {
+            LOG.info("Stream[" + stream.indexOf(contact) + "] : " + contact);
+        }
     }
 }

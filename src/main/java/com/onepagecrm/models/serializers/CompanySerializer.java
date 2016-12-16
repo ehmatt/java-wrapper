@@ -51,9 +51,9 @@ public class CompanySerializer extends BaseSerializer {
                 .setSyncedStatusId(companyObject.optString(SYNCED_STATUS_ID_TAG))
                 .setAddress(AddressSerializer.fromJsonObject(companyObject.optJSONObject(ADDRESS_TAG)))
                 .setWonDealsCount(companyObject.optInt(WON_DEALS_COUNT_TAG))
-                .setTotalWonAmount(companyObject.optDouble(TOTAL_WON_AMOUNT_TAG))
+                .setTotalWonAmount(companyObject.optDouble(TOTAL_WON_AMOUNT_TAG, 0d))
                 .setPendingDealsCount(companyObject.optInt(PENDING_DEALS_COUNT_TAG))
-                .setTotalPendingAmount(companyObject.optDouble(TOTAL_PENDING_AMOUNT_TAG))
+                .setTotalPendingAmount(companyObject.optDouble(TOTAL_PENDING_AMOUNT_TAG, 0d))
                 .setContactsCount(companyObject.optInt(CONTACTS_COUNT_TAG))
                 //.setContacts(ContactListSerializer.fromJsonObject(companyObject))
                 ;
@@ -73,31 +73,33 @@ public class CompanySerializer extends BaseSerializer {
 
     public static String toJsonObject(Company company) {
         JSONObject companyObject = new JSONObject();
-        addJsonStringValue(company.getId(), companyObject, ID_TAG);
-        addJsonStringValue(company.getName(), companyObject, NAME_TAG);
-        addJsonStringValue(company.getDescription(), companyObject, DESCRIPTION_TAG);
-        addJsonStringValue(company.getPhone(), companyObject, PHONE_TAG);
-        addJsonStringValue(company.getUrl(), companyObject, URL_TAG);
-        addJsonStringValue(CustomFieldSerializer.toJsonArray(company.getCompanyFields()), companyObject, COMPANY_FIELDS_TAG);
-        addJsonStringValue(company.getSyncedStatusId(), companyObject, SYNCED_STATUS_ID_TAG);
-        try {
-            JSONObject addressArray = new JSONObject(AddressSerializer.toJsonObject(company.getAddress()));
-            addJsonObject(addressArray, companyObject, ADDRESS_TAG);
-        } catch (JSONException e) {
-            LOG.severe("Error creating Address object while constructing Company object");
-            LOG.severe(e.toString());
-        }
-        addJsonIntegerValue(company.getWonDealsCount(), companyObject, WON_DEALS_COUNT_TAG);
-        addJsonDoubleValue(company.getTotalWonAmount(), companyObject, TOTAL_WON_AMOUNT_TAG);
-        addJsonIntegerValue(company.getPendingDealsCount(), companyObject, PENDING_DEALS_COUNT_TAG);
-        addJsonDoubleValue(company.getTotalPendingAmount(), companyObject, TOTAL_PENDING_AMOUNT_TAG);
-        addJsonIntegerValue(company.getContactsCount(), companyObject, CONTACTS_COUNT_TAG);
-        try {
-            JSONArray contactsArray = new JSONArray(ContactSerializer.toJsonArray(company.getContacts()));
-            addJsonArray(contactsArray, companyObject, CONTACTS_TAG);
-        } catch (JSONException e) {
-            LOG.severe("Problems generating JSONArray of contacts for this company.");
-            LOG.severe(e.toString());
+        if (company != null) {
+            addJsonStringValue(company.getId(), companyObject, ID_TAG);
+            addJsonStringValue(company.getName(), companyObject, NAME_TAG);
+            addJsonStringValue(company.getDescription(), companyObject, DESCRIPTION_TAG);
+            addJsonStringValue(company.getPhone(), companyObject, PHONE_TAG);
+            addJsonStringValue(company.getUrl(), companyObject, URL_TAG);
+            addJsonStringValue(CustomFieldSerializer.toJsonArray(company.getCompanyFields()), companyObject, COMPANY_FIELDS_TAG);
+            addJsonStringValue(company.getSyncedStatusId(), companyObject, SYNCED_STATUS_ID_TAG);
+            try {
+                JSONObject addressArray = new JSONObject(AddressSerializer.toJsonObject(company.getAddress()));
+                addJsonObject(addressArray, companyObject, ADDRESS_TAG);
+            } catch (JSONException e) {
+                LOG.severe("Error creating Address object while constructing Company object");
+                LOG.severe(e.toString());
+            }
+            addJsonIntegerValue(company.getWonDealsCount(), companyObject, WON_DEALS_COUNT_TAG);
+            addJsonDoubleValue(company.getTotalWonAmount(), companyObject, TOTAL_WON_AMOUNT_TAG);
+            addJsonIntegerValue(company.getPendingDealsCount(), companyObject, PENDING_DEALS_COUNT_TAG);
+            addJsonDoubleValue(company.getTotalPendingAmount(), companyObject, TOTAL_PENDING_AMOUNT_TAG);
+            addJsonIntegerValue(company.getContactsCount(), companyObject, CONTACTS_COUNT_TAG);
+            try {
+                JSONArray contactsArray = new JSONArray(ContactSerializer.toJsonArray(company.getContacts()));
+                addJsonArray(contactsArray, companyObject, CONTACTS_TAG);
+            } catch (JSONException e) {
+                LOG.severe("Problems generating JSONArray of contacts for this company.");
+                LOG.severe(e.toString());
+            }
         }
         return companyObject.toString();
     }

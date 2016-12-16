@@ -199,8 +199,8 @@ public class ContactSerializer extends BaseSerializer {
                 contact.setCalls(calls);
             }
             // Company.
-            if (contactObject.has(COMPANY_TAG)) {
-                JSONObject companyObject = contactObject.optJSONObject(COMPANY_TAG);
+            if (contactsElementObject.has(COMPANY_TAG)) {
+                JSONObject companyObject = contactsElementObject.optJSONObject(COMPANY_TAG);
                 contact.setCompany(CompanySerializer.fromJsonObject(companyObject));
             }
             return contact;
@@ -336,13 +336,13 @@ public class ContactSerializer extends BaseSerializer {
         addJsonArray(BaseSerializer.toJsonStringArray(tagNames), contactObject, TAGS_TAG);
 
         // Serialize Company.
-        try {
-            JSONObject companyObject = new JSONObject(CompanySerializer.toJsonObject(contact.getCompany()));
-            addJsonObject(companyObject, contactObject, COMPANY_TAG);
-        } catch (JSONException e) {
-            LOG.severe("Error creating Company object while constructing Contact object");
-            LOG.severe(e.toString());
-        }
+            try {
+                JSONObject companyObject = new JSONObject(CompanySerializer.toJsonObject(contact.getCompany()));
+                addJsonObject(companyObject, contactObject, COMPANY_TAG);
+            } catch (JSONException e) {
+                LOG.severe("Error creating Company object while constructing Contact object");
+                LOG.severe(e.toString());
+            }
 
         return contactObject.toString();
     }
