@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.onepagecrm.models.internal.Utilities.nullChecks;
+
 /**
  * Created by alex on 4/23/16.
  */
@@ -18,7 +20,7 @@ public class DealStageSerializer extends BaseSerializer {
             for (int i = 0; i < dealStagesArray.length(); ++i) {
                 JSONObject dealObject = dealStagesArray.optJSONObject(i);
                 DealStage dealStage = new DealStage();
-                dealStage.setLabel(dealObject.optString(LABEL_TAG));
+                dealStage.setLabel(nullChecks(dealObject.optString(LABEL_TAG)));
                 dealStage.setPercentage(dealObject.optInt(STAGE_TAG));
                 dealStages.add(dealStage);
             }

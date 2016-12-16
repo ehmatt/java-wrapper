@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static com.onepagecrm.models.internal.Utilities.nullChecks;
+
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
  */
@@ -48,15 +50,13 @@ public class CompanySerializer extends BaseSerializer {
                 .setUrl(companyObject.optString(URL_TAG))
                 .setCompanyFields(CustomFieldSerializer.fromJsonArray(companyObject.optJSONArray(COMPANY_FIELDS_TAG),
                         CustomField.CF_TYPE_COMPANY))
-                .setSyncedStatusId(companyObject.optString(SYNCED_STATUS_ID_TAG))
+                .setSyncedStatusId(nullChecks(companyObject.optString(SYNCED_STATUS_ID_TAG)))
                 .setAddress(AddressSerializer.fromJsonObject(companyObject.optJSONObject(ADDRESS_TAG)))
                 .setWonDealsCount(companyObject.optInt(WON_DEALS_COUNT_TAG))
                 .setTotalWonAmount(companyObject.optDouble(TOTAL_WON_AMOUNT_TAG, 0d))
                 .setPendingDealsCount(companyObject.optInt(PENDING_DEALS_COUNT_TAG))
                 .setTotalPendingAmount(companyObject.optDouble(TOTAL_PENDING_AMOUNT_TAG, 0d))
-                .setContactsCount(companyObject.optInt(CONTACTS_COUNT_TAG))
-                //.setContacts(ContactListSerializer.fromJsonObject(companyObject))
-                ;
+                .setContactsCount(companyObject.optInt(CONTACTS_COUNT_TAG));
     }
 
     public static List<Company> fromJsonArray(JSONArray companiesArray) {

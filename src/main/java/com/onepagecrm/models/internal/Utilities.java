@@ -2,18 +2,28 @@ package com.onepagecrm.models.internal;
 
 import org.apache.commons.codec.binary.Base64;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 @SuppressWarnings("WeakerAccess")
 public class Utilities {
 
     private static final Logger LOG = Logger.getLogger(Utilities.class.getName());
+    private static final String NULL = "null";
 
     /* Text Utilities */
 
     public static boolean notNullOrEmpty(String toBeChecked) {
         return toBeChecked != null && !toBeChecked.equals("");
+    }
+
+    public static String nullChecks(String toBeChecked) {
+        return NULL.equalsIgnoreCase(toBeChecked) ? null : toBeChecked;
     }
 
     public static String capitalize(String word) {
