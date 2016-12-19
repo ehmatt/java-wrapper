@@ -8,6 +8,7 @@ public class Settings implements Serializable {
     private Reminder reminder;
     private String timeZone;
     private String dateFormat;
+    private Boolean militaryTime;
     private Integer listingSize;
     private String currency;
     private String currencySymbol;
@@ -53,6 +54,15 @@ public class Settings implements Serializable {
 
     public Settings setListingSize(Integer listingSize) {
         this.listingSize = listingSize;
+        return this;
+    }
+
+    public Boolean getMilitaryTime() {
+        return militaryTime;
+    }
+
+    public Settings setMilitaryTime(Boolean militaryTime) {
+        this.militaryTime = militaryTime;
         return this;
     }
 

@@ -181,6 +181,7 @@ public class BaseSerializer {
     public static final String CURRENCY_SYMBOL_TAG = "currency_symbol";
     public static final String DEFAULT_CONTACT_TYPE_TAG = "default_contact_type";
     public static final String SHOW_TIDY_STREAM_TAG = "show_tidy_stream";
+    public static final String TIME_WITH_AMPM_TAG = "time_with_ampm";
 
     // DEALS TAGS
     public static final String PIPELINE_SORT_TAG = "pipeline_sort";
