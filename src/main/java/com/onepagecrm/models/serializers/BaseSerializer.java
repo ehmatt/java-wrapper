@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(BaseSerializer.class.getName());
@@ -270,6 +271,16 @@ public class BaseSerializer {
     public static String PIPELINE_TAG = "pipeline";
     public static String EXPORT_TAG = "export";
     public static String PRIVATE_CONTACTS_TAG = "private_contacts";
+
+    // COMPANIES
+    public static final String COMPANIES_TAG = "companies";
+    public static final String COMPANY_FIELD_TAG = "company_field";
+    public static final String COMPANY_FIELDS_TAG = "company_fields";
+    public static final String SYNCED_STATUS_ID_TAG = "synced_status_id";
+    public static final String WON_DEALS_COUNT_TAG = "won_deals_count";
+    public static final String TOTAL_WON_AMOUNT_TAG = "total_won_amount";
+    public static final String PENDING_DEALS_COUNT_TAG = "pending_deals_count";
+    public static final String TOTAL_PENDING_AMOUNT_TAG = "total_pending_amount";
 
     /**
      * Method used to parse the base/start of response.

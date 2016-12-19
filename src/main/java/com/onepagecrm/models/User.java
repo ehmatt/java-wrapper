@@ -5,6 +5,7 @@ import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.internal.Sales;
 import com.onepagecrm.models.serializers.BaseSerializer;
+import com.onepagecrm.models.serializers.CompanyListSerializer;
 import com.onepagecrm.models.serializers.ContactListSerializer;
 import com.onepagecrm.models.serializers.DealListSerializer;
 import com.onepagecrm.models.serializers.LoginSerializer;
@@ -166,6 +167,29 @@ public class User extends ApiResource implements Serializable {
         Request request = new GetRequest(endpoint, query);
         Response response = request.send();
         return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
+    public CompanyList companies() throws OnePageException {
+        return getCompanies(Query.queryDefault());
+    }
+
+    public CompanyList companies(Paginator paginator) throws OnePageException {
+        return getCompanies(Query.query(paginator));
+    }
+
+    public CompanyList companies(Map<String, Object> params) throws OnePageException {
+        return getCompanies(Query.fromParams(params));
+    }
+
+    public CompanyList companies(Map<String, Object> params, Paginator paginator) throws OnePageException {
+        String query = Query.fromMaps(params, Query.params(paginator));
+        return getCompanies(query);
+    }
+
+    private CompanyList getCompanies(String query) throws OnePageException {
+        Request request = new GetRequest(COMPANIES_ENDPOINT, query);
+        Response response = request.send();
+        return CompanyListSerializer.fromString(response.getResponseBody());
     }
 
     public ActionList actions(Paginator paginator) throws OnePageException {

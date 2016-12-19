@@ -8,6 +8,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import static com.onepagecrm.models.internal.Utilities.nullChecks;
+
 public class AddressSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(AddressSerializer.class.getName());
@@ -31,21 +33,21 @@ public class AddressSerializer extends BaseSerializer {
         Address address = new Address();
         try {
             if (addressObject.has(ADDRESS_TAG)) {
-                address.setAddress(addressObject.getString(ADDRESS_TAG));
+                address.setAddress(nullChecks(addressObject.optString(ADDRESS_TAG)));
             }
             if (addressObject.has(CITY_TAG)) {
-                address.setCity(addressObject.getString(CITY_TAG));
+                address.setCity(nullChecks(addressObject.optString(CITY_TAG)));
             }
             if (addressObject.has(STATE_TAG)) {
-                address.setState(addressObject.getString(STATE_TAG));
+                address.setState(nullChecks(addressObject.optString(STATE_TAG)));
             }
             if (addressObject.has(ZIP_CODE_TAG)) {
-                address.setZipCode(addressObject.getString(ZIP_CODE_TAG));
+                address.setZipCode(nullChecks(addressObject.optString(ZIP_CODE_TAG)));
             }
             if (addressObject.has(COUNTRY_CODE_TAG)) {
-                address.setCountryCode(addressObject.getString(COUNTRY_CODE_TAG));
+                address.setCountryCode(nullChecks(addressObject.optString(COUNTRY_CODE_TAG)));
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             LOG.severe("Error parsing Address object");
             LOG.severe(e.toString());
         }
