@@ -16,7 +16,7 @@ public class DateSerializer extends BaseSerializer {
     public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
     public static SimpleDateFormat dateCallTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
-    public static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    public static SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
     public static SimpleDateFormat timeFormatAmPm = new SimpleDateFormat("HH:mm a");
     public static SimpleDateFormat friendlyDateFormat = new SimpleDateFormat("MMM dd");
     public static SimpleDateFormat friendlyDateAndYearFormat = new SimpleDateFormat("MMM dd, yyyy");
