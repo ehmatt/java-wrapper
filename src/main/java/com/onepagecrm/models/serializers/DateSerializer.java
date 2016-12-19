@@ -17,6 +17,7 @@ public class DateSerializer extends BaseSerializer {
     public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
     public static SimpleDateFormat dateCallTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
     public static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    public static SimpleDateFormat timeFormatAmPm = new SimpleDateFormat("HH:mm a");
     public static SimpleDateFormat friendlyDateFormat = new SimpleDateFormat("MMM dd");
     public static SimpleDateFormat friendlyDateAndYearFormat = new SimpleDateFormat("MMM dd, yyyy");
     public static SimpleDateFormat friendlyDateTimeAndYearFormat = new SimpleDateFormat("HH:mm MMM dd, yyyy");
@@ -38,9 +39,14 @@ public class DateSerializer extends BaseSerializer {
         dateTimeFormat.setTimeZone(timeZone);
         dateCallTimeFormat.setTimeZone(timeZone);
         timeFormat.setTimeZone(timeZone);
+        timeFormatAmPm.setTimeZone(timeZone);
         friendlyDateFormat.setTimeZone(timeZone);
         friendlyDateAndYearFormat.setTimeZone(timeZone);
         friendlyDateTimeAndYearFormat.setTimeZone(timeZone);
+    }
+
+    public static SimpleDateFormat getTimeFormat(boolean is24Hour) {
+        return is24Hour ? timeFormat : timeFormatAmPm;
     }
 
     public static Date fromFormattedString(String dateStr) {
