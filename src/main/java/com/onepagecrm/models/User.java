@@ -234,7 +234,9 @@ public class User extends ApiResource implements Serializable {
         boolean authKeysEqual = false;
         if (object instanceof User) {
             User toCompare = (User) object;
-            if (this.authKey != null && toCompare.authKey != null) {
+            if (this.authKey == null && toCompare.authKey == null) {
+                authKeysEqual = true;
+            } else if (this.authKey != null && toCompare.authKey != null) {
                 authKeysEqual = this.authKey.equals(toCompare.authKey);
             }
         }
