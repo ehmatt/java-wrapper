@@ -15,6 +15,7 @@ public class Phone extends BaseResource implements Serializable {
     public static final String TYPE_DIRECT = "direct";
     public static final String TYPE_FAX = "fax";
     public static final String TYPE_SKYPE = "skype";
+    public static final String TYPE_COMPANY = "company";
     public static final String TYPE_OTHER = "other";
 
     private String type;
