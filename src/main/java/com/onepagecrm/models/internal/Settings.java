@@ -59,6 +59,10 @@ public class Settings implements Serializable {
         return militaryTime;
     }
 
+    public boolean isMilitaryTimeEnabled() {
+        return militaryTime != null && militaryTime;
+    }
+
     public Settings setMilitaryTime(Boolean militaryTime) {
         this.militaryTime = militaryTime;
         return this;
