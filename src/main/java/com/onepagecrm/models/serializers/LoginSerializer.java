@@ -226,6 +226,7 @@ public class LoginSerializer extends BaseSerializer {
             JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
             if (dataObject.has(CONTACT_TITLES_TAG)) {
                 addContactTitles(dataObject.getJSONArray(CONTACT_TITLES_TAG));
+                Account.settings.setContactTitleEnabled(true);
             }
         } catch (JSONException e) {
             LOG.severe("Error parsing contact titles array");
