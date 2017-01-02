@@ -2,7 +2,9 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Company;
+import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.CustomField;
+import com.onepagecrm.models.DealList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +44,8 @@ public class CompanySerializer extends BaseSerializer {
         if (companyObject.has(COMPANY_TAG)) {
             companyObject = companyObject.optJSONObject(COMPANY_TAG);
         }
-        return new Company()
+
+        Company lCompany = new Company()
                 .setId(companyObject.optString(ID_TAG))
                 .setName(companyObject.optString(NAME_TAG))
                 .setDescription(companyObject.optString(DESCRIPTION_TAG))
@@ -57,6 +60,30 @@ public class CompanySerializer extends BaseSerializer {
                 .setPendingDealsCount(companyObject.optInt(PENDING_DEALS_COUNT_TAG))
                 .setTotalPendingAmount(companyObject.optDouble(TOTAL_PENDING_AMOUNT_TAG, 0d))
                 .setContactsCount(companyObject.optInt(CONTACTS_COUNT_TAG));
+
+        try {
+
+            if (companyObject.has("contacts")) {
+                ContactList lContacts;
+                JSONArray lContactsObject = companyObject.getJSONArray("contacts");
+                lContacts = ContactListSerializer.fromJsonArray(lContactsObject);
+                lCompany.setContacts(lContacts);
+            }
+
+            if (companyObject.has("pending_deals")) {
+                DealList lDeals;
+                JSONArray lDealsObject = companyObject.getJSONArray("pending_deals");
+                lDeals = DealListSerializer.fromJsonArray(lDealsObject);
+                lCompany.setPendingDeals(lDeals);
+            }
+
+        } catch (JSONException e) {
+            LOG.severe("Error parsing Company object");
+            LOG.severe(e.toString());
+            return lCompany;
+        }
+
+        return lCompany;
     }
 
     public static List<Company> fromJsonArray(JSONArray companiesArray) {
