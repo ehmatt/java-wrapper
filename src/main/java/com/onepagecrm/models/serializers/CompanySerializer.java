@@ -45,7 +45,7 @@ public class CompanySerializer extends BaseSerializer {
             companyObject = companyObject.optJSONObject(COMPANY_TAG);
         }
 
-        Company lCompany = new Company()
+        Company company = new Company()
                 .setId(companyObject.optString(ID_TAG))
                 .setName(companyObject.optString(NAME_TAG))
                 .setDescription(companyObject.optString(DESCRIPTION_TAG))
@@ -64,26 +64,26 @@ public class CompanySerializer extends BaseSerializer {
         try {
 
             if (companyObject.has("contacts")) {
-                ContactList lContacts;
-                JSONArray lContactsObject = companyObject.getJSONArray("contacts");
-                lContacts = ContactListSerializer.fromJsonArray(lContactsObject);
-                lCompany.setContacts(lContacts);
+                ContactList contacts;
+                JSONArray contactsObject = companyObject.getJSONArray("contacts");
+                contacts = ContactListSerializer.fromJsonArray(contactsObject);
+                company.setContacts(contacts);
             }
 
             if (companyObject.has("pending_deals")) {
-                DealList lDeals;
-                JSONArray lDealsObject = companyObject.getJSONArray("pending_deals");
-                lDeals = DealListSerializer.fromJsonArray(lDealsObject);
-                lCompany.setPendingDeals(lDeals);
+                DealList deals;
+                JSONArray dealsObject = companyObject.getJSONArray("pending_deals");
+                deals = DealListSerializer.fromJsonArray(dealsObject);
+                company.setPendingDeals(deals);
             }
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Company object");
             LOG.severe(e.toString());
-            return lCompany;
+            return company;
         }
 
-        return lCompany;
+        return company;
     }
 
     public static List<Company> fromJsonArray(JSONArray companiesArray) {

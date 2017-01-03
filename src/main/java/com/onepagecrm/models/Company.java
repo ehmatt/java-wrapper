@@ -225,7 +225,8 @@ public class Company extends ApiResource implements Serializable {
         return pendingDeals;
     }
 
-    public void setPendingDeals(DealList pendingDeals) {
+    public Company setPendingDeals(DealList pendingDeals) {
         this.pendingDeals = pendingDeals;
+        return this;
     }
 }
