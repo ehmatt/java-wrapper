@@ -29,6 +29,8 @@ public class Deal extends ApiResource implements Serializable {
     public static final String STATUS_LOST = "lost";
     public static final String STATUS_PENDING = "pending";
     public static final String RELATED_NOTES_FIELDS = "?fields=notes(text,author)";
+    public static final String TYPE_CONTACT = "contact";
+    public static final String TYPE_COMPANY = "company";
 
     private String id;
     private Double amount;
@@ -86,16 +88,18 @@ public class Deal extends ApiResource implements Serializable {
         return getDeals(params);
     }
 
-    public static DealList list(String contactId, String status) throws OnePageException {
+    public static DealList list(String searchType, String entityId, String status) throws OnePageException {
         Map<String, Object> params = new HashMap<>();
-        params.put("contact_id", contactId);
+        if (searchType.equals(TYPE_CONTACT)) params.put("contact_id", entityId);
+        else if (searchType.equals(TYPE_COMPANY)) params.put("company_id", entityId);
         params.put("status", status);
         return getDeals(params);
     }
 
-    public static DealList list(String contactId, Paginator paginator, String status) throws OnePageException {
+    public static DealList list(String searchType, String entityId, Paginator paginator, String status) throws OnePageException {
         Map<String, Object> params = Query.params(paginator);
-        params.put("contact_id", contactId);
+        if (searchType.equals(TYPE_CONTACT)) params.put("contact_id", entityId);
+        else if (searchType.equals(TYPE_COMPANY)) params.put("company_id", entityId);
         params.put("status", status);
         return getDeals(params);
     }
