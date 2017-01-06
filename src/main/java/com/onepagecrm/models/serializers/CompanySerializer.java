@@ -79,7 +79,13 @@ public class CompanySerializer extends BaseSerializer {
             addJsonStringValue(company.getDescription(), companyObject, DESCRIPTION_TAG);
             addJsonStringValue(company.getPhone(), companyObject, PHONE_TAG);
             addJsonStringValue(company.getUrl(), companyObject, URL_TAG);
-            addJsonStringValue(CustomFieldSerializer.toJsonArray(company.getCompanyFields()), companyObject, COMPANY_FIELDS_TAG);
+            try {
+                JSONArray companyFieldsArray = new JSONArray(CustomFieldSerializer.toJsonArray(company.getCompanyFields()));
+                addJsonArray(companyFieldsArray, companyObject, COMPANY_FIELDS_TAG);
+            } catch (JSONException e) {
+                LOG.severe("Error creating Company Fields array while constructing Company object");
+                LOG.severe(e.toString());
+            }
             addJsonStringValue(company.getSyncedStatusId(), companyObject, SYNCED_STATUS_ID_TAG);
             try {
                 JSONObject addressArray = new JSONObject(AddressSerializer.toJsonObject(company.getAddress()));
