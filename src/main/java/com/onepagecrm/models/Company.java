@@ -33,6 +33,7 @@ public class Company extends ApiResource implements Serializable {
     private Double totalPendingAmount;
     private Integer contactsCount;
     private ContactList contacts;
+    private DealList pendingDeals;
 
     public Company save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -217,6 +218,15 @@ public class Company extends ApiResource implements Serializable {
 
     public Company setContacts(ContactList contacts) {
         this.contacts = contacts;
+        return this;
+    }
+
+    public DealList getPendingDeals() {
+        return pendingDeals;
+    }
+
+    public Company setPendingDeals(DealList pendingDeals) {
+        this.pendingDeals = pendingDeals;
         return this;
     }
 }
