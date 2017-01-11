@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -62,6 +63,12 @@ public class CompanySerializer extends BaseSerializer {
                 .setContactsCount(companyObject.optInt(CONTACTS_COUNT_TAG));
 
         try {
+
+            if (companyObject.has(CREATED_AT_TAG)) {
+                String createdAtStr = companyObject.getString(CREATED_AT_TAG);
+                Date createdAt = DateSerializer.fromFormattedString(createdAtStr);
+                company.setCreatedAt(createdAt);
+            }
 
             if (companyObject.has("contacts")) {
                 ContactList contacts;
