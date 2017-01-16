@@ -120,6 +120,14 @@ public class User extends ApiResource implements Serializable {
         return getContacts(CONTACTS_ENDPOINT, Query.querySearch(paginator, search, true));
     }
 
+    public ContactList contactsByCompany(String companyId) throws OnePageException {
+        return getContacts(CONTACTS_ENDPOINT, Query.queryCompany(companyId));
+    }
+
+    public ContactList contactsByCompany(Paginator paginator, String companyId) throws OnePageException {
+        return getContacts(CONTACTS_ENDPOINT, Query.queryCompany(paginator, companyId));
+    }
+
     public ContactList contactsByLetter(String letter) throws OnePageException {
         return getContacts(CONTACTS_ENDPOINT, Query.queryLetter(letter, true));
     }
