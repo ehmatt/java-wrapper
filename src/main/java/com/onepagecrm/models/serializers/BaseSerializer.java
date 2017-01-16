@@ -202,6 +202,7 @@ public class BaseSerializer {
     public static final String CONTACT_INFO_TAG = "contact_info";
     public static final String CONTACT_NAME_TAG = "contact_name";
     public static final String COMPANY_TAG = "company";
+    public static final String PENDING_DEALS_TAG = "pending_deals";
 
     // NOTES
     public static final String NOTE_TAG = "note";

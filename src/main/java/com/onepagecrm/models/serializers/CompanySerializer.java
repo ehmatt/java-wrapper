@@ -2,15 +2,12 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Company;
-import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.CustomField;
-import com.onepagecrm.models.DealList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -66,22 +63,15 @@ public class CompanySerializer extends BaseSerializer {
 
             if (companyObject.has(CREATED_AT_TAG)) {
                 String createdAtStr = companyObject.getString(CREATED_AT_TAG);
-                Date createdAt = DateSerializer.fromFormattedString(createdAtStr);
-                company.setCreatedAt(createdAt);
+                company.setCreatedAt(DateSerializer.fromFormattedString(createdAtStr));
             }
-
-            if (companyObject.has("contacts")) {
-                ContactList contacts;
-                JSONArray contactsObject = companyObject.getJSONArray("contacts");
-                contacts = ContactListSerializer.fromJsonArray(contactsObject);
-                company.setContacts(contacts);
+            if (companyObject.has(CONTACTS_TAG)) {
+                JSONArray contactsObject = companyObject.getJSONArray(CONTACTS_TAG);
+                company.setContacts(ContactListSerializer.fromJsonArray(contactsObject));
             }
-
-            if (companyObject.has("pending_deals")) {
-                DealList deals;
-                JSONArray dealsObject = companyObject.getJSONArray("pending_deals");
-                deals = DealListSerializer.fromJsonArray(dealsObject);
-                company.setPendingDeals(deals);
+            if (companyObject.has(PENDING_DEALS_TAG)) {
+                JSONArray dealsObject = companyObject.getJSONArray(PENDING_DEALS_TAG);
+                company.setPendingDeals(DealListSerializer.fromJsonArray(dealsObject));
             }
 
         } catch (JSONException e) {
