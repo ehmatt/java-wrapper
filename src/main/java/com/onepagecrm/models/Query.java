@@ -109,6 +109,18 @@ public class Query {
         return fromParams(params);
     }
 
+    public static String queryCompany(String companyId) {
+        Map<String, Object> params = paramsDefault();
+        params.put("company_id", companyId);
+        return fromParams(params);
+    }
+
+    public static String queryCompany(Paginator paginator, String companyId) {
+        Map<String, Object> params = params(paginator);
+        params.put("company_id", companyId);
+        return fromParams(params);
+    }
+
     public static String queryLetter(String letter) {
         Map<String, Object> params = paramsDefault();
         params.put("letter", letter);

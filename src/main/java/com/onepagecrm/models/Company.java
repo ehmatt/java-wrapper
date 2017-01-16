@@ -10,6 +10,7 @@ import com.onepagecrm.net.request.PutRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ public class Company extends ApiResource implements Serializable {
     private Integer contactsCount;
     private ContactList contacts;
     private DealList pendingDeals;
+    private Date createdAt;
 
     public Company save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -227,6 +229,15 @@ public class Company extends ApiResource implements Serializable {
 
     public Company setPendingDeals(DealList pendingDeals) {
         this.pendingDeals = pendingDeals;
+        return this;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Company setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 }
