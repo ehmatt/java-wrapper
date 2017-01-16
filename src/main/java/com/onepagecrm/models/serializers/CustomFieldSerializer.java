@@ -1,7 +1,6 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.models.CustomField;
-import com.onepagecrm.models.internal.Utilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,6 +8,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 
 @SuppressWarnings("WeakerAccess")
 public class CustomFieldSerializer extends BaseSerializer {
@@ -110,7 +111,9 @@ public class CustomFieldSerializer extends BaseSerializer {
         addJsonIntegerValue(customField.getPosition(), customFieldObject, POSITION_TAG);
         addJsonStringValue(customField.getType(), customFieldObject, TYPE_TAG);
         addJsonIntegerValue(customField.getReminderDays(), customFieldObject, REMINDER_DAYS_TAG);
-        addJsonObject(customFieldObject, object, CUSTOM_FIELD_TAG);
+        final String lCfType = getTagSingle(customField.getCfType());
+        final String lTag = notNullOrEmpty(lCfType) ? lCfType : CustomField.CF_TYPE_CONTACT;
+        addJsonObject(customFieldObject, object, lTag);
         CustomFieldValueSerializer.toJsonObject(customField.getValue(), object);
         return object.toString();
     }
@@ -155,7 +158,7 @@ public class CustomFieldSerializer extends BaseSerializer {
     }
 
     public static String getTagSingle(String cfType) {
-        if (!Utilities.notNullOrEmpty(cfType)) return null;
+        if (!notNullOrEmpty(cfType)) return null;
         switch (cfType) {
             case CustomField.CF_TYPE_COMPANY:
                 return BaseSerializer.COMPANY_FIELD_TAG;
@@ -166,7 +169,7 @@ public class CustomFieldSerializer extends BaseSerializer {
     }
 
     public static String getTagPlural(String cfType) {
-        if (!Utilities.notNullOrEmpty(cfType)) return null;
+        if (!notNullOrEmpty(cfType)) return null;
         switch (cfType) {
             case CustomField.CF_TYPE_COMPANY:
                 return BaseSerializer.COMPANY_FIELDS_TAG;
