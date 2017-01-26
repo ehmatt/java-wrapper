@@ -88,7 +88,7 @@ public class Action extends ApiResource implements Serializable {
     private Date date;
     private Date exactTime;
     private int dateColor;
-    private int position;
+    private Integer position;
 
     public Action save() throws OnePageException {
         return isValid() ? update() : create();
@@ -285,11 +285,11 @@ public class Action extends ApiResource implements Serializable {
         return this;
     }
 
-    public int getPosition() {
+    public Integer getPosition() {
         return position;
     }
 
-    public Action setPosition(int position) {
+    public Action setPosition(Integer position) {
         this.position = position;
         return this;
     }
