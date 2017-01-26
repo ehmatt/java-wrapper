@@ -5,8 +5,14 @@ import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.net.ApiResource;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
+@SuppressWarnings("WeakerAccess")
 public abstract class ResourceList<Item extends ApiResource> extends ArrayList<Item> implements Serializable {
 
     private static final long serialVersionUID = -5804947087126420084L;
@@ -67,6 +73,10 @@ public abstract class ResourceList<Item extends ApiResource> extends ArrayList<I
 
     public boolean add(Item item) {
         return list.add(item);
+    }
+
+    public boolean addAll(Collection<? extends Item> all) {
+        return list.addAll(all);
     }
 
     public Item remove(int index) {

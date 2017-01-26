@@ -38,6 +38,7 @@ public class DeviceSerializer extends BaseSerializer {
         return new Device()
                 .setId(deviceObject.optString(ID_TAG))
                 .setDeviceId(deviceObject.optString(DEVICE_ID_TAG))
+                .setDeviceType(deviceObject.optString(DEVICE_TYPE_TAG))
                 .setActionWithTime(deviceObject.optBoolean(ACTION_WITH_TIME_TAG))
                 .setSubscribedAt(DateSerializer.fromFormattedString(deviceObject.optString(SUBSCRIBED_AT_TAG)));
     }
@@ -58,6 +59,7 @@ public class DeviceSerializer extends BaseSerializer {
         if (device != null) {
             addJsonStringValue(device.getId(), deviceObject, ID_TAG);
             addJsonStringValue(device.getDeviceId(), deviceObject, DEVICE_ID_TAG);
+            addJsonStringValue(device.getDeviceType(), deviceObject, DEVICE_TYPE_TAG);
             addJsonBooleanValue(device.getActionWithTime(), deviceObject, ACTION_WITH_TIME_TAG);
             addJsonStringValue(
                     DateSerializer.toFormattedDateTimeString(device.getSubscribedAt()),

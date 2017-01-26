@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.logging.Logger;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class DateSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(DateSerializer.class.getName());
@@ -17,9 +18,11 @@ public class DateSerializer extends BaseSerializer {
     public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
     public static SimpleDateFormat dateCallTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
     public static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    public static SimpleDateFormat timeFormatAmPm = new SimpleDateFormat("hh:mma");
     public static SimpleDateFormat friendlyDateFormat = new SimpleDateFormat("MMM dd");
     public static SimpleDateFormat friendlyDateAndYearFormat = new SimpleDateFormat("MMM dd, yyyy");
     public static SimpleDateFormat friendlyDateTimeAndYearFormat = new SimpleDateFormat("HH:mm MMM dd, yyyy");
+    public static SimpleDateFormat friendlyDateTimeAndYearFormatAmPm = new SimpleDateFormat("hh:mma MMM dd, yyyy");
 
     static {
         setTimeZone(defaultTimeZone);
@@ -38,9 +41,19 @@ public class DateSerializer extends BaseSerializer {
         dateTimeFormat.setTimeZone(timeZone);
         dateCallTimeFormat.setTimeZone(timeZone);
         timeFormat.setTimeZone(timeZone);
+        timeFormatAmPm.setTimeZone(timeZone);
         friendlyDateFormat.setTimeZone(timeZone);
         friendlyDateAndYearFormat.setTimeZone(timeZone);
         friendlyDateTimeAndYearFormat.setTimeZone(timeZone);
+        friendlyDateTimeAndYearFormatAmPm.setTimeZone(timeZone);
+    }
+
+    public static SimpleDateFormat getTimeFormat(boolean is24Hour) {
+        return is24Hour ? timeFormat : timeFormatAmPm;
+    }
+
+    public static SimpleDateFormat getDateTimeYearFormat(boolean is24Hour) {
+        return is24Hour ? friendlyDateTimeAndYearFormat : friendlyDateTimeAndYearFormatAmPm;
     }
 
     public static Date fromFormattedString(String dateStr) {

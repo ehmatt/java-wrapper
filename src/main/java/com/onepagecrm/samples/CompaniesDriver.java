@@ -2,13 +2,16 @@ package com.onepagecrm.samples;
 
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.Company;
+import com.onepagecrm.models.CompanyList;
+import com.onepagecrm.models.CustomField;
 import com.onepagecrm.models.User;
-import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -40,16 +43,21 @@ public class CompaniesDriver {
             }
         }
 
-        OnePageCRM.setServer(Request.DEV_SERVER);
+        OnePageCRM.setServer(Request.APP_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
                 prop.getProperty("password"));
 
-        GetRequest companiesRequest = new GetRequest("companies", "");
-        companiesRequest.send();
+        CompanyList companies = loggedInUser.companies();
+        Company company = Company.getSingleCompany(companies.get(0).getId());
 
-        GetRequest singleCompanyRequest = new GetRequest("companies/56fd40b49007ba716f00000b", "");
-        singleCompanyRequest.send();
+        List<CustomField> customFieldList = CustomField.listContacts();
+        List<CustomField> companyFieldList = CustomField.listCompanies();
+
+        LOG.info("Companies : " + companies);
+        LOG.info("Company : " + company);
+        LOG.info("Custom fields : " + customFieldList);
+        LOG.info("Company fields : " + companyFieldList);
     }
 }

@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class CustomFieldFabricator extends BaseFabricator {
 
     public static CustomField single() {
@@ -36,6 +37,7 @@ public class CustomFieldFabricator extends BaseFabricator {
                 .setPosition(0)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_SINGLE_LINE_TEXT)
+                .setCfType(CustomField.CF_TYPE_CONTACT)
                 .setValue(value);
     }
 
@@ -48,6 +50,7 @@ public class CustomFieldFabricator extends BaseFabricator {
                 .setPosition(1)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_MULTI_LINE_TEXT)
+                .setCfType(CustomField.CF_TYPE_CONTACT)
                 .setValue(value);
     }
 
@@ -60,6 +63,7 @@ public class CustomFieldFabricator extends BaseFabricator {
                 .setPosition(2)
                 .setReminderDays(2)
                 .setType(CustomField.TYPE_ANNIVERSARY)
+                .setCfType(CustomField.CF_TYPE_CONTACT)
                 .setValue(value);
     }
 
@@ -72,6 +76,7 @@ public class CustomFieldFabricator extends BaseFabricator {
                 .setPosition(3)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_DATE)
+                .setCfType(CustomField.CF_TYPE_CONTACT)
                 .setValue(value);
     }
 
@@ -84,6 +89,7 @@ public class CustomFieldFabricator extends BaseFabricator {
                 .setPosition(4)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_NUMBER)
+                .setCfType(CustomField.CF_TYPE_CONTACT)
                 .setValue(value);
     }
 
@@ -97,6 +103,7 @@ public class CustomFieldFabricator extends BaseFabricator {
                 .setPosition(5)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_DROPDOWN)
+                .setCfType(CustomField.CF_TYPE_CONTACT)
                 .setValue(value);
     }
 
@@ -110,6 +117,7 @@ public class CustomFieldFabricator extends BaseFabricator {
                 .setPosition(6)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_MULTIPLE_CHOICE)
+                .setCfType(CustomField.CF_TYPE_CONTACT)
                 .setValue(value);
     }
 

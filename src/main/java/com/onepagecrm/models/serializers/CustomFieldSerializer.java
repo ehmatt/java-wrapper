@@ -9,11 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
+
+@SuppressWarnings("WeakerAccess")
 public class CustomFieldSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CustomFieldSerializer.class.getName());
 
-    public static List<CustomField> fromString(String responseBody) {
+    public static List<CustomField> fromString(String responseBody, String cfType) {
         List<CustomField> customFields = new ArrayList<>();
         try {
             JSONObject responseObject = new JSONObject(responseBody);
@@ -22,8 +25,9 @@ public class CustomFieldSerializer extends BaseSerializer {
 
             if (status == 0 && message.equalsIgnoreCase(OK_TAG)) {
                 JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
-                JSONArray customFieldsArray = dataObject.getJSONArray(CUSTOM_FIELDS_TAG);
-                customFields = fromJsonArray(customFieldsArray);
+                final String customFieldsTag = getTagPlural(cfType);
+                JSONArray customFieldsArray = dataObject.getJSONArray(customFieldsTag);
+                customFields = fromJsonArray(customFieldsArray, cfType);
             }
         } catch (JSONException e) {
             LOG.severe("Error parsing CustomField's from response body");
@@ -32,12 +36,12 @@ public class CustomFieldSerializer extends BaseSerializer {
         return customFields;
     }
 
-    public static List<CustomField> fromJsonArray(JSONArray customFieldArray) {
+    public static List<CustomField> fromJsonArray(JSONArray customFieldArray, String cfType) {
         List<CustomField> customFields = new ArrayList<>();
         for (int i = 0; i < customFieldArray.length(); i++) {
             try {
                 JSONObject outerObject = customFieldArray.getJSONObject(i);
-                CustomField customField = fromJsonObject(outerObject);
+                CustomField customField = fromJsonObject(outerObject, cfType);
                 customFields.add(customField);
             } catch (JSONException e) {
                 LOG.severe("Error parsing CustomField's from JsonArray");
@@ -47,13 +51,15 @@ public class CustomFieldSerializer extends BaseSerializer {
         return customFields;
     }
 
-    public static CustomField fromJsonObject(JSONObject outerObject) {
+    public static CustomField fromJsonObject(JSONObject outerObject, String cfType) {
         CustomField customField = new CustomField();
+
         try {
             if (outerObject.has(VALUE_TAG)) {
                 customField.setValue(CustomFieldValueSerializer.fromJsonObject(outerObject));
             }
-            JSONObject customFieldObject = outerObject.getJSONObject(CUSTOM_FIELD_TAG);
+            final String customFieldTag = getTagSingle(cfType);
+            JSONObject customFieldObject = outerObject.getJSONObject(customFieldTag);
 
             if (customFieldObject.has(CHOICES_TAG)) {
                 JSONArray choicesArray = customFieldObject.getJSONArray(CHOICES_TAG);
@@ -68,13 +74,13 @@ public class CustomFieldSerializer extends BaseSerializer {
                     int reminderDays = customFieldObject.getInt(REMINDER_DAYS_TAG);
                     customField.setReminderDays(reminderDays);
                 } else {
-                    // TODO : review this.
                     // Does it make sense to set this to -1 when null returned??
                     customField.setReminderDays(-1);
                 }
             }
 
-            customField.setId(customFieldObject.optString(ID_TAG))
+            customField.setCfType(cfType)
+                    .setId(customFieldObject.optString(ID_TAG))
                     .setName(customFieldObject.optString(NAME_TAG))
                     .setPosition(customFieldObject.optInt(POSITION_TAG))
                     .setType(customFieldObject.optString(TYPE_TAG));
@@ -96,7 +102,7 @@ public class CustomFieldSerializer extends BaseSerializer {
             // Adds empty array with key.
             customFieldObject.put(CHOICES_TAG, choicesArray);
             // Adds no array when it's empty.
-//            addJsonArray(choicesArray, customFieldObject, CHOICES_TAG);
+            //addJsonArray(choicesArray, customFieldObject, CHOICES_TAG);
         } catch (JSONException e) {
             LOG.severe("Error creating JSONArray out of CustomField choices");
             LOG.severe(e.toString());
@@ -105,7 +111,9 @@ public class CustomFieldSerializer extends BaseSerializer {
         addJsonIntegerValue(customField.getPosition(), customFieldObject, POSITION_TAG);
         addJsonStringValue(customField.getType(), customFieldObject, TYPE_TAG);
         addJsonIntegerValue(customField.getReminderDays(), customFieldObject, REMINDER_DAYS_TAG);
-        addJsonObject(customFieldObject, object, CUSTOM_FIELD_TAG);
+        final String lCfType = getTagSingle(customField.getCfType());
+        final String lTag = notNullOrEmpty(lCfType) ? lCfType : CustomField.CF_TYPE_CONTACT;
+        addJsonObject(customFieldObject, object, lTag);
         CustomFieldValueSerializer.toJsonObject(customField.getValue(), object);
         return object.toString();
     }
@@ -147,5 +155,27 @@ public class CustomFieldSerializer extends BaseSerializer {
 
     private static String getChoicesJsonArray(CustomField customField) {
         return toJsonStringArray(customField.getChoices()).toString();
+    }
+
+    public static String getTagSingle(String cfType) {
+        if (!notNullOrEmpty(cfType)) return null;
+        switch (cfType) {
+            case CustomField.CF_TYPE_COMPANY:
+                return BaseSerializer.COMPANY_FIELD_TAG;
+            case CustomField.CF_TYPE_CONTACT:
+                return BaseSerializer.CUSTOM_FIELD_TAG;
+        }
+        return "";
+    }
+
+    public static String getTagPlural(String cfType) {
+        if (!notNullOrEmpty(cfType)) return null;
+        switch (cfType) {
+            case CustomField.CF_TYPE_COMPANY:
+                return BaseSerializer.COMPANY_FIELDS_TAG;
+            case CustomField.CF_TYPE_CONTACT:
+                return BaseSerializer.CUSTOM_FIELDS_TAG;
+        }
+        return "";
     }
 }

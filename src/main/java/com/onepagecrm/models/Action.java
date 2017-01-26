@@ -9,13 +9,18 @@ import com.onepagecrm.models.serializers.DateSerializer;
 import com.onepagecrm.models.serializers.PredefinedActionSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
-import com.onepagecrm.net.request.*;
+import com.onepagecrm.net.request.DeleteRequest;
+import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.request.PostRequest;
+import com.onepagecrm.net.request.PutRequest;
+import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
+@SuppressWarnings("unused")
 public class Action extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -7486991046434989805L;
@@ -25,11 +30,20 @@ public class Action extends ApiResource implements Serializable {
     private static final String STATUS_DATE_TIME = "date_time";
     private static final String STATUS_WAITING = "waiting";
     private static final String STATUS_QUEUED = "queued";
+    private static final String STATUS_QUEUED_WITH_DATE = "queued_with_date";
     private static final String STATUS_DONE = "done";
+    private static final String STATUS_OTHER = "other"; // Catch all.
 
     public enum Status {
-        ASAP(STATUS_ASAP), DATE(STATUS_DATE), DATE_TIME(STATUS_DATE_TIME), WAITING(STATUS_WAITING), QUEUED(STATUS_QUEUED),
-        DONE("done");
+        ASAP(STATUS_ASAP),
+        DATE(STATUS_DATE),
+        DATE_TIME(STATUS_DATE_TIME),
+        WAITING(STATUS_WAITING),
+        QUEUED(STATUS_QUEUED),
+        QUEUED_WITH_DATE(STATUS_QUEUED_WITH_DATE),
+        DONE(STATUS_DONE),
+        OTHER(STATUS_OTHER);
+
         private String status;
 
         Status(String pStatus) {
@@ -54,10 +68,12 @@ public class Action extends ApiResource implements Serializable {
                     return WAITING;
                 case STATUS_QUEUED:
                     return QUEUED;
+                case STATUS_QUEUED_WITH_DATE:
+                    return QUEUED_WITH_DATE;
                 case STATUS_DONE:
                     return DONE;
                 default:
-                    return null;
+                    return OTHER;
             }
         }
     }
@@ -72,6 +88,45 @@ public class Action extends ApiResource implements Serializable {
     private Date date;
     private Date exactTime;
     private int dateColor;
+
+    public Action save() throws OnePageException {
+        return isValid() ? update() : create();
+    }
+
+    private Action update() throws OnePageException {
+        Request request = new PutRequest(
+                addActionIdToEndpoint(ACTIONS_ENDPOINT),
+                null,
+                ActionSerializer.toJsonObject(this)
+        );
+        Response response = request.send();
+        return ActionSerializer.fromString(response.getResponseBody());
+    }
+
+    private Action create() throws OnePageException {
+        Request request = new PostRequest(ACTIONS_ENDPOINT, null, ActionSerializer.toJsonObject(this));
+        Response response = request.send();
+        return ActionSerializer.fromString(response.getResponseBody());
+    }
+
+    public void delete() throws OnePageException {
+        Request request = new DeleteRequest(ACTIONS_ENDPOINT + "/" + this.getId());
+        Response response = request.send();
+    }
+
+    public Action markComplete() throws OnePageException {
+        String endpoint = MARK_COMPLETE_ENDPOINT.replace("{id}", this.getId());
+        Request request = new PutRequest(endpoint, null, ActionSerializer.toJsonObject(this));
+        Response response = request.send();
+        return ActionSerializer.fromString(response.getResponseBody());
+    }
+
+    public Action undoCompletion() throws OnePageException {
+        String endpoint = UNDO_COMPLETION_ENDPOINT.replace("{id}", this.getId());
+        Request request = new PutRequest(endpoint, null, ActionSerializer.toJsonObject(this));
+        Response response = request.send();
+        return ActionSerializer.fromString(response.getResponseBody());
+    }
 
     public static ActionList list(String assigneeId) throws OnePageException {
         Map<String, Object> params = Query.paramsDefault();
@@ -101,10 +156,6 @@ public class Action extends ApiResource implements Serializable {
         return new PredefinedActionList(PredefinedActionSerializer.fromString(response.getResponseBody()));
     }
 
-    public Action() {
-
-    }
-
     public Action promotePredefined(PredefinedAction predefined) {
         this.setText(predefined.getText());
         // Add the extra days to the date of the action.
@@ -115,39 +166,8 @@ public class Action extends ApiResource implements Serializable {
         return this;
     }
 
-    private Action create() throws OnePageException {
-        Request request = new PostRequest(ACTIONS_ENDPOINT, null, ActionSerializer.toJsonObject(this));
-        Response response = request.send();
-        return ActionSerializer.fromString(response.getResponseBody());
-    }
+    public Action() {
 
-    public void delete() throws OnePageException {
-        Request request = new DeleteRequest(ACTIONS_ENDPOINT + "/" + this.getId());
-        Response response = request.send();
-    }
-
-    private Action update() throws OnePageException {
-        Request request = new PutRequest(addActionIdToEndpoint(ACTIONS_ENDPOINT), null, ActionSerializer.toJsonObject(this));
-        Response response = request.send();
-        return ActionSerializer.fromString(response.getResponseBody());
-    }
-
-    public Action save() throws OnePageException {
-        return isValid() ? update() : create();
-    }
-
-    public Action markComplete() throws OnePageException {
-        String endpoint = MARK_COMPLETE_ENDPOINT.replace("{id}", this.getId());
-        Request request = new PutRequest(endpoint, null, ActionSerializer.toJsonObject(this));
-        Response response = request.send();
-        return ActionSerializer.fromString(response.getResponseBody());
-    }
-
-    public Action undoCompletion() throws OnePageException {
-        String endpoint = UNDO_COMPLETION_ENDPOINT.replace("{id}", this.getId());
-        Request request = new PutRequest(endpoint, null, ActionSerializer.toJsonObject(this));
-        Response response = request.send();
-        return ActionSerializer.fromString(response.getResponseBody());
     }
 
     @Override

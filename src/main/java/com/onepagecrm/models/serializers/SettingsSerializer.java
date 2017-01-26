@@ -17,6 +17,7 @@ public class SettingsSerializer extends BaseSerializer {
         return new Settings()
                 .setTimeZone(settingsObject.optString(TIME_ZONE_TAG))
                 .setDateFormat(settingsObject.optString(DATE_FORMAT_TAG))
+                .setMilitaryTime(!settingsObject.optBoolean(TIME_WITH_AMPM_TAG))
                 .setListingSize(settingsObject.optInt(LISTING_SIZE_TAG))
                 .setCurrency(settingsObject.optString(CURRENCY_TAG))
                 .setCurrencySymbol(settingsObject.optString(CURRENCY_SYMBOL_TAG))

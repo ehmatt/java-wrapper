@@ -9,7 +9,12 @@ import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.Utilities;
-import com.onepagecrm.models.serializers.*;
+import com.onepagecrm.models.serializers.BaseSerializer;
+import com.onepagecrm.models.serializers.CallSerializer;
+import com.onepagecrm.models.serializers.ContactListSerializer;
+import com.onepagecrm.models.serializers.ContactSerializer;
+import com.onepagecrm.models.serializers.DateSerializer;
+import com.onepagecrm.models.serializers.LoginSerializer;
 
 import java.util.logging.Logger;
 
@@ -47,6 +52,7 @@ public class ResponseHandlerTest extends BaseTest {
                 "\"choices\":[],\"position\":0,\"reminder_days\":0}},{\"custom_field\":{" +
                 "\"id\":\"558be3a21787fa26d8000001\",\"name\":\"Spouse_Name\",\"type\":" +
                 "\"single_line_text\",\"choices\":[],\"position\":1,\"reminder_days\":null}}]," +
+                "\"company_fields\":[]," +
                 "\"team\":[],\"settings\":{\"reminder\":{\"type\":\"new_task\",\"hour\":6}," +
                 "\"time_zone\":\"london\",\"date_format\":\"%d/%m/%Y\",\"listing_size\":25," +
                 "\"currency\":\"EUR\",\"currency_symbol\":\"€\",\"popular_countries\":[" +

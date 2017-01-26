@@ -15,6 +15,9 @@ import java.util.Map;
 
 public class CustomField extends ApiResource implements Serializable {
 
+    public static final String CF_TYPE_CONTACT = "contact";
+    public static final String CF_TYPE_COMPANY = "company";
+
     public static final String TYPE_ANNIVERSARY = "anniversary";
     public static final String TYPE_DATE = "date";
     public static final String TYPE_DROPDOWN = "select_box";
@@ -27,11 +30,12 @@ public class CustomField extends ApiResource implements Serializable {
     private String name;
     private Integer position;
     private String type;
+    private String cfType;
     private List<String> choices;
     private Integer reminderDays;
     private CustomFieldValue value;
 
-    public static List<CustomField> list() {
+    public static List<CustomField> listContacts() {
         Map<String, Object> params = new HashMap<>();
         params.put("per_page", 100);
         Request request = new GetRequest(
@@ -39,7 +43,20 @@ public class CustomField extends ApiResource implements Serializable {
                 Query.fromParams(params)
         );
         Response response = request.send();
-        return CustomFieldSerializer.fromString(response.getResponseBody());
+        String responseBody = response.getResponseBody();
+        return CustomFieldSerializer.fromString(responseBody, CF_TYPE_CONTACT);
+    }
+
+    public static List<CustomField> listCompanies() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("per_page", 100);
+        Request request = new GetRequest(
+                COMPANY_FIELDS_ENDPOINT,
+                Query.fromParams(params)
+        );
+        Response response = request.send();
+        String responseBody = response.getResponseBody();
+        return CustomFieldSerializer.fromString(responseBody, CF_TYPE_COMPANY);
     }
 
     public String save() {
@@ -53,6 +70,7 @@ public class CustomField extends ApiResource implements Serializable {
     }
 
     public CustomField() {
+
     }
 
     public CustomField(CustomField customField) {
@@ -105,6 +123,15 @@ public class CustomField extends ApiResource implements Serializable {
 
     public CustomField setType(String type) {
         this.type = type;
+        return this;
+    }
+
+    public String getCfType() {
+        return cfType;
+    }
+
+    public CustomField setCfType(String cfType) {
+        this.cfType = cfType;
         return this;
     }
 

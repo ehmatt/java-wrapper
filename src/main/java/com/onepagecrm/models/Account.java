@@ -28,10 +28,11 @@ public class Account implements Serializable {
     public ContactsCount contactsCount;
 
     public PredefinedActionList predefinedActions;
-
-    // public static User switchUser(login, password) {
+    public List<String> contactTitles;
+    public List<CustomField> companyFields;
 
     public Account() {
+
     }
 
     public static List<User> getTeam() {
@@ -148,6 +149,24 @@ public class Account implements Serializable {
 
     public Account setPredefinedActions(PredefinedActionList predefinedActions) {
         this.predefinedActions = predefinedActions;
+        return this;
+    }
+
+    public List<String> getContactTitles() {
+        return contactTitles;
+    }
+
+    public Account setContactTitles(List<String> contactTitles) {
+        this.contactTitles = contactTitles;
+        return this;
+    }
+
+    public List<CustomField> getCompanyFields() {
+        return companyFields;
+    }
+
+    public Account setCompanyFields(List<CustomField> companyFields) {
+        this.companyFields = companyFields;
         return this;
     }
 }

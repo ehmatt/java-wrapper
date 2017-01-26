@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(BaseSerializer.class.getName());
@@ -41,6 +42,9 @@ public class BaseSerializer {
     public static final String CONTACTS_TAG = "contacts";
     public static final String CONTACT_TAG = "contact";
     public static final String ID_TAG = "id";
+    public static final String CONTACT_TITLES_TAG = "contact_titles";
+    public static final String CONTACT_TITLE_TAG = "contact_title";
+    public static final String TITLE_TAG = "title";
     public static final String COMPANY_ID_TAG = "company_id";
     public static final String JOB_TITLE_TAG = "job_title";
     public static final String OWNER_ID_TAG = "owner_id";
@@ -177,6 +181,7 @@ public class BaseSerializer {
     public static final String CURRENCY_SYMBOL_TAG = "currency_symbol";
     public static final String DEFAULT_CONTACT_TYPE_TAG = "default_contact_type";
     public static final String SHOW_TIDY_STREAM_TAG = "show_tidy_stream";
+    public static final String TIME_WITH_AMPM_TAG = "time_with_ampm";
 
     // DEALS TAGS
     public static final String PIPELINE_SORT_TAG = "pipeline_sort";
@@ -197,6 +202,7 @@ public class BaseSerializer {
     public static final String CONTACT_INFO_TAG = "contact_info";
     public static final String CONTACT_NAME_TAG = "contact_name";
     public static final String COMPANY_TAG = "company";
+    public static final String PENDING_DEALS_TAG = "pending_deals";
 
     // NOTES
     public static final String NOTE_TAG = "note";
@@ -256,6 +262,27 @@ public class BaseSerializer {
     public static final String FCM_DEVICES_TAG = "fcm_devices";
     public static final String ACTION_WITH_TIME_TAG = "action_with_time";
     public static final String SUBSCRIBED_AT_TAG = "subscribed_at";
+    public static final String DEVICE_TYPE_TAG = "device_type";
+
+    // ACCOUNT RIGHTS
+    public static String ACCOUNT_OWNER_TAG = "account_owner";
+    public static String ADMIN_TAG = "admin";
+    public static String ACTIVITY_TAG = "activity";
+    public static String EDIT_TARGET_TAG = "edit_target";
+    public static String DELETE_CONTACTS_TAG = "delete_contacts";
+    public static String PIPELINE_TAG = "pipeline";
+    public static String EXPORT_TAG = "export";
+    public static String PRIVATE_CONTACTS_TAG = "private_contacts";
+
+    // COMPANIES
+    public static final String COMPANIES_TAG = "companies";
+    public static final String COMPANY_FIELD_TAG = "company_field";
+    public static final String COMPANY_FIELDS_TAG = "company_fields";
+    public static final String SYNCED_STATUS_ID_TAG = "synced_status_id";
+    public static final String WON_DEALS_COUNT_TAG = "won_deals_count";
+    public static final String TOTAL_WON_AMOUNT_TAG = "total_won_amount";
+    public static final String PENDING_DEALS_COUNT_TAG = "pending_deals_count";
+    public static final String TOTAL_PENDING_AMOUNT_TAG = "total_pending_amount";
 
     /**
      * Method used to parse the base/start of response.

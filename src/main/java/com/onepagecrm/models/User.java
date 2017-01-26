@@ -4,6 +4,8 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.internal.Sales;
+import com.onepagecrm.models.serializers.BaseSerializer;
+import com.onepagecrm.models.serializers.CompanyListSerializer;
 import com.onepagecrm.models.serializers.ContactListSerializer;
 import com.onepagecrm.models.serializers.DealListSerializer;
 import com.onepagecrm.models.serializers.LoginSerializer;
@@ -16,6 +18,7 @@ import com.onepagecrm.net.request.LoginRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("WeakerAccess")
@@ -38,6 +41,8 @@ public class User extends ApiResource implements Serializable {
     private Integer allCount;
     private Integer streamCount;
     private Integer contactsCount;
+
+    private List<String> accountRights;
 
     public static User login(String username, String password) throws OnePageException {
         Request request = new LoginRequest(username, password);
@@ -115,6 +120,14 @@ public class User extends ApiResource implements Serializable {
         return getContacts(CONTACTS_ENDPOINT, Query.querySearch(paginator, search, true));
     }
 
+    public ContactList contactsByCompany(String companyId) throws OnePageException {
+        return getContacts(CONTACTS_ENDPOINT, Query.queryCompany(companyId));
+    }
+
+    public ContactList contactsByCompany(Paginator paginator, String companyId) throws OnePageException {
+        return getContacts(CONTACTS_ENDPOINT, Query.queryCompany(paginator, companyId));
+    }
+
     public ContactList contactsByLetter(String letter) throws OnePageException {
         return getContacts(CONTACTS_ENDPOINT, Query.queryLetter(letter, true));
     }
@@ -164,6 +177,29 @@ public class User extends ApiResource implements Serializable {
         return ContactListSerializer.fromString(response.getResponseBody());
     }
 
+    public CompanyList companies() throws OnePageException {
+        return getCompanies(Query.queryDefault());
+    }
+
+    public CompanyList companies(Paginator paginator) throws OnePageException {
+        return getCompanies(Query.query(paginator));
+    }
+
+    public CompanyList companies(Map<String, Object> params) throws OnePageException {
+        return getCompanies(Query.fromParams(params));
+    }
+
+    public CompanyList companies(Map<String, Object> params, Paginator paginator) throws OnePageException {
+        String query = Query.fromMaps(params, Query.params(paginator));
+        return getCompanies(query);
+    }
+
+    private CompanyList getCompanies(String query) throws OnePageException {
+        Request request = new GetRequest(COMPANIES_ENDPOINT, query);
+        Response response = request.send();
+        return CompanyListSerializer.fromString(response.getResponseBody());
+    }
+
     public ActionList actions(Paginator paginator) throws OnePageException {
         return Action.list(this.id, paginator);
     }
@@ -206,7 +242,9 @@ public class User extends ApiResource implements Serializable {
         boolean authKeysEqual = false;
         if (object instanceof User) {
             User toCompare = (User) object;
-            if (this.authKey != null && toCompare.authKey != null) {
+            if (this.authKey == null && toCompare.authKey == null) {
+                authKeysEqual = true;
+            } else if (this.authKey != null && toCompare.authKey != null) {
                 authKeysEqual = this.authKey.equals(toCompare.authKey);
             }
         }
@@ -251,6 +289,18 @@ public class User extends ApiResource implements Serializable {
             }
         }
         return null;
+    }
+
+    public boolean hasRight(String right) {
+        return isAdmin() || isOwner() || accountRights != null && accountRights.contains(right);
+    }
+
+    public boolean isAdmin() {
+        return accountRights != null && accountRights.contains(BaseSerializer.ACCOUNT_OWNER_TAG);
+    }
+
+    public boolean isOwner() {
+        return accountRights != null && accountRights.contains(BaseSerializer.ADMIN_TAG);
     }
 
     public String getAuthKey() {
@@ -367,6 +417,15 @@ public class User extends ApiResource implements Serializable {
 
     public User setContactsCount(Integer contactsCount) {
         this.contactsCount = contactsCount;
+        return this;
+    }
+
+    public List<String> getAccountRights() {
+        return accountRights;
+    }
+
+    public User setAccountRights(List<String> accountRights) {
+        this.accountRights = accountRights;
         return this;
     }
 }

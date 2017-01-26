@@ -8,6 +8,7 @@ public class Settings implements Serializable {
     private Reminder reminder;
     private String timeZone;
     private String dateFormat;
+    private Boolean militaryTime;
     private Integer listingSize;
     private String currency;
     private String currencySymbol;
@@ -15,10 +16,8 @@ public class Settings implements Serializable {
     private List<DealStage> dealStages;
     private String defaultView;
     private Boolean showTidyStream;
-
-    public Settings() {
-
-    }
+    private Boolean contactTitleEnabled;
+    private Boolean birthdaysEnabled;
 
     public Reminder getReminder() {
         return reminder;
@@ -53,6 +52,19 @@ public class Settings implements Serializable {
 
     public Settings setListingSize(Integer listingSize) {
         this.listingSize = listingSize;
+        return this;
+    }
+
+    public Boolean getMilitaryTime() {
+        return militaryTime;
+    }
+
+    public boolean isMilitaryTimeEnabled() {
+        return militaryTime != null && militaryTime;
+    }
+
+    public Settings setMilitaryTime(Boolean militaryTime) {
+        this.militaryTime = militaryTime;
         return this;
     }
 
@@ -111,6 +123,32 @@ public class Settings implements Serializable {
 
     public Settings setShowTidyStream(Boolean showTidyStream) {
         this.showTidyStream = showTidyStream;
+        return this;
+    }
+
+    public Boolean getContactTitleEnabled() {
+        return contactTitleEnabled;
+    }
+
+    public boolean isContactTitleEnabled() {
+        return contactTitleEnabled != null && contactTitleEnabled;
+    }
+
+    public Settings setContactTitleEnabled(Boolean contactTitleEnabled) {
+        this.contactTitleEnabled = contactTitleEnabled;
+        return this;
+    }
+
+    public Boolean getBirthdaysEnabled() {
+        return birthdaysEnabled;
+    }
+
+    public boolean areBirthdaysEnabled() {
+        return birthdaysEnabled != null && birthdaysEnabled;
+    }
+
+    public Settings setBirthdaysEnabled(Boolean birthdaysEnabled) {
+        this.birthdaysEnabled = birthdaysEnabled;
         return this;
     }
 }

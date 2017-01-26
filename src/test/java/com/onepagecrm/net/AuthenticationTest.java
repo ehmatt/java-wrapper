@@ -93,4 +93,21 @@ public class AuthenticationTest extends BaseTest {
         assertEquals("639cab894e5ffafeaa50d9b2b5fab903eb23215c34b8b4ba518ba8381e0419f7",
                 callsAuthSig.getSignature());
     }
+
+    /**
+     * Verify Authentication Signature generated matches correct answer for deleting FCM devices.
+     */
+    public void testCalculateSignature_DeleteFcmDevice() {
+        final User user = new User().setId("57a099629007ba29115829b2")
+                .setAuthKey("NVMsF8uNkFihbJRaklVSTr8RZoXbt8/s2biQssgwBoI=");
+
+        String endpoint = "https://app.onepagecrm.com/api/v3/firebase.json";
+        String body = "{\"id\":\"584a795f9007ba7c3f6bf25f\"}";
+
+        Authentication authData = new Authentication(user, 1481280581, "DELETE",
+                endpoint, body);
+
+        assertEquals("8e2366a8410fcb74dd4ae06dd3ae7ce05498d66eb5c326e02510f0dc8bab1b32",
+                authData.getSignature());
+    }
 }

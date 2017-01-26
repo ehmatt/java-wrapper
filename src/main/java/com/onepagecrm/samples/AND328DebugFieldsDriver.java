@@ -2,8 +2,10 @@ package com.onepagecrm.samples;
 
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.Company;
+import com.onepagecrm.models.CompanyList;
+import com.onepagecrm.models.CustomField;
 import com.onepagecrm.models.User;
-import com.onepagecrm.models.internal.Device;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
@@ -13,9 +15,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class RegisterDeviceDriver {
+public class AND328DebugFieldsDriver {
 
-    private static final Logger LOG = Logger.getLogger(RegisterDeviceDriver.class.getName());
+    private static final Logger LOG = Logger.getLogger(AND328DebugFieldsDriver.class.getName());
 
     public static void main(String[] args) throws OnePageException {
         Properties prop = new Properties();
@@ -43,17 +45,29 @@ public class RegisterDeviceDriver {
 
         OnePageCRM.setServer(Request.DEV_SERVER);
 
-        User.login(
+        User loggedInUser = User.login(
                 prop.getProperty("username"),
                 prop.getProperty("password"));
 
-        // Register the device.
-        final String firebaseToken = "d7sIgbT9wsg:APA91bFQvHUxKdLWzEKfwZpWzwQ0qQFoDElh-wThQDFVojYXD69WBhvsLoqKOb2KNQj47ZCzQ0qLB5Al34HUmASzYxBkQGtmTBQGHw7tv2lO2hwlUSzRF8HEfZVSGHsXircLhCtSIrq4";
-        Device phone = new Device().setDeviceId(firebaseToken).setDeviceType(Device.TYPE_ANDROID).register();
-        LOG.info("Registered device : " + phone);
+        CompanyList companies = loggedInUser.companies();
+        Company company = Company.getSingleCompany(companies.get(0).getId());
 
-        // List current devices.
-        List<Device> devices = Device.list();
-        LOG.info("Device list : " + devices);
+        List<CustomField> customFieldList = CustomField.listContacts();
+        List<CustomField> companyFieldList = CustomField.listCompanies();
+
+        LOG.info("Companies : " + companies);
+        LOG.info("Company : " + company);
+        LOG.info("Custom fields : " + customFieldList);
+        LOG.info("Company fields : " + companyFieldList);
+
+        for (CustomField field : customFieldList) {
+            LOG.info("CustomField[index: " + customFieldList.indexOf(field)
+                    + ", hashCode: " + field.getId().hashCode() + "] : " + field);
+        }
+
+        for (CustomField field : companyFieldList) {
+            LOG.info("CompanyField[index: " + companyFieldList.indexOf(field)
+                    + ", hashCode: " + field.getId().hashCode() + "] : " + field);
+        }
     }
 }
