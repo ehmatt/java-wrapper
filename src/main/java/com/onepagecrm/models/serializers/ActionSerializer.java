@@ -102,6 +102,12 @@ public class ActionSerializer extends BaseSerializer {
                     action.setExactTime(exactTime);
                 }
             }
+            if (actionObject.has(POSITION_TAG)) {
+                if (!actionObject.isNull(POSITION_TAG)) {
+                    int position = actionObject.getInt(POSITION_TAG);
+                    action.setPosition(position);
+                }
+            }
             action.setDateColor(DateSerializer.getDateColour(exactTime, status));
 
             return action;

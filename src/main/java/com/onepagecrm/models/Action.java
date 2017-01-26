@@ -20,7 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class Action extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -7486991046434989805L;
@@ -88,6 +88,7 @@ public class Action extends ApiResource implements Serializable {
     private Date date;
     private Date exactTime;
     private int dateColor;
+    private int position;
 
     public Action save() throws OnePageException {
         return isValid() ? update() : create();
@@ -190,6 +191,19 @@ public class Action extends ApiResource implements Serializable {
         return ActionSerializer.toJsonObject(this);
     }
 
+    public String getFriendlyDateString() {
+        if (this.date != null) {
+            // Return date in format yyyy-MM-dd (uppercase).
+            return DateSerializer.toFriendlyDateString(this.date).toUpperCase();
+        } else if (this.status != null) {
+            // Return status (uppercase).
+            return this.status.toString().toUpperCase();
+        } else {
+            // This is needed to correctly display contacts w/out NA's in Action Stream.
+            return null;
+        }
+    }
+
     public String getAssigneeId() {
         return assigneeId;
     }
@@ -262,25 +276,21 @@ public class Action extends ApiResource implements Serializable {
         return this;
     }
 
-    public String getFriendlyDateString() {
-        if (this.date != null) {
-            // Return date in format yyyy-MM-dd (uppercase).
-            return DateSerializer.toFriendlyDateString(this.date).toUpperCase();
-        } else if (this.status != null) {
-            // Return status (uppercase).
-            return this.status.toString().toUpperCase();
-        } else {
-            // This is needed to correctly display contacts w/out NA's in Action Stream.
-            return null;
-        }
-    }
-
     public int getDateColor() {
         return dateColor;
     }
 
     public Action setDateColor(int dateColor) {
         this.dateColor = dateColor;
+        return this;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public Action setPosition(int position) {
+        this.position = position;
         return this;
     }
 }
