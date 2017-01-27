@@ -25,6 +25,10 @@ public class Action extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -7486991046434989805L;
 
+    /**
+     * Constants
+     */
+
     private static final String STATUS_ASAP = "asap";
     private static final String STATUS_DATE = "date";
     private static final String STATUS_DATE_TIME = "date_time";
@@ -33,6 +37,10 @@ public class Action extends ApiResource implements Serializable {
     private static final String STATUS_QUEUED_WITH_DATE = "queued_with_date";
     private static final String STATUS_DONE = "done";
     private static final String STATUS_OTHER = "other"; // Catch all.
+
+    /**
+     * Member variables.
+     */
 
     public enum Status {
         ASAP(STATUS_ASAP),
@@ -89,6 +97,10 @@ public class Action extends ApiResource implements Serializable {
     private Date exactTime;
     private int dateColor;
     private Integer position;
+
+    /**
+     * API methods
+     */
 
     public Action save() throws OnePageException {
         return isValid() ? update() : create();
@@ -167,28 +179,12 @@ public class Action extends ApiResource implements Serializable {
         return this;
     }
 
-    public Action() {
-
-    }
-
-    @Override
-    public String getId() {
-        return this.id;
-    }
-
-    @Override
-    public Action setId(String id) {
-        this.id = id;
-        return this;
-    }
+    /**
+     * Utility methods
+     */
 
     private String addActionIdToEndpoint(String endpoint) {
         return endpoint + "/" + this.id;
-    }
-
-    @Override
-    public String toString() {
-        return ActionSerializer.toJsonObject(this);
     }
 
     public String getFriendlyDateString() {
@@ -202,6 +198,39 @@ public class Action extends ApiResource implements Serializable {
             // This is needed to correctly display contacts w/out NA's in Action Stream.
             return null;
         }
+    }
+
+    public boolean isQueued() {
+        return this.status != null && (this.status == Status.QUEUED || this.status == Status.QUEUED_WITH_DATE);
+    }
+
+    public boolean isNext() {
+        return this.status != null && (this.status == Status.ASAP || this.status == Status.DATE ||
+                this.status == Status.DATE_TIME || this.status == Status.WAITING);
+    }
+
+    @Override
+    public String toString() {
+        return ActionSerializer.toJsonObject(this);
+    }
+
+    /**
+     * Object methods
+     */
+
+    public Action() {
+
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public Action setId(String id) {
+        this.id = id;
+        return this;
     }
 
     public String getAssigneeId() {
