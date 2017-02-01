@@ -16,6 +16,7 @@ public class Settings implements Serializable {
     private List<DealStage> dealStages;
     private String defaultView;
     private Boolean showTidyStream;
+    private Boolean showCompanyFieldsWithContact;
     private Boolean contactTitleEnabled;
     private Boolean birthdaysEnabled;
 
@@ -123,6 +124,19 @@ public class Settings implements Serializable {
 
     public Settings setShowTidyStream(Boolean showTidyStream) {
         this.showTidyStream = showTidyStream;
+        return this;
+    }
+
+    public Boolean getShowCompanyFieldsWithContact() {
+        return showCompanyFieldsWithContact;
+    }
+
+    public boolean shouldShowCompanyFieldsWithContact() {
+        return showCompanyFieldsWithContact != null && showCompanyFieldsWithContact;
+    }
+
+    public Settings setShowCompanyFieldsWithContact(Boolean showCompanyFieldsWithContact) {
+        this.showCompanyFieldsWithContact = showCompanyFieldsWithContact;
         return this;
     }
 
