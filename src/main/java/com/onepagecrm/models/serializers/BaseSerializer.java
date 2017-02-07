@@ -182,6 +182,10 @@ public class BaseSerializer {
     public static final String DEFAULT_CONTACT_TYPE_TAG = "default_contact_type";
     public static final String SHOW_TIDY_STREAM_TAG = "show_tidy_stream";
     public static final String SHOW_COMPANY_FIELDS_WITH_CONTACT_TAG = "show_company_fields_with_contact";
+    public static final String SHOW_COMPANY_PHONE_TAG = "company_phone_enabled";
+    public static final String SHOW_COMPANY_URL_TAG = "company_url_enabled";
+    public static final String SHOW_COMPANY_ADDRESS_TAG = "company_address_enabled";
+    public static final String SHOW_COMPANY_DESCRIPTION_TAG = "company_description_enabled";
     public static final String TIME_WITH_AMPM_TAG = "time_with_ampm";
 
     // DEALS TAGS
