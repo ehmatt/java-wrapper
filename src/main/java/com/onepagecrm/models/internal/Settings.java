@@ -17,6 +17,10 @@ public class Settings implements Serializable {
     private String defaultView;
     private Boolean showTidyStream;
     private Boolean showCompanyFieldsWithContact;
+    private Boolean showCompanyDescription;
+    private Boolean showCompanyPhone;
+    private Boolean showCompanyURL;
+    private Boolean showCompanyAddress;
     private Boolean contactTitleEnabled;
     private Boolean birthdaysEnabled;
 
@@ -137,6 +141,58 @@ public class Settings implements Serializable {
 
     public Settings setShowCompanyFieldsWithContact(Boolean showCompanyFieldsWithContact) {
         this.showCompanyFieldsWithContact = showCompanyFieldsWithContact;
+        return this;
+    }
+
+    public Boolean getShowCompanyAddress() {
+        return showCompanyAddress;
+    }
+
+    public Boolean shouldShowCompanyAddress() {
+        return showCompanyAddress != null && showCompanyAddress;
+    }
+
+    public Settings setShowCompanyAddress(Boolean showCompanyAddress) {
+        this.showCompanyAddress = showCompanyAddress;
+        return this;
+    }
+
+    public Boolean getShowCompanyDescription() {
+        return showCompanyDescription;
+    }
+
+    public Boolean shouldShowCompanyDescription() {
+        return showCompanyDescription != null && showCompanyDescription;
+    }
+
+    public Settings setShowCompanyDescription(Boolean showCompanyDescription) {
+        this.showCompanyDescription = showCompanyDescription;
+        return this;
+    }
+
+    public Boolean getShowCompanyPhone() {
+        return showCompanyPhone;
+    }
+
+    public Boolean shouldShowCompanyPhone() {
+        return showCompanyPhone != null && showCompanyPhone;
+    }
+
+    public Settings setShowCompanyPhone(Boolean showCompanyPhone) {
+        this.showCompanyPhone = showCompanyPhone;
+        return this;
+    }
+
+    public Boolean getShowCompanyURL() {
+        return showCompanyURL;
+    }
+
+    public Boolean shouldShowCompanyURL() {
+        return showCompanyURL != null && showCompanyURL;
+    }
+
+    public Settings setShowCompanyURL(Boolean showCompanyURL) {
+        this.showCompanyURL = showCompanyURL;
         return this;
     }
 

@@ -25,7 +25,11 @@ public class SettingsSerializer extends BaseSerializer {
                 .setDealStages(DealStageSerializer.fromJsonArray(settingsObject.optJSONArray(DEAL_STAGES_TAG)))
                 .setDefaultView(settingsObject.optString(DEFAULT_CONTACT_TYPE_TAG))
                 .setShowTidyStream(settingsObject.optBoolean(SHOW_TIDY_STREAM_TAG))
-                .setShowCompanyFieldsWithContact(settingsObject.optBoolean(SHOW_COMPANY_FIELDS_WITH_CONTACT_TAG));
+                .setShowCompanyFieldsWithContact(settingsObject.optBoolean(SHOW_COMPANY_FIELDS_WITH_CONTACT_TAG))
+                .setShowCompanyAddress(settingsObject.optBoolean(SHOW_COMPANY_ADDRESS_TAG))
+                .setShowCompanyDescription(settingsObject.optBoolean(SHOW_COMPANY_DESCRIPTION_TAG))
+                .setShowCompanyPhone(settingsObject.optBoolean(SHOW_COMPANY_PHONE_TAG))
+                .setShowCompanyURL(settingsObject.optBoolean(SHOW_COMPANY_URL_TAG));
     }
 
     private static List<Country> fromPopularCountryArray(JSONArray choicesArray) {
