@@ -4,6 +4,7 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.CloseSalesCycle;
 import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.SalesCycleClosure;
+import com.onepagecrm.models.serializers.BaseSerializer;
 import com.onepagecrm.models.serializers.CloseSalesCycleSerializer;
 import com.onepagecrm.models.serializers.ContactPhotoSerializer;
 import com.onepagecrm.models.serializers.ContactSerializer;
@@ -132,7 +133,7 @@ public class Contact extends ApiResource implements Serializable {
 
     public Contact addPhoto(String base64EncodedImageString) throws OnePageException {
         Request request = new PutRequest(
-                contactPhotoEndpoint(),
+                subEndpoint(BaseSerializer.CONTACT_PHOTO_TAG),
                 null,
                 ContactPhotoSerializer.toJsonObject(base64EncodedImageString)
         );
@@ -172,20 +173,20 @@ public class Contact extends ApiResource implements Serializable {
     }
 
     public Contact starContact() throws OnePageException {
-        Request request = new PutRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/" + "star");
+        Request request = new PutRequest(subEndpoint(BaseSerializer.STAR_TAG));
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
     public Contact unStarContact() throws OnePageException {
-        Request request = new PutRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/" + "unstar");
+        Request request = new PutRequest(subEndpoint(BaseSerializer.UNSTAR_TAG));
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
     public Contact split(String newCompanyName) throws OnePageException {
         Request request = new PutRequest(
-                contactSplitEndpoint(),
+                subEndpoint(BaseSerializer.SPLIT_TAG),
                 null,
                 ContactSplitSerializer.toJsonObject(newCompanyName)
         );
@@ -193,16 +194,12 @@ public class Contact extends ApiResource implements Serializable {
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
+    private String subEndpoint(String subEndpoint) {
+        return addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/" + subEndpoint;
+    }
+
     private static String addIdToEndpoint(String endpoint, String id) {
         return endpoint + "/" + id;
-    }
-
-    private String contactPhotoEndpoint() {
-        return addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/contact_photo";
-    }
-
-    private String contactSplitEndpoint() {
-        return addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/split";
     }
 
     public Contact() {

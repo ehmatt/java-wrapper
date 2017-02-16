@@ -57,6 +57,9 @@ public class BaseSerializer {
     public static final String PENDING_DEAL_TAG = "pending_deal";
     public static final String TOTAL_PENDINGS_TAG = "total_pendings";
     public static final String CLOSE_SALES_CYCLE_COMMENT_TAG = "comment";
+    public static final String CONTACT_PHOTO_TAG = "contact_photo";
+    public static final String STAR_TAG = "star";
+    public static final String UNSTAR_TAG = "unstar";
 
     // CONTACT POINT TAGS
     public static final String PHONES_TAG = "phones";
