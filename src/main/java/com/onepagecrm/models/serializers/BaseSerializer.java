@@ -289,6 +289,9 @@ public class BaseSerializer {
     public static final String PENDING_DEALS_COUNT_TAG = "pending_deals_count";
     public static final String TOTAL_PENDING_AMOUNT_TAG = "total_pending_amount";
 
+    // SPLIT
+    public static final String SPLIT_TAG = "split";
+
     /**
      * Method used to parse the base/start of response.
      *

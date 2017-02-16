@@ -7,6 +7,7 @@ import com.onepagecrm.models.internal.SalesCycleClosure;
 import com.onepagecrm.models.serializers.CloseSalesCycleSerializer;
 import com.onepagecrm.models.serializers.ContactPhotoSerializer;
 import com.onepagecrm.models.serializers.ContactSerializer;
+import com.onepagecrm.models.serializers.ContactSplitSerializer;
 import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.models.serializers.LoginSerializer;
 import com.onepagecrm.net.ApiResource;
@@ -131,7 +132,7 @@ public class Contact extends ApiResource implements Serializable {
 
     public Contact addPhoto(String base64EncodedImageString) throws OnePageException {
         Request request = new PutRequest(
-                addContactPhotoToEndpoint(CONTACTS_ENDPOINT),
+                contactPhotoEndpoint(),
                 null,
                 ContactPhotoSerializer.toJsonObject(base64EncodedImageString)
         );
@@ -182,12 +183,26 @@ public class Contact extends ApiResource implements Serializable {
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
+    public Contact split(String newCompanyName) throws OnePageException {
+        Request request = new PutRequest(
+                contactSplitEndpoint(),
+                null,
+                ContactSplitSerializer.toJsonObject(newCompanyName)
+        );
+        Response response = request.send();
+        return ContactSerializer.fromString(response.getResponseBody());
+    }
+
     private static String addIdToEndpoint(String endpoint, String id) {
         return endpoint + "/" + id;
     }
 
-    private String addContactPhotoToEndpoint(String endpoint) {
-        return addIdToEndpoint(endpoint, this.id) + "/contact_photo";
+    private String contactPhotoEndpoint() {
+        return addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/contact_photo";
+    }
+
+    private String contactSplitEndpoint() {
+        return addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/split";
     }
 
     public Contact() {
