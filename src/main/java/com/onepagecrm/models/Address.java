@@ -4,6 +4,8 @@ import com.onepagecrm.models.serializers.AddressSerializer;
 
 import java.io.Serializable;
 
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
+
 public class Address extends BaseResource implements Serializable {
 
     private String address;
@@ -21,11 +23,11 @@ public class Address extends BaseResource implements Serializable {
     }
 
     public boolean isValid() {
-        return address != null && !address.equals("") ||
-                city != null && !city.equals("") ||
-                state != null && !state.equals("") ||
-                zipCode != null && !zipCode.equals("") ||
-                countryCode != null && !countryCode.equals("");
+        return notNullOrEmpty(address) ||
+                notNullOrEmpty(city) ||
+                notNullOrEmpty(state) ||
+                notNullOrEmpty(zipCode) ||
+                notNullOrEmpty(countryCode);
     }
 
     @Override

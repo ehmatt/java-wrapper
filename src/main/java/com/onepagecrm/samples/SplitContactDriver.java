@@ -70,8 +70,8 @@ public class SplitContactDriver {
             LOG.info("Contact split (since was more than one contact in old company).");
         } else {
             // For some reason have to save contact with no company.
-            contact.setCompanyName(null);
-            contact.save();
+            contact.setCompanyName(null); // TODO - remove me when API-380 fixed!!
+            contact.save(); // TODO - remove me when API-380 fixed!!
             // Then save with new company.
             contact.setCompanyName(newCompany);
             contact.save();
