@@ -20,6 +20,7 @@ import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
  */
+@SuppressWarnings("unused")
 public class Company extends ApiResource implements Serializable {
 
     private String id;
