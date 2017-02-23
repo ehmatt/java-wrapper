@@ -117,6 +117,10 @@ public class Company extends ApiResource implements Serializable {
                 address != null && address.isValid());
     }
 
+    public boolean multiContact() {
+        return contactsCount != null && contactsCount > 1;
+    }
+
     public String getName() {
         return name;
     }
