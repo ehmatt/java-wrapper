@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+@SuppressWarnings("WeakerAccess")
 public abstract class Request {
 
     protected static final Logger LOG = Logger.getLogger(Request.class.getName());
@@ -37,6 +38,7 @@ public abstract class Request {
     public static final int LOCAL_DEV_SERVER = 13;
     public static final int NETWORK_DEV_SERVER = 14;
     public static final int MOCK_REQUEST_SERVER = 15;
+    public static final int CUSTOM_URL_SERVER = 16;
 
     protected static final String APP_URL = "https://app.onepagecrm.com/api/v3/";
     protected static final String DEV_URL = "http://dev.onepagecrm.com/api/v3/";
@@ -52,7 +54,12 @@ public abstract class Request {
     protected static final String TITAN_URL = "http://titan.dev.onepagecrm.com/api/v3/";
     protected static final String VOYAGER_URL = "http://voyager.dev.onepagecrm.com/api/v3/";
     protected static final String LOCAL_DEV_URL = "http://localhost:3000/api/v3/";
-    protected static final String NETWORK_DEV_URL = "http://10.100.0.18:3001/api/v3/";
+    protected static final String NETWORK_DEV_URL = "http://10.100.0.15/api/v3/";
+    protected static String CUSTOM_URL = "http://10.100.0.15/api/v3/";
+
+    public static void setCustomUrl(String customUrl) {
+        CUSTOM_URL = customUrl;
+    }
 
     private static final Map<Integer, String> sUrlMap = new HashMap<>();
 
@@ -72,6 +79,7 @@ public abstract class Request {
         sUrlMap.put(VOYAGER_SERVER, VOYAGER_URL);
         sUrlMap.put(LOCAL_DEV_SERVER, LOCAL_DEV_URL);
         sUrlMap.put(NETWORK_DEV_SERVER, NETWORK_DEV_URL);
+        sUrlMap.put(CUSTOM_URL_SERVER, CUSTOM_URL);
     }
 
     public static String format = ".json";
