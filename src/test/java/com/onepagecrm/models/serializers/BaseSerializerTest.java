@@ -151,14 +151,14 @@ public class BaseSerializerTest extends BaseTest {
         assertEquals(expected, actual);
     }
 
-    public void testParseNumber_StringIn_IntOut() {
+    public void testParseNumber_StringIn_LongOut() {
         String luckyNumberThirteen = "13";
 
-        Integer expected = 13;
+        Long expected = 13L;
         Object actual = BaseSerializer.parseNumber(luckyNumberThirteen);
 
         assertTrue("Should not be null.", actual != null);
-        assertTrue("Should be of type Integer.", actual instanceof Integer);
+        assertTrue("Should be of type Long.", actual instanceof Long);
         assertEquals(expected, actual);
     }
 }

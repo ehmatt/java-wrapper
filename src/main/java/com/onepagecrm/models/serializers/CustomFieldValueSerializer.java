@@ -17,10 +17,10 @@ public class CustomFieldValueSerializer extends BaseSerializer {
             try {
                 Object valueObject = customFieldObject.get(VALUE_TAG);
                 if (valueObject instanceof Number) {
-                    // Integers are of type Number in Java.
-                    if (valueObject instanceof Integer) {
-                        // Convert this to an Integer.
-                        valueObject = ((Number) valueObject).intValue();
+                    // Longs are of type Number in Java.
+                    if (valueObject instanceof Long) {
+                        // Convert this to a Long.
+                        valueObject = ((Number) valueObject).longValue();
                     } else {
                         // Floating point numbers are of type Number in Java.
                         // Convert this to a Double.
@@ -43,8 +43,8 @@ public class CustomFieldValueSerializer extends BaseSerializer {
         if (customFieldValue != null) {
             if (customFieldValue.getValue() instanceof String) {
                 addJsonStringValue((String) customFieldValue.getValue(), valueObject, VALUE_TAG);
-            } else if (customFieldValue.getValue() instanceof Integer) {
-                addJsonIntegerValue((Integer) customFieldValue.getValue(), valueObject, VALUE_TAG);
+            } else if (customFieldValue.getValue() instanceof Long) {
+                addJsonLongValue((Long) customFieldValue.getValue(), valueObject, VALUE_TAG);
             } else if (customFieldValue.getValue() instanceof Double) {
                 addJsonDoubleValue((Double) customFieldValue.getValue(), valueObject, VALUE_TAG);
             } else if (customFieldValue.getValue() instanceof String[]) {
@@ -60,8 +60,8 @@ public class CustomFieldValueSerializer extends BaseSerializer {
         if (customFieldValue != null) {
             if (customFieldValue.getValue() instanceof String) {
                 addJsonStringValue((String) customFieldValue.getValue(), valueObject, VALUE_TAG);
-            } else if (customFieldValue.getValue() instanceof Integer) {
-                addJsonIntegerValue((Integer) customFieldValue.getValue(), valueObject, VALUE_TAG);
+            } else if (customFieldValue.getValue() instanceof Long) {
+                addJsonLongValue((Long) customFieldValue.getValue(), valueObject, VALUE_TAG);
             } else if (customFieldValue.getValue() instanceof Float) {
                 addJsonFloatValue((Float) customFieldValue.getValue(), valueObject, VALUE_TAG);
             } else if (customFieldValue.getValue() instanceof String[]) {

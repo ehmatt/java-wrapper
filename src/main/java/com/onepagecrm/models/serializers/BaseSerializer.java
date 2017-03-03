@@ -368,10 +368,10 @@ public class BaseSerializer {
             try {
                 Object valueObject = object.get(key);
                 if (valueObject instanceof Number) {
-                    // Integers are of type Number in Java.
-                    if (valueObject instanceof Integer) {
-                        // Convert this to an Integer.
-                        valueObject = ((Number) valueObject).intValue();
+                    // Longs are of type Number in Java.
+                    if (valueObject instanceof Long) {
+                        // Convert this to a Long.
+                        valueObject = ((Number) valueObject).longValue();
                     } else {
                         // Floating point numbers are of type Number in Java.
                         // Convert this to a Double (big Float).
@@ -390,13 +390,13 @@ public class BaseSerializer {
     public static Number parseNumber(String numberAsString) {
         Number number = null;
         try {
-            number = Integer.valueOf(numberAsString);
+            number = Long.valueOf(numberAsString);
         } catch (NumberFormatException e) {
             try {
                 number = Double.valueOf(numberAsString);
             } catch (NumberFormatException ex) {
                 LOG.severe("Not float value entered. " + e);
-                LOG.severe("Not integer value entered. " + ex);
+                LOG.severe("Not long value entered. " + ex);
             }
         }
         return number;

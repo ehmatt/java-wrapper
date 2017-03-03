@@ -8,15 +8,15 @@ import java.io.Serializable;
 public class CustomFieldValue implements Serializable {
 
     private String stringValue;
-    private Integer integerValue;
+    private Long longValue;
     private Double doubleValue;
     private String[] stringArrayValue;
 
     public Serializable getValue() {
         if (stringValue != null) {
             return this.stringValue;
-        } else if (integerValue != null) {
-            return this.integerValue;
+        } else if (longValue != null) {
+            return this.longValue;
         } else if (doubleValue != null) {
             return this.doubleValue;
         } else if (stringArrayValue != null) {
@@ -29,8 +29,8 @@ public class CustomFieldValue implements Serializable {
         String retString = "";
         if (stringValue != null) {
             retString = this.stringValue;
-        } else if (integerValue != null) {
-            retString = String.valueOf(this.integerValue);
+        } else if (longValue != null) {
+            retString = String.valueOf(this.longValue);
         } else if (doubleValue != null) {
             retString = String.valueOf(this.doubleValue);
         } else if (stringArrayValue != null) {
@@ -43,8 +43,8 @@ public class CustomFieldValue implements Serializable {
         if (object instanceof String) {
             this.setValue((String) object);
         }
-        if (object instanceof Integer) {
-            this.setValue((Integer) object);
+        if (object instanceof Long) {
+            this.setValue((Long) object);
         }
         if (object instanceof Double) {
             this.setValue((Double) object);
@@ -62,15 +62,15 @@ public class CustomFieldValue implements Serializable {
 
     public Serializable setValue(String stringValue) {
         this.stringValue = stringValue;
-        this.integerValue = null;
+        this.longValue = null;
         this.doubleValue = null;
         this.stringArrayValue = null;
         return getValue();
     }
 
-    public Serializable setValue(Integer integerValue) {
+    public Serializable setValue(Long longValue) {
         this.stringValue = null;
-        this.integerValue = integerValue;
+        this.longValue = longValue;
         this.doubleValue = null;
         this.stringArrayValue = null;
         return getValue();
@@ -78,7 +78,7 @@ public class CustomFieldValue implements Serializable {
 
     public Serializable setValue(Double doubleValue) {
         this.stringValue = null;
-        this.integerValue = null;
+        this.longValue = null;
         this.doubleValue = doubleValue;
         this.stringArrayValue = null;
         return getValue();
@@ -86,7 +86,7 @@ public class CustomFieldValue implements Serializable {
 
     public Serializable setValue(String[] stringArrayValue) {
         this.stringValue = null;
-        this.integerValue = null;
+        this.longValue = null;
         this.doubleValue = null;
         this.stringArrayValue = stringArrayValue;
         return getValue();
