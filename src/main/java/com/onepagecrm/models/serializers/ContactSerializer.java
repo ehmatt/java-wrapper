@@ -50,7 +50,13 @@ public class ContactSerializer extends BaseSerializer {
         Contact contact = new Contact();
         List<Action> actions = new LinkedList<>();
         try {
-            JSONObject contactObject = contactsElementObject.getJSONObject(CONTACT_TAG);
+            JSONObject contactObject = new JSONObject();
+
+           if (contactsElementObject.has(LINKED_CONTACT_TAG))
+                contactsElementObject = contactsElementObject.getJSONObject(LINKED_CONTACT_TAG);
+
+            contactObject = contactsElementObject.getJSONObject(CONTACT_TAG);
+
             if (contactObject.has(ID_TAG)) {
                 contact.setId(contactObject.getString(ID_TAG));
             }
@@ -203,6 +209,16 @@ public class ContactSerializer extends BaseSerializer {
                 JSONObject companyObject = contactsElementObject.optJSONObject(COMPANY_TAG);
                 contact.setCompany(CompanySerializer.fromJsonObject(companyObject));
             }
+            //Linked ids.
+            List<String> linkedWith = new ArrayList<>();
+            if (contactsElementObject.has(LINKED_WITH)) {
+                JSONArray linkedWithArray = contactsElementObject.getJSONArray(LINKED_WITH);
+                for (int i=0; i< linkedWithArray.length(); i++) {
+                    linkedWith.add(linkedWithArray.getString(i));
+                }
+            }
+            contact.setLinkedWithIds(linkedWith);
+
             return contact;
 
         } catch (JSONException e) {

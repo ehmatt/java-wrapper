@@ -20,7 +20,6 @@ public class LinkedContact extends BaseResource implements Serializable {
     public LinkedContact() {
 
     }
-
     public String getContactId() {
         return contactId;
     }

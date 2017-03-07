@@ -2,6 +2,7 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.serializers.CompanySerializer;
+import com.onepagecrm.models.serializers.LinkedContactsSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
