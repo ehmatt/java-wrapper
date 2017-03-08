@@ -2,6 +2,7 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.BaseTest;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -143,11 +144,11 @@ public class BaseSerializerTest extends BaseTest {
     public void testParseNumber_StringIn_DoubleOut() {
         String pi = "3.14";
 
-        Double expected = 3.14d;
+        BigDecimal expected = new BigDecimal("3.14");
         Object actual = BaseSerializer.parseNumber(pi);
 
         assertTrue("Should not be null.", actual != null);
-        assertTrue("Should be of type Double.", actual instanceof Double);
+        assertTrue("Should be of type Double.", actual instanceof BigDecimal);
         assertEquals(expected, actual);
     }
 

@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -374,8 +375,8 @@ public class BaseSerializer {
                         valueObject = ((Number) valueObject).longValue();
                     } else {
                         // Floating point numbers are of type Number in Java.
-                        // Convert this to a Double (big Float).
-                        valueObject = ((Number) valueObject).doubleValue();
+                        // Convert this to a BigDecimal.
+                        valueObject = new BigDecimal(valueObject.toString());
                     }
                     return (Number) valueObject;
                 }
@@ -393,7 +394,7 @@ public class BaseSerializer {
             number = Long.valueOf(numberAsString);
         } catch (NumberFormatException e) {
             try {
-                number = Double.valueOf(numberAsString);
+                number = new BigDecimal(numberAsString);
             } catch (NumberFormatException ex) {
                 LOG.severe("Not float value entered. " + e);
                 LOG.severe("Not long value entered. " + ex);
@@ -639,7 +640,7 @@ public class BaseSerializer {
     }
 
     /**
-     * Adds a Float value to a JSONObject with the specified key.
+     * Adds a Double value to a JSONObject with the specified key.
      *
      * @param value
      * @param object
@@ -651,6 +652,24 @@ public class BaseSerializer {
                 object.put(key, value);
             } catch (JSONException e) {
                 LOG.severe("Error serializing double value : " + value);
+                LOG.severe(e.toString());
+            }
+        }
+    }
+
+    /**
+     * Adds a Float value to a JSONObject with the specified key.
+     *
+     * @param value
+     * @param object
+     * @param key
+     */
+    public static void addJsonBigDecimalValue(BigDecimal value, JSONObject object, String key) {
+        if (value != null) {
+            try {
+                object.put(key, value);
+            } catch (JSONException e) {
+                LOG.severe("Error serializing BigDecimal value : " + value);
                 LOG.severe(e.toString());
             }
         }

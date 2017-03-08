@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.logging.Logger;
 
 public class CustomFieldValueSerializer extends BaseSerializer {
@@ -23,8 +24,8 @@ public class CustomFieldValueSerializer extends BaseSerializer {
                         valueObject = ((Number) valueObject).longValue();
                     } else {
                         // Floating point numbers are of type Number in Java.
-                        // Convert this to a Double.
-                        valueObject = ((Number) valueObject).doubleValue();
+                        // Convert this to a BigDecimal.
+                        valueObject = new BigDecimal(valueObject.toString());
                     }
                 } else if (valueObject instanceof JSONArray) {
                     // Parse array of Strings.
@@ -45,8 +46,8 @@ public class CustomFieldValueSerializer extends BaseSerializer {
                 addJsonStringValue((String) customFieldValue.getValue(), valueObject, VALUE_TAG);
             } else if (customFieldValue.getValue() instanceof Long) {
                 addJsonLongValue((Long) customFieldValue.getValue(), valueObject, VALUE_TAG);
-            } else if (customFieldValue.getValue() instanceof Double) {
-                addJsonDoubleValue((Double) customFieldValue.getValue(), valueObject, VALUE_TAG);
+            } else if (customFieldValue.getValue() instanceof BigDecimal) {
+                addJsonBigDecimalValue((BigDecimal) customFieldValue.getValue(), valueObject, VALUE_TAG);
             } else if (customFieldValue.getValue() instanceof String[]) {
                 JSONArray valueArray = toJsonStringArray((String[]) customFieldValue.getValue());
                 addJsonArray(valueArray, valueObject, VALUE_TAG);
@@ -56,19 +57,6 @@ public class CustomFieldValueSerializer extends BaseSerializer {
     }
 
     public static String toJsonObject(CustomFieldValue customFieldValue) {
-        JSONObject valueObject = new JSONObject();
-        if (customFieldValue != null) {
-            if (customFieldValue.getValue() instanceof String) {
-                addJsonStringValue((String) customFieldValue.getValue(), valueObject, VALUE_TAG);
-            } else if (customFieldValue.getValue() instanceof Long) {
-                addJsonLongValue((Long) customFieldValue.getValue(), valueObject, VALUE_TAG);
-            } else if (customFieldValue.getValue() instanceof Float) {
-                addJsonFloatValue((Float) customFieldValue.getValue(), valueObject, VALUE_TAG);
-            } else if (customFieldValue.getValue() instanceof String[]) {
-                JSONArray valueArray = toJsonStringArray((String[]) customFieldValue.getValue());
-                addJsonArray(valueArray, valueObject, VALUE_TAG);
-            }
-        }
-        return valueObject.toString();
+        return toJsonObject(customFieldValue, new JSONObject());
     }
 }
