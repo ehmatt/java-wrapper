@@ -184,6 +184,8 @@ public class BaseSerializer {
     public static final String POPULAR_COUNTRIES_TAG = "popular_countries";
     public static final String CURRENCY_SYMBOL_TAG = "currency_symbol";
     public static final String DEFAULT_CONTACT_TYPE_TAG = "default_contact_type";
+    public static final String SEPARATOR_TAG = "separator";
+    public static final String DELIMITER_TAG = "delimiter";
     public static final String SHOW_TIDY_STREAM_TAG = "show_tidy_stream";
     public static final String SHOW_COMPANY_FIELDS_WITH_CONTACT_TAG = "show_company_fields_with_contact";
     public static final String SHOW_COMPANY_PHONE_TAG = "company_phone_enabled";

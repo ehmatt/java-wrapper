@@ -15,6 +15,8 @@ public class Settings implements Serializable {
     private List<Country> popularCountries;
     private List<DealStage> dealStages;
     private String defaultView;
+    private String separator;
+    private String delimiter;
     private Boolean showTidyStream;
     private Boolean showCompanyFieldsWithContact;
     private Boolean showCompanyDescription;
@@ -23,6 +25,32 @@ public class Settings implements Serializable {
     private Boolean showCompanyAddress;
     private Boolean contactTitleEnabled;
     private Boolean birthdaysEnabled;
+
+    @Override
+    public String toString() {
+        return "Settings{" +
+                "reminder=" + reminder +
+                ", timeZone='" + timeZone + '\'' +
+                ", dateFormat='" + dateFormat + '\'' +
+                ", militaryTime=" + militaryTime +
+                ", listingSize=" + listingSize +
+                ", currency='" + currency + '\'' +
+                ", currencySymbol='" + currencySymbol + '\'' +
+                ", popularCountries=" + popularCountries +
+                ", dealStages=" + dealStages +
+                ", defaultView='" + defaultView + '\'' +
+                ", separator='" + separator + '\'' +
+                ", delimiter='" + delimiter + '\'' +
+                ", showTidyStream=" + showTidyStream +
+                ", showCompanyFieldsWithContact=" + showCompanyFieldsWithContact +
+                ", showCompanyDescription=" + showCompanyDescription +
+                ", showCompanyPhone=" + showCompanyPhone +
+                ", showCompanyURL=" + showCompanyURL +
+                ", showCompanyAddress=" + showCompanyAddress +
+                ", contactTitleEnabled=" + contactTitleEnabled +
+                ", birthdaysEnabled=" + birthdaysEnabled +
+                '}';
+    }
 
     public Reminder getReminder() {
         return reminder;
@@ -115,6 +143,24 @@ public class Settings implements Serializable {
 
     public Settings setDefaultView(String defaultView) {
         this.defaultView = defaultView;
+        return this;
+    }
+
+    public String getSeparator() {
+        return separator;
+    }
+
+    public Settings setSeparator(String separator) {
+        this.separator = separator;
+        return this;
+    }
+
+    public String getDelimiter() {
+        return delimiter;
+    }
+
+    public Settings setDelimiter(String delimiter) {
+        this.delimiter = delimiter;
         return this;
     }
 
