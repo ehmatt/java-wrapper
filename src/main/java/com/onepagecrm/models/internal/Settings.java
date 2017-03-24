@@ -15,9 +15,42 @@ public class Settings implements Serializable {
     private List<Country> popularCountries;
     private List<DealStage> dealStages;
     private String defaultView;
+    private String separator;
+    private String delimiter;
     private Boolean showTidyStream;
+    private Boolean showCompanyFieldsWithContact;
+    private Boolean showCompanyDescription;
+    private Boolean showCompanyPhone;
+    private Boolean showCompanyURL;
+    private Boolean showCompanyAddress;
     private Boolean contactTitleEnabled;
     private Boolean birthdaysEnabled;
+
+    @Override
+    public String toString() {
+        return "Settings{" +
+                "reminder=" + reminder +
+                ", timeZone='" + timeZone + '\'' +
+                ", dateFormat='" + dateFormat + '\'' +
+                ", militaryTime=" + militaryTime +
+                ", listingSize=" + listingSize +
+                ", currency='" + currency + '\'' +
+                ", currencySymbol='" + currencySymbol + '\'' +
+                ", popularCountries=" + popularCountries +
+                ", dealStages=" + dealStages +
+                ", defaultView='" + defaultView + '\'' +
+                ", separator='" + separator + '\'' +
+                ", delimiter='" + delimiter + '\'' +
+                ", showTidyStream=" + showTidyStream +
+                ", showCompanyFieldsWithContact=" + showCompanyFieldsWithContact +
+                ", showCompanyDescription=" + showCompanyDescription +
+                ", showCompanyPhone=" + showCompanyPhone +
+                ", showCompanyURL=" + showCompanyURL +
+                ", showCompanyAddress=" + showCompanyAddress +
+                ", contactTitleEnabled=" + contactTitleEnabled +
+                ", birthdaysEnabled=" + birthdaysEnabled +
+                '}';
+    }
 
     public Reminder getReminder() {
         return reminder;
@@ -113,6 +146,24 @@ public class Settings implements Serializable {
         return this;
     }
 
+    public String getSeparator() {
+        return separator;
+    }
+
+    public Settings setSeparator(String separator) {
+        this.separator = separator;
+        return this;
+    }
+
+    public String getDelimiter() {
+        return delimiter;
+    }
+
+    public Settings setDelimiter(String delimiter) {
+        this.delimiter = delimiter;
+        return this;
+    }
+
     public Boolean getShowTidyStream() {
         return showTidyStream;
     }
@@ -123,6 +174,71 @@ public class Settings implements Serializable {
 
     public Settings setShowTidyStream(Boolean showTidyStream) {
         this.showTidyStream = showTidyStream;
+        return this;
+    }
+
+    public Boolean getShowCompanyFieldsWithContact() {
+        return showCompanyFieldsWithContact;
+    }
+
+    public boolean shouldShowCompanyFieldsWithContact() {
+        return showCompanyFieldsWithContact != null && showCompanyFieldsWithContact;
+    }
+
+    public Settings setShowCompanyFieldsWithContact(Boolean showCompanyFieldsWithContact) {
+        this.showCompanyFieldsWithContact = showCompanyFieldsWithContact;
+        return this;
+    }
+
+    public Boolean getShowCompanyAddress() {
+        return showCompanyAddress;
+    }
+
+    public Boolean shouldShowCompanyAddress() {
+        return showCompanyAddress != null && showCompanyAddress;
+    }
+
+    public Settings setShowCompanyAddress(Boolean showCompanyAddress) {
+        this.showCompanyAddress = showCompanyAddress;
+        return this;
+    }
+
+    public Boolean getShowCompanyDescription() {
+        return showCompanyDescription;
+    }
+
+    public Boolean shouldShowCompanyDescription() {
+        return showCompanyDescription != null && showCompanyDescription;
+    }
+
+    public Settings setShowCompanyDescription(Boolean showCompanyDescription) {
+        this.showCompanyDescription = showCompanyDescription;
+        return this;
+    }
+
+    public Boolean getShowCompanyPhone() {
+        return showCompanyPhone;
+    }
+
+    public Boolean shouldShowCompanyPhone() {
+        return showCompanyPhone != null && showCompanyPhone;
+    }
+
+    public Settings setShowCompanyPhone(Boolean showCompanyPhone) {
+        this.showCompanyPhone = showCompanyPhone;
+        return this;
+    }
+
+    public Boolean getShowCompanyURL() {
+        return showCompanyURL;
+    }
+
+    public Boolean shouldShowCompanyURL() {
+        return showCompanyURL != null && showCompanyURL;
+    }
+
+    public Settings setShowCompanyURL(Boolean showCompanyURL) {
+        this.showCompanyURL = showCompanyURL;
         return this;
     }
 
