@@ -24,6 +24,8 @@ public class SettingsSerializer extends BaseSerializer {
                 .setPopularCountries(fromPopularCountryArray(settingsObject.optJSONArray(POPULAR_COUNTRIES_TAG)))
                 .setDealStages(DealStageSerializer.fromJsonArray(settingsObject.optJSONArray(DEAL_STAGES_TAG)))
                 .setDefaultView(settingsObject.optString(DEFAULT_CONTACT_TYPE_TAG))
+                .setSeparator(settingsObject.optString(SEPARATOR_TAG))
+                .setDelimiter(settingsObject.optString(DELIMITER_TAG))
                 .setShowTidyStream(settingsObject.optBoolean(SHOW_TIDY_STREAM_TAG))
                 .setShowCompanyFieldsWithContact(settingsObject.optBoolean(SHOW_COMPANY_FIELDS_WITH_CONTACT_TAG))
                 .setShowCompanyAddress(settingsObject.optBoolean(SHOW_COMPANY_ADDRESS_TAG))
