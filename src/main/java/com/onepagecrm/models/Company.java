@@ -8,6 +8,7 @@ import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.PutRequest;
 import com.onepagecrm.net.request.Request;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -84,6 +85,29 @@ public class Company extends ApiResource implements Serializable {
         Response response = request.send();
         String responseBody = response.getResponseBody();
         return CompanySerializer.fromString(responseBody);
+    }
+
+    public static ContactList getLinkedContacts(String companyId) throws OnePageException {
+        String endpoint = LINKED_CONTACTS_ENDPOINT.replace("{id}", companyId);
+        Request request = new GetRequest(endpoint, null);
+        Response response = request.send();
+        String responseBody = response.getResponseBody();
+        return LinkedContactsSerializer.fromString(responseBody);
+    }
+
+    public static LinkedContact linkContact(String companyId, String contactId) throws OnePageException {
+        String endpoint = LINKED_CONTACTS_ENDPOINT.replace("{id}", companyId);
+
+        Request request = new PostRequest(
+                endpoint,
+                null,
+                CompanySerializer.toJsonObject(contactId)
+        );
+
+        Response response = request.send();
+        String responseBody = response.getResponseBody();
+
+        return CompanySerializer.linkedContactFromString(responseBody);
     }
 
     private static String addIdToEndpoint(String endpoint, String id) {
