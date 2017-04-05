@@ -4,9 +4,11 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.CloseSalesCycle;
 import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.SalesCycleClosure;
+import com.onepagecrm.models.serializers.BaseSerializer;
 import com.onepagecrm.models.serializers.CloseSalesCycleSerializer;
 import com.onepagecrm.models.serializers.ContactPhotoSerializer;
 import com.onepagecrm.models.serializers.ContactSerializer;
+import com.onepagecrm.models.serializers.ContactSplitSerializer;
 import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.models.serializers.LoginSerializer;
 import com.onepagecrm.net.ApiResource;
@@ -130,7 +132,7 @@ public class Contact extends ApiResource implements Serializable {
 
     public Contact addPhoto(String base64EncodedImageString) throws OnePageException {
         Request request = new PutRequest(
-                addContactPhotoToEndpoint(CONTACTS_ENDPOINT),
+                subEndpoint(BaseSerializer.CONTACT_PHOTO_TAG),
                 null,
                 ContactPhotoSerializer.toJsonObject(base64EncodedImageString)
         );
@@ -170,23 +172,33 @@ public class Contact extends ApiResource implements Serializable {
     }
 
     public Contact starContact() throws OnePageException {
-        Request request = new PutRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/" + "star");
+        Request request = new PutRequest(subEndpoint(BaseSerializer.STAR_TAG));
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
     public Contact unStarContact() throws OnePageException {
-        Request request = new PutRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/" + "unstar");
+        Request request = new PutRequest(subEndpoint(BaseSerializer.UNSTAR_TAG));
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
-    private static String addIdToEndpoint(String endpoint, String id) {
-        return endpoint + "/" + id;
+    public Contact split(String newCompanyName) throws OnePageException {
+        Request request = new PutRequest(
+                subEndpoint(BaseSerializer.SPLIT_TAG),
+                null,
+                ContactSplitSerializer.toJsonObject(newCompanyName)
+        );
+        Response response = request.send();
+        return ContactSerializer.fromString(response.getResponseBody());
     }
 
-    private String addContactPhotoToEndpoint(String endpoint) {
-        return addIdToEndpoint(endpoint, this.id) + "/contact_photo";
+    private String subEndpoint(String subEndpoint) {
+        return addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/" + subEndpoint;
+    }
+
+    private static String addIdToEndpoint(String endpoint, String id) {
+        return endpoint + "/" + id;
     }
 
     public Contact() {

@@ -5,6 +5,8 @@ import com.onepagecrm.models.Deal;
 import java.io.Serializable;
 import java.util.List;
 
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
+
 public class DealStage implements Serializable {
 
     private Integer percentage;
@@ -32,7 +34,7 @@ public class DealStage implements Serializable {
 
     public String getDisplayText() {
         if (percentage != null) {
-            if (label == null || label.equalsIgnoreCase("null")) {
+            if (!notNullOrEmpty(label) || label.equalsIgnoreCase("null")) {
                 return percentage + "%";
             } else {
                 return percentage + "%" + " - " + Utilities.capitalize(label);

@@ -17,9 +17,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
+
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
  */
+@SuppressWarnings("unused")
 public class Company extends ApiResource implements Serializable {
 
     private String id;
@@ -129,6 +132,18 @@ public class Company extends ApiResource implements Serializable {
     @Override
     public String toString() {
         return CompanySerializer.toJsonObject(this);
+    }
+
+    public boolean dataToLoseWithDeletion() {
+        return isValid() && (notNullOrEmpty(description) ||
+                notNullOrEmpty(phone) ||
+                notNullOrEmpty(url) ||
+                companyFields != null && !companyFields.isEmpty() ||
+                address != null && address.isValid());
+    }
+
+    public boolean multiContact() {
+        return contactsCount != null && contactsCount > 1;
     }
 
     public String getName() {
