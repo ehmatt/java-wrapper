@@ -591,7 +591,7 @@ public class Contact extends ApiResource implements Serializable {
     }
 
     public Contact setLinkedWithId(String linkedWithId) {
-        if(this.linkedWithIds == null) this.linkedWithIds = new ArrayList<>();
+        if (this.linkedWithIds == null) this.linkedWithIds = new ArrayList<>();
         this.linkedWithIds.add(linkedWithId);
         return this;
     }

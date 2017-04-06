@@ -64,7 +64,7 @@ public class CompanySerializer extends BaseSerializer {
                 linkedWithId = linkedWithJson.getString(0);
             }
 
-            if (contactId != null  && companyId != null && linkedWithId != null)
+            if (contactId != null && companyId != null && linkedWithId != null)
                 return new LinkedContact(contactId, linkedWithId, companyId);
 
         } catch (ClassCastException e) {

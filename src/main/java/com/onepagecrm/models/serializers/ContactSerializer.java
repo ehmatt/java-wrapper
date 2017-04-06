@@ -52,7 +52,7 @@ public class ContactSerializer extends BaseSerializer {
         try {
             JSONObject contactObject = new JSONObject();
 
-           if (contactsElementObject.has(LINKED_CONTACT_TAG))
+            if (contactsElementObject.has(LINKED_CONTACT_TAG))
                 contactsElementObject = contactsElementObject.getJSONObject(LINKED_CONTACT_TAG);
 
             contactObject = contactsElementObject.getJSONObject(CONTACT_TAG);
@@ -213,7 +213,7 @@ public class ContactSerializer extends BaseSerializer {
             List<String> linkedWith = new ArrayList<>();
             if (contactsElementObject.has(LINKED_WITH)) {
                 JSONArray linkedWithArray = contactsElementObject.getJSONArray(LINKED_WITH);
-                for (int i=0; i< linkedWithArray.length(); i++) {
+                for (int i = 0; i < linkedWithArray.length(); i++) {
                     linkedWith.add(linkedWithArray.getString(i));
                 }
             }
@@ -352,13 +352,13 @@ public class ContactSerializer extends BaseSerializer {
         addJsonArray(BaseSerializer.toJsonStringArray(tagNames), contactObject, TAGS_TAG);
 
         // Serialize Company.
-            try {
-                JSONObject companyObject = new JSONObject(CompanySerializer.toJsonObject(contact.getCompany()));
-                addJsonObject(companyObject, contactObject, COMPANY_TAG);
-            } catch (JSONException e) {
-                LOG.severe("Error creating Company object while constructing Contact object");
-                LOG.severe(e.toString());
-            }
+        try {
+            JSONObject companyObject = new JSONObject(CompanySerializer.toJsonObject(contact.getCompany()));
+            addJsonObject(companyObject, contactObject, COMPANY_TAG);
+        } catch (JSONException e) {
+            LOG.severe("Error creating Company object while constructing Contact object");
+            LOG.severe(e.toString());
+        }
 
         return contactObject.toString();
     }
