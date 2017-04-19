@@ -20,7 +20,11 @@ import com.onepagecrm.net.request.PutRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
@@ -157,9 +161,10 @@ public class Contact extends ApiResource implements Serializable {
     public DeleteResult delete() throws OnePageException {
         Request request = new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id), null);
         Response response = request.send();
-        final String responseBody = response.getResponseBody();
+        String responseBody = response.getResponseBody();
+        DeleteResult deleteResult = DeleteResultSerializer.fromString(this.id, responseBody);
         LoginSerializer.updateDynamicResources(responseBody);
-        return DeleteResultSerializer.fromString(this.id, responseBody);
+        return deleteResult;
     }
 
     public Contact undoDeletion() throws OnePageException {
@@ -190,7 +195,10 @@ public class Contact extends ApiResource implements Serializable {
                 ContactSplitSerializer.toJsonObject(newCompanyName)
         );
         Response response = request.send();
-        return ContactSerializer.fromString(response.getResponseBody());
+        String responseBody = response.getResponseBody();
+        Contact contact = ContactSerializer.fromString(responseBody);
+        LoginSerializer.updateDynamicResources(responseBody);
+        return contact;
     }
 
     private String subEndpoint(String subEndpoint) {
