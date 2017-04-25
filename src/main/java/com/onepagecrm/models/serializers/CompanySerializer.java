@@ -38,46 +38,6 @@ public class CompanySerializer extends BaseSerializer {
         return company;
     }
 
-    public static LinkedContact linkedContactFromString(String responseBody) throws OnePageException {
-        try {
-            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONObject responseObject = new JSONObject(parsedResponse);
-
-            String contactId = "";
-            String companyId = "";
-            String linkedWithId = "";
-
-            if (responseObject.has("linked_contact")) responseObject = responseObject.getJSONObject("linked_contact");
-
-            if (responseObject.has("contact")) {
-                JSONObject contactObject = responseObject.getJSONObject("contact");
-                if (contactObject.has("id")) contactId = contactObject.getString("id");
-            }
-
-            if (responseObject.has("company")) {
-                JSONObject companyObject = responseObject.getJSONObject("company");
-                if (companyObject.has("id")) companyId = companyObject.getString("id");
-            }
-
-            if (responseObject.has("linked_with")) {
-                JSONArray linkedWithJson = responseObject.getJSONArray("linked_with");
-                linkedWithId = linkedWithJson.getString(0);
-            }
-
-            if (contactId != null && companyId != null && linkedWithId != null)
-                return new LinkedContact(contactId, linkedWithId, companyId);
-
-        } catch (ClassCastException e) {
-            throw (OnePageException) BaseSerializer.fromString(responseBody);
-
-        } catch (JSONException e) {
-            LOG.severe("Error parsing Company from JSON.");
-            LOG.severe(e.toString());
-        }
-
-        return new LinkedContact();
-    }
-
     public static Company fromJsonObject(JSONObject companyObject) {
         // Fix for some objects not having name.
         if (companyObject.has(COMPANY_TAG)) {

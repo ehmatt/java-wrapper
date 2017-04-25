@@ -11,12 +11,6 @@ public class LinkedContact extends BaseResource implements Serializable {
     private String linkedWithId;
     private String companyId;
 
-    public LinkedContact(String contactId, String linkedWithId, String companyId) {
-        this.contactId = contactId;
-        this.linkedWithId = linkedWithId;
-        this.companyId = companyId;
-    }
-
     public LinkedContact() {
 
     }
@@ -25,24 +19,27 @@ public class LinkedContact extends BaseResource implements Serializable {
         return contactId;
     }
 
-    public void setContactId(String contactId) {
+    public LinkedContact setContactId(String contactId) {
         this.contactId = contactId;
+        return this;
     }
 
     public String getLinkedWithId() {
         return linkedWithId;
     }
 
-    public void setLinkedWithId(String linkedWithId) {
+    public LinkedContact setLinkedWithId(String linkedWithId) {
         this.linkedWithId = linkedWithId;
+        return this;
     }
 
     public String getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(String companyId) {
+    public LinkedContact setCompanyId(String companyId) {
         this.companyId = companyId;
+        return this;
     }
 
     public boolean isValid() {

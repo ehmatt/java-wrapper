@@ -2,10 +2,7 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.DeleteResult;
-import com.onepagecrm.models.serializers.CompanySerializer;
-import com.onepagecrm.models.serializers.DeleteResultSerializer;
-import com.onepagecrm.models.serializers.LinkedContactsSerializer;
-import com.onepagecrm.models.serializers.LoginSerializer;
+import com.onepagecrm.models.serializers.*;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.DeleteRequest;
@@ -100,6 +97,10 @@ public class Company extends ApiResource implements Serializable {
         return company;
     }
 
+    public ContactList getLinkedContacts() throws OnePageException {
+        return getLinkedContacts(this.id);
+    }
+
     public static ContactList getLinkedContacts(String companyId) throws OnePageException {
         String endpoint = LINKED_CONTACTS_ENDPOINT.replace("{id}", companyId);
         Request request = new GetRequest(endpoint, null);
@@ -117,7 +118,7 @@ public class Company extends ApiResource implements Serializable {
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
-        LinkedContact linkedContact = CompanySerializer.linkedContactFromString(responseBody);
+        LinkedContact linkedContact = LinkedContactSerializer.fromString(responseBody);
         LoginSerializer.updateDynamicResources(responseBody);
         return linkedContact;
     }

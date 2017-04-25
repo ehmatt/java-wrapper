@@ -63,7 +63,7 @@ public class BaseSerializer {
     public static final String CONTACT_PHOTO_TAG = "contact_photo";
     public static final String STAR_TAG = "star";
     public static final String UNSTAR_TAG = "unstar";
-    public static final String LINKED_WITH = "linked_with";
+    public static final String LINKED_WITH_TAG = "linked_with";
 
     // CONTACT POINT TAGS
     public static final String PHONES_TAG = "phones";

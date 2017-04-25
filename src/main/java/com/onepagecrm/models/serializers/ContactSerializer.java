@@ -211,8 +211,8 @@ public class ContactSerializer extends BaseSerializer {
             }
             //Linked ids.
             List<String> linkedWith = new ArrayList<>();
-            if (contactsElementObject.has(LINKED_WITH)) {
-                JSONArray linkedWithArray = contactsElementObject.getJSONArray(LINKED_WITH);
+            if (contactsElementObject.has(LINKED_WITH_TAG)) {
+                JSONArray linkedWithArray = contactsElementObject.getJSONArray(LINKED_WITH_TAG);
                 for (int i = 0; i < linkedWithArray.length(); i++) {
                     linkedWith.add(linkedWithArray.getString(i));
                 }
