@@ -99,6 +99,9 @@ public class ContactSerializer extends BaseSerializer {
             if (contactObject.has(TOTAL_PENDINGS_TAG)) {
                 contact.setTotalPending(contactObject.getDouble(TOTAL_PENDINGS_TAG));
             }
+            if (contactObject.has(TOTAL_DEALS_COUNT_TAG)) {
+                contact.setTotalDealsCount(contactObject.getInt(TOTAL_DEALS_COUNT_TAG));
+            }
             if (contactObject.has(PHOTO_URL_TAG)) {
                 contact.setPhotoUrl(contactObject.getString(PHOTO_URL_TAG));
             }
