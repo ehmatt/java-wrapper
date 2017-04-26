@@ -61,6 +61,7 @@ public class Contact extends ApiResource implements Serializable {
     private String leadSourceId;
     private Boolean hasPendingDeal;
     private Double totalPending;
+    private int totalDealsCount;
     private String type;
     private String companyName;
     private String companyId;
@@ -435,6 +436,15 @@ public class Contact extends ApiResource implements Serializable {
 
     public Contact setTotalPending(Double totalPending) {
         this.totalPending = totalPending;
+        return this;
+    }
+
+    public int getTotalDealsCount() {
+        return totalDealsCount;
+    }
+
+    public Contact setTotalDealsCount(int totalDealsCount) {
+        this.totalDealsCount = totalDealsCount;
         return this;
     }
 
