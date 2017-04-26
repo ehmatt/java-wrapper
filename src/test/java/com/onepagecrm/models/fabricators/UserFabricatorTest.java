@@ -52,7 +52,7 @@ public class UserFabricatorTest extends BaseTest {
         assertEquals("559cd1866f6e656707000000@users.onepagecrm.com", user.getBccEmail());
         assertEquals("Myles Inc.", user.getCompanyName());
         assertEquals("https://onepagecrm-ud2-us-west-1.s3-us-west-1.amazonaws.com/" +
-                "559cd1866f6e656707000001/1467713634000/577b88629007ba32a088880a.png", user.getPhotoUrl());
+                "559cd1866f6e656707000001/1487329884000/58a6da5c9007ba3ae10f286e.png", user.getPhotoUrl());
     }
 
     private void validateSecond(User user) {
