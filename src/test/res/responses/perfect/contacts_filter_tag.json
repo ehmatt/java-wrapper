@@ -218,7 +218,7 @@
             {
               "company_field": {
                 "id": "578bbeb79007ba5344fb68eb",
-                "name": "TestSingleLine",
+                "name": "CompanySingleLine",
                 "type": "single_line_text",
                 "position": 0
               },
@@ -227,7 +227,7 @@
             {
               "company_field": {
                 "id": "578bbf109007ba5344fb68ec",
-                "name": "TestMultiLine",
+                "name": "CompanyMultiLine",
                 "type": "multi_line_text",
                 "position": 1
               },
@@ -236,7 +236,7 @@
             {
               "company_field": {
                 "id": "578bbf1e9007ba5344fb68ed",
-                "name": "TestDate",
+                "name": "CompanyDate",
                 "type": "date",
                 "position": 2
               },
@@ -245,7 +245,7 @@
             {
               "company_field": {
                 "id": "578bbf259007ba5344fb68ee",
-                "name": "TestNumber",
+                "name": "CompanyNumber",
                 "type": "number",
                 "position": 3
               },
@@ -254,7 +254,7 @@
             {
               "company_field": {
                 "id": "578bbf389007ba5344fb68ef",
-                "name": "TestDropdown",
+                "name": "CompanyDropdown",
                 "type": "select_box",
                 "position": 4,
                 "choices": [
@@ -268,7 +268,7 @@
             {
               "company_field": {
                 "id": "578bbf4f9007ba5344fb68f0",
-                "name": "TestMultipleChoice",
+                "name": "CompanyMultipleChoice",
                 "type": "multiple_choice",
                 "position": 5,
                 "choices": [
@@ -785,7 +785,7 @@
             {
               "company_field": {
                 "id": "578bbeb79007ba5344fb68eb",
-                "name": "TestSingleLine",
+                "name": "CompanySingleLine",
                 "type": "single_line_text",
                 "position": 0
               },
@@ -794,7 +794,7 @@
             {
               "company_field": {
                 "id": "578bbf109007ba5344fb68ec",
-                "name": "TestMultiLine",
+                "name": "CompanyMultiLine",
                 "type": "multi_line_text",
                 "position": 1
               },
@@ -803,7 +803,7 @@
             {
               "company_field": {
                 "id": "578bbf1e9007ba5344fb68ed",
-                "name": "TestDate",
+                "name": "CompanyDate",
                 "type": "date",
                 "position": 2
               },
@@ -812,7 +812,7 @@
             {
               "company_field": {
                 "id": "578bbf259007ba5344fb68ee",
-                "name": "TestNumber",
+                "name": "CompanyNumber",
                 "type": "number",
                 "position": 3
               },
@@ -821,7 +821,7 @@
             {
               "company_field": {
                 "id": "578bbf389007ba5344fb68ef",
-                "name": "TestDropdown",
+                "name": "CompanyDropdown",
                 "type": "select_box",
                 "position": 4,
                 "choices": [
@@ -835,7 +835,7 @@
             {
               "company_field": {
                 "id": "578bbf4f9007ba5344fb68f0",
-                "name": "TestMultipleChoice",
+                "name": "CompanyMultipleChoice",
                 "type": "multiple_choice",
                 "position": 5,
                 "choices": [
