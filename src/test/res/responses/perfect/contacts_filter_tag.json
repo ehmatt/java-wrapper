@@ -778,17 +778,86 @@
         "company": {
           "id": "56fd40b49007ba716f000004",
           "name": "OnePageCRM",
-          "description": "",
-          "phone": "",
-          "url": "",
-          "company_fields": [],
+          "description": "Sales CRM known for simplicity, ease-of-use and great design. Really good Android and iOS apps also.",
+          "phone": "+353 76 680 5459",
+          "url": "https://www.onepagecrm.com",
+          "company_fields": [
+            {
+              "company_field": {
+                "id": "578bbeb79007ba5344fb68eb",
+                "name": "TestSingleLine",
+                "type": "single_line_text",
+                "position": 0
+              },
+              "value": "Single..."
+            },
+            {
+              "company_field": {
+                "id": "578bbf109007ba5344fb68ec",
+                "name": "TestMultiLine",
+                "type": "multi_line_text",
+                "position": 1
+              },
+              "value": "Multi..."
+            },
+            {
+              "company_field": {
+                "id": "578bbf1e9007ba5344fb68ed",
+                "name": "TestDate",
+                "type": "date",
+                "position": 2
+              },
+              "value": "2016-12-19"
+            },
+            {
+              "company_field": {
+                "id": "578bbf259007ba5344fb68ee",
+                "name": "TestNumber",
+                "type": "number",
+                "position": 3
+              },
+              "value": 3.14
+            },
+            {
+              "company_field": {
+                "id": "578bbf389007ba5344fb68ef",
+                "name": "TestDropdown",
+                "type": "select_box",
+                "position": 4,
+                "choices": [
+                  "First",
+                  "Second",
+                  "Third"
+                ]
+              },
+              "value": "First"
+            },
+            {
+              "company_field": {
+                "id": "578bbf4f9007ba5344fb68f0",
+                "name": "TestMultipleChoice",
+                "type": "multiple_choice",
+                "position": 5,
+                "choices": [
+                  "First",
+                  "Second",
+                  "Third"
+                ]
+              },
+              "value": [
+                "First",
+                "Second",
+                "Third"
+              ]
+            }
+          ],
           "synced_status_id": null,
           "address": {
-            "address": null,
-            "city": null,
-            "state": null,
+            "address": "Unit 5, Business Innovation Centre, Upper Newcastle",
+            "city": "Galway",
+            "state": "Connacht",
             "zip_code": null,
-            "country_code": null
+            "country_code": "IE"
           }
         }
       }
