@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
-public class CustomFieldFabricator extends BaseFabricator {
+public class CompanyFieldFabricator extends BaseFabricator {
 
     public static CustomField single() {
         return singleLineText();
@@ -20,7 +20,6 @@ public class CustomFieldFabricator extends BaseFabricator {
         List<CustomField> customFields = new ArrayList<>();
         customFields.add(singleLineText());
         customFields.add(multiLineText());
-        customFields.add(anniversary());
         customFields.add(date());
         customFields.add(number());
         customFields.add(dropdown());
@@ -30,53 +29,40 @@ public class CustomFieldFabricator extends BaseFabricator {
 
     public static CustomField singleLineText() {
         CustomFieldValue value = new CustomFieldValue();
-        value.setValue("Example Contact single-line value");
+        value.setValue("Example Company single-line value");
         return new CustomField()
-                .setId("561b89cc9007ba41ef000005")
-                .setName("TestSingleLine")
+                .setId("578bbeb79007ba5344fb68eb")
+                .setName("CompanySingleLine")
                 .setPosition(0)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_SINGLE_LINE_TEXT)
-                .setCfType(CustomField.CF_TYPE_CONTACT)
+                .setCfType(CustomField.CF_TYPE_COMPANY)
                 .setValue(value);
     }
 
     public static CustomField multiLineText() {
         CustomFieldValue value = new CustomFieldValue();
-        value.setValue("Example Contact multi-line value");
+        value.setValue("Example Company multi-line value");
         return new CustomField()
-                .setId("561b8a209007ba41ef00000b")
-                .setName("TestMultiLine")
+                .setId("578bbf109007ba5344fb68ec")
+                .setName("CompanyMultiLine")
                 .setPosition(1)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_MULTI_LINE_TEXT)
-                .setCfType(CustomField.CF_TYPE_CONTACT)
-                .setValue(value);
-    }
-
-    public static CustomField anniversary() {
-        CustomFieldValue value = new CustomFieldValue();
-        value.setValue("2016-01-19");
-        return new CustomField()
-                .setId("561b8a209007ba41ef00000c")
-                .setName("TestAnniversary")
-                .setPosition(2)
-                .setReminderDays(2)
-                .setType(CustomField.TYPE_ANNIVERSARY)
-                .setCfType(CustomField.CF_TYPE_CONTACT)
+                .setCfType(CustomField.CF_TYPE_COMPANY)
                 .setValue(value);
     }
 
     public static CustomField date() {
         CustomFieldValue value = new CustomFieldValue();
-        value.setValue("2016-01-20");
+        value.setValue("2016-01-21");
         return new CustomField()
-                .setId("561b8a209007ba41ef00000d")
-                .setName("TestDate")
-                .setPosition(3)
+                .setId("578bbf1e9007ba5344fb68ed")
+                .setName("CompanyDate")
+                .setPosition(2)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_DATE)
-                .setCfType(CustomField.CF_TYPE_CONTACT)
+                .setCfType(CustomField.CF_TYPE_COMPANY)
                 .setValue(value);
     }
 
@@ -84,12 +70,12 @@ public class CustomFieldFabricator extends BaseFabricator {
         CustomFieldValue value = new CustomFieldValue();
         value.setValue(3.14);
         return new CustomField()
-                .setId("561b8a5a9007ba41ef000013")
-                .setName("TestNumber")
-                .setPosition(4)
+                .setId("578bbf259007ba5344fb68ee")
+                .setName("CompanyNumber")
+                .setPosition(3)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_NUMBER)
-                .setCfType(CustomField.CF_TYPE_CONTACT)
+                .setCfType(CustomField.CF_TYPE_COMPANY)
                 .setValue(value);
     }
 
@@ -98,12 +84,12 @@ public class CustomFieldFabricator extends BaseFabricator {
         value.setValue("First");
         return new CustomField()
                 .setChoices(choicesList())
-                .setId("561b8a5a9007ba41ef000014")
-                .setName("TestDropdown")
-                .setPosition(5)
+                .setId("578bbf389007ba5344fb68ef")
+                .setName("CompanyDropdown")
+                .setPosition(4)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_DROPDOWN)
-                .setCfType(CustomField.CF_TYPE_CONTACT)
+                .setCfType(CustomField.CF_TYPE_COMPANY)
                 .setValue(value);
     }
 
@@ -112,24 +98,20 @@ public class CustomFieldFabricator extends BaseFabricator {
         value.setValue(choicesArray());
         return new CustomField()
                 .setChoices(choicesList())
-                .setId("561b8a5a9007ba41ef000015")
-                .setName("TestMultipleChoice")
-                .setPosition(6)
+                .setId("578bbf4f9007ba5344fb68f0")
+                .setName("CompanyMultipleChoice")
+                .setPosition(5)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_MULTIPLE_CHOICE)
-                .setCfType(CustomField.CF_TYPE_CONTACT)
+                .setCfType(CustomField.CF_TYPE_COMPANY)
                 .setValue(value);
     }
 
     public static List<String> choicesList() {
-        List<String> choices = new ArrayList<>();
-        choices.add("First");
-        choices.add("Second");
-        choices.add("Third");
-        return choices;
+        return CustomFieldFabricator.choicesList();
     }
 
     public static String[] choicesArray() {
-        return new String[]{"First", "Second", "Third"};
+        return CustomFieldFabricator.choicesArray();
     }
 }
