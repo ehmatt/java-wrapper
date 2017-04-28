@@ -58,7 +58,6 @@ public class PostRequest extends BasicSignedRequest {
 
     public void authenticate() {
         setRequestBody();
-        //setAuthData(new OnePageAuthData(Account.loggedInUser, Request.POST, endpointUrl, requestBody));
         setAuthData(new BasicAuthData(Account.loggedInUser));
     }
 }

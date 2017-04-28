@@ -9,7 +9,6 @@ public class DeleteRequest extends BasicSignedRequest {
     public DeleteRequest(String endpoint) {
         setType();
         setEndpointUrl(endpoint);
-        //setAuthData(new OnePageAuthData(Account.loggedInUser, Request.DELETE, endpointUrl, requestBody));
         setAuthData(new BasicAuthData(Account.loggedInUser));
     }
 
@@ -36,7 +35,6 @@ public class DeleteRequest extends BasicSignedRequest {
 
     public void authenticate() {
         setRequestBody();
-        //setAuthData(new OnePageAuthData(Account.loggedInUser, Request.DELETE, endpointUrl, requestBody));
         setAuthData(new BasicAuthData(Account.loggedInUser));
     }
 }

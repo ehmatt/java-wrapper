@@ -28,7 +28,6 @@ public class PutRequest extends BasicSignedRequest {
     public PutRequest(String endpoint) {
         setType();
         setEndpointUrl(endpoint);
-        //setAuthData(new OnePageAuthData(Account.loggedInUser, Request.PUT, endpointUrl, ""));
         setAuthData(new BasicAuthData(Account.loggedInUser));
     }
 
@@ -44,7 +43,6 @@ public class PutRequest extends BasicSignedRequest {
 
     public void authenticate() {
         setRequestBody();
-        //setAuthData(new OnePageAuthData(Account.loggedInUser, Request.PUT, endpointUrl, requestBody));
         setAuthData(new BasicAuthData(Account.loggedInUser));
     }
 }

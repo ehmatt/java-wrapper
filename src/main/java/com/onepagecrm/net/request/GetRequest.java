@@ -9,7 +9,6 @@ public class GetRequest extends BasicSignedRequest {
     public GetRequest(String endpoint) {
         setType();
         setEndpointUrl(endpoint);
-        //setAuthData(new OnePageAuthData(Account.loggedInUser, Request.GET, endpointUrl, requestBody));
         setAuthData(new BasicAuthData(Account.loggedInUser));
     }
 
@@ -36,7 +35,6 @@ public class GetRequest extends BasicSignedRequest {
 
     public void authenticate() {
         setRequestBody();
-        //setAuthData(new OnePageAuthData(Account.loggedInUser, Request.GET, endpointUrl, requestBody));
         setAuthData(new BasicAuthData(Account.loggedInUser));
     }
 }

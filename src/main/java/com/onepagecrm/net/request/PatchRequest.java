@@ -28,7 +28,6 @@ public class PatchRequest extends BasicSignedRequest {
     public PatchRequest(String endpoint) {
         setType();
         setEndpointUrl(endpoint);
-        //setAuthData(new OnePageAuthData(Account.loggedInUser, Request.PATCH, endpointUrl, ""));
         setAuthData(new BasicAuthData(Account.loggedInUser));
     }
 
@@ -44,7 +43,6 @@ public class PatchRequest extends BasicSignedRequest {
 
     public void authenticate() {
         setRequestBody();
-        //setAuthData(new OnePageAuthData(Account.loggedInUser, Request.PATCH, endpointUrl, requestBody));
         setAuthData(new BasicAuthData(Account.loggedInUser));
     }
 }
