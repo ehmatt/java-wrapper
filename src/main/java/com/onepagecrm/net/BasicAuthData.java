@@ -46,18 +46,20 @@ public class BasicAuthData extends AuthData {
         if (OnePageCRM.DEBUG) {
             LOG.info("login=" + login);
             LOG.info("password=" + password);
-            LOG.info("Authorization=" + toBeEncoded);
+            LOG.info("toBeEncoded=" + toBeEncoded);
         }
         String encodedAuthorization = "";
         try {
             encodedAuthorization = Base64.encodeBase64String(toBeEncoded.getBytes("UTF-8"));
         } catch (IOException e) {
-            LOG.severe("Error encoding the Authorization data.");
+            LOG.severe("Error encoding the auth data.");
             LOG.severe(e.toString());
         }
+        String basicAuth = String.format(Locale.ENGLISH, "Basic %s", encodedAuthorization);
         if (OnePageCRM.DEBUG) {
-            LOG.info("b64(Authorization)=" + encodedAuthorization);
+            LOG.info("b64(toBeEncoded)=" + encodedAuthorization);
+            LOG.info("Authorization=" + basicAuth);
         }
-        return encodedAuthorization;
+        return basicAuth;
     }
 }
