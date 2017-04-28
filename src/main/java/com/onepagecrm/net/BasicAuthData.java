@@ -2,9 +2,9 @@ package com.onepagecrm.net;
 
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.models.User;
+import com.onepagecrm.models.internal.Utilities;
 import org.apache.commons.codec.binary.Base64;
 
-import java.io.IOException;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -40,24 +40,27 @@ public class BasicAuthData extends AuthData {
             LOG.info("*************************************");
             LOG.info("--- AUTHENTICATION ---");
         }
-        String login = getUserId();
-        String password = getApiKey();
-        String toBeEncoded = String.format(Locale.ENGLISH, "%s:%s", login, password);
+        final String login = getUserId();
+        final String password = getApiKey();
+        final String toBeEncoded = String.format(Locale.ENGLISH, "%s:%s", login, password);
         if (OnePageCRM.DEBUG) {
             LOG.info("login=" + login);
             LOG.info("password=" + password);
             LOG.info("toBeEncoded=" + toBeEncoded);
         }
-        String encodedAuthorization = "";
+        byte[] encodeAuthBytes = new byte[0];
         try {
-            encodedAuthorization = Base64.encodeBase64String(toBeEncoded.getBytes("UTF-8"));
-        } catch (IOException e) {
+            if (Utilities.notNullOrEmpty(login) && Utilities.notNullOrEmpty(password)) {
+                encodeAuthBytes = Base64.encodeBase64(toBeEncoded.getBytes("UTF-8"));
+            }
+        } catch (Exception e) {
             LOG.severe("Error encoding the auth data.");
             LOG.severe(e.toString());
         }
-        String basicAuth = String.format(Locale.ENGLISH, "Basic %s", encodedAuthorization);
+        final String encodedAuth = encodeAuthBytes.length == 0 ? "" : new String(encodeAuthBytes);
+        final String basicAuth = String.format(Locale.ENGLISH, "Basic %s", encodedAuth);
         if (OnePageCRM.DEBUG) {
-            LOG.info("b64(toBeEncoded)=" + encodedAuthorization);
+            LOG.info("b64(toBeEncoded)=" + encodedAuth);
             LOG.info("Authorization=" + basicAuth);
         }
         return basicAuth;
