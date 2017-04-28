@@ -51,7 +51,7 @@ public class OnePageAuthData extends AuthData {
      */
     public OnePageAuthData(User user, String type, String url, String body) {
         super(user.getId(), user.getAuthKey());
-        this.timestamp = getUnixTime();
+        this.timestamp = Utilities.getUnixTime();
         this.type = type;
         this.url = url;
         this.body = body;
@@ -88,7 +88,7 @@ public class OnePageAuthData extends AuthData {
         }
         final String thisUserId = getUserId() != null ? getUserId() : "";
         final String thisApiKey = getApiKey() != null ? getApiKey() : "";
-        final int thisTimestamp = getTimestamp() != 0 ? getTimestamp() : getUnixTime();
+        final int thisTimestamp = getTimestamp() != 0 ? getTimestamp() : Utilities.getUnixTime();
         final String thisType = getType() != null ? getType() : "";
         final String thisUrl = getUrl() != null ? getUrl() : "";
         final String thisBody = getBody() != null ? getBody() : "";
@@ -180,17 +180,6 @@ public class OnePageAuthData extends AuthData {
             LOG.info("hash(Signature)=" + sha256Hash);
         }
         return sha256Hash;
-    }
-
-    /**
-     * Method acquires the current Unix-style time.
-     * <p/>
-     * Unix-style time is the amount of milliseconds elapsed since 01 Jan 1970.
-     *
-     * @return
-     */
-    public int getUnixTime() {
-        return (int) (System.currentTimeMillis() / 1000L);
     }
 
     public int getTimestamp() {
