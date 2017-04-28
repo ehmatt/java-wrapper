@@ -1,14 +1,15 @@
 package com.onepagecrm.net.request;
 
 import com.onepagecrm.models.Account;
-import com.onepagecrm.net.Authentication;
+import com.onepagecrm.net.OnePageAuthData;
 
-public class DeleteRequest extends SignedRequest {
+@SuppressWarnings({"WeakerAccess", "UnusedReturnValue"})
+public class DeleteRequest extends OnePageSignedRequest {
 
     public DeleteRequest(String endpoint) {
         setType();
         setEndpointUrl(endpoint);
-        authData = new Authentication(Account.loggedInUser, Request.DELETE, endpointUrl, requestBody);
+        setAuthData(new OnePageAuthData(Account.loggedInUser, Request.DELETE, endpointUrl, requestBody));
     }
 
     public DeleteRequest(String endpoint, String query) {
@@ -34,6 +35,6 @@ public class DeleteRequest extends SignedRequest {
 
     public void authenticate() {
         setRequestBody();
-        authData = new Authentication(Account.loggedInUser, Request.DELETE, endpointUrl, requestBody);
+        setAuthData(new OnePageAuthData(Account.loggedInUser, Request.DELETE, endpointUrl, requestBody));
     }
 }

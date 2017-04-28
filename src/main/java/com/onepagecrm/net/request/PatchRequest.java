@@ -1,9 +1,10 @@
 package com.onepagecrm.net.request;
 
 import com.onepagecrm.models.Account;
-import com.onepagecrm.net.Authentication;
+import com.onepagecrm.net.OnePageAuthData;
 
-public class PatchRequest extends SignedRequest {
+@SuppressWarnings({"WeakerAccess", "UnusedReturnValue", "unused"})
+public class PatchRequest extends OnePageSignedRequest {
 
     /**
      * Constructor which takes JSON string for request body.
@@ -27,7 +28,7 @@ public class PatchRequest extends SignedRequest {
     public PatchRequest(String endpoint) {
         setType();
         setEndpointUrl(endpoint);
-        authData = new Authentication(Account.loggedInUser, Request.PATCH, endpointUrl, "");
+        setAuthData(new OnePageAuthData(Account.loggedInUser, Request.PATCH, endpointUrl, ""));
     }
 
     @Override
@@ -42,6 +43,6 @@ public class PatchRequest extends SignedRequest {
 
     public void authenticate() {
         setRequestBody();
-        authData = new Authentication(Account.loggedInUser, Request.PATCH, endpointUrl, requestBody);
+        setAuthData(new OnePageAuthData(Account.loggedInUser, Request.PATCH, endpointUrl, requestBody));
     }
 }

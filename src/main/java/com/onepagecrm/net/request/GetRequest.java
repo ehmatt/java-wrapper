@@ -1,14 +1,15 @@
 package com.onepagecrm.net.request;
 
 import com.onepagecrm.models.Account;
-import com.onepagecrm.net.Authentication;
+import com.onepagecrm.net.OnePageAuthData;
 
-public class GetRequest extends SignedRequest {
+@SuppressWarnings({"WeakerAccess", "UnusedReturnValue"})
+public class GetRequest extends OnePageSignedRequest {
 
     public GetRequest(String endpoint) {
         setType();
         setEndpointUrl(endpoint);
-        authData = new Authentication(Account.loggedInUser, Request.GET, endpointUrl, requestBody);
+        setAuthData(new OnePageAuthData(Account.loggedInUser, Request.GET, endpointUrl, requestBody));
     }
 
     public GetRequest(String endpoint, String query) {
@@ -34,6 +35,6 @@ public class GetRequest extends SignedRequest {
 
     public void authenticate() {
         setRequestBody();
-        authData = new Authentication(Account.loggedInUser, Request.GET, endpointUrl, requestBody);
+        setAuthData(new OnePageAuthData(Account.loggedInUser, Request.GET, endpointUrl, requestBody));
     }
 }

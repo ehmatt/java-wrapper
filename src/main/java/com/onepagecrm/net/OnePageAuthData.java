@@ -15,17 +15,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
-public class Authentication {
+@SuppressWarnings("WeakerAccess")
+public class OnePageAuthData extends AuthData {
 
-    private static final Logger LOG = Logger.getLogger(Authentication.class.getName());
+    private static final Logger LOG = Logger.getLogger(OnePageAuthData.class.getName());
 
-    private String userId;
-    private String apiKey;
     private int timestamp;
     private String type;
     private String url;
     private String body;
-    private String signature;
 
     /**
      * Constructor which will only be used for login (no user details known
@@ -35,10 +33,12 @@ public class Authentication {
      * @param url
      * @param body
      */
-    public Authentication(String type, String url, String body) {
+    public OnePageAuthData(String type, String url, String body) {
+        super(null, null);
         this.type = type;
         this.url = url;
         this.body = body;
+        // No need to calculate signature here (login)!
     }
 
     /**
@@ -49,14 +49,13 @@ public class Authentication {
      * @param url
      * @param body
      */
-    public Authentication(User user, String type, String url, String body) {
-        this.userId = user.getId();
-        this.apiKey = user.getAuthKey();
+    public OnePageAuthData(User user, String type, String url, String body) {
+        super(user.getId(), user.getAuthKey());
         this.timestamp = getUnixTime();
         this.type = type;
         this.url = url;
         this.body = body;
-        this.signature = calculateSignature();
+        updateSignature();
     }
 
     /**
@@ -67,14 +66,13 @@ public class Authentication {
      * @param url
      * @param body
      */
-    public Authentication(User user, int timestamp, String type, String url, String body) {
-        this.userId = user.getId();
-        this.apiKey = user.getAuthKey();
+    public OnePageAuthData(User user, int timestamp, String type, String url, String body) {
+        super(user.getId(), user.getAuthKey());
         this.timestamp = timestamp;
         this.type = type;
         this.url = url;
         this.body = body;
-        this.signature = calculateSignature();
+        updateSignature();
     }
 
     /**
@@ -83,14 +81,14 @@ public class Authentication {
      *
      * @return
      */
-    private String calculateSignature() {
+    public String calculateSignature() {
         if (OnePageCRM.DEBUG) {
             LOG.info("*************************************");
             LOG.info("--- AUTHENTICATION ---");
         }
         byte[] decodedApiKey = new byte[0];
         try {
-            decodedApiKey = Base64.decodeBase64(apiKey.getBytes("UTF-8"));
+            decodedApiKey = Base64.decodeBase64(getApiKey().getBytes("UTF-8"));
         } catch (IOException e) {
             LOG.severe("Error decoding the ApiKey");
             LOG.severe(e.toString());
@@ -100,7 +98,7 @@ public class Authentication {
             LOG.info("URL=" + url);
             LOG.info("hash(URL)=" + urlHash);
         }
-        String signature = userId + "." + timestamp + "." + type.toUpperCase() + "." + urlHash;
+        String signature = getUserId() + "." + timestamp + "." + type.toUpperCase() + "." + urlHash;
         if (type.equals("POST") || type.equals("PUT")) {
             if (body != null) {
                 String bodyHash = convertStringToSha1Hash(body);
@@ -179,14 +177,6 @@ public class Authentication {
         return (int) (System.currentTimeMillis() / 1000L);
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getApiKey() {
-        return apiKey;
-    }
-
     public int getTimestamp() {
         return timestamp;
     }
@@ -201,9 +191,5 @@ public class Authentication {
 
     public String getBody() {
         return body;
-    }
-
-    public String getSignature() {
-        return signature;
     }
 }

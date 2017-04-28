@@ -1,28 +1,17 @@
 package com.onepagecrm.net.request;
 
-import com.onepagecrm.OnePageCRM;
-import com.onepagecrm.net.Authentication;
+import com.onepagecrm.net.AuthData;
 
+@SuppressWarnings("WeakerAccess")
 public abstract class SignedRequest extends Request {
 
-    protected Authentication authData;
+    private AuthData authData;
 
-    @Override
-    public void setRequestHeaders() {
-        super.setRequestHeaders();
-        if (authData != null && authData.getUserId() != null) {
-            connection.setRequestProperty(X_UID, authData.getUserId());
-            LOG.info("X_UID=" + authData.getUserId());
-            connection.setRequestProperty(X_TS, Integer.toString(authData.getUnixTime()));
-            LOG.info("X_TS=" + Integer.toString(authData.getUnixTime()));
-            connection.setRequestProperty(X_AUTH, authData.getSignature());
-            LOG.info("X_AUTH=" + authData.getSignature());
-            connection.setRequestProperty(X_SOURCE, OnePageCRM.SOURCE);
-            LOG.info("X_SOURCE=" + OnePageCRM.SOURCE);
-        }
+    public void setAuthData(AuthData authData) {
+        this.authData = authData;
     }
 
-    public void setAuthData(Authentication authData) {
-        this.authData = authData;
+    public AuthData getAuthData() {
+        return authData;
     }
 }
