@@ -61,5 +61,11 @@ public class Driver {
         LOG.info("User's Predefined Actions : " + loggedInUser.getAccount().predefinedActions);
         LOG.info("User's Contact Titles : " + loggedInUser.getAccount().contactTitles);
         LOG.info("User's Account Rights : " + loggedInUser.getAccountRights());
+
+        loggedInUser.actionStream();
+
+        loggedInUser.contacts();
+
+        loggedInUser.pipeline();
     }
 }

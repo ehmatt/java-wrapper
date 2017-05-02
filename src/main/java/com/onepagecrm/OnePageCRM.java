@@ -15,6 +15,7 @@ public final class OnePageCRM {
     public static boolean DEBUG = false;
     public static int SERVER = Request.APP_SERVER;
     public static String SOURCE = "java-wrapper";
+    public static boolean COMPLEX_AUTH = false;
 
     public static OnePageCRM getInstance() {
         if (instance == null) {
@@ -41,6 +42,11 @@ public final class OnePageCRM {
 
     public static OnePageCRM setCustomUrl(String customUrl) {
         Request.setCustomUrl(customUrl);
+        return getInstance();
+    }
+
+    public static OnePageCRM setComplexAuth(boolean complexAuth) {
+        COMPLEX_AUTH = complexAuth;
         return getInstance();
     }
 }
