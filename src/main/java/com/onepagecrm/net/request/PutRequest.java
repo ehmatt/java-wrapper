@@ -1,8 +1,11 @@
 package com.onepagecrm.net.request;
 
+import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.models.Account;
-import com.onepagecrm.net.Authentication;
+import com.onepagecrm.net.BasicAuthData;
+import com.onepagecrm.net.OnePageAuthData;
 
+@SuppressWarnings({"WeakerAccess", "UnusedReturnValue"})
 public class PutRequest extends SignedRequest {
 
     /**
@@ -27,7 +30,10 @@ public class PutRequest extends SignedRequest {
     public PutRequest(String endpoint) {
         setType();
         setEndpointUrl(endpoint);
-        authData = new Authentication(Account.loggedInUser, Request.PUT, endpointUrl, "");
+        setAuthData((!OnePageCRM.COMPLEX_AUTH) ?
+                new BasicAuthData(Account.loggedInUser) :
+                new OnePageAuthData(Account.loggedInUser, Request.PUT, endpointUrl, ""));
+        setAuthData(new BasicAuthData(Account.loggedInUser));
     }
 
     @Override
@@ -42,6 +48,8 @@ public class PutRequest extends SignedRequest {
 
     public void authenticate() {
         setRequestBody();
-        authData = new Authentication(Account.loggedInUser, Request.PUT, endpointUrl, requestBody);
+        setAuthData((!OnePageCRM.COMPLEX_AUTH) ?
+                new BasicAuthData(Account.loggedInUser) :
+                new OnePageAuthData(Account.loggedInUser, Request.PUT, endpointUrl, requestBody));
     }
 }

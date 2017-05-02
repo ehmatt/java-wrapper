@@ -114,6 +114,8 @@ public abstract class Request {
     protected static final String X_AUTH = "X-OnePageCRM-AUTH";
     protected static final String X_SOURCE = "X-OnePageCRM-SOURCE";
 
+    protected static final String AUTHORIZATION = "Authorization";
+
     protected HttpURLConnection connection;
 
     public abstract void setType();

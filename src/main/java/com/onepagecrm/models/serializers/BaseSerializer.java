@@ -42,6 +42,8 @@ public class BaseSerializer {
     // CONTACT TAGS
     public static final String CONTACTS_TAG = "contacts";
     public static final String CONTACT_TAG = "contact";
+    public static final String LINKED_CONTACTS_TAG = "linked_contacts";
+    public static final String LINKED_CONTACT_TAG = "linked_contact";
     public static final String ID_TAG = "id";
     public static final String CONTACT_TITLES_TAG = "contact_titles";
     public static final String CONTACT_TITLE_TAG = "contact_title";
@@ -62,6 +64,7 @@ public class BaseSerializer {
     public static final String CONTACT_PHOTO_TAG = "contact_photo";
     public static final String STAR_TAG = "star";
     public static final String UNSTAR_TAG = "unstar";
+    public static final String LINKED_WITH_TAG = "linked_with";
 
     // CONTACT POINT TAGS
     public static final String PHONES_TAG = "phones";
