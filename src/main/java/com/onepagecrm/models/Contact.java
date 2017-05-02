@@ -20,6 +20,7 @@ import com.onepagecrm.net.request.PutRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -77,6 +78,8 @@ public class Contact extends ApiResource implements Serializable {
     private List<Note> notes;
     private List<Call> calls;
     private Company company;
+    private List<String> linkedWithIds;
+    private String linkedWithName;
 
     public Contact save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -159,9 +162,10 @@ public class Contact extends ApiResource implements Serializable {
     public DeleteResult delete() throws OnePageException {
         Request request = new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id), null);
         Response response = request.send();
-        final String responseBody = response.getResponseBody();
+        String responseBody = response.getResponseBody();
+        DeleteResult deleteResult = DeleteResultSerializer.fromString(this.id, responseBody);
         LoginSerializer.updateDynamicResources(responseBody);
-        return DeleteResultSerializer.fromString(this.id, responseBody);
+        return deleteResult;
     }
 
     public Contact undoDeletion() throws OnePageException {
@@ -192,7 +196,10 @@ public class Contact extends ApiResource implements Serializable {
                 ContactSplitSerializer.toJsonObject(newCompanyName)
         );
         Response response = request.send();
-        return ContactSerializer.fromString(response.getResponseBody());
+        String responseBody = response.getResponseBody();
+        Contact contact = ContactSerializer.fromString(responseBody);
+        LoginSerializer.updateDynamicResources(responseBody);
+        return contact;
     }
 
     private String subEndpoint(String subEndpoint) {
@@ -580,6 +587,30 @@ public class Contact extends ApiResource implements Serializable {
 
     public Contact setCompany(Company company) {
         this.company = company;
+        return this;
+    }
+
+    public Contact setLinkedWithName(String linkedWithName) {
+        this.linkedWithName = linkedWithName;
+        return this;
+    }
+
+    public String getLinkedWithName() {
+        return linkedWithName;
+    }
+
+    public List<String> getLinkedWithIds() {
+        return linkedWithIds;
+    }
+
+    public Contact setLinkedWithIds(List<String> linkedWithIds) {
+        this.linkedWithIds = linkedWithIds;
+        return this;
+    }
+
+    public Contact setLinkedWithId(String linkedWithId) {
+        if (this.linkedWithIds == null) this.linkedWithIds = new ArrayList<>();
+        this.linkedWithIds.add(linkedWithId);
         return this;
     }
 }
