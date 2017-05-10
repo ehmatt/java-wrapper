@@ -114,7 +114,21 @@ public class Company extends ApiResource implements Serializable {
         Request request = new PostRequest(
                 endpoint,
                 null,
-                CompanySerializer.toJsonObject(contactId)
+                CompanySerializer.toJsonObject(contactId, null)
+        );
+        Response response = request.send();
+        String responseBody = response.getResponseBody();
+        LinkedContact linkedContact = LinkedContactSerializer.fromString(responseBody);
+        LoginSerializer.updateDynamicResources(responseBody);
+        return linkedContact;
+    }
+
+    public static LinkedContact linkContact(String companyId, String contactId, String linkedWithId) throws OnePageException {
+        String endpoint = LINKED_CONTACTS_ENDPOINT.replace("{id}", companyId);
+        Request request = new PostRequest(
+                endpoint,
+                null,
+                CompanySerializer.toJsonObject(contactId, linkedWithId)
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();

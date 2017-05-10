@@ -96,10 +96,13 @@ public class CompanySerializer extends BaseSerializer {
         return companies;
     }
 
-    public static String toJsonObject(String contactId) {
+    public static String toJsonObject(String contactId, String linkedWithId) {
         JSONObject jsonObject = new JSONObject();
         if (contactId != null && !contactId.isEmpty()) {
             addJsonStringValue(contactId, jsonObject, CONTACT_ID_TAG);
+        }
+        if (linkedWithId != null && !linkedWithId.isEmpty()) {
+            addJsonStringValue(linkedWithId, jsonObject, LINKED_WITH_TAG);
         }
         return jsonObject.toString();
     }
