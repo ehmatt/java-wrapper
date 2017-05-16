@@ -151,9 +151,8 @@ public class ActionSerializer extends BaseSerializer {
             );
             addJsonStringValue(action.getStatus().toString(), actionObject, STATUS_TAG);
             switch (action.getStatus()) {
-                case ASAP:
-                    break;
                 case DATE:
+                case QUEUED_WITH_DATE:
                     addJsonStringValue(
                             DateSerializer.toFormattedDateString(action.getDate()),
                             actionObject,
@@ -171,10 +170,6 @@ public class ActionSerializer extends BaseSerializer {
                             actionObject,
                             EXACT_TIME_TAG
                     );
-                    break;
-                case WAITING:
-                    break;
-                case QUEUED:
                     break;
             }
         }
