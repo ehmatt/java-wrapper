@@ -176,6 +176,8 @@ public class Action extends ApiResource implements Serializable {
         calendar.setTime(this.date == null ? new Date() : this.date);
         calendar.add(Calendar.DATE, predefined.getDays());
         this.setDate(calendar.getTime());
+        calendar.set(Calendar.HOUR_OF_DAY, 9);
+        this.setExactTime(calendar.getTime());
         return this;
     }
 
