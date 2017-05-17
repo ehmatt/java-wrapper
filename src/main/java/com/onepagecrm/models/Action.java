@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class Action extends ApiResource implements Serializable {
@@ -169,14 +170,24 @@ public class Action extends ApiResource implements Serializable {
         return new PredefinedActionList(PredefinedActionSerializer.fromString(response.getResponseBody()));
     }
 
-    public Action promotePredefined(PredefinedAction predefined) {
+    /**
+     * Caution - TimeZone is UTC and will not function as expected if using something different.
+     *
+     * @param predefined - PredefinedAction to be promoted.
+     * @return The current action which has taken on the text and date of the PredefinedAction.
+     */
+    public Action promote(PredefinedAction predefined) {
         this.setText(predefined.getText());
         // Add the extra days to the date of the action.
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.setTime(this.date == null ? new Date() : this.date);
         calendar.add(Calendar.DATE, predefined.getDays());
         this.setDate(calendar.getTime());
+        // Add the extra days to the exact time for Date & Time.
         calendar.set(Calendar.HOUR_OF_DAY, 9);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
         this.setExactTime(calendar.getTime());
         return this;
     }
