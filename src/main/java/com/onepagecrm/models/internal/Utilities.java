@@ -38,6 +38,10 @@ public class Utilities {
         return NULL.equalsIgnoreCase(toBeChecked) ? null : toBeChecked;
     }
 
+    public static String nullToEmpty(String toBeChecked) {
+        return notNullOrEmpty(toBeChecked) ? toBeChecked : "";
+    }
+
     public static String capitalize(String word) {
         if (notNullOrEmpty(word))
             return Character.toString(word.charAt(0)).toUpperCase() + word.substring(1);
