@@ -3,7 +3,6 @@ package com.onepagecrm.models.serializers;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Company;
 import com.onepagecrm.models.CustomField;
-import com.onepagecrm.models.LinkedContact;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -98,12 +97,8 @@ public class CompanySerializer extends BaseSerializer {
 
     public static String toJsonObject(String contactId, String linkedWithId) {
         JSONObject jsonObject = new JSONObject();
-        if (contactId != null && !contactId.isEmpty()) {
-            addJsonStringValue(contactId, jsonObject, CONTACT_ID_TAG);
-        }
-        if (linkedWithId != null && !linkedWithId.isEmpty()) {
-            addJsonStringValue(linkedWithId, jsonObject, LINKED_WITH_TAG);
-        }
+        addJsonStringValue(contactId, jsonObject, CONTACT_ID_TAG);
+        addJsonStringValue(linkedWithId, jsonObject, LINKED_WITH_TAG);
         return jsonObject.toString();
     }
 
