@@ -149,28 +149,30 @@ public class ActionSerializer extends BaseSerializer {
                     actionObject,
                     MODIFIED_AT_TAG
             );
-            addJsonStringValue(action.getStatus().toString(), actionObject, STATUS_TAG);
-            switch (action.getStatus()) {
-                case DATE:
-                case QUEUED_WITH_DATE:
-                    addJsonStringValue(
-                            DateSerializer.toFormattedDateString(action.getDate()),
-                            actionObject,
-                            DATE_TAG
-                    );
-                    break;
-                case DATE_TIME:
-                    addJsonStringValue(
-                            DateSerializer.toFormattedDateString(action.getDate()),
-                            actionObject,
-                            DATE_TAG
-                    );
-                    addJsonLongValue(
-                            DateSerializer.toTimestamp(action.getExactTime()),
-                            actionObject,
-                            EXACT_TIME_TAG
-                    );
-                    break;
+            if (action.getStatus() != null) {
+                addJsonStringValue(action.getStatus().toString(), actionObject, STATUS_TAG);
+                switch (action.getStatus()) {
+                    case DATE:
+                    case QUEUED_WITH_DATE:
+                        addJsonStringValue(
+                                DateSerializer.toFormattedDateString(action.getDate()),
+                                actionObject,
+                                DATE_TAG
+                        );
+                        break;
+                    case DATE_TIME:
+                        addJsonStringValue(
+                                DateSerializer.toFormattedDateString(action.getDate()),
+                                actionObject,
+                                DATE_TAG
+                        );
+                        addJsonLongValue(
+                                DateSerializer.toTimestamp(action.getExactTime()),
+                                actionObject,
+                                EXACT_TIME_TAG
+                        );
+                        break;
+                }
             }
         }
         return actionObject.toString();
