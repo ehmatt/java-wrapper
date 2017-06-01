@@ -3,7 +3,7 @@ package com.onepagecrm.net;
 import com.onepagecrm.BaseTest;
 import com.onepagecrm.models.User;
 
-public class AuthenticationTest extends BaseTest {
+public class OnePageAuthDataTest extends BaseTest {
 
     private User loggedInUser;
 
@@ -23,8 +23,8 @@ public class AuthenticationTest extends BaseTest {
 
         // Set up fabricated User.
         loggedInUser = new User()
-                .setId("556cb8b61787fa02e000047e")
-                .setAuthKey("WqLLs1n/Y3SvOpGg5CNOpdKy74GkGI6lnhwSfYmgNl4=")
+                .setId("559cd1866f6e656707000001")
+                .setAuthKey("xbigujk/IWwGwz0ojZAXnl/jOiQ3yKnBAFOWM6F9c88=")
                 .setFirstName("Cillian")
                 .setLastName("Myles");
     }
@@ -34,7 +34,7 @@ public class AuthenticationTest extends BaseTest {
      */
     public void testCalculateSignature_Login() {
         String loginUrl = "https://app.onepagecrm.com/api/v3/login.json";
-        Authentication loginAuthSig = new Authentication("POST", loginUrl, "");
+        OnePageAuthData loginAuthSig = new OnePageAuthData("POST", loginUrl, "");
         assertNull("Login signature incorrectly constructed", loginAuthSig.getSignature());
     }
 
@@ -45,10 +45,10 @@ public class AuthenticationTest extends BaseTest {
     public void testCalculateSignature_ActionStream() {
         String actionStreamUrl = "https://app.onepagecrm.com/api/v3/action_stream.json";
 
-        Authentication actionStreamAuthSig = new Authentication(loggedInUser, 1435850641, "GET",
+        OnePageAuthData actionStreamAuthSig = new OnePageAuthData(loggedInUser, 1435850641, "GET",
                 actionStreamUrl, "");
 
-        assertEquals("d3aefe439817aa7be31d8aecf5368b0bf23e7b1b0004ea6bc3692ac8fc4d0ab4",
+        assertEquals("35f66dd6cb0d5246541590a222647c644e6925f0874c0e45688708fe2cf2e900",
                 actionStreamAuthSig.getSignature());
     }
 
@@ -59,10 +59,10 @@ public class AuthenticationTest extends BaseTest {
         String postCallUrl = "https://app.onepagecrm.com/api/v3/calls.json?contact_id=55804f6b1787fa72b400002e";
         String postCallBody = "text=&call_result=interested&contact_id=55804f6b1787fa72b400002e";
 
-        Authentication callsAuthSig = new Authentication(loggedInUser, 1435851404, "POST",
+        OnePageAuthData callsAuthSig = new OnePageAuthData(loggedInUser, 1435851404, "POST",
                 postCallUrl, postCallBody);
 
-        assertEquals("56292bace8643cd06d30d44264670acf543610fb75626449091980606163a977",
+        assertEquals("5f5f91e6954eb5e08aad92ca4de0ad16284e0efa51bf76cf062578e19e7dbf67",
                 callsAuthSig.getSignature());
     }
 
@@ -73,10 +73,10 @@ public class AuthenticationTest extends BaseTest {
         String postCallUrl = "https://app.onepagecrm.com/api/v3/calls.json?contact_id=55d5d973e57c393e8a00009c";
         String postCallBody = "{\"text\":\"JAVA\",\"call_result\":\"interested\"}";
 
-        Authentication callsAuthSig = new Authentication(loggedInUser, 1441288055, "POST",
+        OnePageAuthData callsAuthSig = new OnePageAuthData(loggedInUser, 1441288055, "POST",
                 postCallUrl, postCallBody);
 
-        assertEquals("cbb42048c9617dd4a883f17579cbf698a4222c3626dd302d372375f031b5a28b",
+        assertEquals("bab25ae744e70b0e51b670e40954a3403560163ecfcf07326d30bba897c734c0",
                 callsAuthSig.getSignature());
     }
 
@@ -87,10 +87,10 @@ public class AuthenticationTest extends BaseTest {
         String postCallUrl = "https://app.onepagecrm.com/api/v3/contacts.json";
         String postCallBody = "{\"first_name\":\"Cillian\",\"company_name\":\"Myles Inc.\",\"last_name\":\"Myles\"}";
 
-        Authentication callsAuthSig = new Authentication(loggedInUser, 1441288055, "POST",
+        OnePageAuthData callsAuthSig = new OnePageAuthData(loggedInUser, 1441288055, "POST",
                 postCallUrl, postCallBody);
 
-        assertEquals("639cab894e5ffafeaa50d9b2b5fab903eb23215c34b8b4ba518ba8381e0419f7",
+        assertEquals("c953d8c0f8b2f02eb8f7b1f6c2c6d12e26e0eb2f9eb73c7f9f5b5833f8ca0b3c",
                 callsAuthSig.getSignature());
     }
 
@@ -104,7 +104,7 @@ public class AuthenticationTest extends BaseTest {
         String endpoint = "https://app.onepagecrm.com/api/v3/firebase.json";
         String body = "{\"id\":\"584a795f9007ba7c3f6bf25f\"}";
 
-        Authentication authData = new Authentication(user, 1481280581, "DELETE",
+        OnePageAuthData authData = new OnePageAuthData(user, 1481280581, "DELETE",
                 endpoint, body);
 
         assertEquals("8e2366a8410fcb74dd4ae06dd3ae7ce05498d66eb5c326e02510f0dc8bab1b32",

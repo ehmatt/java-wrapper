@@ -1,6 +1,15 @@
 package com.onepagecrm.models.serializers;
 
-import com.onepagecrm.exceptions.*;
+import com.onepagecrm.exceptions.AuthenticationException;
+import com.onepagecrm.exceptions.BadRequestException;
+import com.onepagecrm.exceptions.ForbiddenException;
+import com.onepagecrm.exceptions.MethodNotAllowedException;
+import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.PaymentRequiredException;
+import com.onepagecrm.exceptions.PreconditionFailedException;
+import com.onepagecrm.exceptions.ResourceNotFoundException;
+import com.onepagecrm.exceptions.ServerErrorException;
+import com.onepagecrm.exceptions.ServiceUnavailableException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,17 +35,26 @@ public class ErrorSerializer extends BaseSerializer {
                 case 401:
                     exception = new AuthenticationException();
                     break;
+                case 402:
+                    exception = new PaymentRequiredException();
+                    break;
                 case 403:
                     exception = new ForbiddenException();
                     break;
                 case 404:
                     exception = new ResourceNotFoundException();
                     break;
+                case 405:
+                    exception = new MethodNotAllowedException();
+                    break;
                 case 409:
                     exception = new PreconditionFailedException();
                     break;
                 case 500:
                     exception = new ServerErrorException();
+                    break;
+                case 503:
+                    exception = new ServiceUnavailableException();
                     break;
             }
             exception

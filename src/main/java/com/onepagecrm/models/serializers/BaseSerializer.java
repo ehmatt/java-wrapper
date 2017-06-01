@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,6 +42,8 @@ public class BaseSerializer {
     // CONTACT TAGS
     public static final String CONTACTS_TAG = "contacts";
     public static final String CONTACT_TAG = "contact";
+    public static final String LINKED_CONTACTS_TAG = "linked_contacts";
+    public static final String LINKED_CONTACT_TAG = "linked_contact";
     public static final String ID_TAG = "id";
     public static final String CONTACT_TITLES_TAG = "contact_titles";
     public static final String CONTACT_TITLE_TAG = "contact_title";
@@ -56,7 +59,12 @@ public class BaseSerializer {
     public static final String IMAGE_TAG = "image";
     public static final String PENDING_DEAL_TAG = "pending_deal";
     public static final String TOTAL_PENDINGS_TAG = "total_pendings";
+    public static final String TOTAL_DEALS_COUNT_TAG = "total_deals_count";
     public static final String CLOSE_SALES_CYCLE_COMMENT_TAG = "comment";
+    public static final String CONTACT_PHOTO_TAG = "contact_photo";
+    public static final String STAR_TAG = "star";
+    public static final String UNSTAR_TAG = "unstar";
+    public static final String LINKED_WITH_TAG = "linked_with";
 
     // CONTACT POINT TAGS
     public static final String PHONES_TAG = "phones";
@@ -180,7 +188,14 @@ public class BaseSerializer {
     public static final String POPULAR_COUNTRIES_TAG = "popular_countries";
     public static final String CURRENCY_SYMBOL_TAG = "currency_symbol";
     public static final String DEFAULT_CONTACT_TYPE_TAG = "default_contact_type";
+    public static final String SEPARATOR_TAG = "separator";
+    public static final String DELIMITER_TAG = "delimiter";
     public static final String SHOW_TIDY_STREAM_TAG = "show_tidy_stream";
+    public static final String SHOW_COMPANY_FIELDS_WITH_CONTACT_TAG = "show_company_fields_with_contact";
+    public static final String SHOW_COMPANY_PHONE_TAG = "company_phone_enabled";
+    public static final String SHOW_COMPANY_URL_TAG = "company_url_enabled";
+    public static final String SHOW_COMPANY_ADDRESS_TAG = "company_address_enabled";
+    public static final String SHOW_COMPANY_DESCRIPTION_TAG = "company_description_enabled";
     public static final String TIME_WITH_AMPM_TAG = "time_with_ampm";
 
     // DEALS TAGS
@@ -284,6 +299,9 @@ public class BaseSerializer {
     public static final String PENDING_DEALS_COUNT_TAG = "pending_deals_count";
     public static final String TOTAL_PENDING_AMOUNT_TAG = "total_pending_amount";
 
+    // SPLIT
+    public static final String SPLIT_TAG = "split";
+
     /**
      * Method used to parse the base/start of response.
      *
@@ -357,14 +375,14 @@ public class BaseSerializer {
             try {
                 Object valueObject = object.get(key);
                 if (valueObject instanceof Number) {
-                    // Integers are of type Number in Java.
-                    if (valueObject instanceof Integer) {
-                        // Convert this to an Integer.
-                        valueObject = ((Number) valueObject).intValue();
+                    // Longs are of type Number in Java.
+                    if (valueObject instanceof Long) {
+                        // Convert this to a Long.
+                        valueObject = ((Number) valueObject).longValue();
                     } else {
                         // Floating point numbers are of type Number in Java.
-                        // Convert this to a Double (big Float).
-                        valueObject = ((Number) valueObject).doubleValue();
+                        // Convert this to a BigDecimal.
+                        valueObject = new BigDecimal(valueObject.toString());
                     }
                     return (Number) valueObject;
                 }
@@ -379,13 +397,13 @@ public class BaseSerializer {
     public static Number parseNumber(String numberAsString) {
         Number number = null;
         try {
-            number = Integer.valueOf(numberAsString);
+            number = Long.valueOf(numberAsString);
         } catch (NumberFormatException e) {
             try {
-                number = Double.valueOf(numberAsString);
+                number = new BigDecimal(numberAsString);
             } catch (NumberFormatException ex) {
                 LOG.severe("Not float value entered. " + e);
-                LOG.severe("Not integer value entered. " + ex);
+                LOG.severe("Not long value entered. " + ex);
             }
         }
         return number;
@@ -628,7 +646,7 @@ public class BaseSerializer {
     }
 
     /**
-     * Adds a Float value to a JSONObject with the specified key.
+     * Adds a Double value to a JSONObject with the specified key.
      *
      * @param value
      * @param object
@@ -640,6 +658,24 @@ public class BaseSerializer {
                 object.put(key, value);
             } catch (JSONException e) {
                 LOG.severe("Error serializing double value : " + value);
+                LOG.severe(e.toString());
+            }
+        }
+    }
+
+    /**
+     * Adds a Float value to a JSONObject with the specified key.
+     *
+     * @param value
+     * @param object
+     * @param key
+     */
+    public static void addJsonBigDecimalValue(BigDecimal value, JSONObject object, String key) {
+        if (value != null) {
+            try {
+                object.put(key, value);
+            } catch (JSONException e) {
+                LOG.severe("Error serializing BigDecimal value : " + value);
                 LOG.severe(e.toString());
             }
         }

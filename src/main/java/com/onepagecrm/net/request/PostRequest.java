@@ -1,10 +1,13 @@
 package com.onepagecrm.net.request;
 
+import com.onepagecrm.OnePageCRM;
+import com.onepagecrm.models.Account;
+import com.onepagecrm.net.BasicAuthData;
+import com.onepagecrm.net.OnePageAuthData;
+
 import java.util.Map;
 
-import com.onepagecrm.models.Account;
-import com.onepagecrm.net.Authentication;
-
+@SuppressWarnings({"WeakerAccess", "UnusedReturnValue", "unused"})
 public class PostRequest extends SignedRequest {
 
     /**
@@ -57,6 +60,8 @@ public class PostRequest extends SignedRequest {
 
     public void authenticate() {
         setRequestBody();
-        authData = new Authentication(Account.loggedInUser, Request.POST, endpointUrl, requestBody);
+        setAuthData((!OnePageCRM.COMPLEX_AUTH) ?
+                new BasicAuthData(Account.loggedInUser) :
+                new OnePageAuthData(Account.loggedInUser, Request.POST, endpointUrl, requestBody));
     }
 }

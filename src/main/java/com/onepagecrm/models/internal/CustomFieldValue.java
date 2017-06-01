@@ -4,21 +4,22 @@ import com.onepagecrm.models.serializers.BaseSerializer;
 import com.onepagecrm.models.serializers.CustomFieldValueSerializer;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class CustomFieldValue implements Serializable {
 
     private String stringValue;
-    private Integer integerValue;
-    private Double doubleValue;
+    private Long longValue;
+    private BigDecimal floatingValue;
     private String[] stringArrayValue;
 
     public Serializable getValue() {
         if (stringValue != null) {
             return this.stringValue;
-        } else if (integerValue != null) {
-            return this.integerValue;
-        } else if (doubleValue != null) {
-            return this.doubleValue;
+        } else if (longValue != null) {
+            return this.longValue;
+        } else if (floatingValue != null) {
+            return this.floatingValue;
         } else if (stringArrayValue != null) {
             return this.stringArrayValue;
         }
@@ -29,10 +30,10 @@ public class CustomFieldValue implements Serializable {
         String retString = "";
         if (stringValue != null) {
             retString = this.stringValue;
-        } else if (integerValue != null) {
-            retString = String.valueOf(this.integerValue);
-        } else if (doubleValue != null) {
-            retString = String.valueOf(this.doubleValue);
+        } else if (longValue != null) {
+            retString = String.valueOf(this.longValue);
+        } else if (floatingValue != null) {
+            retString = String.valueOf(this.floatingValue);
         } else if (stringArrayValue != null) {
             retString = BaseSerializer.toCommaSeparatedString(this.stringArrayValue);
         }
@@ -43,11 +44,11 @@ public class CustomFieldValue implements Serializable {
         if (object instanceof String) {
             this.setValue((String) object);
         }
-        if (object instanceof Integer) {
-            this.setValue((Integer) object);
+        if (object instanceof Long) {
+            this.setValue((Long) object);
         }
-        if (object instanceof Double) {
-            this.setValue((Double) object);
+        if (object instanceof BigDecimal) {
+            this.setValue((BigDecimal) object);
         }
         if (object instanceof String[]) {
             this.setValue((String[]) object);
@@ -62,32 +63,32 @@ public class CustomFieldValue implements Serializable {
 
     public Serializable setValue(String stringValue) {
         this.stringValue = stringValue;
-        this.integerValue = null;
-        this.doubleValue = null;
+        this.longValue = null;
+        this.floatingValue = null;
         this.stringArrayValue = null;
         return getValue();
     }
 
-    public Serializable setValue(Integer integerValue) {
+    public Serializable setValue(Long longValue) {
         this.stringValue = null;
-        this.integerValue = integerValue;
-        this.doubleValue = null;
+        this.longValue = longValue;
+        this.floatingValue = null;
         this.stringArrayValue = null;
         return getValue();
     }
 
-    public Serializable setValue(Double doubleValue) {
+    public Serializable setValue(BigDecimal floatingValue) {
         this.stringValue = null;
-        this.integerValue = null;
-        this.doubleValue = doubleValue;
+        this.longValue = null;
+        this.floatingValue = floatingValue;
         this.stringArrayValue = null;
         return getValue();
     }
 
     public Serializable setValue(String[] stringArrayValue) {
         this.stringValue = null;
-        this.integerValue = null;
-        this.doubleValue = null;
+        this.longValue = null;
+        this.floatingValue = null;
         this.stringArrayValue = stringArrayValue;
         return getValue();
     }

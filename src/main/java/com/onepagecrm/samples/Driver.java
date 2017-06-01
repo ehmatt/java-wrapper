@@ -40,7 +40,7 @@ public class Driver {
             }
         }
 
-        OnePageCRM.setServer(Request.APP_SERVER);
+        OnePageCRM.setServer(Request.DEV_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
@@ -49,6 +49,7 @@ public class Driver {
         LOG.info("Logged in User : " + loggedInUser);
 
         LOG.info("User's Team : " + Account.team);
+        LOG.info("User's Settings : " + Account.settings);
         LOG.info("User's Statuses : " + loggedInUser.getAccount().statuses);
         LOG.info("User's Lead Sources : " + loggedInUser.getAccount().leadSources);
         LOG.info("User's Custom Fields : " + loggedInUser.getAccount().customFields);
@@ -60,5 +61,11 @@ public class Driver {
         LOG.info("User's Predefined Actions : " + loggedInUser.getAccount().predefinedActions);
         LOG.info("User's Contact Titles : " + loggedInUser.getAccount().contactTitles);
         LOG.info("User's Account Rights : " + loggedInUser.getAccountRights());
+
+        loggedInUser.actionStream();
+
+        loggedInUser.contacts();
+
+        loggedInUser.pipeline();
     }
 }

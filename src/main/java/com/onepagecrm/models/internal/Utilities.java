@@ -16,6 +16,17 @@ public class Utilities {
     private static final Logger LOG = Logger.getLogger(Utilities.class.getName());
     private static final String NULL = "null";
 
+    /**
+     * Method acquires the current Unix-style time.
+     * <p/>
+     * Unix-style time is the amount of milliseconds elapsed since 01 Jan 1970.
+     *
+     * @return
+     */
+    public static int getUnixTime() {
+        return (int) (System.currentTimeMillis() / 1000L);
+    }
+
     /* Text Utilities */
 
     public static boolean notNullOrEmpty(String toBeChecked) {

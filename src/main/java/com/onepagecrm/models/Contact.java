@@ -4,9 +4,11 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.CloseSalesCycle;
 import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.SalesCycleClosure;
+import com.onepagecrm.models.serializers.BaseSerializer;
 import com.onepagecrm.models.serializers.CloseSalesCycleSerializer;
 import com.onepagecrm.models.serializers.ContactPhotoSerializer;
 import com.onepagecrm.models.serializers.ContactSerializer;
+import com.onepagecrm.models.serializers.ContactSplitSerializer;
 import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.models.serializers.LoginSerializer;
 import com.onepagecrm.net.ApiResource;
@@ -18,6 +20,7 @@ import com.onepagecrm.net.request.PutRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +62,7 @@ public class Contact extends ApiResource implements Serializable {
     private String leadSourceId;
     private Boolean hasPendingDeal;
     private Double totalPending;
+    private int totalDealsCount;
     private String type;
     private String companyName;
     private String companyId;
@@ -74,6 +78,8 @@ public class Contact extends ApiResource implements Serializable {
     private List<Note> notes;
     private List<Call> calls;
     private Company company;
+    private List<String> linkedWithIds;
+    private String linkedWithName;
 
     public Contact save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -131,7 +137,7 @@ public class Contact extends ApiResource implements Serializable {
 
     public Contact addPhoto(String base64EncodedImageString) throws OnePageException {
         Request request = new PutRequest(
-                addContactPhotoToEndpoint(CONTACTS_ENDPOINT),
+                subEndpoint(BaseSerializer.CONTACT_PHOTO_TAG),
                 null,
                 ContactPhotoSerializer.toJsonObject(base64EncodedImageString)
         );
@@ -156,9 +162,10 @@ public class Contact extends ApiResource implements Serializable {
     public DeleteResult delete() throws OnePageException {
         Request request = new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id), null);
         Response response = request.send();
-        final String responseBody = response.getResponseBody();
+        String responseBody = response.getResponseBody();
+        DeleteResult deleteResult = DeleteResultSerializer.fromString(this.id, responseBody);
         LoginSerializer.updateDynamicResources(responseBody);
-        return DeleteResultSerializer.fromString(this.id, responseBody);
+        return deleteResult;
     }
 
     public Contact undoDeletion() throws OnePageException {
@@ -171,23 +178,36 @@ public class Contact extends ApiResource implements Serializable {
     }
 
     public Contact starContact() throws OnePageException {
-        Request request = new PutRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/" + "star");
+        Request request = new PutRequest(subEndpoint(BaseSerializer.STAR_TAG));
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
     public Contact unStarContact() throws OnePageException {
-        Request request = new PutRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/" + "unstar");
+        Request request = new PutRequest(subEndpoint(BaseSerializer.UNSTAR_TAG));
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
-    private static String addIdToEndpoint(String endpoint, String id) {
-        return endpoint + "/" + id;
+    public Contact split(String newCompanyName) throws OnePageException {
+        Request request = new PutRequest(
+                subEndpoint(BaseSerializer.SPLIT_TAG),
+                null,
+                ContactSplitSerializer.toJsonObject(newCompanyName)
+        );
+        Response response = request.send();
+        String responseBody = response.getResponseBody();
+        Contact contact = ContactSerializer.fromString(responseBody);
+        LoginSerializer.updateDynamicResources(responseBody);
+        return contact;
     }
 
-    private String addContactPhotoToEndpoint(String endpoint) {
-        return addIdToEndpoint(endpoint, this.id) + "/contact_photo";
+    private String subEndpoint(String subEndpoint) {
+        return addIdToEndpoint(CONTACTS_ENDPOINT, this.id) + "/" + subEndpoint;
+    }
+
+    private static String addIdToEndpoint(String endpoint, String id) {
+        return endpoint + "/" + id;
     }
 
     public Contact() {
@@ -426,6 +446,15 @@ public class Contact extends ApiResource implements Serializable {
         return this;
     }
 
+    public int getTotalDealsCount() {
+        return totalDealsCount;
+    }
+
+    public Contact setTotalDealsCount(int totalDealsCount) {
+        this.totalDealsCount = totalDealsCount;
+        return this;
+    }
+
     public String getType() {
         return type;
     }
@@ -558,6 +587,30 @@ public class Contact extends ApiResource implements Serializable {
 
     public Contact setCompany(Company company) {
         this.company = company;
+        return this;
+    }
+
+    public Contact setLinkedWithName(String linkedWithName) {
+        this.linkedWithName = linkedWithName;
+        return this;
+    }
+
+    public String getLinkedWithName() {
+        return linkedWithName;
+    }
+
+    public List<String> getLinkedWithIds() {
+        return linkedWithIds;
+    }
+
+    public Contact setLinkedWithIds(List<String> linkedWithIds) {
+        this.linkedWithIds = linkedWithIds;
+        return this;
+    }
+
+    public Contact setLinkedWithId(String linkedWithId) {
+        if (this.linkedWithIds == null) this.linkedWithIds = new ArrayList<>();
+        this.linkedWithIds.add(linkedWithId);
         return this;
     }
 }

@@ -95,6 +95,13 @@ public class CompanySerializer extends BaseSerializer {
         return companies;
     }
 
+    public static String toJsonObject(String contactId, String linkedWithId) {
+        JSONObject jsonObject = new JSONObject();
+        addJsonStringValue(contactId, jsonObject, CONTACT_ID_TAG);
+        addJsonStringValue(linkedWithId, jsonObject, LINKED_WITH_TAG);
+        return jsonObject.toString();
+    }
+
     public static String toJsonObject(Company company) {
         JSONObject companyObject = new JSONObject();
         if (company != null) {

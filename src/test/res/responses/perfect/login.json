@@ -1,7 +1,7 @@
 {
   "status": 0,
-  "message": "OK",
-  "timestamp": 1475587232,
+  "message": "Created",
+  "timestamp": 1493026395,
   "data": {
     "user_id": "559cd1866f6e656707000001",
     "auth_key": "xbigujk/IWwGwz0ojZAXnl/jOiQ3yKnBAFOWM6F9c88=",
@@ -16,7 +16,7 @@
           "account_owner",
           "admin"
         ],
-        "photo_url": "https://onepagecrm-ud2-us-west-1.s3-us-west-1.amazonaws.com/559cd1866f6e656707000001/1467713634000/577b88629007ba32a088880a.png",
+        "photo_url": "https://onepagecrm-ud2-us-west-1.s3-us-west-1.amazonaws.com/559cd1866f6e656707000001/1487329884000/58a6da5c9007ba3ae10f286e.png",
         "bcc_email": "559cd1866f6e656707000000@users.onepagecrm.com"
       }
     },
@@ -33,7 +33,8 @@
             "edit_target",
             "delete_contacts",
             "pipeline",
-            "export"
+            "export",
+            "private_contacts"
           ],
           "photo_url": ""
         }
@@ -47,9 +48,9 @@
           "company_name": "Myles Inc.",
           "account_rights": [
             "activity",
-            "edit_target",
-            "pipeline",
-            "export"
+            "delete_contacts",
+            "export",
+            "private_contacts"
           ],
           "photo_url": ""
         }
@@ -61,17 +62,20 @@
         "type": "new_task",
         "hour": 6
       },
-      "time_zone": "Europe/London",
+      "time_zone": "Europe/Dublin",
       "date_format": "%d/%m/%Y",
+      "time_with_ampm": true,
       "listing_size": 100,
       "currency": "EUR",
       "currency_symbol": "€",
+      "separator": ".",
+      "delimiter": ",",
       "popular_countries": [
-        "IE",
         "US",
-        "AL",
-        "AI",
-        "AE"
+        "IE",
+        "TT",
+        "IR",
+        "AL"
       ],
       "deal_stages": [
         {
@@ -97,7 +101,19 @@
       ],
       "default_contact_type": "individual",
       "show_tidy_stream": false,
-      "show_company_fields_with_contact": false
+      "show_company_fields_with_contact": true,
+      "company_phone_enabled": true,
+      "company_url_enabled": true,
+      "company_address_enabled": true,
+      "company_description_enabled": true,
+      "send_push_notifications": true,
+      "clipper_beta": false
+    },
+    "cost_setup": {
+      "cost_enabled": false,
+      "cost_required": false,
+      "commission_base": "amount",
+      "commission_percentage": "10.0"
     },
     "custom_fields": [
       {
@@ -172,7 +188,7 @@
       {
         "company_field": {
           "id": "578bbeb79007ba5344fb68eb",
-          "name": "TestSingleLine",
+          "name": "CompanySingleLine",
           "type": "single_line_text",
           "position": 0
         }
@@ -180,7 +196,7 @@
       {
         "company_field": {
           "id": "578bbf109007ba5344fb68ec",
-          "name": "TestMultiLine",
+          "name": "CompanyMultiLine",
           "type": "multi_line_text",
           "position": 1
         }
@@ -188,7 +204,7 @@
       {
         "company_field": {
           "id": "578bbf1e9007ba5344fb68ed",
-          "name": "TestDate",
+          "name": "CompanyDate",
           "type": "date",
           "position": 2
         }
@@ -196,7 +212,7 @@
       {
         "company_field": {
           "id": "578bbf259007ba5344fb68ee",
-          "name": "TestNumber",
+          "name": "CompanyNumber",
           "type": "number",
           "position": 3
         }
@@ -204,7 +220,7 @@
       {
         "company_field": {
           "id": "578bbf389007ba5344fb68ef",
-          "name": "TestDropdown",
+          "name": "CompanyDropdown",
           "type": "select_box",
           "position": 4,
           "choices": [
@@ -217,7 +233,7 @@
       {
         "company_field": {
           "id": "578bbf4f9007ba5344fb68f0",
-          "name": "TestMultipleChoice",
+          "name": "CompanyMultipleChoice",
           "type": "multiple_choice",
           "position": 5,
           "choices": [
@@ -228,6 +244,7 @@
         }
       }
     ],
+    "deal_fields": [],
     "filters": [
       {
         "filter": {

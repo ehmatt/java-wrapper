@@ -1,9 +1,15 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.serializers.CompanySerializer;
+import com.onepagecrm.models.serializers.DeleteResultSerializer;
+import com.onepagecrm.models.serializers.LinkedContactSerializer;
+import com.onepagecrm.models.serializers.LinkedContactsSerializer;
+import com.onepagecrm.models.serializers.LoginSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.DeleteRequest;
 import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.PutRequest;
@@ -15,9 +21,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
+
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
  */
+@SuppressWarnings({"unused", "WeakerAccess", "SameParameterValue"})
 public class Company extends ApiResource implements Serializable {
 
     private String id;
@@ -49,7 +58,9 @@ public class Company extends ApiResource implements Serializable {
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
-        return CompanySerializer.fromString(responseBody);
+        Company company = CompanySerializer.fromString(responseBody);
+        LoginSerializer.updateDynamicResources(responseBody);
+        return company;
     }
 
     private Company update() throws OnePageException {
@@ -60,7 +71,9 @@ public class Company extends ApiResource implements Serializable {
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
-        return CompanySerializer.fromString(responseBody);
+        Company company = CompanySerializer.fromString(responseBody);
+        LoginSerializer.updateDynamicResources(responseBody);
+        return company;
     }
 
     public static Company getSingleCompany(String companyId) throws OnePageException {
@@ -83,7 +96,49 @@ public class Company extends ApiResource implements Serializable {
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
-        return CompanySerializer.fromString(responseBody);
+        Company company = CompanySerializer.fromString(responseBody);
+        LoginSerializer.updateDynamicResources(responseBody);
+        return company;
+    }
+
+    public ContactList getLinkedContacts() throws OnePageException {
+        return getLinkedContacts(this.id);
+    }
+
+    public static ContactList getLinkedContacts(String companyId) throws OnePageException {
+        String endpoint = LINKED_CONTACTS_ENDPOINT.replace("{id}", companyId);
+        Request request = new GetRequest(endpoint, null);
+        Response response = request.send();
+        String responseBody = response.getResponseBody();
+        return LinkedContactsSerializer.fromString(responseBody);
+    }
+
+    public static LinkedContact linkContact(String companyId, String contactId) throws OnePageException {
+        return linkContact(companyId, contactId, null);
+    }
+
+    public static LinkedContact linkContact(String companyId, String contactId, String linkedWithId) throws OnePageException {
+        String endpoint = LINKED_CONTACTS_ENDPOINT.replace("{id}", companyId);
+        Request request = new PostRequest(
+                endpoint,
+                null,
+                CompanySerializer.toJsonObject(contactId, linkedWithId)
+        );
+        Response response = request.send();
+        String responseBody = response.getResponseBody();
+        LinkedContact linkedContact = LinkedContactSerializer.fromString(responseBody);
+        LoginSerializer.updateDynamicResources(responseBody);
+        return linkedContact;
+    }
+
+    public static DeleteResult unlinkContact(String companyId, String contactId) throws OnePageException {
+        String endpoint = LINKED_CONTACTS_ENDPOINT.replace("{id}", companyId);
+        Request request = new DeleteRequest(addIdToEndpoint(endpoint, contactId), null);
+        Response response = request.send();
+        String responseBody = response.getResponseBody();
+        DeleteResult deleteResult = DeleteResultSerializer.fromString(contactId, responseBody);
+        LoginSerializer.updateDynamicResources(responseBody);
+        return deleteResult;
     }
 
     private static String addIdToEndpoint(String endpoint, String id) {
@@ -104,6 +159,18 @@ public class Company extends ApiResource implements Serializable {
     @Override
     public String toString() {
         return CompanySerializer.toJsonObject(this);
+    }
+
+    public boolean dataToLoseWithDeletion() {
+        return isValid() && (notNullOrEmpty(description) ||
+                notNullOrEmpty(phone) ||
+                notNullOrEmpty(url) ||
+                companyFields != null && !companyFields.isEmpty() ||
+                address != null && address.isValid());
+    }
+
+    public boolean multiContact() {
+        return contactsCount != null && contactsCount > 1;
     }
 
     public String getName() {

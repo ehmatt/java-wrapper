@@ -8,10 +8,10 @@ import com.onepagecrm.models.internal.DeleteResult;
  */
 public class DeleteResultSerializer extends BaseSerializer {
 
-    public static DeleteResult fromString(String pResourceId, String responseBody) throws OnePageException {
+    public static DeleteResult fromString(String resourceId, String responseBody) throws OnePageException {
         try {
             BaseSerializer.fromString(responseBody);
-            return new DeleteResult(pResourceId, true);
+            return new DeleteResult(resourceId, true);
 
         } catch (ClassCastException e) {
             throw (OnePageException) BaseSerializer.fromString(responseBody);
