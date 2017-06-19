@@ -17,6 +17,7 @@ public class CustomField extends ApiResource implements Serializable {
 
     public static final String CF_TYPE_CONTACT = "contact";
     public static final String CF_TYPE_COMPANY = "company";
+    public static final String CF_TYPE_DEAL = "deal";
 
     public static final String TYPE_ANNIVERSARY = "anniversary";
     public static final String TYPE_DATE = "date";
@@ -57,6 +58,18 @@ public class CustomField extends ApiResource implements Serializable {
         Response response = request.send();
         String responseBody = response.getResponseBody();
         return CustomFieldSerializer.fromString(responseBody, CF_TYPE_COMPANY);
+    }
+
+    public static List<CustomField> listDeals() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("per_page", 100);
+        Request request = new GetRequest(
+                DEAL_FIELDS_ENDPOINT,
+                Query.fromParams(params)
+        );
+        Response response = request.send();
+        String responseBody = response.getResponseBody();
+        return CustomFieldSerializer.fromString(responseBody, CF_TYPE_DEAL);
     }
 
     public String save() {

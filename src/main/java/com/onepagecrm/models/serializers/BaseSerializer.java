@@ -302,6 +302,10 @@ public class BaseSerializer {
     // SPLIT
     public static final String SPLIT_TAG = "split";
 
+    // DEAL FIELDS
+    public static final String DEAL_FIELD_TAG = "deal_field";
+    public static final String DEAL_FIELDS_TAG = "deal_fields";
+
     /**
      * Method used to parse the base/start of response.
      *

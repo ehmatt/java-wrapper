@@ -38,6 +38,7 @@ public class CustomFieldSerializer extends BaseSerializer {
 
     public static List<CustomField> fromJsonArray(JSONArray customFieldArray, String cfType) {
         List<CustomField> customFields = new ArrayList<>();
+        if (customFieldArray == null) return customFields;
         for (int i = 0; i < customFieldArray.length(); i++) {
             try {
                 JSONObject outerObject = customFieldArray.getJSONObject(i);
@@ -160,10 +161,12 @@ public class CustomFieldSerializer extends BaseSerializer {
     public static String getTagSingle(String cfType) {
         if (!notNullOrEmpty(cfType)) return null;
         switch (cfType) {
-            case CustomField.CF_TYPE_COMPANY:
-                return BaseSerializer.COMPANY_FIELD_TAG;
             case CustomField.CF_TYPE_CONTACT:
                 return BaseSerializer.CUSTOM_FIELD_TAG;
+            case CustomField.CF_TYPE_COMPANY:
+                return BaseSerializer.COMPANY_FIELD_TAG;
+            case CustomField.CF_TYPE_DEAL:
+                return BaseSerializer.DEAL_FIELD_TAG;
         }
         return "";
     }
@@ -171,10 +174,12 @@ public class CustomFieldSerializer extends BaseSerializer {
     public static String getTagPlural(String cfType) {
         if (!notNullOrEmpty(cfType)) return null;
         switch (cfType) {
-            case CustomField.CF_TYPE_COMPANY:
-                return BaseSerializer.COMPANY_FIELDS_TAG;
             case CustomField.CF_TYPE_CONTACT:
                 return BaseSerializer.CUSTOM_FIELDS_TAG;
+            case CustomField.CF_TYPE_COMPANY:
+                return BaseSerializer.COMPANY_FIELDS_TAG;
+            case CustomField.CF_TYPE_DEAL:
+                return BaseSerializer.DEAL_FIELDS_TAG;
         }
         return "";
     }
