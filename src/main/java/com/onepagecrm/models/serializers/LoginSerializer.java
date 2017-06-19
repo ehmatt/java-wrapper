@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 
 import static com.onepagecrm.models.Account.loggedInUser;
 
+@SuppressWarnings("WeakerAccess")
 public class LoginSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(LoginSerializer.class.getName());
@@ -70,8 +71,8 @@ public class LoginSerializer extends BaseSerializer {
         }
     }
 
-    private static void addSettings(JSONObject settingsObject) {
-        Settings settings = SettingsSerializer.fromJsonObject(settingsObject);
+    private static void addSettings(JSONObject dataObject) {
+        Settings settings = SettingsSerializer.fromJsonObject(dataObject);
         loggedInUser.getAccount().setSettings(settings);
     }
 
