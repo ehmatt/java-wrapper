@@ -22,12 +22,12 @@ public class SettingsSerializer extends BaseSerializer {
 
     public static Settings fromJsonObject(JSONObject dataObject) {
         try {
-            JSONObject costObject = dataObject.getJSONObject(COST_SETUP);
+            JSONObject costObject = dataObject.getJSONObject(COST_SETUP_TAG);
             Cost costSetup = new Cost()
-                    .setCostEnabled(costObject.optBoolean(COST_ENABLED))
-                    .setCostRequired(costObject.optBoolean(COST_REQUIRED))
-                    .setCommissionBase(Cost.Commission.fromString(costObject.optString(COMMISSION_BASE)))
-                    .setCommissionPercentage(costObject.optDouble(COMMISSION_PERCENTAGE));
+                    .setCostEnabled(costObject.optBoolean(COST_ENABLED_TAG))
+                    .setCostRequired(costObject.optBoolean(COST_REQUIRED_TAG))
+                    .setCommissionBase(Cost.Commission.fromString(costObject.optString(COMMISSION_BASE_TAG)))
+                    .setCommissionPercentage(costObject.optDouble(COMMISSION_PERCENTAGE_TAG));
 
             JSONObject settingsObject = dataObject.getJSONObject(SETTINGS_TAG);
             return new Settings()

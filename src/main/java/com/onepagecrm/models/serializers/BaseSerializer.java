@@ -305,11 +305,11 @@ public class BaseSerializer {
     // DEAL FIELDS (CFD)
     public static final String DEAL_FIELD_TAG = "deal_field";
     public static final String DEAL_FIELDS_TAG = "deal_fields";
-    public static final String COST_SETUP = "cost_setup";
-    public static final String COST_ENABLED = "cost_enabled";
-    public static final String COST_REQUIRED = "cost_required";
-    public static final String COMMISSION_BASE = "commission_base";
-    public static final String COMMISSION_PERCENTAGE = "commission_percentage";
+    public static final String COST_SETUP_TAG = "cost_setup";
+    public static final String COST_ENABLED_TAG = "cost_enabled";
+    public static final String COST_REQUIRED_TAG = "cost_required";
+    public static final String COMMISSION_BASE_TAG = "commission_base";
+    public static final String COMMISSION_PERCENTAGE_TAG = "commission_percentage";
 
     /**
      * Method used to parse the base/start of response.
