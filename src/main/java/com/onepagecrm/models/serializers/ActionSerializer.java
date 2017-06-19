@@ -102,6 +102,12 @@ public class ActionSerializer extends BaseSerializer {
                     action.setExactTime(exactTime);
                 }
             }
+            if (actionObject.has(POSITION_TAG)) {
+                if (!actionObject.isNull(POSITION_TAG)) {
+                    int position = actionObject.getInt(POSITION_TAG);
+                    action.setPosition(position);
+                }
+            }
             action.setDateColor(DateSerializer.getDateColour(exactTime, status));
 
             return action;
@@ -143,33 +149,30 @@ public class ActionSerializer extends BaseSerializer {
                     actionObject,
                     MODIFIED_AT_TAG
             );
-            addJsonStringValue(action.getStatus().toString(), actionObject, STATUS_TAG);
-            switch (action.getStatus()) {
-                case ASAP:
-                    break;
-                case DATE:
-                    addJsonStringValue(
-                            DateSerializer.toFormattedDateString(action.getDate()),
-                            actionObject,
-                            DATE_TAG
-                    );
-                    break;
-                case DATE_TIME:
-                    addJsonStringValue(
-                            DateSerializer.toFormattedDateString(action.getDate()),
-                            actionObject,
-                            DATE_TAG
-                    );
-                    addJsonLongValue(
-                            DateSerializer.toTimestamp(action.getExactTime()),
-                            actionObject,
-                            EXACT_TIME_TAG
-                    );
-                    break;
-                case WAITING:
-                    break;
-                case QUEUED:
-                    break;
+            if (action.getStatus() != null) {
+                addJsonStringValue(action.getStatus().toString(), actionObject, STATUS_TAG);
+                switch (action.getStatus()) {
+                    case DATE:
+                    case QUEUED_WITH_DATE:
+                        addJsonStringValue(
+                                DateSerializer.toFormattedDateString(action.getDate()),
+                                actionObject,
+                                DATE_TAG
+                        );
+                        break;
+                    case DATE_TIME:
+                        addJsonStringValue(
+                                DateSerializer.toFormattedDateString(action.getDate()),
+                                actionObject,
+                                DATE_TAG
+                        );
+                        addJsonLongValue(
+                                DateSerializer.toTimestamp(action.getExactTime()),
+                                actionObject,
+                                EXACT_TIME_TAG
+                        );
+                        break;
+                }
             }
         }
         return actionObject.toString();

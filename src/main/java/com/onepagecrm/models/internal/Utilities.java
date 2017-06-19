@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.CharBuffer;
 import java.util.logging.Logger;
 
 @SuppressWarnings("WeakerAccess")
@@ -21,7 +22,7 @@ public class Utilities {
      * <p/>
      * Unix-style time is the amount of milliseconds elapsed since 01 Jan 1970.
      *
-     * @return
+     * @return Unix Time (in milliseconds).
      */
     public static int getUnixTime() {
         return (int) (System.currentTimeMillis() / 1000L);
@@ -35,6 +36,10 @@ public class Utilities {
 
     public static String nullChecks(String toBeChecked) {
         return NULL.equalsIgnoreCase(toBeChecked) ? null : toBeChecked;
+    }
+
+    public static String nullToEmpty(String toBeChecked) {
+        return notNullOrEmpty(toBeChecked) ? toBeChecked : "";
     }
 
     public static String capitalize(String word) {
@@ -53,6 +58,28 @@ public class Utilities {
         if (notNullOrEmpty(word))
             return word.substring(0, 1).toUpperCase();
         return null;
+    }
+
+    /**
+     * Creates a String made of the input String repeated the desired amount of times.
+     *
+     * @param toBeRepeated - the String to be repeated.
+     * @param times        - the desired amount of times for the input to be repeated.
+     * @return The input String repeated 'times' times.
+     */
+    public static String repeatedString(String toBeRepeated, int times) {
+        return CharBuffer.allocate(times).toString().replace("\0", toBeRepeated);
+    }
+
+    /**
+     * Creates a String made of the input Char repeated the desired amount of times.
+     *
+     * @param toBeRepeated - the Char to be repeated.
+     * @param times        - the desired amount of times for the input to be repeated.
+     * @return The input Char repeated 'times' times.
+     */
+    public static String repeatedChar(char toBeRepeated, int times) {
+        return CharBuffer.allocate(times).toString().replace('\0', toBeRepeated);
     }
 
     /* Specifically for Notes, Calls, Deals */
