@@ -22,15 +22,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class Deal extends ApiResource implements Serializable {
 
     public static final String STATUS_WON = "won";
     public static final String STATUS_LOST = "lost";
     public static final String STATUS_PENDING = "pending";
-    public static final String RELATED_NOTES_FIELDS = "?fields=notes(text,author)";
+
     public static final String TYPE_CONTACT = "contact";
     public static final String TYPE_COMPANY = "company";
+
+    public static final String RELATED_NOTES_FIELDS = "?fields=notes(text,author)";
 
     private String id;
     private Double amount;
@@ -51,6 +53,7 @@ public class Deal extends ApiResource implements Serializable {
     private Boolean hasRelatedNotes;
     private List<Note> relatedNotes;
     private Date closeDate;
+    private List<CustomField> dealFields;
 
     public Deal save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -360,5 +363,14 @@ public class Deal extends ApiResource implements Serializable {
             this.company = company;
             return this;
         }
+    }
+
+    public List<CustomField> getDealFields() {
+        return dealFields;
+    }
+
+    public Deal setDealFields(List<CustomField> dealFields) {
+        this.dealFields = dealFields;
+        return this;
     }
 }

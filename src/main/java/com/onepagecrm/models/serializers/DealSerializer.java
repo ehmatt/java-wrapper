@@ -1,6 +1,7 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.CustomField;
 import com.onepagecrm.models.Deal;
 import com.onepagecrm.models.DealList;
 import com.onepagecrm.models.Note;
@@ -118,6 +119,10 @@ public class DealSerializer extends BaseSerializer {
                     contactInfo.setCompany(contactInfoObj.getString(COMPANY_TAG));
                 }
                 deal.setContactInfo(contactInfo);
+            }
+            if (dealObject.has(DEAL_FIELDS_TAG)) {
+                deal.setDealFields(CustomFieldSerializer.fromJsonArray(
+                        dealObject.optJSONArray(DEAL_FIELDS_TAG), CustomField.CF_TYPE_DEAL));
             }
         } catch (JSONException e) {
             LOG.severe("Error parsing Deal object");
