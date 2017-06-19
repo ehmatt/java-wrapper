@@ -60,7 +60,7 @@ public class ResponseHandlerTest extends BaseTest {
                 "\"Qualification\"},{\"stage\":25,\"label\":null},{\"stage\":50,\"label\":" +
                 "\"Decision\"},{\"stage\":75,\"label\":null},{\"stage\":90,\"label\":" +
                 "\"Negotiation\"}],\"default_contact_type\":\"company\"," +
-                "\"show_tidy_stream\":false},\"user\":{\"user\":{\"id\":" +
+                "\"show_tidy_stream\":false},\"cost_setup\":{},\"user\":{\"user\":{\"id\":" +
                 "\"556cb8b61787fa02e000047e\",\"first_name\":\"Cillian\",\"last_name\":" +
                 "\"Myles\",\"email\":\"cillian.college@gmail.com\",\"company_name\":" +
                 "\"Myles Inc.\",\"photo_url\":\"\",\"bcc_email\":" +
