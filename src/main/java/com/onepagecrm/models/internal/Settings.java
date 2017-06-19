@@ -25,6 +25,7 @@ public class Settings implements Serializable {
     private Boolean showCompanyAddress;
     private Boolean contactTitleEnabled;
     private Boolean birthdaysEnabled;
+    private Cost costSetup;
 
     @Override
     public String toString() {
@@ -49,6 +50,7 @@ public class Settings implements Serializable {
                 ", showCompanyAddress=" + showCompanyAddress +
                 ", contactTitleEnabled=" + contactTitleEnabled +
                 ", birthdaysEnabled=" + birthdaysEnabled +
+                ", costSetup=" + costSetup +
                 '}';
     }
 
@@ -265,6 +267,15 @@ public class Settings implements Serializable {
 
     public Settings setBirthdaysEnabled(Boolean birthdaysEnabled) {
         this.birthdaysEnabled = birthdaysEnabled;
+        return this;
+    }
+
+    public Cost getCostSetup() {
+        return costSetup;
+    }
+
+    public Settings setCostSetup(Cost costSetup) {
+        this.costSetup = costSetup;
         return this;
     }
 }

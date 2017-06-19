@@ -302,9 +302,14 @@ public class BaseSerializer {
     // SPLIT
     public static final String SPLIT_TAG = "split";
 
-    // DEAL FIELDS
+    // DEAL FIELDS (CFD)
     public static final String DEAL_FIELD_TAG = "deal_field";
     public static final String DEAL_FIELDS_TAG = "deal_fields";
+    public static final String COST_SETUP = "cost_setup";
+    public static final String COST_ENABLED = "cost_enabled";
+    public static final String COST_REQUIRED = "cost_required";
+    public static final String COMMISSION_BASE = "commission_base";
+    public static final String COMMISSION_PERCENTAGE = "commission_percentage";
 
     /**
      * Method used to parse the base/start of response.

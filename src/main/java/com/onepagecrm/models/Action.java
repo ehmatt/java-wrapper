@@ -55,8 +55,8 @@ public class Action extends ApiResource implements Serializable {
 
         private String status;
 
-        Status(String pStatus) {
-            status = pStatus;
+        Status(String status) {
+            this.status = status;
         }
 
         @Override

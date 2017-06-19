@@ -63,9 +63,7 @@ public class LoginSerializer extends BaseSerializer {
         try {
             JSONObject responseObject = new JSONObject(responseBody);
             JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
-            if (dataObject.has(SETTINGS_TAG)) {
-                addSettings(dataObject.getJSONObject(SETTINGS_TAG));
-            }
+            addSettings(dataObject);
         } catch (Exception e) {
             LOG.severe("Error parsing Settings array");
             LOG.severe(e.toString());
