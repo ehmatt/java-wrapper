@@ -17,6 +17,7 @@ public abstract class Commission implements Serializable {
 
     private final static String TYPE_PERCENTAGE = "percentage";
     private final static String TYPE_ABSOLUTE = "absolute";
+    private final static String TYPE_NONE = "none";
     private final static String TYPE_OTHER = "other"; // Catch all.
 
     /**
@@ -55,6 +56,7 @@ public abstract class Commission implements Serializable {
     public enum Type {
         PERCENTAGE(TYPE_PERCENTAGE),
         ABSOLUTE(TYPE_ABSOLUTE),
+        NONE(TYPE_NONE),
         OTHER(TYPE_OTHER);
 
         private String type;
@@ -75,6 +77,8 @@ public abstract class Commission implements Serializable {
                     return PERCENTAGE;
                 case TYPE_ABSOLUTE:
                     return ABSOLUTE;
+                case TYPE_NONE:
+                    return NONE;
                 default:
                     return OTHER;
             }

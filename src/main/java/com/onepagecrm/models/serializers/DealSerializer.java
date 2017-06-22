@@ -103,12 +103,10 @@ public class DealSerializer extends BaseSerializer {
             if (dealObject.has(HAS_RELATED_NOTES_TAG)) {
                 deal.setHasRelatedNotes(dealObject.getBoolean(HAS_RELATED_NOTES_TAG));
             }
-            if (dealObject.has(CLOSE_DATE_TAG)) {
-                if (!dealObject.isNull(CLOSE_DATE_TAG)) {
-                    String closeDateStr = dealObject.getString(CLOSE_DATE_TAG);
-                    Date closeDate = DateSerializer.fromFormattedString(closeDateStr);
-                    deal.setCloseDate(closeDate);
-                }
+            if (dealObject.has(CLOSE_DATE_TAG) && !dealObject.isNull(CLOSE_DATE_TAG)) {
+                String closeDateStr = dealObject.getString(CLOSE_DATE_TAG);
+                Date closeDate = DateSerializer.fromFormattedString(closeDateStr);
+                deal.setCloseDate(closeDate);
             }
             if (dealObject.has(CONTACT_INFO_TAG)) {
                 JSONObject contactInfoObj = dealObject.getJSONObject(CONTACT_INFO_TAG);
@@ -126,16 +124,16 @@ public class DealSerializer extends BaseSerializer {
                 deal.setDealFields(CustomFieldSerializer.fromJsonArray(
                         dealObject.optJSONArray(DEAL_FIELDS_TAG), CustomField.CF_TYPE_DEAL));
             }
-            if (dealObject.has(COST_TAG)) {
+            if (dealObject.has(COST_TAG) && !dealObject.isNull(COST_TAG)) {
                 deal.setCost(dealObject.getDouble(COST_TAG));
             }
-            if (dealObject.has(MARGIN_TAG)) {
+            if (dealObject.has(MARGIN_TAG) && !dealObject.isNull(MARGIN_TAG)) {
                 deal.setMargin(dealObject.getDouble(MARGIN_TAG));
             }
-            if (dealObject.has(TOTAL_COST_TAG)) {
+            if (dealObject.has(TOTAL_COST_TAG) && !dealObject.isNull(TOTAL_COST_TAG)) {
                 deal.setTotalCost(dealObject.getDouble(TOTAL_COST_TAG));
             }
-            if (dealObject.has(COMMISSION_TAG)) {
+            if (dealObject.has(COMMISSION_TAG) && !dealObject.isNull(COMMISSION_TAG)) {
                 deal.setCommission(dealObject.getDouble(COMMISSION_TAG));
             }
             if (dealObject.has(COMMISSION_BASE_TAG)) {
@@ -144,7 +142,7 @@ public class DealSerializer extends BaseSerializer {
             if (dealObject.has(COMMISSION_TYPE_TAG)) {
                 deal.setCommissionType(Commission.Type.fromString(dealObject.getString(COMMISSION_TYPE_TAG)));
             }
-            if (dealObject.has(COMMISSION_PERCENTAGE_TAG)) {
+            if (dealObject.has(COMMISSION_PERCENTAGE_TAG) && !dealObject.isNull(COMMISSION_PERCENTAGE_TAG)) {
                 deal.setCommissionPercentage(dealObject.getDouble(COMMISSION_PERCENTAGE_TAG));
             }
         } catch (JSONException e) {
