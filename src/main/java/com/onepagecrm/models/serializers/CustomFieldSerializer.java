@@ -112,9 +112,10 @@ public class CustomFieldSerializer extends BaseSerializer {
         addJsonIntegerValue(customField.getPosition(), customFieldObject, POSITION_TAG);
         addJsonStringValue(customField.getType(), customFieldObject, TYPE_TAG);
         addJsonIntegerValue(customField.getReminderDays(), customFieldObject, REMINDER_DAYS_TAG);
-        final String lCfType = getTagSingle(customField.getCfType());
-        final String lTag = notNullOrEmpty(lCfType) ? lCfType : CustomField.CF_TYPE_CONTACT;
-        addJsonObject(customFieldObject, object, lTag);
+        final String cfType = getTagSingle(customField.getCfType());
+        final String defaultTag = getTagSingle(CustomField.CF_TYPE_CONTACT);
+        final String tag = notNullOrEmpty(cfType) ? cfType : defaultTag;
+        addJsonObject(customFieldObject, object, tag);
         CustomFieldValueSerializer.toJsonObject(customField.getValue(), object);
         return object.toString();
     }

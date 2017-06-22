@@ -1,6 +1,7 @@
 package com.onepagecrm.models.serializers;
 
-import com.onepagecrm.models.internal.Cost;
+import com.onepagecrm.models.internal.Commission;
+import com.onepagecrm.models.internal.CostSetup;
 import com.onepagecrm.models.internal.Country;
 import com.onepagecrm.models.internal.Settings;
 import org.json.JSONArray;
@@ -23,10 +24,10 @@ public class SettingsSerializer extends BaseSerializer {
     public static Settings fromJsonObject(JSONObject dataObject) {
         try {
             JSONObject costObject = dataObject.getJSONObject(COST_SETUP_TAG);
-            Cost costSetup = new Cost()
-                    .setCostEnabled(costObject.optBoolean(COST_ENABLED_TAG))
-                    .setCostRequired(costObject.optBoolean(COST_REQUIRED_TAG))
-                    .setCommissionBase(Cost.Commission.fromString(costObject.optString(COMMISSION_BASE_TAG)))
+            CostSetup costSetup = new CostSetup()
+                    .setEnabled(costObject.optBoolean(COST_ENABLED_TAG))
+                    .setRequired(costObject.optBoolean(COST_REQUIRED_TAG))
+                    .setCommissionBase(Commission.Base.fromString(costObject.optString(COMMISSION_BASE_TAG)))
                     .setCommissionPercentage(costObject.optDouble(COMMISSION_PERCENTAGE_TAG));
 
             JSONObject settingsObject = dataObject.getJSONObject(SETTINGS_TAG);

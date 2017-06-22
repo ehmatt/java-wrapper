@@ -5,6 +5,7 @@ import com.onepagecrm.models.CustomField;
 import com.onepagecrm.models.Deal;
 import com.onepagecrm.models.DealList;
 import com.onepagecrm.models.Note;
+import com.onepagecrm.models.internal.Commission;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Created by Cillian Myles (cillian@onepagecrm.com) on 11/24/15.
+ * @author Cillian Myles (cillian@onepagecrm.com) on 11/24/15.
  */
 public class DealSerializer extends BaseSerializer {
 
@@ -120,9 +121,31 @@ public class DealSerializer extends BaseSerializer {
                 }
                 deal.setContactInfo(contactInfo);
             }
+            // CFD fields.
             if (dealObject.has(DEAL_FIELDS_TAG)) {
                 deal.setDealFields(CustomFieldSerializer.fromJsonArray(
                         dealObject.optJSONArray(DEAL_FIELDS_TAG), CustomField.CF_TYPE_DEAL));
+            }
+            if (dealObject.has(COST_TAG)) {
+                deal.setCost(dealObject.getDouble(COST_TAG));
+            }
+            if (dealObject.has(MARGIN_TAG)) {
+                deal.setMargin(dealObject.getDouble(MARGIN_TAG));
+            }
+            if (dealObject.has(TOTAL_COST_TAG)) {
+                deal.setTotalCost(dealObject.getDouble(TOTAL_COST_TAG));
+            }
+            if (dealObject.has(COMMISSION_TAG)) {
+                deal.setCommission(dealObject.getDouble(COMMISSION_TAG));
+            }
+            if (dealObject.has(COMMISSION_BASE_TAG)) {
+                deal.setCommissionBase(Commission.Base.fromString(dealObject.getString(COMMISSION_BASE_TAG)));
+            }
+            if (dealObject.has(COMMISSION_TYPE_TAG)) {
+                deal.setCommissionType(Commission.Type.fromString(dealObject.getString(COMMISSION_TYPE_TAG)));
+            }
+            if (dealObject.has(COMMISSION_PERCENTAGE_TAG)) {
+                deal.setCommissionPercentage(dealObject.getDouble(COMMISSION_PERCENTAGE_TAG));
             }
         } catch (JSONException e) {
             LOG.severe("Error parsing Deal object");
@@ -186,6 +209,14 @@ public class DealSerializer extends BaseSerializer {
                 dealObject,
                 CLOSE_DATE_TAG
         );
+        // TODO - Deal fields!!
+        addJsonDoubleValue(deal.getCost(), dealObject, COST_TAG);
+        addJsonDoubleValue(deal.getMargin(), dealObject, MARGIN_TAG);
+        addJsonDoubleValue(deal.getTotalCost(), dealObject, TOTAL_COST_TAG);
+        addJsonDoubleValue(deal.getCommission(), dealObject, COMMISSION_TAG);
+        addJsonStringValue(deal.getCommissionBase().toString(), dealObject, COMMISSION_BASE_TAG);
+        addJsonStringValue(deal.getCommissionType().toString(), dealObject, COMMISSION_TYPE_TAG);
+        addJsonDoubleValue(deal.getCommissionPercentage(), dealObject, COMMISSION_PERCENTAGE_TAG);
         return dealObject.toString();
     }
 

@@ -25,7 +25,7 @@ public class Settings implements Serializable {
     private Boolean showCompanyAddress;
     private Boolean contactTitleEnabled;
     private Boolean birthdaysEnabled;
-    private Cost costSetup;
+    private CostSetup costSetup;
 
     @Override
     public String toString() {
@@ -270,11 +270,11 @@ public class Settings implements Serializable {
         return this;
     }
 
-    public Cost getCostSetup() {
+    public CostSetup getCostSetup() {
         return costSetup;
     }
 
-    public Settings setCostSetup(Cost costSetup) {
+    public Settings setCostSetup(CostSetup costSetup) {
         this.costSetup = costSetup;
         return this;
     }

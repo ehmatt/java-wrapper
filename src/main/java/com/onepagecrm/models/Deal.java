@@ -1,6 +1,7 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.internal.Commission;
 import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.serializers.DealListSerializer;
@@ -22,6 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Cillian Myles (cillian@onepagecrm.com) on 22/06/2017.
+ */
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class Deal extends ApiResource implements Serializable {
 
@@ -54,6 +58,13 @@ public class Deal extends ApiResource implements Serializable {
     private List<Note> relatedNotes;
     private Date closeDate;
     private List<CustomField> dealFields;
+    private Double cost;
+    private Double margin;
+    private Double totalCost;
+    private Double commission;
+    private Commission.Base commissionBase;
+    private Commission.Type commissionType;
+    private Double commissionPercentage;
 
     public Deal save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -371,6 +382,69 @@ public class Deal extends ApiResource implements Serializable {
 
     public Deal setDealFields(List<CustomField> dealFields) {
         this.dealFields = dealFields;
+        return this;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public Deal setCost(Double cost) {
+        this.cost = cost;
+        return this;
+    }
+
+    public Double getMargin() {
+        return margin;
+    }
+
+    public Deal setMargin(Double margin) {
+        this.margin = margin;
+        return this;
+    }
+
+    public Double getTotalCost() {
+        return totalCost;
+    }
+
+    public Deal setTotalCost(Double totalCost) {
+        this.totalCost = totalCost;
+        return this;
+    }
+
+    public Double getCommission() {
+        return commission;
+    }
+
+    public Deal setCommission(Double commission) {
+        this.commission = commission;
+        return this;
+    }
+
+    public Commission.Base getCommissionBase() {
+        return commissionBase;
+    }
+
+    public Deal setCommissionBase(Commission.Base commissionBase) {
+        this.commissionBase = commissionBase;
+        return this;
+    }
+
+    public Commission.Type getCommissionType() {
+        return commissionType;
+    }
+
+    public Deal setCommissionType(Commission.Type commissionType) {
+        this.commissionType = commissionType;
+        return this;
+    }
+
+    public Double getCommissionPercentage() {
+        return commissionPercentage;
+    }
+
+    public Deal setCommissionPercentage(Double commissionPercentage) {
+        this.commissionPercentage = commissionPercentage;
         return this;
     }
 }
