@@ -2,6 +2,8 @@ package com.onepagecrm.models;
 
 import java.io.Serializable;
 
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
+
 /**
  * Created by Nichollas on 08/03/17.
  */
@@ -43,18 +45,26 @@ public class LinkedContact extends BaseResource implements Serializable {
     }
 
     public boolean isValid() {
-        return contactId != null && !contactId.isEmpty() &&
-                linkedWithId != null && !linkedWithId.isEmpty() &&
-                companyId != null && !companyId.isEmpty();
+        return notNullOrEmpty(contactId) &&
+                notNullOrEmpty(linkedWithId) &&
+                notNullOrEmpty(companyId);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LinkedContact that = (LinkedContact) o;
+        if (!this.isValid() || !that.isValid()) return false;
+        return this.contactId.equals(that.contactId) && this.linkedWithId.equals(that.linkedWithId) && this.companyId.equals(that.companyId);
     }
 
     @Override
     public String toString() {
-        return null;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        return false;
+        return "LinkedContact{" +
+                "contactId='" + contactId + '\'' +
+                ", linkedWithId='" + linkedWithId + '\'' +
+                ", companyId='" + companyId + '\'' +
+                '}';
     }
 }
