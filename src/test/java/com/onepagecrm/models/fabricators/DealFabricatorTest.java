@@ -3,6 +3,7 @@ package com.onepagecrm.models.fabricators;
 import com.onepagecrm.BaseTest;
 import com.onepagecrm.models.Deal;
 import com.onepagecrm.models.DealList;
+import com.onepagecrm.models.internal.Commission;
 import com.onepagecrm.models.serializers.DateSerializer;
 
 /**
@@ -99,9 +100,30 @@ public class DealFabricatorTest extends BaseTest {
         assertTrue(deal.getHasRelatedNotes() != null && !deal.getHasRelatedNotes());
     }
 
+    public void testWithFields_correctValues() {
+        Deal deal = DealFabricator.withCustomFields();
+        assertTrue("Deal must be valid.", deal.isValid());
+        assertTrue("Deal should have custom fields.",
+                deal.getDealFields() != null && !deal.getDealFields().isEmpty());
+    }
+
+    public void testCommissionPercentage_correctValues() {
+        Deal deal = DealFabricator.commissionPercentage();
+        assertTrue("Deal must be valid.", deal.isValid());
+        assertTrue("Deal should have commission type percentage.",
+                deal.getCommissionType() != null && deal.getCommissionType().equals(Commission.Type.PERCENTAGE));
+    }
+
+    public void testCommissionAbsolute_correctValues() {
+        Deal deal = DealFabricator.commissionAbsolute();
+        assertTrue("Deal must be valid.", deal.isValid());
+        assertTrue("Deal should have commission type absolute.",
+                deal.getCommissionType() != null && deal.getCommissionType().equals(Commission.Type.ABSOLUTE));
+    }
+
     @SuppressWarnings("ForLoopReplaceableByForEach")
     public void testList_allDealsValid() {
-        final int expectedAmount = 15;
+        final int expectedAmount = 17;
         DealList deals = DealFabricator.list();
         assertEquals("Should be " + expectedAmount + " deals", expectedAmount, deals.size());
 

@@ -41,12 +41,12 @@ public class DealFabricator extends BaseFabricator {
         return list().get(14);
     }
 
-    public static Deal commissionAbsolute() {
-        return list().get(15); // TODO - add deal to json
+    public static Deal commissionPercentage() {
+        return list().get(15);
     }
 
-    public static Deal commissionPercentage() {
-        return list().get(16); // TODO - add deal to json
+    public static Deal commissionAbsolute() {
+        return list().get(16);
     }
 
     public static DealList list() {
