@@ -6,7 +6,7 @@ import com.onepagecrm.models.DealList;
 import com.onepagecrm.models.serializers.DateSerializer;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 16/02/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 16/02/2016.
  */
 public class DealFabricatorTest extends BaseTest {
 
@@ -101,8 +101,9 @@ public class DealFabricatorTest extends BaseTest {
 
     @SuppressWarnings("ForLoopReplaceableByForEach")
     public void testList_allDealsValid() {
+        final int expectedAmount = 15;
         DealList deals = DealFabricator.list();
-        assertEquals("Should be 14 deals", deals.size(), 14);
+        assertEquals("Should be " + expectedAmount + " deals", expectedAmount, deals.size());
 
         for (int i = 0; i < deals.size(); i++) {
             Deal deal = deals.get(i);
