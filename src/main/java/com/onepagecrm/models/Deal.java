@@ -4,6 +4,7 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Commission;
 import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.Paginator;
+import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.models.serializers.DealListSerializer;
 import com.onepagecrm.models.serializers.DealSerializer;
 import com.onepagecrm.models.serializers.DeleteResultSerializer;
@@ -26,17 +27,23 @@ import java.util.Map;
 /**
  * @author Cillian Myles (cillian@onepagecrm.com) on 22/06/2017.
  */
-@SuppressWarnings({"unused", "WeakerAccess"})
+@SuppressWarnings({"unused", "WeakerAccess", "UnusedReturnValue"})
 public class Deal extends ApiResource implements Serializable {
+
+    /**
+     * Constants
+     */
 
     public static final String STATUS_WON = "won";
     public static final String STATUS_LOST = "lost";
     public static final String STATUS_PENDING = "pending";
-
     public static final String TYPE_CONTACT = "contact";
     public static final String TYPE_COMPANY = "company";
-
     public static final String RELATED_NOTES_FIELDS = "?fields=notes(text,author)";
+
+    /**
+     * Member variables.
+     */
 
     private String id;
     private Double amount;
@@ -65,6 +72,10 @@ public class Deal extends ApiResource implements Serializable {
     private Commission.Base commissionBase;
     private Commission.Type commissionType;
     private Double commissionPercentage;
+
+    /**
+     * API methods
+     */
 
     public Deal save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -171,6 +182,45 @@ public class Deal extends ApiResource implements Serializable {
         return endpoint + "/" + this.id;
     }
 
+    /**
+     * Utility methods
+     */
+
+    public boolean isMulti() {
+        return this.months != null && this.months > 1;
+    }
+
+    public boolean isPending() {
+        return !isClosed();
+    }
+
+    public boolean isClosed() {
+        return Utilities.notNullOrEmpty(this.status) &&
+                (STATUS_LOST.equals(this.status) || STATUS_WON.equals(this.status));
+    }
+
+    public boolean hasCommission() {
+        return this.commission != null && this.commission > 0d;
+    }
+
+    public boolean hasCommissionBase() {
+        return this.commissionBase != null;
+    }
+
+
+    public boolean hasCommissionType() {
+        return this.commissionType != null;
+    }
+
+    /**
+     * Object methods
+     */
+
+    @Override
+    public String toString() {
+        return DealSerializer.toJsonObject(this);
+    }
+
     @Override
     public String getId() {
         return this.id;
@@ -180,11 +230,6 @@ public class Deal extends ApiResource implements Serializable {
     public Deal setId(String id) {
         this.id = id;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return DealSerializer.toJsonObject(this);
     }
 
     public Double getAmount() {
