@@ -214,7 +214,13 @@ public class DealSerializer extends BaseSerializer {
         addJsonObjectValue(deal.getCommissionBase(), dealObject, COMMISSION_BASE_TAG);
         addJsonObjectValue(deal.getCommissionType(), dealObject, COMMISSION_TYPE_TAG);
         addJsonDoubleValue(deal.getCommissionPercentage(), dealObject, COMMISSION_PERCENTAGE_TAG);
-        // TODO - Deal custom fields
+        try {
+            JSONArray dealFieldsArray = new JSONArray(CustomFieldSerializer.toJsonArray(deal.getDealFields()));
+            addJsonArray(dealFieldsArray, dealObject, DEAL_FIELDS_TAG);
+        } catch (JSONException e) {
+            LOG.severe("Error creating Deal Fields array while constructing Deal object");
+            LOG.severe(e.toString());
+        }
         return dealObject.toString();
     }
 
