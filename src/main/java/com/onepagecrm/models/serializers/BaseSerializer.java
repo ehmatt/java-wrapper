@@ -572,7 +572,7 @@ public class BaseSerializer {
     }
 
     /**
-     * Adds an integer value to a JSONObject with the specified key.
+     * Adds an Integer value to a JSONObject with the specified key.
      *
      * @param value
      * @param object
@@ -590,7 +590,7 @@ public class BaseSerializer {
     }
 
     /**
-     * Adds a long value to a JSONObject with the specified key.
+     * Adds a Long value to a JSONObject with the specified key.
      *
      * @param value
      * @param object
@@ -624,7 +624,7 @@ public class BaseSerializer {
     }
 
     /**
-     * Adds a boolean value to a JSONObject with the specified key.
+     * Adds a Boolean value to a JSONObject with the specified key.
      *
      * @param value
      * @param object
@@ -678,7 +678,7 @@ public class BaseSerializer {
     }
 
     /**
-     * Adds a Float value to a JSONObject with the specified key.
+     * Adds a BigDecimal value to a JSONObject with the specified key.
      *
      * @param value
      * @param object
@@ -690,6 +690,24 @@ public class BaseSerializer {
                 object.put(key, value);
             } catch (JSONException e) {
                 LOG.severe("Error serializing BigDecimal value : " + value);
+                LOG.severe(e.toString());
+            }
+        }
+    }
+
+    /**
+     * Adds an Object value to a JSONObject with the specified key.
+     *
+     * @param value
+     * @param object
+     * @param key
+     */
+    public static void addJsonObjectValue(Object value, JSONObject object, String key) {
+        if (value != null) {
+            try {
+                object.put(key, value.toString());
+            } catch (JSONException e) {
+                LOG.severe("Error serializing Object value : " + value);
                 LOG.severe(e.toString());
             }
         }

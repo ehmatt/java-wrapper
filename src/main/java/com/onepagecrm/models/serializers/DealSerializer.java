@@ -207,14 +207,14 @@ public class DealSerializer extends BaseSerializer {
                 dealObject,
                 CLOSE_DATE_TAG
         );
-        // TODO - Deal fields!!
         addJsonDoubleValue(deal.getCost(), dealObject, COST_TAG);
         addJsonDoubleValue(deal.getMargin(), dealObject, MARGIN_TAG);
         addJsonDoubleValue(deal.getTotalCost(), dealObject, TOTAL_COST_TAG);
         addJsonDoubleValue(deal.getCommission(), dealObject, COMMISSION_TAG);
-        addJsonStringValue(deal.getCommissionBase().toString(), dealObject, COMMISSION_BASE_TAG);
-        addJsonStringValue(deal.getCommissionType().toString(), dealObject, COMMISSION_TYPE_TAG);
+        addJsonObjectValue(deal.getCommissionBase(), dealObject, COMMISSION_BASE_TAG);
+        addJsonObjectValue(deal.getCommissionType(), dealObject, COMMISSION_TYPE_TAG);
         addJsonDoubleValue(deal.getCommissionPercentage(), dealObject, COMMISSION_PERCENTAGE_TAG);
+        // TODO - Deal custom fields
         return dealObject.toString();
     }
 
