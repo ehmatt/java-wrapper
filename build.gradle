@@ -9,3 +9,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'jars')
     testCompile 'junit:junit:4.12'
 }
+
+jar {
+    exclude('com/onepagecrm/samples/**')
+}
