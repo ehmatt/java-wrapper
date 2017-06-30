@@ -130,6 +130,18 @@ public class DateSerializer extends BaseSerializer {
         return null;
     }
 
+    public static String toFriendlyDateAndYearString(Date date) {
+        Date today = new Date();
+        if (date != null) {
+            if (dateFormat.format(date).equals(dateFormat.format(today))) {
+                return TODAY;
+            } else {
+                return friendlyDateAndYearFormat.format(date);
+            }
+        }
+        return null;
+    }
+
     public static int getDateColour(Date date, String status) {
         if (date != null) {
             return getColorByDate(date);
