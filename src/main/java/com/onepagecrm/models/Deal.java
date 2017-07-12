@@ -24,6 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.onepagecrm.models.internal.Commission.Type.ABSOLUTE;
+import static com.onepagecrm.models.internal.Commission.Type.PERCENTAGE;
+
 /**
  * @author Cillian Myles (cillian@onepagecrm.com) on 22/06/2017.
  */
@@ -200,13 +203,13 @@ public class Deal extends ApiResource implements Serializable {
     }
 
     public boolean hasCommission() {
-        return this.commission != null && this.commission > 0d;
+        return hasCommissionType() &&
+                (PERCENTAGE.equals(this.commissionType) || ABSOLUTE.equals(this.commissionType));
     }
 
     public boolean hasCommissionBase() {
         return this.commissionBase != null;
     }
-
 
     public boolean hasCommissionType() {
         return this.commissionType != null;
