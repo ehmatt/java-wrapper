@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.util.logging.Logger;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
  */
 public class LinkedContactSerializer extends BaseSerializer {
 
@@ -33,27 +33,26 @@ public class LinkedContactSerializer extends BaseSerializer {
     }
 
     public static LinkedContact fromJsonObject(JSONObject linkedContactObject) {
+        LinkedContact linkedContact = new LinkedContact();
         String contactId = "";
         String companyId = "";
         String linkedWithId = "";
 
         try {
-            if (linkedContactObject.has(LINKED_CONTACT_TAG))
+            if (linkedContactObject.has(LINKED_CONTACT_TAG)) {
                 linkedContactObject = linkedContactObject.getJSONObject(LINKED_CONTACT_TAG);
-
+            }
             if (linkedContactObject.has(CONTACT_TAG)) {
                 JSONObject contactObject = linkedContactObject.getJSONObject(CONTACT_TAG);
-                if (contactObject.has(ID_TAG)) contactId = contactObject.getString(ID_TAG);
+                contactId = contactObject.optString(ID_TAG);
             }
-
             if (linkedContactObject.has(COMPANY_TAG)) {
                 JSONObject companyObject = linkedContactObject.getJSONObject(COMPANY_TAG);
-                if (companyObject.has(ID_TAG)) companyId = companyObject.getString(ID_TAG);
+                companyId = companyObject.optString(ID_TAG);
             }
-
             if (linkedContactObject.has(LINKED_WITH_TAG)) {
-                JSONArray linkedWithJson = linkedContactObject.getJSONArray(LINKED_WITH_TAG);
-                linkedWithId = linkedWithJson.getString(0);
+                JSONArray linkedWithArray = linkedContactObject.getJSONArray(LINKED_WITH_TAG);
+                linkedWithId = linkedWithArray.optString(0);
             }
 
         } catch (JSONException e) {
@@ -62,12 +61,9 @@ public class LinkedContactSerializer extends BaseSerializer {
             return new LinkedContact();
         }
 
-        if (contactId != null && companyId != null && linkedWithId != null)
-            return new LinkedContact()
-                    .setContactId(contactId)
-                    .setCompanyId(companyId)
-                    .setLinkedWithId(linkedWithId);
-
-        return new LinkedContact();
+        return linkedContact
+                .setContactId(contactId)
+                .setCompanyId(companyId)
+                .setLinkedWithId(linkedWithId);
     }
 }
