@@ -293,11 +293,14 @@ public class BaseSerializer {
     public static final String COMPANIES_TAG = "companies";
     public static final String COMPANY_FIELD_TAG = "company_field";
     public static final String COMPANY_FIELDS_TAG = "company_fields";
-    public static final String SYNCED_STATUS_ID_TAG = "synced_status_id";
     public static final String WON_DEALS_COUNT_TAG = "won_deals_count";
     public static final String TOTAL_WON_AMOUNT_TAG = "total_won_amount";
     public static final String PENDING_DEALS_COUNT_TAG = "pending_deals_count";
     public static final String TOTAL_PENDING_AMOUNT_TAG = "total_pending_amount";
+    public static final String SYNCING_STATUS_TAG = "syncing_status";
+    public static final String SYNCED_STATUS_ID_TAG = "synced_status_id";
+    public static final String SYNCING_TAGS_TAG = "syncing_tags";
+    public static final String SYNCED_TAGS_TAG = "synced_tags";
 
     // SPLIT
     public static final String SPLIT_TAG = "split";

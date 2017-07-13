@@ -24,7 +24,7 @@ import java.util.Map;
 import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
  */
 @SuppressWarnings({"unused", "WeakerAccess", "SameParameterValue"})
 public class Company extends ApiResource implements Serializable {
@@ -35,7 +35,6 @@ public class Company extends ApiResource implements Serializable {
     private String phone;
     private String url;
     private List<CustomField> companyFields;
-    private String syncedStatusId;
     private Address address;
     private Integer wonDealsCount;
     private Double totalWonAmount;
@@ -45,6 +44,10 @@ public class Company extends ApiResource implements Serializable {
     private ContactList contacts;
     private DealList pendingDeals;
     private Date createdAt;
+    private Boolean syncingStatus;
+    private String syncedStatusId;
+    private Boolean syncingTags;
+    private List<Tag> syncedTags;
 
     public Company save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -218,15 +221,6 @@ public class Company extends ApiResource implements Serializable {
         return this;
     }
 
-    public String getSyncedStatusId() {
-        return syncedStatusId;
-    }
-
-    public Company setSyncedStatusId(String syncedStatusId) {
-        this.syncedStatusId = syncedStatusId;
-        return this;
-    }
-
     public Address getAddress() {
         return address;
     }
@@ -305,6 +299,50 @@ public class Company extends ApiResource implements Serializable {
 
     public Company setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+        return this;
+    }
+
+    public Boolean getSyncingStatus() {
+        return syncingStatus;
+    }
+
+    public boolean isSyncingStatus() {
+        return syncingStatus != null && syncingStatus;
+    }
+
+    public Company setSyncingStatus(Boolean syncingStatus) {
+        this.syncingStatus = syncingStatus;
+        return this;
+    }
+
+    public String getSyncedStatusId() {
+        return syncedStatusId;
+    }
+
+    public Company setSyncedStatusId(String syncedStatusId) {
+        this.syncedStatusId = syncedStatusId;
+        return this;
+    }
+
+    public Boolean getSyncingTags() {
+        return syncingTags;
+    }
+
+    public boolean isSyncingTags() {
+        return syncingTags != null && syncingTags;
+    }
+
+    public Company setSyncingTags(Boolean syncingTags) {
+        this.syncingTags = syncingTags;
+        return this;
+    }
+
+    public List<Tag> getSyncedTags() {
+        return syncedTags;
+    }
+
+    public Company setSyncedTags(List<Tag> syncedTags) {
+        this.syncedTags = syncedTags;
         return this;
     }
 }
