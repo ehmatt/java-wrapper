@@ -3,6 +3,7 @@ package com.onepagecrm.models.serializers;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Company;
 import com.onepagecrm.models.CustomField;
+import com.onepagecrm.models.helpers.TagHelper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,18 +57,15 @@ public class CompanySerializer extends BaseSerializer {
                 .setTotalWonAmount(companyObject.optDouble(TOTAL_WON_AMOUNT_TAG, 0d))
                 .setPendingDealsCount(companyObject.optInt(PENDING_DEALS_COUNT_TAG))
                 .setTotalPendingAmount(companyObject.optDouble(TOTAL_PENDING_AMOUNT_TAG, 0d))
+                .setCreatedAt(DateSerializer.fromFormattedString(companyObject.optString(CREATED_AT_TAG)))
+                .setModifiedAt(DateSerializer.fromFormattedString(companyObject.optString(MODIFIED_AT_TAG)))
                 .setContactsCount(companyObject.optInt(CONTACTS_COUNT_TAG))
                 .setSyncingStatus(companyObject.optBoolean(SYNCING_STATUS_TAG))
                 .setSyncedStatusId(nullChecks(companyObject.optString(SYNCED_STATUS_ID_TAG)))
                 .setSyncingTags(companyObject.optBoolean(SYNCING_TAGS_TAG))
-                .setSyncedTags(TagSerializer.fromJsonArray(companyObject.optJSONArray(SYNCED_TAGS_TAG)));
+                .setSyncedTags(TagHelper.asTags(BaseSerializer.toListOfStrings(companyObject.optJSONArray(SYNCED_TAGS_TAG))));
 
         try {
-
-            if (companyObject.has(CREATED_AT_TAG)) {
-                String createdAtStr = companyObject.getString(CREATED_AT_TAG);
-                company.setCreatedAt(DateSerializer.fromFormattedString(createdAtStr));
-            }
             if (companyObject.has(CONTACTS_TAG)) {
                 JSONArray contactsObject = companyObject.getJSONArray(CONTACTS_TAG);
                 company.setContacts(ContactListSerializer.fromJsonArray(contactsObject));

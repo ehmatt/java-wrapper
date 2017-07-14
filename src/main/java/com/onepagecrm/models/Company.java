@@ -26,7 +26,7 @@ import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
  */
-@SuppressWarnings({"unused", "WeakerAccess", "SameParameterValue"})
+@SuppressWarnings({"unused", "WeakerAccess", "SameParameterValue", "UnusedReturnValue"})
 public class Company extends ApiResource implements Serializable {
 
     private String id;
@@ -44,6 +44,7 @@ public class Company extends ApiResource implements Serializable {
     private ContactList contacts;
     private DealList pendingDeals;
     private Date createdAt;
+    private Date modifiedAt;
     private Boolean syncingStatus;
     private String syncedStatusId;
     private Boolean syncingTags;
@@ -299,6 +300,15 @@ public class Company extends ApiResource implements Serializable {
 
     public Company setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+        return this;
+    }
+
+    public Date getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public Company setModifiedAt(Date modifiedAt) {
+        this.modifiedAt = modifiedAt;
         return this;
     }
 
