@@ -2,6 +2,8 @@ package com.onepagecrm.models.internal;
 
 import java.io.Serializable;
 
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
+
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 22/06/2017.
  */
@@ -82,6 +84,11 @@ public abstract class Commission implements Serializable {
                 default:
                     return OTHER;
             }
+        }
+
+        public boolean hasValue() {
+            return notNullOrEmpty(this.type) &&
+                    (TYPE_PERCENTAGE.equals(this.type) || TYPE_ABSOLUTE.equals(this.type));
         }
     }
 }
