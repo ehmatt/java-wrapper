@@ -293,11 +293,14 @@ public class BaseSerializer {
     public static final String COMPANIES_TAG = "companies";
     public static final String COMPANY_FIELD_TAG = "company_field";
     public static final String COMPANY_FIELDS_TAG = "company_fields";
-    public static final String SYNCED_STATUS_ID_TAG = "synced_status_id";
     public static final String WON_DEALS_COUNT_TAG = "won_deals_count";
     public static final String TOTAL_WON_AMOUNT_TAG = "total_won_amount";
     public static final String PENDING_DEALS_COUNT_TAG = "pending_deals_count";
     public static final String TOTAL_PENDING_AMOUNT_TAG = "total_pending_amount";
+    public static final String SYNCING_STATUS_TAG = "syncing_status";
+    public static final String SYNCED_STATUS_ID_TAG = "synced_status_id";
+    public static final String SYNCING_TAGS_TAG = "syncing_tags";
+    public static final String SYNCED_TAGS_TAG = "synced_tags";
 
     // SPLIT
     public static final String SPLIT_TAG = "split";
@@ -425,27 +428,24 @@ public class BaseSerializer {
 
     public static JSONArray toJsonStringArray(String[] stringArray) {
         JSONArray stringArrayObject = new JSONArray();
-        if (stringArray.length > 0) {
-            for (int i = 0; i < stringArray.length; i++) {
-                stringArrayObject.put(stringArray[i]);
-            }
+        if (stringArray == null) return stringArrayObject;
+        for (String aStringArray : stringArray) {
+            stringArrayObject.put(aStringArray);
         }
         return stringArrayObject;
     }
 
     public static JSONArray toJsonStringArray(List<String> stringList) {
         JSONArray stringArrayObject = new JSONArray();
-        if (stringList != null) {
-            if (stringList.size() > 0) {
-                for (int i = 0; i < stringList.size(); i++) {
-                    stringArrayObject.put(stringList.get(i));
-                }
-            }
+        if (stringList == null) return stringArrayObject;
+        for (String aStringList : stringList) {
+            stringArrayObject.put(aStringList);
         }
         return stringArrayObject;
     }
 
     public static String[] toArrayOfStrings(JSONArray stringArray) {
+        if (stringArray == null) return new String[0];
         String[] choices = new String[stringArray.length()];
         for (int i = 0; i < stringArray.length(); i++) {
             try {
@@ -461,6 +461,7 @@ public class BaseSerializer {
 
     public static List<String> toListOfStrings(JSONArray stringArray) {
         List<String> choices = new ArrayList<>();
+        if (stringArray == null) return choices;
         for (int i = 0; i < stringArray.length(); i++) {
             try {
                 String choice = stringArray.getString(i);
@@ -476,47 +477,37 @@ public class BaseSerializer {
     public static String stringSeparator = "__,__";
 
     public static String toCommaSeparatedString(List<String> strings) {
-        if (strings != null) {
-            // Convert from list of strings to array of strings.
-            String[] array = strings.toArray(new String[strings.size()]);
-            // Call the version of the function which takes array.
-            return toCommaSeparatedString(array);
-        } else {
-            return "";
-        }
+        if (strings == null) return "";
+        // Convert from list of strings to array of strings.
+        String[] array = strings.toArray(new String[strings.size()]);
+        // Call the version of the function which takes array.
+        return toCommaSeparatedString(array);
     }
 
     public static String toCommaSeparatedString(String[] strings) {
         String result = "";
-        if (strings != null) {
-            for (int i = 0; i < strings.length; i++) {
-                result += strings[i];
-                // Do not append comma at the end of last element
-                if (i < strings.length - 1) {
-                    result += stringSeparator;
-                }
+        if (strings == null) return result;
+        for (int i = 0; i < strings.length; i++) {
+            result += strings[i];
+            // Do not append comma at the end of last element
+            if (i < strings.length - 1) {
+                result += stringSeparator;
             }
         }
         return result;
     }
 
     public static List<String> toListOfStrings(String string) {
-        if (string != null) {
-            String[] array = toArrayOfStrings(string);
-            return Arrays.asList(array);
-        } else {
-            return new ArrayList<>();
-        }
+        if (string == null) return new ArrayList<>();
+        String[] array = toArrayOfStrings(string);
+        return Arrays.asList(array);
     }
 
     public static final String[] EMPTY_STRING_ARRAY = {};
 
     public static String[] toArrayOfStrings(String string) {
-        if (string != null) {
-            return string.split(stringSeparator);
-        } else {
-            return EMPTY_STRING_ARRAY;
-        }
+        if (string == null) return EMPTY_STRING_ARRAY;
+        return string.split(stringSeparator);
     }
 
     /**

@@ -63,8 +63,8 @@ public class LinkedContact extends BaseResource implements Serializable {
     public String toString() {
         return "LinkedContact{" +
                 "contactId='" + contactId + '\'' +
-                ", linkedWithId='" + linkedWithId + '\'' +
                 ", companyId='" + companyId + '\'' +
+                ", linkedWithId='" + linkedWithId + '\'' +
                 '}';
     }
 }
