@@ -460,9 +460,280 @@
           "modified_at": "2016-08-05T11:42:05Z",
           "close_date": "2016-08-05"
         }
+      },
+      {
+        "deal": {
+          "id": "58f0a96b9007ba6a849d7b3b",
+          "contact_id": "58f0a9459007ba6a849d7b20",
+          "owner_id": "559cd1866f6e656707000001",
+          "owner": {
+            "id": "559cd1866f6e656707000001",
+            "name": "Cillian Myles",
+            "email": "cillian.college+dev@gmail.com"
+          },
+          "name": "Earliest deal",
+          "text": "",
+          "date": "2017-05-08",
+          "contact_info": {
+            "contact_name": "",
+            "company": "OnePageCRM"
+          },
+          "author": "Cillian M.",
+          "amount": 100,
+          "months": 1,
+          "total_amount": 100,
+          "cost": 10,
+          "total_cost": 10,
+          "margin": 90,
+          "commission": 0,
+          "commission_percentage": 0,
+          "commission_type": "none",
+          "commission_base": "margin",
+          "status": "pending",
+          "has_related_notes": false,
+          "attachments": [],
+          "deal_fields": [
+            {
+              "deal_field": {
+                "id": "5947a6279007ba40b8ecbb0a",
+                "name": "DealSingleLine",
+                "type": "single_line_text",
+                "position": 0
+              },
+              "value": "Single..."
+            },
+            {
+              "deal_field": {
+                "id": "5947a6479007ba40b8ecbb0b",
+                "name": "DealMultiLine",
+                "type": "multi_line_text",
+                "position": 1
+              },
+              "value": "Multi..."
+            },
+            {
+              "deal_field": {
+                "id": "5947a6569007ba40b8ecbb0c",
+                "name": "DealNumber",
+                "type": "number",
+                "position": 2
+              },
+              "value": 3.14
+            },
+            {
+              "deal_field": {
+                "id": "5947a6749007ba40b8ecbb0d",
+                "name": "DealDropdown",
+                "type": "select_box",
+                "position": 3,
+                "choices": [
+                  "First",
+                  "Second",
+                  "Third"
+                ]
+              },
+              "value": "First"
+            },
+            {
+              "deal_field": {
+                "id": "5947a6849007ba40b8ecbb11",
+                "name": "DealDate",
+                "type": "date",
+                "position": 4
+              },
+              "value": "2016-01-01"
+            },
+            {
+              "deal_field": {
+                "id": "5947a6aa9007ba40b8ecbb12",
+                "name": "DealMultipleChoice",
+                "type": "multiple_choice",
+                "position": 5,
+                "choices": [
+                  "First",
+                  "Second",
+                  "Third"
+                ]
+              },
+              "value": [
+                "First",
+                "Second",
+                "Third"
+              ]
+            }
+          ],
+          "created_at": "2017-04-14T10:50:19Z",
+          "modified_at": "2017-06-28T09:05:09Z",
+          "stage": 50,
+          "expected_close_date": "2016-01-01"
+        }
+      },
+      {
+        "deal": {
+          "id": "57ebdac09007ba41f7aaa9bd",
+          "contact_id": "56fa81eb9007ba07fc000080",
+          "owner_id": "559cd1866f6e656707000001",
+          "owner": {
+            "id": "559cd1866f6e656707000001",
+            "name": "Cillian Myles",
+            "email": "cillian.college+dev@gmail.com"
+          },
+          "name": "Important deal name",
+          "text": "Deal note/text.",
+          "date": "2016-09-28",
+          "contact_info": {
+            "contact_name": "Java Wrapper",
+            "company": "OnePageCRM"
+          },
+          "author": "Cillian M.",
+          "amount": 99.99,
+          "months": 1,
+          "total_amount": 99.99,
+          "cost": 48,
+          "total_cost": 48,
+          "margin": 51.99,
+          "commission": 5.2,
+          "commission_percentage": 10.001923446816695,
+          "commission_type": "percentage",
+          "commission_base": "margin",
+          "status": "pending",
+          "has_related_notes": true,
+          "attachments": [],
+          "deal_fields": [
+            {
+              "deal_field": {
+                "id": "5947a6279007ba40b8ecbb0a",
+                "name": "DealSingleLine",
+                "type": "single_line_text",
+                "position": 0
+              },
+              "value": "Sample"
+            },
+            {
+              "deal_field": {
+                "id": "5947a6479007ba40b8ecbb0b",
+                "name": "DealMultiLine",
+                "type": "multi_line_text",
+                "position": 1
+              },
+              "value": "Data here"
+            }
+          ],
+          "created_at": "2016-09-28T14:59:12Z",
+          "modified_at": "2017-06-22T13:13:13Z",
+          "stage": 10,
+          "expected_close_date": "2016-09-28"
+        },
+        "related_notes": [
+          {
+            "note": {
+              "id": "594b9ead9007ba2e76a12d09",
+              "author": "Cillian M.",
+              "contact_id": "56fa81eb9007ba07fc000080",
+              "text": "Another related one. Will I be able to see this though is the big question?",
+              "date": "2017-06-22",
+              "attachments": [],
+              "linked_deal_id": "57ebdac09007ba41f7aaa9bd",
+              "created_at": "2017-06-22T10:40:46Z",
+              "modified_at": "2017-06-22T10:40:46Z"
+            }
+          },
+          {
+            "note": {
+              "id": "594ceda29007ba24b1bf142c",
+              "author": "Cillian M.",
+              "contact_id": "56fa81eb9007ba07fc000080",
+              "text": "This one will test the sorting",
+              "date": "2017-06-23",
+              "attachments": [],
+              "linked_deal_id": "57ebdac09007ba41f7aaa9bd",
+              "created_at": "2017-06-23T10:29:54Z",
+              "modified_at": "2017-06-23T10:29:54Z"
+            }
+          },
+          {
+            "note": {
+              "id": "594919ac9007ba45e4a64a4d",
+              "author": "Cillian M.",
+              "contact_id": "56fa81eb9007ba07fc000080",
+              "text": "Related note (very important)",
+              "date": "2017-06-20",
+              "attachments": [],
+              "linked_deal_id": "57ebdac09007ba41f7aaa9bd",
+              "created_at": "2017-06-20T12:48:44Z",
+              "modified_at": "2017-06-20T12:48:44Z"
+            }
+          },
+          {
+            "note": {
+              "id": "594ced499007ba24b1bf1419",
+              "author": "Cillian M.",
+              "contact_id": "56fa81eb9007ba07fc000080",
+              "text": "Yet another deal note to add to the list. This one should be a bit longer and the date is different... are you still reading this??",
+              "date": "2017-06-23",
+              "attachments": [],
+              "linked_deal_id": "57ebdac09007ba41f7aaa9bd",
+              "created_at": "2017-06-23T10:28:26Z",
+              "modified_at": "2017-06-23T10:28:26Z"
+            }
+          }
+        ]
+      },
+      {
+        "deal": {
+          "id": "56fa82159007ba1965000000",
+          "contact_id": "56fa81eb9007ba07fc000080",
+          "owner_id": "559cd1866f6e656707000001",
+          "owner": {
+            "id": "559cd1866f6e656707000001",
+            "name": "Cillian Myles",
+            "email": "cillian.college+dev@gmail.com"
+          },
+          "name": "Less important deal name",
+          "text": "",
+          "date": "2017-03-20",
+          "contact_info": {
+            "contact_name": "Java Wrapper",
+            "company": "OnePageCRM"
+          },
+          "author": "Cillian M.",
+          "amount": 20400,
+          "months": 1,
+          "total_amount": 20400,
+          "cost": 9000,
+          "total_cost": 9000,
+          "margin": 11400,
+          "commission": 768,
+          "commission_percentage": 3.764705882352941,
+          "commission_type": "absolute",
+          "commission_base": "amount",
+          "status": "pending",
+          "has_related_notes": true,
+          "attachments": [],
+          "deal_fields": [],
+          "created_at": "2016-03-29T13:24:37Z",
+          "modified_at": "2017-06-27T08:53:54Z",
+          "stage": 50,
+          "expected_close_date": "2016-11-23"
+        },
+        "related_notes": [
+          {
+            "note": {
+              "id": "571e036b9007ba4566062065",
+              "author": "Cillian M.",
+              "contact_id": "56fa81eb9007ba07fc000080",
+              "text": "Note 1",
+              "date": "2016-04-25",
+              "attachments": [],
+              "linked_deal_id": "56fa82159007ba1965000000",
+              "created_at": "2016-04-25T11:45:47Z",
+              "modified_at": "2017-06-22T15:18:55Z"
+            }
+          }
+        ]
       }
     ],
-    "total_count": 14,
+    "total_count": 17,
     "page": 1,
     "max_page": 1,
     "per_page": 100

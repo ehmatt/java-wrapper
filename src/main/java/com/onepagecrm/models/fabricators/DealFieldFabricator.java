@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 28/06/2017.
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
-public class CompanyFieldFabricator extends BaseFabricator {
+public class DealFieldFabricator extends BaseFabricator {
 
     public static CustomField single() {
         return singleLineText();
@@ -20,49 +20,36 @@ public class CompanyFieldFabricator extends BaseFabricator {
         List<CustomField> customFields = new ArrayList<>();
         customFields.add(singleLineText());
         customFields.add(multiLineText());
-        customFields.add(date());
         customFields.add(number());
         customFields.add(dropdown());
+        customFields.add(date());
         customFields.add(multipleChoice());
         return customFields;
     }
 
     public static CustomField singleLineText() {
         CustomFieldValue value = new CustomFieldValue();
-        value.setValue("Example Company single-line value");
+        value.setValue("Example Deal single-line value");
         return new CustomField()
-                .setId("578bbeb79007ba5344fb68eb")
-                .setName("CompanySingleLine")
+                .setId("5947a6279007ba40b8ecbb0a")
+                .setName("DealSingleLine")
                 .setPosition(0)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_SINGLE_LINE_TEXT)
-                .setCfType(CustomField.CF_TYPE_COMPANY)
+                .setCfType(CustomField.CF_TYPE_DEAL)
                 .setValue(value);
     }
 
     public static CustomField multiLineText() {
         CustomFieldValue value = new CustomFieldValue();
-        value.setValue("Example Company multi-line value");
+        value.setValue("Example Deal multi-line value");
         return new CustomField()
-                .setId("578bbf109007ba5344fb68ec")
-                .setName("CompanyMultiLine")
+                .setId("5947a6479007ba40b8ecbb0b")
+                .setName("DealMultiLine")
                 .setPosition(1)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_MULTI_LINE_TEXT)
-                .setCfType(CustomField.CF_TYPE_COMPANY)
-                .setValue(value);
-    }
-
-    public static CustomField date() {
-        CustomFieldValue value = new CustomFieldValue();
-        value.setValue("2016-01-21");
-        return new CustomField()
-                .setId("578bbf1e9007ba5344fb68ed")
-                .setName("CompanyDate")
-                .setPosition(2)
-                .setReminderDays(-1)
-                .setType(CustomField.TYPE_DATE)
-                .setCfType(CustomField.CF_TYPE_COMPANY)
+                .setCfType(CustomField.CF_TYPE_DEAL)
                 .setValue(value);
     }
 
@@ -70,12 +57,12 @@ public class CompanyFieldFabricator extends BaseFabricator {
         CustomFieldValue value = new CustomFieldValue();
         value.setValue(3.14);
         return new CustomField()
-                .setId("578bbf259007ba5344fb68ee")
-                .setName("CompanyNumber")
-                .setPosition(3)
+                .setId("5947a6569007ba40b8ecbb0c")
+                .setName("DealNumber")
+                .setPosition(2)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_NUMBER)
-                .setCfType(CustomField.CF_TYPE_COMPANY)
+                .setCfType(CustomField.CF_TYPE_DEAL)
                 .setValue(value);
     }
 
@@ -84,12 +71,25 @@ public class CompanyFieldFabricator extends BaseFabricator {
         value.setValue("First");
         return new CustomField()
                 .setChoices(choicesList())
-                .setId("578bbf389007ba5344fb68ef")
-                .setName("CompanyDropdown")
-                .setPosition(4)
+                .setId("5947a6749007ba40b8ecbb0d")
+                .setName("DealDropdown")
+                .setPosition(3)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_DROPDOWN)
-                .setCfType(CustomField.CF_TYPE_COMPANY)
+                .setCfType(CustomField.CF_TYPE_DEAL)
+                .setValue(value);
+    }
+
+    public static CustomField date() {
+        CustomFieldValue value = new CustomFieldValue();
+        value.setValue("2016-01-20");
+        return new CustomField()
+                .setId("5947a6849007ba40b8ecbb11")
+                .setName("DealDate")
+                .setPosition(4)
+                .setReminderDays(-1)
+                .setType(CustomField.TYPE_DATE)
+                .setCfType(CustomField.CF_TYPE_DEAL)
                 .setValue(value);
     }
 
@@ -98,12 +98,12 @@ public class CompanyFieldFabricator extends BaseFabricator {
         value.setValue(choicesArray());
         return new CustomField()
                 .setChoices(choicesList())
-                .setId("578bbf4f9007ba5344fb68f0")
-                .setName("CompanyMultipleChoice")
+                .setId("5947a6aa9007ba40b8ecbb12")
+                .setName("DealMultipleChoice")
                 .setPosition(5)
                 .setReminderDays(-1)
                 .setType(CustomField.TYPE_MULTIPLE_CHOICE)
-                .setCfType(CustomField.CF_TYPE_COMPANY)
+                .setCfType(CustomField.CF_TYPE_DEAL)
                 .setValue(value);
     }
 

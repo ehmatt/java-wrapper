@@ -18,6 +18,9 @@ public class Account implements Serializable {
     public Countries countries;
 
     public List<CustomField> customFields;
+    public List<CustomField> companyFields;
+    public List<CustomField> dealFields;
+
     public List<Filter> filters;
     public List<CallResult> callResults;
     public List<Tag> tags;
@@ -29,7 +32,6 @@ public class Account implements Serializable {
 
     public PredefinedActionList predefinedActions;
     public List<String> contactTitles;
-    public List<CustomField> companyFields;
 
     public Account() {
 
@@ -167,6 +169,15 @@ public class Account implements Serializable {
 
     public Account setCompanyFields(List<CustomField> companyFields) {
         this.companyFields = companyFields;
+        return this;
+    }
+
+    public List<CustomField> getDealFields() {
+        return dealFields;
+    }
+
+    public Account setDealFields(List<CustomField> dealFields) {
+        this.dealFields = dealFields;
         return this;
     }
 }

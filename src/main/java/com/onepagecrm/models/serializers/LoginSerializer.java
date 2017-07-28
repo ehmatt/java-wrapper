@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 
 import static com.onepagecrm.models.Account.loggedInUser;
 
+@SuppressWarnings("WeakerAccess")
 public class LoginSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(LoginSerializer.class.getName());
@@ -63,17 +64,15 @@ public class LoginSerializer extends BaseSerializer {
         try {
             JSONObject responseObject = new JSONObject(responseBody);
             JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
-            if (dataObject.has(SETTINGS_TAG)) {
-                addSettings(dataObject.getJSONObject(SETTINGS_TAG));
-            }
+            addSettings(dataObject);
         } catch (Exception e) {
             LOG.severe("Error parsing Settings array");
             LOG.severe(e.toString());
         }
     }
 
-    private static void addSettings(JSONObject settingsObject) {
-        Settings settings = SettingsSerializer.fromJsonObject(settingsObject);
+    private static void addSettings(JSONObject dataObject) {
+        Settings settings = SettingsSerializer.fromJsonObject(dataObject);
         loggedInUser.getAccount().setSettings(settings);
     }
 

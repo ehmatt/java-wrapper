@@ -1,21 +1,15 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Company;
 import com.onepagecrm.models.ContactList;
-import com.onepagecrm.models.CustomField;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
-import static com.onepagecrm.models.internal.Utilities.nullChecks;
-
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
  */
 public class LinkedContactsSerializer extends BaseSerializer {
 

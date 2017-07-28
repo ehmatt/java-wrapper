@@ -13,6 +13,7 @@ import com.onepagecrm.models.Note;
 import com.onepagecrm.models.Phone;
 import com.onepagecrm.models.Tag;
 import com.onepagecrm.models.Url;
+import com.onepagecrm.models.helpers.TagHelper;
 import com.onepagecrm.models.internal.SalesCycleClosure;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -133,11 +134,7 @@ public class ContactSerializer extends BaseSerializer {
             // Add Tags.
             if (contactObject.has(TAGS_TAG)) {
                 List<String> tagNames = BaseSerializer.toListOfStrings(contactObject.getJSONArray(TAGS_TAG));
-                List<Tag> tags = new ArrayList<>();
-                for (String tagName : tagNames) {
-                    tags.add(new Tag().setName(tagName));
-                }
-                if (!tags.isEmpty()) contact.setTags(tags);
+                contact.setTags(TagHelper.asTags(tagNames));
             }
             // Add Custom Fields.
             if (contactObject.has(CUSTOM_FIELDS_TAG)) {

@@ -1,7 +1,7 @@
 {
   "status": 0,
   "message": "Created",
-  "timestamp": 1493026395,
+  "timestamp": 1498640868,
   "data": {
     "user_id": "559cd1866f6e656707000001",
     "auth_key": "xbigujk/IWwGwz0ojZAXnl/jOiQ3yKnBAFOWM6F9c88=",
@@ -110,8 +110,8 @@
       "clipper_beta": false
     },
     "cost_setup": {
-      "cost_enabled": false,
-      "cost_required": false,
+      "cost_enabled": true,
+      "cost_required": true,
       "commission_base": "amount",
       "commission_percentage": "10.0"
     },
@@ -244,7 +244,66 @@
         }
       }
     ],
-    "deal_fields": [],
+    "deal_fields": [
+      {
+        "deal_field": {
+          "id": "5947a6279007ba40b8ecbb0a",
+          "name": "DealSingleLine",
+          "type": "single_line_text",
+          "position": 0
+        }
+      },
+      {
+        "deal_field": {
+          "id": "5947a6479007ba40b8ecbb0b",
+          "name": "DealMultiLine",
+          "type": "multi_line_text",
+          "position": 1
+        }
+      },
+      {
+        "deal_field": {
+          "id": "5947a6569007ba40b8ecbb0c",
+          "name": "DealNumber",
+          "type": "number",
+          "position": 2
+        }
+      },
+      {
+        "deal_field": {
+          "id": "5947a6749007ba40b8ecbb0d",
+          "name": "DealDropdown",
+          "type": "select_box",
+          "position": 3,
+          "choices": [
+            "First",
+            "Second",
+            "Third"
+          ]
+        }
+      },
+      {
+        "deal_field": {
+          "id": "5947a6849007ba40b8ecbb11",
+          "name": "DealDate",
+          "type": "date",
+          "position": 4
+        }
+      },
+      {
+        "deal_field": {
+          "id": "5947a6aa9007ba40b8ecbb12",
+          "name": "DealMultipleChoice",
+          "type": "multiple_choice",
+          "position": 5,
+          "choices": [
+            "First",
+            "Second",
+            "Third"
+          ]
+        }
+      }
+    ],
     "filters": [
       {
         "filter": {
