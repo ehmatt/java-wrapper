@@ -11,5 +11,11 @@ dependencies {
 }
 
 jar {
+    manifest {
+        attributes 'Implementation-Version': '0.0.1'
+    }
     exclude('com/onepagecrm/samples/**')
+    into 'resources', {
+        from './src/test/res/responses/perfect'
+    }
 }
