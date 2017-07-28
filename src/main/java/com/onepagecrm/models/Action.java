@@ -21,7 +21,10 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
 
-@SuppressWarnings({"unused", "WeakerAccess"})
+/**
+ * @author Cillian Myles (cillian@onepagecrm.com) on 29/06/2017.
+ */
+@SuppressWarnings({"unused", "WeakerAccess", "UnusedReturnValue"})
 public class Action extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = -7486991046434989805L;
@@ -55,8 +58,8 @@ public class Action extends ApiResource implements Serializable {
 
         private String status;
 
-        Status(String pStatus) {
-            status = pStatus;
+        Status(String status) {
+            this.status = status;
         }
 
         @Override
@@ -192,13 +195,13 @@ public class Action extends ApiResource implements Serializable {
         return this;
     }
 
-    /**
-     * Utility methods
-     */
-
     private String addActionIdToEndpoint(String endpoint) {
         return endpoint + "/" + this.id;
     }
+
+    /**
+     * Utility methods
+     */
 
     public String getFriendlyDateString() {
         if (this.date != null) {
@@ -222,17 +225,13 @@ public class Action extends ApiResource implements Serializable {
                 this.status == Status.DATE_TIME || this.status == Status.WAITING);
     }
 
-    @Override
-    public String toString() {
-        return ActionSerializer.toJsonObject(this);
-    }
-
     /**
      * Object methods
      */
 
-    public Action() {
-
+    @Override
+    public String toString() {
+        return ActionSerializer.toJsonObject(this);
     }
 
     @Override

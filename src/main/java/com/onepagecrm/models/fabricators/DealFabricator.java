@@ -10,8 +10,9 @@ import com.onepagecrm.models.serializers.DealListSerializer;
 import java.util.logging.Logger;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 16/02/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 16/02/2016.
  */
+@SuppressWarnings("WeakerAccess")
 public class DealFabricator extends BaseFabricator {
 
     private static final Logger LOG = Logger.getLogger(DealFabricator.class.getName());
@@ -34,6 +35,18 @@ public class DealFabricator extends BaseFabricator {
 
     public static Deal lost() {
         return list().get(10);
+    }
+
+    public static Deal withCustomFields() {
+        return list().get(14);
+    }
+
+    public static Deal commissionPercentage() {
+        return list().get(15);
+    }
+
+    public static Deal commissionAbsolute() {
+        return list().get(16);
     }
 
     public static DealList list() {

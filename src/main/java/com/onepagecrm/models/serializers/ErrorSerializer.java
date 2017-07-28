@@ -27,40 +27,10 @@ public class ErrorSerializer extends BaseSerializer {
         JSONObject responseObject;
         try {
             responseObject = new JSONObject(responseBody);
-            int status = responseObject.getInt(STATUS_TAG);
-            switch (status) {
-                case 400:
-                    exception = new BadRequestException();
-                    break;
-                case 401:
-                    exception = new AuthenticationException();
-                    break;
-                case 402:
-                    exception = new PaymentRequiredException();
-                    break;
-                case 403:
-                    exception = new ForbiddenException();
-                    break;
-                case 404:
-                    exception = new ResourceNotFoundException();
-                    break;
-                case 405:
-                    exception = new MethodNotAllowedException();
-                    break;
-                case 409:
-                    exception = new PreconditionFailedException();
-                    break;
-                case 500:
-                    exception = new ServerErrorException();
-                    break;
-                case 503:
-                    exception = new ServiceUnavailableException();
-                    break;
-            }
-            exception
-                    .setErrorName(responseObject.getString(ERROR_NAME_TAG))
-                    .setStatus(responseObject.getInt(STATUS_TAG))
+            int statusCode = responseObject.getInt(STATUS_TAG);
+            exception = fromHttpStatusCode(statusCode)
                     .setMessage(responseObject.getString(MESSAGE_TAG))
+                    .setErrorName(responseObject.getString(ERROR_NAME_TAG))
                     .setErrorMessage(responseObject.getString(ERROR_MESSAGE_TAG))
                     .setErrors(fromJsonObject(responseObject));
 
@@ -69,6 +39,40 @@ public class ErrorSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
         return exception;
+    }
+
+    public static OnePageException fromHttpStatusCode(int statusCode) {
+        OnePageException exception = new OnePageException();
+        switch (statusCode) {
+            case 400:
+                exception = new BadRequestException();
+                break;
+            case 401:
+                exception = new AuthenticationException();
+                break;
+            case 402:
+                exception = new PaymentRequiredException();
+                break;
+            case 403:
+                exception = new ForbiddenException();
+                break;
+            case 404:
+                exception = new ResourceNotFoundException();
+                break;
+            case 405:
+                exception = new MethodNotAllowedException();
+                break;
+            case 409:
+                exception = new PreconditionFailedException();
+                break;
+            case 500:
+                exception = new ServerErrorException();
+                break;
+            case 503:
+                exception = new ServiceUnavailableException();
+                break;
+        }
+        return exception.setStatus(statusCode);
     }
 
     @SuppressWarnings("unchecked")

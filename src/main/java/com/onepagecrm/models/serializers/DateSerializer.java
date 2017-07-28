@@ -1,6 +1,7 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.models.internal.OPCRMColors;
+import com.onepagecrm.models.internal.Utilities;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,7 +58,7 @@ public class DateSerializer extends BaseSerializer {
     }
 
     public static Date fromFormattedString(String dateStr) {
-        if (dateStr != null) {
+        if (Utilities.notNullOrEmpty(dateStr)) {
             try {
                 return dateTimeFormat.parse(dateStr);
             } catch (ParseException e) {
@@ -125,6 +126,18 @@ public class DateSerializer extends BaseSerializer {
                 return TODAY;
             } else {
                 return friendlyDateFormat.format(date);
+            }
+        }
+        return null;
+    }
+
+    public static String toFriendlyDateAndYearString(Date date) {
+        Date today = new Date();
+        if (date != null) {
+            if (dateFormat.format(date).equals(dateFormat.format(today))) {
+                return TODAY;
+            } else {
+                return friendlyDateAndYearFormat.format(date);
             }
         }
         return null;

@@ -104,14 +104,16 @@ public class TagSerializer extends BaseSerializer {
 
     public static List<Tag> fromJsonArray(JSONArray tagsArray) {
         List<Tag> tags = new ArrayList<>();
-        for (int j = 0; j < tagsArray.length(); j++) {
-            JSONObject tagObject;
-            try {
-                tagObject = tagsArray.getJSONObject(j);
-                tags.add(fromJsonObject(tagObject));
-            } catch (JSONException e) {
-                LOG.severe("Error parsing Tag array");
-                LOG.severe(e.toString());
+        if (tagsArray != null) {
+            for (int j = 0; j < tagsArray.length(); j++) {
+                JSONObject tagObject;
+                try {
+                    tagObject = tagsArray.getJSONObject(j);
+                    tags.add(fromJsonObject(tagObject));
+                } catch (JSONException e) {
+                    LOG.severe("Error parsing Tag array");
+                    LOG.severe(e.toString());
+                }
             }
         }
         return tags;
