@@ -12,6 +12,7 @@ dependencies {
 
 jar {
     manifest {
+        attributes 'Created-By': 'Cillian Myles (OnePageCRM)'
         attributes 'Implementation-Version': '0.0.1'
     }
     exclude('com/onepagecrm/samples/**')
