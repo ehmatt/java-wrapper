@@ -75,6 +75,7 @@ public class Deal extends ApiResource implements Serializable {
     private Commission.Base commissionBase;
     private Commission.Type commissionType;
     private Double commissionPercentage;
+    private List<Attachment> attachments;
 
     /**
      * API methods
@@ -493,6 +494,15 @@ public class Deal extends ApiResource implements Serializable {
 
     public Deal setCommissionPercentage(Double commissionPercentage) {
         this.commissionPercentage = commissionPercentage;
+        return this;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public Deal setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
         return this;
     }
 }

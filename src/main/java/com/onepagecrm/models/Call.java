@@ -20,7 +20,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Cillian Myles (cillian@onepagecrm.com) on 31/07/2017.
+ */
 public class Call extends ApiResource implements Serializable {
+
+    /**
+     * Member variables.
+     */
 
     private String id;
     private String author;
@@ -32,8 +39,12 @@ public class Call extends ApiResource implements Serializable {
     private Date modifiedAt;
     private String via;
     private String recordingLink;
+    private String text;
     private List<Attachment> attachments;
-    private String mText;
+
+    /**
+     * API methods
+     */
 
     public Call save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -97,9 +108,9 @@ public class Call extends ApiResource implements Serializable {
         return endpoint + "/" + this.id;
     }
 
-    public Call() {
-
-    }
+    /**
+     * Object methods
+     */
 
     @Override
     public String getId() {
@@ -198,21 +209,21 @@ public class Call extends ApiResource implements Serializable {
         return this;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public Call setText(String text) {
+        this.text = text;
+        return this;
+    }
+
     public List<Attachment> getAttachments() {
         return attachments;
     }
 
     public Call setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
-        return this;
-    }
-
-    public String getText() {
-        return mText;
-    }
-
-    public Call setText(String pText) {
-        mText = pText;
         return this;
     }
 }

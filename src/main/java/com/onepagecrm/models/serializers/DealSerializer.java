@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * @author Cillian Myles (cillian@onepagecrm.com) on 11/24/15.
+ * @author Cillian Myles (cillian@onepagecrm.com) on 24/11/2015.
  */
 public class DealSerializer extends BaseSerializer {
 
@@ -144,6 +144,9 @@ public class DealSerializer extends BaseSerializer {
             }
             if (dealObject.has(COMMISSION_PERCENTAGE_TAG) && !dealObject.isNull(COMMISSION_PERCENTAGE_TAG)) {
                 deal.setCommissionPercentage(dealObject.getDouble(COMMISSION_PERCENTAGE_TAG));
+            }
+            if (dealObject.has(ATTACHMENTS_TAG)) {
+                deal.setAttachments(AttachmentSerializer.fromJsonArray(dealObject.optJSONArray(ATTACHMENTS_TAG)));
             }
         } catch (JSONException e) {
             LOG.severe("Error parsing Deal object");

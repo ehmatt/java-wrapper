@@ -17,9 +17,17 @@ import com.onepagecrm.net.request.Request;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Cillian Myles (cillian@onepagecrm.com) on 31/07/2017.
+ */
 public class Note extends ApiResource implements Serializable {
+
+    /**
+     * Member variables.
+     */
 
     private String id;
     private String author;
@@ -28,6 +36,11 @@ public class Note extends ApiResource implements Serializable {
     private Date createdAt;
     private Date date;
     private String linkedDealId;
+    private List<Attachment> attachments;
+
+    /**
+     * API methods
+     */
 
     public Note save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -90,6 +103,10 @@ public class Note extends ApiResource implements Serializable {
     private String addNoteIdToEndpoint(String endpoint) {
         return endpoint + "/" + this.id;
     }
+
+    /**
+     * Object methods
+     */
 
     @Override
     public String getId() {
@@ -159,5 +176,14 @@ public class Note extends ApiResource implements Serializable {
 
     public String getLinkedDealId() {
         return linkedDealId;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public Note setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+        return this;
     }
 }

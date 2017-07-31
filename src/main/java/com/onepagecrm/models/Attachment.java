@@ -12,6 +12,9 @@ import com.onepagecrm.net.request.Request;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 31/07/2017.
+ */
 public class Attachment extends ApiResource implements Serializable {
 
     /**

@@ -74,7 +74,8 @@ public class AttachmentSerializer extends BaseSerializer {
             return attachments;
         }
         for (int i = 0; i < attachmentsArray.length(); i++) {
-            Attachment attachment = fromJsonObject(attachmentsArray.optJSONObject(i));
+            JSONObject attachmentObject = attachmentsArray.optJSONObject(i);
+            Attachment attachment = fromJsonObject(attachmentObject);
             if (attachment != null) {
                 attachments.add(attachment);
             }

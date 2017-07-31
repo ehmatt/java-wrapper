@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 
 /**
  * Created by alex on 4/25/16.
+ *
+ * @author Cillian Myles (cillian@onepagecrm.com) on 31/07/2017.
  */
 public class NoteSerializer extends BaseSerializer {
 
@@ -39,17 +41,15 @@ public class NoteSerializer extends BaseSerializer {
         if (noteObject.has(NOTE_TAG)) {
             noteObject = noteObject.optJSONObject(NOTE_TAG);
         }
-        Note note = new Note();
-        note.setId(noteObject.optString(ID_TAG));
-        note.setAuthor(noteObject.optString(AUTHOR_TAG));
-        note.setText(noteObject.optString(TEXT_TAG));
-        note.setContactId(noteObject.optString(CONTACT_ID_TAG));
-        note.setCreatedAt(DateSerializer.fromFormattedString(noteObject.optString(CREATED_AT_TAG)));
-        note.setDate(DateSerializer.fromFormattedString(noteObject.optString(DATE_TAG)));
-        if (!noteObject.isNull(LINKED_DEAL_ID_TAG)) {
-            note.setLinkedDealId(noteObject.optString(LINKED_DEAL_ID_TAG));
-        }
-        return note;
+        return new Note()
+                .setId(noteObject.optString(ID_TAG))
+                .setAuthor(noteObject.optString(AUTHOR_TAG))
+                .setText(noteObject.optString(TEXT_TAG))
+                .setContactId(noteObject.optString(CONTACT_ID_TAG))
+                .setCreatedAt(DateSerializer.fromFormattedString(noteObject.optString(CREATED_AT_TAG)))
+                .setDate(DateSerializer.fromFormattedString(noteObject.optString(DATE_TAG)))
+                .setLinkedDealId(!noteObject.isNull(LINKED_DEAL_ID_TAG) ? noteObject.optString(LINKED_DEAL_ID_TAG) : null)
+                .setAttachments(AttachmentSerializer.fromJsonArray(noteObject.optJSONArray(ATTACHMENTS_TAG)));
     }
 
     public static List<Note> fromJsonArray(JSONArray notesArray) {
