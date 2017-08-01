@@ -109,6 +109,14 @@ public class Call extends ApiResource implements Serializable {
     }
 
     /**
+     * Utility methods
+     */
+
+    public boolean hasAttachments() {
+        return this.attachments != null && !attachments.isEmpty();
+    }
+
+    /**
      * Object methods
      */
 
