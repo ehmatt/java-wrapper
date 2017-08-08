@@ -106,7 +106,7 @@ public class Attachment extends ApiResource implements Serializable {
 
     public String getFileExtension() {
         return Utilities.notNullOrEmpty(filename) && filename.contains(".") ?
-                filename.substring(filename.lastIndexOf(".")) : "";
+                filename.substring(filename.lastIndexOf(".")).replace(".", "") : "";
     }
 
     /**
