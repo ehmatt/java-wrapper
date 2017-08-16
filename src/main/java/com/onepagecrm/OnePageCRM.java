@@ -3,7 +3,7 @@ package com.onepagecrm;
 import com.onepagecrm.models.Account;
 import com.onepagecrm.net.request.Request;
 
-@SuppressWarnings({"WeakerAccess", "unused"})
+@SuppressWarnings({"WeakerAccess", "unused", "UnusedReturnValue"})
 public final class OnePageCRM {
 
     public static Account account;
@@ -24,8 +24,7 @@ public final class OnePageCRM {
         return instance;
     }
 
-    @SuppressWarnings("SameParameterValue")
-    public static OnePageCRM setDEBUG(boolean debug) {
+    public static OnePageCRM setDebug(boolean debug) {
         DEBUG = debug;
         return getInstance();
     }
@@ -37,6 +36,16 @@ public final class OnePageCRM {
 
     public static OnePageCRM setSource(String source) {
         SOURCE = source;
+        return getInstance();
+    }
+
+    public static OnePageCRM setLocalDevUrl(String customUrl) {
+        Request.setLocalDevUrl(customUrl);
+        return getInstance();
+    }
+
+    public static OnePageCRM setNetworkDevUrl(String customUrl) {
+        Request.setNetworkDevUrl(customUrl);
         return getInstance();
     }
 

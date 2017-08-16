@@ -17,7 +17,9 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-@SuppressWarnings("WeakerAccess")
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
+
+@SuppressWarnings({"WeakerAccess", "MismatchedQueryAndUpdateOfCollection", "unused"})
 public abstract class Request {
 
     protected static final Logger LOG = Logger.getLogger(Request.class.getName());
@@ -29,16 +31,21 @@ public abstract class Request {
     public static final int CALYPSO_SERVER = 4;
     public static final int DEIMOS_SERVER = 5;
     public static final int DRACO_SERVER = 6;
-    public static final int GEMINI_SERVER = 7;
-    public static final int ORION_SERVER = 8;
-    public static final int PHOBOS_SERVER = 9;
-    public static final int SECURE_SERVER = 10;
-    public static final int TITAN_SERVER = 11;
-    public static final int VOYAGER_SERVER = 12;
-    public static final int LOCAL_DEV_SERVER = 13;
-    public static final int NETWORK_DEV_SERVER = 14;
-    public static final int MOCK_REQUEST_SERVER = 15;
-    public static final int CUSTOM_URL_SERVER = 16;
+    public static final int GANYMEDE_SERVER = 7;
+    public static final int GEMINI_SERVER = 8;
+    public static final int ORION_SERVER = 9;
+    public static final int PEGASUS_SERVER = 10;
+    public static final int PHOBOS_SERVER = 11;
+    public static final int SECURE_SERVER = 12;
+    public static final int SIRIUS_SERVER = 13;
+    public static final int TAURUS_SERVER = 14;
+    public static final int TITAN_SERVER = 15;
+    public static final int VIRGO_SERVER = 16;
+    public static final int VOYAGER_SERVER = 17;
+    public static final int LOCAL_DEV_SERVER = 20;
+    public static final int NETWORK_DEV_SERVER = 21;
+    public static final int MOCK_REQUEST_SERVER = 22;
+    public static final int CUSTOM_URL_SERVER = 23;
 
     protected static final String APP_URL = "https://app.onepagecrm.com/api/v3/";
     protected static final String DEV_URL = "http://dev.onepagecrm.com/api/v3/";
@@ -46,16 +53,29 @@ public abstract class Request {
     protected static final String ATLAS_URL = "http://atlas.dev.onepagecrm.com/api/v3/";
     protected static final String CALYPSO_URL = "http://calypso.dev.onepagecrm.com/api/v3/";
     protected static final String DEIMOS_URL = "http://deimos.dev.onepagecrm.com/api/v3/";
+    protected static final String GANYMEDE_URL = "http://ganymede.dev.onepagecrm.com/api/v3/";
     protected static final String DRACO_URL = "http://draco.dev.onepagecrm.com/api/v3/";
     protected static final String GEMINI_URL = "http://gemini.dev.onepagecrm.com/api/v3/";
     protected static final String ORION_URL = "http://orion.dev.onepagecrm.com/api/v3/";
+    protected static final String PEGASUS_URL = "http://pegasus.dev.onepagecrm.com/api/v3/";
     protected static final String PHOBOS_URL = "http://phobos.dev.onepagecrm.com/api/v3/";
     protected static final String SECURE_URL = "https://secure.dev.onepagecrm.com/api/v3/";
+    protected static final String SIRIUS_URL = "http://sirius.dev.onepagecrm.com/api/v3/";
+    protected static final String TAURUS_URL = "http://taurus.dev.onepagecrm.com/api/v3/";
     protected static final String TITAN_URL = "http://titan.dev.onepagecrm.com/api/v3/";
+    protected static final String VIRGO_URL = "http://virgo.dev.onepagecrm.com/api/v3/";
     protected static final String VOYAGER_URL = "http://voyager.dev.onepagecrm.com/api/v3/";
-    protected static final String LOCAL_DEV_URL = "http://localhost:3000/api/v3/";
-    protected static final String NETWORK_DEV_URL = "http://10.100.0.15/api/v3/";
+    protected static String LOCAL_DEV_URL = "http://localhost:3000/api/v3/";
+    protected static String NETWORK_DEV_URL = "http://10.100.0.15/api/v3/";
     protected static String CUSTOM_URL = "http://10.100.0.15/api/v3/";
+
+    public static void setLocalDevUrl(String customUrl) {
+        LOCAL_DEV_URL = customUrl;
+    }
+
+    public static void setNetworkDevUrl(String customUrl) {
+        NETWORK_DEV_URL = customUrl;
+    }
 
     public static void setCustomUrl(String customUrl) {
         CUSTOM_URL = customUrl;
@@ -70,16 +90,60 @@ public abstract class Request {
         sUrlMap.put(ATLAS_SERVER, ATLAS_URL);
         sUrlMap.put(CALYPSO_SERVER, CALYPSO_URL);
         sUrlMap.put(DEIMOS_SERVER, DEIMOS_URL);
+        sUrlMap.put(GANYMEDE_SERVER, GANYMEDE_URL);
         sUrlMap.put(DRACO_SERVER, DRACO_URL);
         sUrlMap.put(GEMINI_SERVER, GEMINI_URL);
         sUrlMap.put(ORION_SERVER, ORION_URL);
+        sUrlMap.put(PEGASUS_SERVER, PEGASUS_URL);
         sUrlMap.put(PHOBOS_SERVER, PHOBOS_URL);
         sUrlMap.put(SECURE_SERVER, SECURE_URL);
+        sUrlMap.put(SIRIUS_SERVER, SIRIUS_URL);
+        sUrlMap.put(TAURUS_SERVER, TAURUS_URL);
         sUrlMap.put(TITAN_SERVER, TITAN_URL);
+        sUrlMap.put(VIRGO_SERVER, VIRGO_URL);
         sUrlMap.put(VOYAGER_SERVER, VOYAGER_URL);
         sUrlMap.put(LOCAL_DEV_SERVER, LOCAL_DEV_URL);
         sUrlMap.put(NETWORK_DEV_SERVER, NETWORK_DEV_URL);
         sUrlMap.put(CUSTOM_URL_SERVER, CUSTOM_URL);
+    }
+
+    private static final Map<String, Integer> sNameServerMap = new HashMap<>();
+
+    static {
+        sNameServerMap.put("APP", APP_SERVER);
+        sNameServerMap.put("DEV", DEV_SERVER);
+        sNameServerMap.put("STAGING", STAGING_SERVER);
+        sNameServerMap.put("ATLAS", ATLAS_SERVER);
+        sNameServerMap.put("CALYPSO", CALYPSO_SERVER);
+        sNameServerMap.put("DEIMOS", DEIMOS_SERVER);
+        sNameServerMap.put("GANYMEDE", GANYMEDE_SERVER);
+        sNameServerMap.put("DRACO", DRACO_SERVER);
+        sNameServerMap.put("GEMINI", GEMINI_SERVER);
+        sNameServerMap.put("ORION", ORION_SERVER);
+        sNameServerMap.put("PEGASUS", PEGASUS_SERVER);
+        sNameServerMap.put("PHOBOS", PHOBOS_SERVER);
+        sNameServerMap.put("SECURE", SECURE_SERVER);
+        sNameServerMap.put("SIRIUS", SIRIUS_SERVER);
+        sNameServerMap.put("TAURUS", TAURUS_SERVER);
+        sNameServerMap.put("TITAN", TITAN_SERVER);
+        sNameServerMap.put("VIRGO", VIRGO_SERVER);
+        sNameServerMap.put("VOYAGER", VOYAGER_SERVER);
+        sNameServerMap.put("LOCAL", LOCAL_DEV_SERVER);
+        sNameServerMap.put("NETWORK", NETWORK_DEV_SERVER);
+        sNameServerMap.put("CUSTOM", CUSTOM_URL_SERVER);
+    }
+
+    public static int getServerId(String name) {
+        return getServerId(name, APP_SERVER);
+    }
+
+    public static int getServerId(String name, int defaultServer) {
+        final int safeDefault = sUrlMap.get(defaultServer) != null ? defaultServer : APP_SERVER;
+        if (!notNullOrEmpty(name)) {
+            return safeDefault;
+        }
+        final Integer matched = sNameServerMap.get(name);
+        return matched != null ? matched : safeDefault;
     }
 
     public static String format = ".json";
@@ -127,7 +191,7 @@ public abstract class Request {
     /**
      * Method require to send HTTP request.
      *
-     * @return
+     * @return response
      */
     public Response send() {
         boolean mockingRequest = (OnePageCRM.SERVER == MOCK_REQUEST_SERVER);
@@ -179,8 +243,8 @@ public abstract class Request {
     /**
      * Convert String to Url object.
      *
-     * @param url
-     * @return
+     * @param url of request
+     * @return formed {@link URL url}.
      */
     private URL getUrl(String url) {
         URL requestUrl = null;
