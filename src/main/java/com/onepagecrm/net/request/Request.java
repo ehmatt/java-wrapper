@@ -133,6 +133,10 @@ public abstract class Request {
         sNameServerMap.put("CUSTOM", CUSTOM_URL_SERVER);
     }
 
+    public static boolean validServerId(int id) {
+        return sUrlMap.get(id) != null;
+    }
+
     public static int getServerId(String name) {
         return getServerId(name, APP_SERVER);
     }
