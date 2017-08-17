@@ -47,6 +47,28 @@ public abstract class Request {
     public static final int MOCK_REQUEST_SERVER = 22;
     public static final int CUSTOM_URL_SERVER = 23;
 
+    protected static final String APP_NAME = "APP";
+    protected static final String DEV_NAME = "DEV";
+    protected static final String STAGING_NAME = "STAGING";
+    protected static final String ATLAS_NAME = "ATLAS";
+    protected static final String CALYPSO_NAME = "CALYPSO";
+    protected static final String DEIMOS_NAME = "DEIMOS";
+    protected static final String GANYMEDE_NAME = "GANYMEDE";
+    protected static final String DRACO_NAME = "DRACO";
+    protected static final String GEMINI_NAME = "GEMINI";
+    protected static final String ORION_NAME = "ORION";
+    protected static final String PEGASUS_NAME = "PEGASUS";
+    protected static final String PHOBOS_NAME = "PHOBOS";
+    protected static final String SECURE_NAME = "SECURE";
+    protected static final String SIRIUS_NAME = "SIRIUS";
+    protected static final String TAURUS_NAME = "TAURUS";
+    protected static final String TITAN_NAME = "TITAN";
+    protected static final String VIRGO_NAME = "VIRGO";
+    protected static final String VOYAGER_NAME = "VOYAGER";
+    protected static final String LOCAL_DEV_NAME = "LOCAL";
+    protected static final String NETWORK_DEV_NAME = "NETWORK";
+    protected static final String CUSTOM_NAME = "CUSTOM";
+
     protected static final String APP_URL = "https://app.onepagecrm.com/api/v3/";
     protected static final String DEV_URL = "http://dev.onepagecrm.com/api/v3/";
     protected static final String STAGING_URL = "http://staging.onepagecrm.com/api/v3/";
@@ -81,60 +103,99 @@ public abstract class Request {
         CUSTOM_URL = customUrl;
     }
 
-    private static final Map<Integer, String> sUrlMap = new HashMap<>();
+    private static final Map<Integer, String> sServerNameMap = new HashMap<>();
 
     static {
-        sUrlMap.put(APP_SERVER, APP_URL);
-        sUrlMap.put(DEV_SERVER, DEV_URL);
-        sUrlMap.put(STAGING_SERVER, STAGING_URL);
-        sUrlMap.put(ATLAS_SERVER, ATLAS_URL);
-        sUrlMap.put(CALYPSO_SERVER, CALYPSO_URL);
-        sUrlMap.put(DEIMOS_SERVER, DEIMOS_URL);
-        sUrlMap.put(GANYMEDE_SERVER, GANYMEDE_URL);
-        sUrlMap.put(DRACO_SERVER, DRACO_URL);
-        sUrlMap.put(GEMINI_SERVER, GEMINI_URL);
-        sUrlMap.put(ORION_SERVER, ORION_URL);
-        sUrlMap.put(PEGASUS_SERVER, PEGASUS_URL);
-        sUrlMap.put(PHOBOS_SERVER, PHOBOS_URL);
-        sUrlMap.put(SECURE_SERVER, SECURE_URL);
-        sUrlMap.put(SIRIUS_SERVER, SIRIUS_URL);
-        sUrlMap.put(TAURUS_SERVER, TAURUS_URL);
-        sUrlMap.put(TITAN_SERVER, TITAN_URL);
-        sUrlMap.put(VIRGO_SERVER, VIRGO_URL);
-        sUrlMap.put(VOYAGER_SERVER, VOYAGER_URL);
-        sUrlMap.put(LOCAL_DEV_SERVER, LOCAL_DEV_URL);
-        sUrlMap.put(NETWORK_DEV_SERVER, NETWORK_DEV_URL);
-        sUrlMap.put(CUSTOM_URL_SERVER, CUSTOM_URL);
+        sServerNameMap.put(APP_SERVER, APP_NAME);
+        sServerNameMap.put(DEV_SERVER, DEV_NAME);
+        sServerNameMap.put(STAGING_SERVER, STAGING_NAME);
+        sServerNameMap.put(ATLAS_SERVER, ATLAS_NAME);
+        sServerNameMap.put(CALYPSO_SERVER, CALYPSO_NAME);
+        sServerNameMap.put(DEIMOS_SERVER, DEIMOS_NAME);
+        sServerNameMap.put(GANYMEDE_SERVER, GANYMEDE_NAME);
+        sServerNameMap.put(DRACO_SERVER, DRACO_NAME);
+        sServerNameMap.put(GEMINI_SERVER, GEMINI_NAME);
+        sServerNameMap.put(ORION_SERVER, ORION_NAME);
+        sServerNameMap.put(PEGASUS_SERVER, PEGASUS_NAME);
+        sServerNameMap.put(PHOBOS_SERVER, PHOBOS_NAME);
+        sServerNameMap.put(SECURE_SERVER, SECURE_NAME);
+        sServerNameMap.put(SIRIUS_SERVER, SIRIUS_NAME);
+        sServerNameMap.put(TAURUS_SERVER, TAURUS_NAME);
+        sServerNameMap.put(TITAN_SERVER, TITAN_NAME);
+        sServerNameMap.put(VIRGO_SERVER, VIRGO_NAME);
+        sServerNameMap.put(VOYAGER_SERVER, VOYAGER_NAME);
+        sServerNameMap.put(LOCAL_DEV_SERVER, LOCAL_DEV_NAME);
+        sServerNameMap.put(NETWORK_DEV_SERVER, NETWORK_DEV_NAME);
+        sServerNameMap.put(CUSTOM_URL_SERVER, CUSTOM_NAME);
+    }
+
+    private static final Map<Integer, String> sServerUrlMap = new HashMap<>();
+
+    static {
+        sServerUrlMap.put(APP_SERVER, APP_URL);
+        sServerUrlMap.put(DEV_SERVER, DEV_URL);
+        sServerUrlMap.put(STAGING_SERVER, STAGING_URL);
+        sServerUrlMap.put(ATLAS_SERVER, ATLAS_URL);
+        sServerUrlMap.put(CALYPSO_SERVER, CALYPSO_URL);
+        sServerUrlMap.put(DEIMOS_SERVER, DEIMOS_URL);
+        sServerUrlMap.put(GANYMEDE_SERVER, GANYMEDE_URL);
+        sServerUrlMap.put(DRACO_SERVER, DRACO_URL);
+        sServerUrlMap.put(GEMINI_SERVER, GEMINI_URL);
+        sServerUrlMap.put(ORION_SERVER, ORION_URL);
+        sServerUrlMap.put(PEGASUS_SERVER, PEGASUS_URL);
+        sServerUrlMap.put(PHOBOS_SERVER, PHOBOS_URL);
+        sServerUrlMap.put(SECURE_SERVER, SECURE_URL);
+        sServerUrlMap.put(SIRIUS_SERVER, SIRIUS_URL);
+        sServerUrlMap.put(TAURUS_SERVER, TAURUS_URL);
+        sServerUrlMap.put(TITAN_SERVER, TITAN_URL);
+        sServerUrlMap.put(VIRGO_SERVER, VIRGO_URL);
+        sServerUrlMap.put(VOYAGER_SERVER, VOYAGER_URL);
+        sServerUrlMap.put(LOCAL_DEV_SERVER, LOCAL_DEV_URL);
+        sServerUrlMap.put(NETWORK_DEV_SERVER, NETWORK_DEV_URL);
+        sServerUrlMap.put(CUSTOM_URL_SERVER, CUSTOM_URL);
     }
 
     private static final Map<String, Integer> sNameServerMap = new HashMap<>();
 
     static {
-        sNameServerMap.put("APP", APP_SERVER);
-        sNameServerMap.put("DEV", DEV_SERVER);
-        sNameServerMap.put("STAGING", STAGING_SERVER);
-        sNameServerMap.put("ATLAS", ATLAS_SERVER);
-        sNameServerMap.put("CALYPSO", CALYPSO_SERVER);
-        sNameServerMap.put("DEIMOS", DEIMOS_SERVER);
-        sNameServerMap.put("GANYMEDE", GANYMEDE_SERVER);
-        sNameServerMap.put("DRACO", DRACO_SERVER);
-        sNameServerMap.put("GEMINI", GEMINI_SERVER);
-        sNameServerMap.put("ORION", ORION_SERVER);
-        sNameServerMap.put("PEGASUS", PEGASUS_SERVER);
-        sNameServerMap.put("PHOBOS", PHOBOS_SERVER);
-        sNameServerMap.put("SECURE", SECURE_SERVER);
-        sNameServerMap.put("SIRIUS", SIRIUS_SERVER);
-        sNameServerMap.put("TAURUS", TAURUS_SERVER);
-        sNameServerMap.put("TITAN", TITAN_SERVER);
-        sNameServerMap.put("VIRGO", VIRGO_SERVER);
-        sNameServerMap.put("VOYAGER", VOYAGER_SERVER);
-        sNameServerMap.put("LOCAL", LOCAL_DEV_SERVER);
-        sNameServerMap.put("NETWORK", NETWORK_DEV_SERVER);
-        sNameServerMap.put("CUSTOM", CUSTOM_URL_SERVER);
+        sNameServerMap.put(APP_NAME, APP_SERVER);
+        sNameServerMap.put(DEV_NAME, DEV_SERVER);
+        sNameServerMap.put(STAGING_NAME, STAGING_SERVER);
+        sNameServerMap.put(ATLAS_NAME, ATLAS_SERVER);
+        sNameServerMap.put(CALYPSO_NAME, CALYPSO_SERVER);
+        sNameServerMap.put(DEIMOS_NAME, DEIMOS_SERVER);
+        sNameServerMap.put(GANYMEDE_NAME, GANYMEDE_SERVER);
+        sNameServerMap.put(DRACO_NAME, DRACO_SERVER);
+        sNameServerMap.put(GEMINI_NAME, GEMINI_SERVER);
+        sNameServerMap.put(ORION_NAME, ORION_SERVER);
+        sNameServerMap.put(PEGASUS_NAME, PEGASUS_SERVER);
+        sNameServerMap.put(PHOBOS_NAME, PHOBOS_SERVER);
+        sNameServerMap.put(SECURE_NAME, SECURE_SERVER);
+        sNameServerMap.put(SIRIUS_NAME, SIRIUS_SERVER);
+        sNameServerMap.put(TAURUS_NAME, TAURUS_SERVER);
+        sNameServerMap.put(TITAN_NAME, TITAN_SERVER);
+        sNameServerMap.put(VIRGO_NAME, VIRGO_SERVER);
+        sNameServerMap.put(VOYAGER_NAME, VOYAGER_SERVER);
+        sNameServerMap.put(LOCAL_DEV_NAME, LOCAL_DEV_SERVER);
+        sNameServerMap.put(NETWORK_DEV_NAME, NETWORK_DEV_SERVER);
+        sNameServerMap.put(CUSTOM_NAME, CUSTOM_URL_SERVER);
     }
 
     public static boolean validServerId(int id) {
-        return sUrlMap.get(id) != null;
+        return sServerUrlMap.get(id) != null;
+    }
+
+    public static String getServerName(int serverId) {
+        return getServerName(serverId, APP_NAME);
+    }
+
+    public static String getServerName(int serverId, String defaultName) {
+        final String safeDefault = sNameServerMap.get(defaultName) != null ? defaultName : APP_NAME;
+        if (serverId < APP_SERVER || serverId > CUSTOM_URL_SERVER) {
+            return safeDefault;
+        }
+        final String matched = sServerNameMap.get(serverId);
+        return matched != null ? matched : safeDefault;
     }
 
     public static int getServerId(String name) {
@@ -142,7 +203,7 @@ public abstract class Request {
     }
 
     public static int getServerId(String name, int defaultServer) {
-        final int safeDefault = sUrlMap.get(defaultServer) != null ? defaultServer : APP_SERVER;
+        final int safeDefault = sServerUrlMap.get(defaultServer) != null ? defaultServer : APP_SERVER;
         if (!notNullOrEmpty(name)) {
             return safeDefault;
         }
@@ -189,7 +250,7 @@ public abstract class Request {
     public abstract void setType();
 
     public void setEndpointUrl(String endpoint) {
-        endpointUrl = sUrlMap.get(OnePageCRM.SERVER) + endpoint + format;
+        endpointUrl = sServerUrlMap.get(OnePageCRM.SERVER) + endpoint + format;
     }
 
     /**
