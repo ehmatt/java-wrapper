@@ -7,6 +7,14 @@ public class TimeoutException extends OnePageException {
 
     private int timeMs;
 
+    public TimeoutException(String message) {
+        super(message);
+    }
+
+    public TimeoutException() {
+
+    }
+
     public int getTimeMs() {
         return timeMs;
     }

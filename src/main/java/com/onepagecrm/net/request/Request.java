@@ -1,6 +1,8 @@
 package com.onepagecrm.net.request;
 
 import com.onepagecrm.OnePageCRM;
+import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.TimeoutException;
 import com.onepagecrm.models.serializers.BaseSerializer;
 import com.onepagecrm.net.Response;
 
@@ -260,7 +262,7 @@ public abstract class Request {
      *
      * @return response
      */
-    public Response send() {
+    public Response send() throws OnePageException {
         boolean mockingRequest = (OnePageCRM.SERVER == MOCK_REQUEST_SERVER);
         if (!mockingRequest) {
             setupAndConnect();
@@ -295,7 +297,7 @@ public abstract class Request {
     /**
      * Connect to Url using HttpURLConnection class.
      */
-    private void setupAndConnect() {
+    private void setupAndConnect() throws OnePageException {
         URL url = getUrl(this.endpointUrl);
         connection = null;
         try {
@@ -303,8 +305,13 @@ public abstract class Request {
             connection.setConnectTimeout(DEFAULT_TIME_OUT_MS);
             HttpURLConnection.setFollowRedirects(true);
         } catch (java.net.SocketTimeoutException e) {
-            LOG.severe("Request timed out after " + (DEFAULT_TIME_OUT_MS / 1000) + " seconds");
+            String message = "Request timed out after " + (DEFAULT_TIME_OUT_MS / 1000) + " seconds";
+            LOG.severe(message);
             LOG.severe(e.toString());
+            throw new TimeoutException()
+                    .setTimeMs(DEFAULT_TIME_OUT_MS)
+                    .setMessage(message)
+                    .setErrorName(message);
         } catch (IOException e) {
             LOG.severe("Error connecting to url : " + url);
             LOG.severe(e.toString());
@@ -322,7 +329,7 @@ public abstract class Request {
         try {
             requestUrl = new URL(url);
         } catch (MalformedURLException e) {
-            LOG.severe("Error forming Url for GET request");
+            LOG.severe("Error forming url for request");
             LOG.severe(e.toString());
         }
         return requestUrl;

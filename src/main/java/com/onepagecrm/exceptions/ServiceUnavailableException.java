@@ -7,6 +7,14 @@ public class ServiceUnavailableException extends APIException {
 
     private int timestamp;
 
+    public ServiceUnavailableException(String message) {
+        super(message);
+    }
+
+    public ServiceUnavailableException() {
+
+    }
+
     public int getTimestamp() {
         return timestamp;
     }
