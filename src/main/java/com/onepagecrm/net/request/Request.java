@@ -492,7 +492,7 @@ public abstract class Request {
 
     private String getGetResponseBody() {
         Scanner scan = null;
-        String responseBody = "";
+        StringBuilder responseBody = new StringBuilder();
         if (response.getResponseCode() < 300) {
             try {
                 scan = new Scanner(connection.getInputStream());
@@ -506,16 +506,16 @@ public abstract class Request {
 
         if (scan != null) {
             while (scan.hasNext()) {
-                responseBody += scan.nextLine();
+                responseBody.append(scan.nextLine());
             }
             scan.close();
         }
-        return responseBody;
+        return responseBody.toString();
     }
 
     private String getPostResponseBody() {
         BufferedReader br = null;
-        String responseBody = "";
+        StringBuilder responseBody = new StringBuilder();
         if (response.getResponseCode() < 300) {
             try {
                 br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -530,7 +530,7 @@ public abstract class Request {
         if (br != null) {
             try {
                 while ((output = br.readLine()) != null) {
-                    responseBody += output;
+                    responseBody.append(output);
                 }
             } catch (IOException e) {
                 LOG.severe("Could not read line using buffered reader");
@@ -543,6 +543,6 @@ public abstract class Request {
                 LOG.severe(e.toString());
             }
         }
-        return responseBody;
+        return responseBody.toString();
     }
 }
