@@ -245,6 +245,8 @@ public abstract class Request {
 
     protected static final String AUTHORIZATION = "Authorization";
 
+    protected static final int DEFAULT_TIME_OUT_MS = 10000; // 10 seconds
+
     protected HttpURLConnection connection;
 
     public abstract void setType();
@@ -298,9 +300,13 @@ public abstract class Request {
         connection = null;
         try {
             connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(DEFAULT_TIME_OUT_MS);
             HttpURLConnection.setFollowRedirects(true);
+        } catch (java.net.SocketTimeoutException e) {
+            LOG.severe("Request timed out after " + (DEFAULT_TIME_OUT_MS / 1000) + " seconds");
+            LOG.severe(e.toString());
         } catch (IOException e) {
-            LOG.severe("Error connecting to Url : " + url);
+            LOG.severe("Error connecting to url : " + url);
             LOG.severe(e.toString());
         }
     }
