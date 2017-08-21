@@ -42,7 +42,7 @@ public class Deal extends ApiResource implements Serializable {
     public static final String STATUS_PENDING = "pending";
     public static final String TYPE_CONTACT = "contact";
     public static final String TYPE_COMPANY = "company";
-    public static final String RELATED_NOTES_FIELDS = "?fields=notes(text,author)";
+    public static final String RELATED_NOTES_FIELDS = "fields=notes(text,author)";
 
     /**
      * Member variables.
@@ -97,9 +97,18 @@ public class Deal extends ApiResource implements Serializable {
 
     private Deal update() throws OnePageException {
         Request request = new PutRequest(
-                addDealIdToEndpoint(DEALS_ENDPOINT),
+                addIdToEndpoint(DEALS_ENDPOINT, this.id),
                 null,
                 DealSerializer.toJsonObject(this)
+        );
+        Response response = request.send();
+        return DealSerializer.fromString(response.getResponseBody());
+    }
+
+    public static Deal byId(String dealId) throws OnePageException {
+        Request request = new GetRequest(
+                addIdToEndpoint(DEALS_ENDPOINT, dealId),
+                "?" + RELATED_NOTES_FIELDS
         );
         Response response = request.send();
         return DealSerializer.fromString(response.getResponseBody());
@@ -157,7 +166,7 @@ public class Deal extends ApiResource implements Serializable {
 
     public Deal partial() throws OnePageException {
         Request request = new PatchRequest(
-                addDealIdToEndpoint(DEALS_ENDPOINT),
+                addIdToEndpoint(DEALS_ENDPOINT, this.id),
                 null,
                 DealSerializer.toJsonObject(this)
         );
@@ -166,14 +175,14 @@ public class Deal extends ApiResource implements Serializable {
     }
 
     public DeleteResult delete() throws OnePageException {
-        Request request = new DeleteRequest(addDealIdToEndpoint(DEALS_ENDPOINT));
+        Request request = new DeleteRequest(addIdToEndpoint(DEALS_ENDPOINT, this.id));
         Response response = request.send();
         return DeleteResultSerializer.fromString(this.id, response.getResponseBody());
     }
 
-    public List<Note> getNotesRelatedToDeal() throws OnePageException {
+    public List<Note> relatedNotes() throws OnePageException {
         List<Note> notes = new ArrayList<>();
-        Request request = new GetRequest(addDealIdToEndpoint(DEALS_ENDPOINT), RELATED_NOTES_FIELDS);
+        Request request = new GetRequest(addIdToEndpoint(DEALS_ENDPOINT, this.id), "?" + RELATED_NOTES_FIELDS);
         Response response = request.send();
         Deal deal = DealSerializer.fromString(response.getResponseBody());
         if (deal.hasRelatedNotes()) {
@@ -182,8 +191,8 @@ public class Deal extends ApiResource implements Serializable {
         return notes;
     }
 
-    private String addDealIdToEndpoint(String endpoint) {
-        return endpoint + "/" + this.id;
+    private static String addIdToEndpoint(String endpoint, String id) {
+        return endpoint + "/" + id;
     }
 
     /**

@@ -111,7 +111,7 @@ public class Contact extends ApiResource implements Serializable {
         return contact;
     }
 
-    public static Contact getSingleContact(String contactId) throws OnePageException {
+    public static Contact byId(String contactId) throws OnePageException {
         Request request = new GetRequest(
                 addIdToEndpoint(CONTACTS_ENDPOINT, contactId),
                 "?" + EXTRA_FIELDS

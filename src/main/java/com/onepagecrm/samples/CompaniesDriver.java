@@ -50,7 +50,7 @@ public class CompaniesDriver {
                 prop.getProperty("password"));
 
         CompanyList companies = loggedInUser.companies();
-        Company company = Company.getSingleCompany(companies.get(0).getId());
+        Company company = Company.byId(companies.get(0).getId());
 
         List<CustomField> customFieldList = CustomField.listContacts();
         List<CustomField> companyFieldList = CustomField.listCompanies();
