@@ -54,6 +54,7 @@ public class NoteSerializer extends BaseSerializer {
 
     public static List<Note> fromJsonArray(JSONArray notesArray) {
         List<Note> notes = new LinkedList<>();
+        if (notesArray == null) return notes;
         for (int i = 0; i < notesArray.length(); ++i) {
             JSONObject noteObject = notesArray.optJSONObject(i);
             Note note = fromJsonObject(noteObject);

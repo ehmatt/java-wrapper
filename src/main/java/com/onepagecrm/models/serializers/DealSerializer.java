@@ -4,15 +4,12 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.CustomField;
 import com.onepagecrm.models.Deal;
 import com.onepagecrm.models.DealList;
-import com.onepagecrm.models.Note;
 import com.onepagecrm.models.internal.Commission;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -103,6 +100,9 @@ public class DealSerializer extends BaseSerializer {
             if (dealObject.has(HAS_RELATED_NOTES_TAG)) {
                 deal.setHasRelatedNotes(dealObject.getBoolean(HAS_RELATED_NOTES_TAG));
             }
+            if (dealObject.has(RELATED_NOTES_TAG)) {
+                deal.setRelatedNotes(NoteSerializer.fromJsonArray(dealObject.optJSONArray(RELATED_NOTES_TAG)));
+            }
             if (dealObject.has(CLOSE_DATE_TAG) && !dealObject.isNull(CLOSE_DATE_TAG)) {
                 String closeDateStr = dealObject.getString(CLOSE_DATE_TAG);
                 Date closeDate = DateSerializer.fromFormattedString(closeDateStr);
@@ -153,22 +153,6 @@ public class DealSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
         return deal;
-    }
-
-    public static List<Note> getNotesFromString(String pResponseBody) {
-        List<Note> notes = new ArrayList<>();
-        try {
-            JSONObject responseObject = new JSONObject(pResponseBody);
-            JSONObject dataObject = responseObject.getJSONObject("data");
-            if (dataObject.has("related_notes")) {
-                JSONArray relatedNotes = dataObject.getJSONArray("related_notes");
-                notes = NoteSerializer.fromJsonArray(relatedNotes);
-            }
-        } catch (JSONException e) {
-            LOG.severe("Error parsing Deal object from response body");
-            LOG.severe(e.toString());
-        }
-        return notes;
     }
 
     public static String toJsonObject(Deal deal) {

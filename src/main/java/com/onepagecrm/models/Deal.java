@@ -42,7 +42,7 @@ public class Deal extends ApiResource implements Serializable {
     public static final String STATUS_PENDING = "pending";
     public static final String TYPE_CONTACT = "contact";
     public static final String TYPE_COMPANY = "company";
-    public static final String RELATED_NOTES_FIELDS = "fields=notes(text,author)";
+    public static final String RELATED_NOTES_FIELDS = "fields=notes(all)";
 
     /**
      * Member variables.
@@ -181,14 +181,10 @@ public class Deal extends ApiResource implements Serializable {
     }
 
     public List<Note> relatedNotes() throws OnePageException {
-        List<Note> notes = new ArrayList<>();
         Request request = new GetRequest(addIdToEndpoint(DEALS_ENDPOINT, this.id), "?" + RELATED_NOTES_FIELDS);
         Response response = request.send();
         Deal deal = DealSerializer.fromString(response.getResponseBody());
-        if (deal.hasRelatedNotes()) {
-            notes = DealSerializer.getNotesFromString(response.getResponseBody());
-        }
-        return notes;
+        return deal.hasRelatedNotes() ? deal.getRelatedNotes() : new ArrayList<Note>();
     }
 
     private static String addIdToEndpoint(String endpoint, String id) {
