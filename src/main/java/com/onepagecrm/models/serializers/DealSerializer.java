@@ -36,13 +36,16 @@ public class DealSerializer extends BaseSerializer {
         return deal;
     }
 
-    public static Deal fromJsonObject(JSONObject dealObject) {
+    public static Deal fromJsonObject(JSONObject dataObject) {
         Deal deal = new Deal();
+        JSONObject dealObject = new JSONObject();
+        JSONArray notesArray;
         try {
             // Fix for some objects not having name.
-            if (dealObject.has(DEAL_TAG)) {
-                dealObject = dealObject.getJSONObject(DEAL_TAG);
+            if (dataObject.has(DEAL_TAG)) {
+                dealObject = dataObject.getJSONObject(DEAL_TAG);
             }
+            notesArray = dataObject.optJSONArray(RELATED_NOTES_TAG);
             // Now parse info.
             if (dealObject.has(ID_TAG)) {
                 deal.setId(dealObject.getString(ID_TAG));
@@ -100,9 +103,6 @@ public class DealSerializer extends BaseSerializer {
             if (dealObject.has(HAS_RELATED_NOTES_TAG)) {
                 deal.setHasRelatedNotes(dealObject.getBoolean(HAS_RELATED_NOTES_TAG));
             }
-            if (dealObject.has(RELATED_NOTES_TAG)) {
-                deal.setRelatedNotes(NoteSerializer.fromJsonArray(dealObject.optJSONArray(RELATED_NOTES_TAG)));
-            }
             if (dealObject.has(CLOSE_DATE_TAG) && !dealObject.isNull(CLOSE_DATE_TAG)) {
                 String closeDateStr = dealObject.getString(CLOSE_DATE_TAG);
                 Date closeDate = DateSerializer.fromFormattedString(closeDateStr);
@@ -147,6 +147,10 @@ public class DealSerializer extends BaseSerializer {
             }
             if (dealObject.has(ATTACHMENTS_TAG)) {
                 deal.setAttachments(AttachmentSerializer.fromJsonArray(dealObject.optJSONArray(ATTACHMENTS_TAG)));
+            }
+            // Related notes.
+            if (notesArray != null) {
+                deal.setRelatedNotes(NoteSerializer.fromJsonArray(notesArray));
             }
         } catch (JSONException e) {
             LOG.severe("Error parsing Deal object");
