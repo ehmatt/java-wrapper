@@ -325,6 +325,8 @@ public class BaseSerializer {
     public static final String FILENAME_TAG = "filename";
     public static final String SIZE_TAG = "size";
     public static final String URL_EXPIRES_AT_TAG = "url_expires_at";
+    public static final String CALL_ID_TAG = "call_id";
+    public static final String NOTE_ID_TAG = "note_id";
 
     /**
      * Method used to parse the base/start of response.
