@@ -38,14 +38,14 @@ public class DealSerializer extends BaseSerializer {
 
     public static Deal fromJsonObject(JSONObject dataObject) {
         Deal deal = new Deal();
-        JSONObject dealObject = new JSONObject();
-        JSONArray notesArray;
+        JSONObject dealObject;
         try {
             // Fix for some objects not having name.
             if (dataObject.has(DEAL_TAG)) {
                 dealObject = dataObject.getJSONObject(DEAL_TAG);
+            } else {
+                dealObject = dataObject;
             }
-            notesArray = dataObject.optJSONArray(RELATED_NOTES_TAG);
             // Now parse info.
             if (dealObject.has(ID_TAG)) {
                 deal.setId(dealObject.getString(ID_TAG));
@@ -148,9 +148,9 @@ public class DealSerializer extends BaseSerializer {
             if (dealObject.has(ATTACHMENTS_TAG)) {
                 deal.setAttachments(AttachmentSerializer.fromJsonArray(dealObject.optJSONArray(ATTACHMENTS_TAG)));
             }
-            // Related notes.
-            if (notesArray != null) {
-                deal.setRelatedNotes(NoteSerializer.fromJsonArray(notesArray));
+            // Related notes (outer object).
+            if (dataObject.has(RELATED_NOTES_TAG)) {
+                deal.setRelatedNotes(NoteSerializer.fromJsonArray(dataObject.optJSONArray(RELATED_NOTES_TAG)));
             }
         } catch (JSONException e) {
             LOG.severe("Error parsing Deal object");
