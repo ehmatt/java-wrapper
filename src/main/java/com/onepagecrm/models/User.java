@@ -321,11 +321,11 @@ public class User extends ApiResource implements Serializable {
     }
 
     public boolean isAdmin() {
-        return accountRights != null && accountRights.contains(BaseSerializer.ACCOUNT_OWNER_TAG);
+        return accountRights != null && accountRights.contains(BaseSerializer.ADMIN_TAG);
     }
 
     public boolean isOwner() {
-        return accountRights != null && accountRights.contains(BaseSerializer.ADMIN_TAG);
+        return accountRights != null && accountRights.contains(BaseSerializer.ACCOUNT_OWNER_TAG);
     }
 
     /**
