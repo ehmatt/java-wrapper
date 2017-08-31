@@ -34,7 +34,7 @@ public class ErrorSerializer extends BaseSerializer {
 
         try {
             JSONObject responseObject = new JSONObject(responseBody);
-            exception.setStatus(responseObject.optInt(STATUS_TAG));
+            exception.setStatus(responseObject.optInt(STATUS_TAG, responseCode));
             exception.setMessage(responseObject.optString(MESSAGE_TAG));
             exception.setErrorName(responseObject.optString(ERROR_NAME_TAG));
             exception.setErrorMessage(responseObject.optString(ERROR_MESSAGE_TAG));
