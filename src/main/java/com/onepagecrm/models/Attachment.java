@@ -84,7 +84,7 @@ public class Attachment extends ApiResource implements Serializable {
                 AttachmentSerializer.toJsonObject(this)
         );
         Response response = request.send();
-        return AttachmentSerializer.fromString(response.getResponseBody());
+        return AttachmentSerializer.fromResponse(response);
     }
 
     private Attachment create() throws OnePageException {
@@ -93,7 +93,7 @@ public class Attachment extends ApiResource implements Serializable {
                 null,
                 AttachmentSerializer.toJsonObject(this));
         Response response = request.send();
-        return AttachmentSerializer.fromString(response.getResponseBody());
+        return AttachmentSerializer.fromResponse(response);
     }
 
     private String addIdToEndpoint(String endpoint) {

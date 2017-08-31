@@ -23,6 +23,7 @@ public class ActionSerializer extends BaseSerializer {
         return fromJsonObject(actionObject);
     }
 
+    // TODO - delete
     public static Action fromString(String responseBody) throws APIException {
         try {
             String dataString = (String) BaseSerializer.fromString(responseBody);
@@ -56,6 +57,9 @@ public class ActionSerializer extends BaseSerializer {
     }
 
     public static Action fromJsonObject(JSONObject actionObject) {
+        if (actionObject == null) {
+            return null;
+        }
         Action action = new Action();
         String status = null;
         Date exactTime = null;

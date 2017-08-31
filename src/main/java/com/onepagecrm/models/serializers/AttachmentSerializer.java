@@ -2,6 +2,7 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.Attachment;
+import com.onepagecrm.net.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +18,13 @@ public class AttachmentSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(AttachmentSerializer.class.getName());
 
+    public static Attachment fromResponse(Response response) throws APIException {
+        JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
+        JSONObject attachmentObject = dataObject.optJSONObject(ATTACHMENT_TAG);
+        return fromJsonObject(attachmentObject);
+    }
+
+    // TODO - delete
     public static Attachment fromString(String responseBody) throws APIException {
         try {
             String parsedResponse = (String) BaseSerializer.fromString(responseBody);

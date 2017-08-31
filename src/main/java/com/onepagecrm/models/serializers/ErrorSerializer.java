@@ -5,7 +5,6 @@ import com.onepagecrm.exceptions.AuthenticationException;
 import com.onepagecrm.exceptions.BadRequestException;
 import com.onepagecrm.exceptions.ForbiddenException;
 import com.onepagecrm.exceptions.MethodNotAllowedException;
-import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.exceptions.PaymentRequiredException;
 import com.onepagecrm.exceptions.PreconditionFailedException;
 import com.onepagecrm.exceptions.ResourceNotFoundException;
@@ -49,6 +48,7 @@ public class ErrorSerializer extends BaseSerializer {
         return exception;
     }
 
+    // TODO - delete
     public static APIException fromString(String responseBody) {
         APIException exception = new APIException();
 

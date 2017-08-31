@@ -368,7 +368,7 @@ public class BaseSerializer {
         }
     }
 
-    // TODO - delete me
+    // TODO - delete me (below)
 
     /**
      * Method used to parse the base/start of response.
