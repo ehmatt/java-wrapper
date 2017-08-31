@@ -23,6 +23,9 @@ import java.util.logging.Logger;
 
 import static com.onepagecrm.models.Account.loggedInUser;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 31/08/2017.
+ */
 @SuppressWarnings("WeakerAccess")
 public class LoginSerializer extends BaseSerializer {
 
@@ -30,8 +33,9 @@ public class LoginSerializer extends BaseSerializer {
 
     public static User fromResponse(Response response) throws APIException {
         final String responseBody = response.getResponseBody();
-        final String dataString = (String) BaseSerializer.fromResponse(response);
-        loggedInUser = UserSerializer.fromString(dataString);
+        JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
+        loggedInUser = UserSerializer.fromString(dataObject.toString());
+        // TODO - don't convert ^^ toString() and back to JSONObject in method called
         updateLoginOnlyResources(responseBody);
         updateDynamicResources(responseBody);
         return loggedInUser;

@@ -3,6 +3,7 @@ package com.onepagecrm.models.serializers;
 import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Action;
+import com.onepagecrm.net.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +16,12 @@ import java.util.logging.Logger;
 public class ActionSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ActionSerializer.class.getName());
+
+    public static Action fromResponse(Response response) throws APIException {
+        JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
+        JSONObject actionObject = dataObject.optJSONObject(ACTION_TAG);
+        return fromJsonObject(actionObject);
+    }
 
     public static Action fromString(String responseBody) throws APIException {
         try {
@@ -84,25 +91,19 @@ public class ActionSerializer extends BaseSerializer {
                 status = actionObject.getString(STATUS_TAG);
                 action.setStatus(Action.Status.fromString(status));
             }
-            if (actionObject.has(DATE_TAG)) {
-                if (!actionObject.isNull(DATE_TAG)) {
-                    String dateStr = actionObject.getString(DATE_TAG);
-                    exactTime = DateSerializer.fromFormattedString(dateStr);
-                    action.setDate(exactTime);
-                }
+            if (actionObject.has(DATE_TAG) && !actionObject.isNull(DATE_TAG)) {
+                String dateStr = actionObject.getString(DATE_TAG);
+                exactTime = DateSerializer.fromFormattedString(dateStr);
+                action.setDate(exactTime);
             }
-            if (actionObject.has(EXACT_TIME_TAG)) {
-                if (!actionObject.isNull(EXACT_TIME_TAG)) {
-                    String exactTimeStr = String.valueOf(actionObject.getInt(EXACT_TIME_TAG));
-                    exactTime = DateSerializer.fromTimestamp(exactTimeStr);
-                    action.setExactTime(exactTime);
-                }
+            if (actionObject.has(EXACT_TIME_TAG) && !actionObject.isNull(EXACT_TIME_TAG)) {
+                String exactTimeStr = String.valueOf(actionObject.getInt(EXACT_TIME_TAG));
+                exactTime = DateSerializer.fromTimestamp(exactTimeStr);
+                action.setExactTime(exactTime);
             }
-            if (actionObject.has(POSITION_TAG)) {
-                if (!actionObject.isNull(POSITION_TAG)) {
-                    int position = actionObject.getInt(POSITION_TAG);
-                    action.setPosition(position);
-                }
+            if (actionObject.has(POSITION_TAG) && !actionObject.isNull(POSITION_TAG)) {
+                int position = actionObject.getInt(POSITION_TAG);
+                action.setPosition(position);
             }
             action.setDateColor(DateSerializer.getDateColour(exactTime, status));
 

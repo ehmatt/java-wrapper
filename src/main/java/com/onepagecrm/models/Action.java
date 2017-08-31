@@ -117,13 +117,13 @@ public class Action extends ApiResource implements Serializable {
                 ActionSerializer.toJsonObject(this)
         );
         Response response = request.send();
-        return ActionSerializer.fromString(response.getResponseBody());
+        return ActionSerializer.fromResponse(response);
     }
 
     private Action create() throws OnePageException {
         Request request = new PostRequest(ACTIONS_ENDPOINT, null, ActionSerializer.toJsonObject(this));
         Response response = request.send();
-        return ActionSerializer.fromString(response.getResponseBody());
+        return ActionSerializer.fromResponse(response);
     }
 
     public void delete() throws OnePageException {
@@ -135,14 +135,14 @@ public class Action extends ApiResource implements Serializable {
         String endpoint = MARK_COMPLETE_ENDPOINT.replace("{id}", this.getId());
         Request request = new PutRequest(endpoint, null, ActionSerializer.toJsonObject(this));
         Response response = request.send();
-        return ActionSerializer.fromString(response.getResponseBody());
+        return ActionSerializer.fromResponse(response);
     }
 
     public Action undoCompletion() throws OnePageException {
         String endpoint = UNDO_COMPLETION_ENDPOINT.replace("{id}", this.getId());
         Request request = new PutRequest(endpoint, null, ActionSerializer.toJsonObject(this));
         Response response = request.send();
-        return ActionSerializer.fromString(response.getResponseBody());
+        return ActionSerializer.fromResponse(response);
     }
 
     public static ActionList list(String assigneeId) throws OnePageException {

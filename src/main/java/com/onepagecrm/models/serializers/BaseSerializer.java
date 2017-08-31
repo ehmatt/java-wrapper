@@ -350,7 +350,8 @@ public class BaseSerializer {
             // 200 (OK) / 201 (Created).
             if (jsonStatus == 0 && jsonMessage.equalsIgnoreCase(OK_TAG) || jsonMessage.equalsIgnoreCase(CREATED_TAG)) {
                 JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
-                return dataObject.toString();
+                //return dataObject.toString(); // TODO - tidy up
+                return dataObject;
             }
 
             // Parse-able errors e.g. 400+ (with JSON).

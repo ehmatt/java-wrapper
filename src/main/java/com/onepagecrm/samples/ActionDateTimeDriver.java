@@ -3,6 +3,8 @@ package com.onepagecrm.samples;
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Action;
+import com.onepagecrm.models.Contact;
+import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
 import com.onepagecrm.models.serializers.DateSerializer;
 import com.onepagecrm.net.request.Request;
@@ -42,7 +44,7 @@ public class ActionDateTimeDriver {
             }
         }
 
-        OnePageCRM.setServer(Request.APP_SERVER);
+        OnePageCRM.setServer(Request.DEV_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
@@ -53,12 +55,15 @@ public class ActionDateTimeDriver {
         // Fri, 01 Jul 2016 08:00:00 GMT = 1467360000 = Fri, 01 Jul 2016 9:00:00 AM (IST)
         Date firstJulyAt9Am = DateSerializer.fromTimestamp(String.valueOf(1467360000));
 
+        ContactList contacts = loggedInUser.contacts();
+        Contact first = contacts.get(0);
+
         new Action()
                 .setText("This one will be added")
                 .setStatus(Action.Status.DATE_TIME)
                 .setDate(firstJulyAt9Am)
                 .setExactTime(firstJulyAt9Am)
-                .setContactId("5774e13c00d4afe3fb314f58")
+                .setContactId(first.getId())
                 .setAssigneeId(loggedInUser.getId())
                 .save();
     }
