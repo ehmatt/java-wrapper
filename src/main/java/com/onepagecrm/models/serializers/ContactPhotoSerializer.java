@@ -1,6 +1,6 @@
 package com.onepagecrm.models.serializers;
 
-import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.Contact;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,18 +11,11 @@ public class ContactPhotoSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ContactPhotoSerializer.class.getName());
 
-    public static Contact fromString(String responseBody) throws OnePageException {
-        String parsedResponse;
-        OnePageException exception;
-
+    public static Contact fromString(String responseBody) throws APIException {
         try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONObject parsedObject = new JSONObject(parsedResponse);
+            String dataString = (String) BaseSerializer.fromString(responseBody);
+            JSONObject parsedObject = new JSONObject(dataString);
             return ContactSerializer.fromJsonObject(parsedObject);
-
-        } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
 
         } catch (JSONException e) {
             LOG.severe("Could not create JSON object from response");

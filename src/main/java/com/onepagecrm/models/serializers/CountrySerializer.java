@@ -1,6 +1,6 @@
 package com.onepagecrm.models.serializers;
 
-import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.Countries;
 import com.onepagecrm.models.internal.Country;
 import org.json.JSONArray;
@@ -15,19 +15,12 @@ public class CountrySerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CountrySerializer.class.getName());
 
-    public static Countries fromString(String responseBody) throws OnePageException {
-        String parsedResponse;
-        OnePageException exception;
-
+    public static Countries fromString(String responseBody) throws APIException {
         try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONObject dataObject = new JSONObject(parsedResponse);
+            String dataString = (String) BaseSerializer.fromString(responseBody);
+            JSONObject dataObject = new JSONObject(dataString);
             JSONArray countriesArray = dataObject.getJSONArray(COUNTRIES_TAG);
             return fromJsonArray(countriesArray);
-
-        } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
 
         } catch (JSONException e) {
             LOG.severe("Could not find Country array");

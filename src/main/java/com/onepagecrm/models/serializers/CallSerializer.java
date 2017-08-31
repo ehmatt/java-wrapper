@@ -1,5 +1,6 @@
 package com.onepagecrm.models.serializers;
 
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Call;
 import com.onepagecrm.models.CallResult;
@@ -18,15 +19,12 @@ public class CallSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CallSerializer.class.getName());
 
-    public static Call fromString(String responseBody) throws OnePageException {
+    public static Call fromString(String responseBody) throws APIException {
         Call call = new Call();
         try {
-            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONObject responseObject = new JSONObject(parsedResponse);
+            String dataString = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(dataString);
             return fromJsonObject(responseObject);
-
-        } catch (ClassCastException e) {
-            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Call from JSON.");

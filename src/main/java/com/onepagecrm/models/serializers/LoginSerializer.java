@@ -1,6 +1,6 @@
 package com.onepagecrm.models.serializers;
 
-import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.Account;
 import com.onepagecrm.models.Filter;
 import com.onepagecrm.models.LeadSource;
@@ -28,7 +28,7 @@ public class LoginSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(LoginSerializer.class.getName());
 
-    public static User fromResponse(Response response) throws OnePageException {
+    public static User fromResponse(Response response) throws APIException {
         final String responseBody = response.getResponseBody();
         final String dataString = (String) BaseSerializer.fromResponse(response);
         loggedInUser = UserSerializer.fromString(dataString);
@@ -37,21 +37,12 @@ public class LoginSerializer extends BaseSerializer {
         return loggedInUser;
     }
 
-    public static User fromString(String responseBody) throws OnePageException {
-        String parsedResponse;
-        OnePageException exception;
-
-        try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            loggedInUser = UserSerializer.fromString(parsedResponse);
-            updateLoginOnlyResources(responseBody);
-            updateDynamicResources(responseBody);
-            return loggedInUser;
-
-        } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
-        }
+    public static User fromString(String responseBody) throws APIException {
+        final String dataString = (String) BaseSerializer.fromString(responseBody);
+        loggedInUser = UserSerializer.fromString(dataString);
+        updateLoginOnlyResources(responseBody);
+        updateDynamicResources(responseBody);
+        return loggedInUser;
     }
 
     public static void updateLoginOnlyResources(String responseBody) {

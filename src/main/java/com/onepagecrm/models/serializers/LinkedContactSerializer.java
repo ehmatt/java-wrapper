@@ -1,5 +1,6 @@
 package com.onepagecrm.models.serializers;
 
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.LinkedContact;
 import org.json.JSONArray;
@@ -15,14 +16,11 @@ public class LinkedContactSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(LinkedContactSerializer.class.getName());
 
-    public static LinkedContact fromString(String responseBody) throws OnePageException {
+    public static LinkedContact fromString(String responseBody) throws APIException {
         try {
-            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONObject responseObject = new JSONObject(parsedResponse);
+            String dataString = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(dataString);
             return fromJsonObject(responseObject);
-
-        } catch (ClassCastException e) {
-            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing LinkedContact from JSON.");

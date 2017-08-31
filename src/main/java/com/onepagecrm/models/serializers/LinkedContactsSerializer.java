@@ -1,6 +1,6 @@
 package com.onepagecrm.models.serializers;
 
-import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.ContactList;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,15 +15,12 @@ public class LinkedContactsSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(LinkedContactsSerializer.class.getName());
 
-    public static ContactList fromString(String responseBody) throws OnePageException {
+    public static ContactList fromString(String responseBody) throws APIException {
         ContactList contactList = new ContactList();
         try {
             String parsedResponse = (String) BaseSerializer.fromString(responseBody);
             JSONObject responseObject = new JSONObject(parsedResponse);
             return fromJsonObject(responseObject);
-
-        } catch (ClassCastException e) {
-            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Company from JSON.");

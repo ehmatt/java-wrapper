@@ -1,5 +1,6 @@
 package com.onepagecrm.models.serializers;
 
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.NoteList;
 import com.onepagecrm.models.internal.Paginator;
@@ -15,19 +16,16 @@ public class NoteListSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(NoteListSerializer.class.getName());
 
-    public static NoteList fromString(String responseBody) throws OnePageException {
+    public static NoteList fromString(String responseBody) throws APIException {
         NoteList notes = new NoteList();
 
         try {
-            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONObject responseObject = new JSONObject(parsedResponse);
+            String dataString = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(dataString);
             JSONArray notesArray = responseObject.optJSONArray(NOTES_TAG);
             Paginator paginator = RequestMetadataSerializer.fromJsonObject(responseObject);
             notes.setPaginator(paginator);
             notes.setList(NoteSerializer.fromJsonArray(notesArray));
-
-        } catch (ClassCastException e) {
-            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (Exception e) {
             LOG.severe("Error parsing NoteList from JSON.");

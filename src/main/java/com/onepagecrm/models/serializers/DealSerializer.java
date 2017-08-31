@@ -1,6 +1,6 @@
 package com.onepagecrm.models.serializers;
 
-import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.CustomField;
 import com.onepagecrm.models.Deal;
 import com.onepagecrm.models.DealList;
@@ -19,15 +19,12 @@ public class DealSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(DealSerializer.class.getName());
 
-    public static Deal fromString(String responseBody) throws OnePageException {
+    public static Deal fromString(String responseBody) throws APIException {
         Deal deal = new Deal();
         try {
             String parsedResponse = (String) BaseSerializer.fromString(responseBody);
             JSONObject responseObject = new JSONObject(parsedResponse);
             return fromJsonObject(responseObject);
-
-        } catch (ClassCastException e) {
-            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Deal object from response body");

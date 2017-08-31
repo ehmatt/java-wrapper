@@ -1,5 +1,6 @@
 package com.onepagecrm.models.serializers;
 
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.PredefinedAction;
 import org.json.JSONArray;
@@ -18,17 +19,12 @@ public class PredefinedActionSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(PredefinedActionSerializer.class.getSimpleName());
 
-    public static List<PredefinedAction> fromString(String responseBody) throws OnePageException {
-        String parsedResponse;
-        OnePageException exception;
+    public static List<PredefinedAction> fromString(String responseBody) throws APIException {
         try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONObject responseObject = new JSONObject(parsedResponse);
+            String dataString = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(dataString);
             return fromJsonArray(responseObject.optJSONArray(PREDEFINED_ACTIONS_TAG));
 
-        } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
         } catch (JSONException e) {
             LOG.severe("Error parsing JSON" + e);
             return new ArrayList<>();

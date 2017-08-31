@@ -1,6 +1,6 @@
 package com.onepagecrm.models.serializers;
 
-import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.Request;
 import org.json.JSONArray;
@@ -335,9 +335,9 @@ public class BaseSerializer {
      *
      * @param response parsed by {@link Request} class.
      * @return JSONObject "data" as string.
-     * @throws OnePageException (APIException).
+     * @throws APIException (APIException).
      */
-    public static Object fromResponse(Response response) throws OnePageException {
+    public static Object fromResponse(Response response) throws APIException {
         final int httpCode = response.getResponseCode();
         final String message = response.getResponseMessage();
         final String body = response.getResponseBody();
@@ -348,7 +348,7 @@ public class BaseSerializer {
             final String jsonMessage = responseObject.optString(MESSAGE_TAG, "");
 
             // 200 (OK) / 201 (Created).
-            if (jsonStatus == 0 && message.equalsIgnoreCase(OK_TAG) || message.equalsIgnoreCase(CREATED_TAG)) {
+            if (jsonStatus == 0 && jsonMessage.equalsIgnoreCase(OK_TAG) || jsonMessage.equalsIgnoreCase(CREATED_TAG)) {
                 JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
                 return dataObject.toString();
             }
@@ -367,30 +367,31 @@ public class BaseSerializer {
         }
     }
 
+    // TODO - delete me
+
     /**
      * Method used to parse the base/start of response.
      *
-     * @param responseBody
-     * @return
-     * @throws OnePageException
+     * @param responseBody parsed by {@link Request} class.
+     * @return JSONObject "data" as string.
+     * @throws APIException (APIException).
      */
-    public static Object fromString(String responseBody) throws OnePageException {
-        String dataString = "";
+    public static Object fromString(String responseBody) throws APIException {
         try {
             JSONObject responseObject = new JSONObject(responseBody);
-            int status = responseObject.getInt(STATUS_TAG);
-            String message = responseObject.getString(MESSAGE_TAG);
+            final int jsonStatus = responseObject.optInt(STATUS_TAG, -1);
+            final String jsonMessage = responseObject.optString(MESSAGE_TAG, "");
 
             // OK response
-            if (status == 0 && message.equalsIgnoreCase(OK_TAG)) {
+            if (jsonStatus == 0 && jsonMessage.equalsIgnoreCase(OK_TAG)) {
                 JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
-                dataString = dataObject.toString();
+                return dataObject.toString();
             }
 
             // 201 response
-            else if (status == 0 && message.equalsIgnoreCase(CREATED_TAG)) {
+            else if (jsonStatus == 0 && jsonMessage.equalsIgnoreCase(CREATED_TAG)) {
                 JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
-                dataString = dataObject.toString();
+                return dataObject.toString();
             }
 
             // Error
@@ -401,8 +402,8 @@ public class BaseSerializer {
         } catch (JSONException e) {
             LOG.severe("Error parsing response body");
             LOG.severe(e.toString());
+            return "";
         }
-        return dataString;
     }
 
     /**

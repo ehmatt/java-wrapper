@@ -1,6 +1,6 @@
 package com.onepagecrm.models.serializers;
 
-import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.CallList;
 import com.onepagecrm.models.internal.Paginator;
 import org.json.JSONArray;
@@ -15,19 +15,16 @@ public class CallListSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CallListSerializer.class.getName());
 
-    public static CallList fromString(String responseBody) throws OnePageException {
+    public static CallList fromString(String responseBody) throws APIException {
         CallList calls = new CallList();
 
         try {
-            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONObject responseObject = new JSONObject(parsedResponse);
+            String dataString = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(dataString);
             JSONArray callsArray = responseObject.optJSONArray(CALLS_TAG);
             Paginator paginator = RequestMetadataSerializer.fromJsonObject(responseObject);
             calls.setPaginator(paginator);
             calls.setList(CallSerializer.fromJsonArray(callsArray));
-
-        } catch (ClassCastException e) {
-            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (Exception e) {
             LOG.severe("Error parsing CallList from JSON.");

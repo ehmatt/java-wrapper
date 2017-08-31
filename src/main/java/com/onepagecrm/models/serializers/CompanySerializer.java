@@ -1,5 +1,6 @@
 package com.onepagecrm.models.serializers;
 
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Company;
 import com.onepagecrm.models.CustomField;
@@ -21,15 +22,12 @@ public class CompanySerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CompanySerializer.class.getName());
 
-    public static Company fromString(String responseBody) throws OnePageException {
+    public static Company fromString(String responseBody) throws APIException {
         Company company = new Company();
         try {
-            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONObject responseObject = new JSONObject(parsedResponse);
+            String dataString = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(dataString);
             return fromJsonObject(responseObject);
-
-        } catch (ClassCastException e) {
-            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Company from JSON.");

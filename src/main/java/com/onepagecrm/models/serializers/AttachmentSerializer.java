@@ -1,6 +1,6 @@
 package com.onepagecrm.models.serializers;
 
-import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.Attachment;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,18 +17,13 @@ public class AttachmentSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(AttachmentSerializer.class.getName());
 
-    public static Attachment fromString(String responseBody) throws OnePageException {
-        String parsedResponse;
-        OnePageException exception;
+    public static Attachment fromString(String responseBody) throws APIException {
         try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
             JSONObject responseObject = new JSONObject(parsedResponse);
             JSONObject attachmentObject = responseObject.optJSONObject(ATTACHMENT_TAG);
             return fromJsonObject(attachmentObject);
 
-        } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
         } catch (JSONException e) {
             LOG.severe("Could not find attachment object tags in response");
             LOG.severe(e.toString());

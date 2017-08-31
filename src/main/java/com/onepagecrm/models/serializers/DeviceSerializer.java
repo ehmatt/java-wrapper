@@ -1,6 +1,6 @@
 package com.onepagecrm.models.serializers;
 
-import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.internal.Device;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,17 +17,12 @@ public class DeviceSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(DeviceSerializer.class.getSimpleName());
 
-    public static Device fromString(String responseBody) throws OnePageException {
-        String parsedResponse;
-        OnePageException exception;
+    public static Device fromString(String responseBody) throws APIException {
         try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONObject responseObject = new JSONObject(parsedResponse);
+            String dataString = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(dataString);
             return fromJsonObject(responseObject.optJSONObject(FCM_DEVICE_TAG));
 
-        } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
         } catch (JSONException e) {
             LOG.severe("Error parsing JSON" + e);
             return new Device();

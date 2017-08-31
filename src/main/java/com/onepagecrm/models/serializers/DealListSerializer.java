@@ -1,6 +1,6 @@
 package com.onepagecrm.models.serializers;
 
-import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.Deal;
 import com.onepagecrm.models.DealList;
 import com.onepagecrm.models.internal.Paginator;
@@ -25,19 +25,16 @@ public class DealListSerializer extends BaseSerializer {
      * @param responseBody
      * @return
      */
-    public static DealList fromString(String responseBody) throws OnePageException {
+    public static DealList fromString(String responseBody) throws APIException {
         DealList deals = new DealList();
 
         try {
-            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONObject responseObject = new JSONObject(parsedResponse);
+            String dataString = (String) BaseSerializer.fromString(responseBody);
+            JSONObject responseObject = new JSONObject(dataString);
             JSONArray dealsArray = responseObject.getJSONArray(DEALS_TAG);
             deals = fromJsonArray(dealsArray);
             Paginator paginator = RequestMetadataSerializer.fromJsonObject(responseObject);
             deals.setPaginator(paginator);
-
-        } catch (ClassCastException e) {
-            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing deals array from response body");

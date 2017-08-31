@@ -1,6 +1,6 @@
 package com.onepagecrm.models.serializers;
 
-import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.Note;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,15 +19,12 @@ public class NoteSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(NoteSerializer.class.getName());
 
-    public static Note fromString(String responseBody) throws OnePageException {
+    public static Note fromString(String responseBody) throws APIException {
         Note note = new Note();
         try {
             String parsedResponse = (String) BaseSerializer.fromString(responseBody);
             JSONObject responseObject = new JSONObject(parsedResponse);
             return fromJsonObject(responseObject);
-
-        } catch (ClassCastException e) {
-            throw (OnePageException) BaseSerializer.fromString(responseBody);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Note from JSON.");

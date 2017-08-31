@@ -25,7 +25,7 @@ public class ErrorSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ErrorSerializer.class.getName());
 
-    public static OnePageException fromResponse(Response response) {
+    public static APIException fromResponse(Response response) {
         final int responseCode = response.getResponseCode();
         final String responseBody = response.getResponseBody();
 
@@ -49,7 +49,7 @@ public class ErrorSerializer extends BaseSerializer {
         return exception;
     }
 
-    public static OnePageException fromString(String responseBody) {
+    public static APIException fromString(String responseBody) {
         APIException exception = new APIException();
 
         try {
