@@ -12,6 +12,7 @@ import com.onepagecrm.models.internal.PredefinedAction;
 import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.internal.Settings;
 import com.onepagecrm.models.internal.StreamCount;
+import com.onepagecrm.net.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +27,15 @@ import static com.onepagecrm.models.Account.loggedInUser;
 public class LoginSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(LoginSerializer.class.getName());
+
+    public static User fromResponse(Response response) throws OnePageException {
+        final String responseBody = response.getResponseBody();
+        final String dataString = (String) BaseSerializer.fromResponse(response);
+        loggedInUser = UserSerializer.fromString(dataString);
+        updateLoginOnlyResources(responseBody);
+        updateDynamicResources(responseBody);
+        return loggedInUser;
+    }
 
     public static User fromString(String responseBody) throws OnePageException {
         String parsedResponse;

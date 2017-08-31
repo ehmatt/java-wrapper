@@ -1,5 +1,6 @@
 package com.onepagecrm.models.serializers;
 
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.exceptions.AuthenticationException;
 import com.onepagecrm.exceptions.BadRequestException;
 import com.onepagecrm.exceptions.ForbiddenException;
@@ -10,6 +11,7 @@ import com.onepagecrm.exceptions.PreconditionFailedException;
 import com.onepagecrm.exceptions.ResourceNotFoundException;
 import com.onepagecrm.exceptions.ServerErrorException;
 import com.onepagecrm.exceptions.ServiceUnavailableException;
+import com.onepagecrm.net.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,26 +20,55 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Logger;
 
+@SuppressWarnings("WeakerAccess")
 public class ErrorSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ErrorSerializer.class.getName());
 
+    public static OnePageException fromResponse(Response response) {
+        final int httpCode = response.getResponseCode();
+        final String message = response.getResponseMessage();
+        final String body = response.getResponseBody();
+
+        OnePageException exception = fromHttpStatusCode(httpCode);
+        if (exception instanceof APIException) {
+            ((APIException) exception).setResponse(response);
+        }
+
+        try {
+            JSONObject responseObject = new JSONObject(body);
+            exception.setStatus(responseObject.optInt(STATUS_TAG));
+            exception.setMessage(responseObject.optString(MESSAGE_TAG));
+            exception.setErrorName(responseObject.optString(ERROR_NAME_TAG));
+            exception.setErrorMessage(responseObject.optString(ERROR_MESSAGE_TAG));
+            exception.setErrors(fromJsonObject(responseObject));
+
+        } catch (JSONException e) {
+            LOG.severe("Error parsing error JSON from response body");
+            LOG.severe(e.toString());
+        }
+
+        return exception;
+    }
+
     public static OnePageException fromString(String responseBody) {
         OnePageException exception = new OnePageException();
-        JSONObject responseObject;
+
         try {
-            responseObject = new JSONObject(responseBody);
+            JSONObject responseObject = new JSONObject(responseBody);
             int statusCode = responseObject.getInt(STATUS_TAG);
             exception = fromHttpStatusCode(statusCode)
-                    .setMessage(responseObject.getString(MESSAGE_TAG))
-                    .setErrorName(responseObject.getString(ERROR_NAME_TAG))
-                    .setErrorMessage(responseObject.getString(ERROR_MESSAGE_TAG))
+                    .setStatus(responseObject.optInt(STATUS_TAG))
+                    .setMessage(responseObject.optString(MESSAGE_TAG))
+                    .setErrorName(responseObject.optString(ERROR_NAME_TAG))
+                    .setErrorMessage(responseObject.optString(ERROR_MESSAGE_TAG))
                     .setErrors(fromJsonObject(responseObject));
 
         } catch (JSONException e) {
-            LOG.severe("Error parsing error tags from response body");
+            LOG.severe("Error parsing error JSON from response body");
             LOG.severe(e.toString());
         }
+
         return exception;
     }
 
@@ -78,6 +109,7 @@ public class ErrorSerializer extends BaseSerializer {
     @SuppressWarnings("unchecked")
     public static Map<String, String> fromJsonObject(JSONObject errorObject) {
         Map<String, String> errorMessages = new HashMap<>();
+        if (errorObject == null) return errorMessages;
         try {
             if (errorObject.has(ERRORS_TAG)) {
                 JSONObject errorsObject = errorObject.getJSONObject(ERRORS_TAG);

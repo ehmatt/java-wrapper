@@ -1,6 +1,8 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.Request;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -327,6 +329,43 @@ public class BaseSerializer {
     public static final String URL_EXPIRES_AT_TAG = "url_expires_at";
     public static final String CALL_ID_TAG = "call_id";
     public static final String NOTE_ID_TAG = "note_id";
+
+    /**
+     * Method used to parse the base/start of response.
+     *
+     * @param response parsed by {@link Request} class.
+     * @return JSONObject "data" as string.
+     * @throws OnePageException (APIException).
+     */
+    public static Object fromResponse(Response response) throws OnePageException {
+        final int httpCode = response.getResponseCode();
+        final String message = response.getResponseMessage();
+        final String body = response.getResponseBody();
+
+        try {
+            JSONObject responseObject = new JSONObject(body);
+            final int jsonStatus = responseObject.optInt(STATUS_TAG, -1);
+            final String jsonMessage = responseObject.optString(MESSAGE_TAG, "");
+
+            // 200 (OK) / 201 (Created).
+            if (jsonStatus == 0 && message.equalsIgnoreCase(OK_TAG) || message.equalsIgnoreCase(CREATED_TAG)) {
+                JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+                return dataObject.toString();
+            }
+
+            // Parse-able errors e.g. 400+ (with JSON).
+            else {
+                throw ErrorSerializer.fromResponse(response);
+            }
+
+        } catch (JSONException e) {
+            LOG.severe("Error parsing response body");
+            LOG.severe(e.toString());
+
+            // Un-parse-able errors e.g. 500+ (with HTML/XML).
+            throw ErrorSerializer.fromResponse(response);
+        }
+    }
 
     /**
      * Method used to parse the base/start of response.

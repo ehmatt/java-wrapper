@@ -21,7 +21,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused", "UnusedReturnValue"})
 public class User extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = 1383622287570201668L;
@@ -44,23 +44,31 @@ public class User extends ApiResource implements Serializable {
 
     private List<String> accountRights;
 
+    /**
+     * Login requests.
+     */
+
     public static User login(String username, String password) throws OnePageException {
         Request request = new LoginRequest(username, password);
         Response response = request.send();
-        return LoginSerializer.fromString(response.getResponseBody());
+        return LoginSerializer.fromResponse(response);
     }
 
     public static User googleLogin(String authCode) throws OnePageException {
         Request request = new GoogleLoginRequest(authCode);
         Response response = request.send();
-        return LoginSerializer.fromString(response.getResponseBody());
+        return LoginSerializer.fromResponse(response);
     }
 
     public User bootstrap() throws OnePageException {
         Request request = new GetRequest(BOOTSTRAP_ENDPOINT);
         Response response = request.send();
-        return LoginSerializer.fromString(response.getResponseBody());
+        return LoginSerializer.fromResponse(response);
     }
+
+    /**
+     * Stream requests.
+     */
 
     public ContactList actionStream() throws OnePageException {
         return getContacts(ACTION_STREAM_ENDPOINT, Query.queryDefault());
@@ -94,6 +102,10 @@ public class User extends ApiResource implements Serializable {
     public ContactList actionStreamByLetter(Paginator paginator, String letter) throws OnePageException {
         return getContacts(ACTION_STREAM_ENDPOINT, Query.queryLetter(paginator, letter));
     }
+
+    /**
+     * Contacts requests.
+     */
 
     public ContactList contacts() throws OnePageException {
         return getContacts(CONTACTS_ENDPOINT, Query.query(true));
@@ -136,6 +148,10 @@ public class User extends ApiResource implements Serializable {
         return getContacts(CONTACTS_ENDPOINT, Query.queryLetter(paginator, letter, true));
     }
 
+    /**
+     * Team Stream requests.
+     */
+
     public ContactList teamStream(Map<String, Object> params) throws OnePageException {
         return getContacts(TEAM_STREAM_ENDPOINT, Query.fromParams(params));
     }
@@ -144,6 +160,17 @@ public class User extends ApiResource implements Serializable {
         String query = Query.fromMaps(params, Query.params(paginator));
         return getContacts(TEAM_STREAM_ENDPOINT, query);
     }
+
+    private ContactList getContacts(final String endpoint, String query) throws OnePageException {
+        query += "&" + Contact.EXTRA_FIELDS;
+        Request request = new GetRequest(endpoint, query);
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
+    }
+
+    /**
+     * Pipeline requests.
+     */
 
     public DealList pipeline() throws OnePageException {
         Request request = new GetRequest(DEALS_ENDPOINT, Query.query(true));
@@ -170,12 +197,9 @@ public class User extends ApiResource implements Serializable {
         return DealListSerializer.fromString(response.getResponseBody());
     }
 
-    private ContactList getContacts(final String endpoint, String query) throws OnePageException {
-        query += "&" + Contact.EXTRA_FIELDS;
-        Request request = new GetRequest(endpoint, query);
-        Response response = request.send();
-        return ContactListSerializer.fromString(response.getResponseBody());
-    }
+    /**
+     * Companies requests.
+     */
 
     public CompanyList companies() throws OnePageException {
         return getCompanies(Query.queryDefault());
@@ -200,6 +224,10 @@ public class User extends ApiResource implements Serializable {
         return CompanyListSerializer.fromString(response.getResponseBody());
     }
 
+    /**
+     * Actions requests.
+     */
+
     public ActionList actions(Paginator paginator) throws OnePageException {
         return Action.list(this.id, paginator);
     }
@@ -216,19 +244,12 @@ public class User extends ApiResource implements Serializable {
         return Action.listPredefined();
     }
 
+    /**
+     * Object methods.
+     */
+
     public User() {
 
-    }
-
-    @Override
-    public String getId() {
-        return this.id;
-    }
-
-    @Override
-    public User setId(String id) {
-        this.id = id;
-        return this;
     }
 
     @Override
@@ -257,6 +278,10 @@ public class User extends ApiResource implements Serializable {
         boolean authKeyValid = this.authKey != null && !this.authKey.equals("");
         return idValid && authKeyValid;
     }
+
+    /**
+     * Utility methods.
+     */
 
     public String getSimpleName() {
         if (lastName != null && !lastName.equals("")) {
@@ -301,6 +326,21 @@ public class User extends ApiResource implements Serializable {
 
     public boolean isOwner() {
         return accountRights != null && accountRights.contains(BaseSerializer.ADMIN_TAG);
+    }
+
+    /**
+     * Accessor methods.
+     */
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public User setId(String id) {
+        this.id = id;
+        return this;
     }
 
     public String getAuthKey() {

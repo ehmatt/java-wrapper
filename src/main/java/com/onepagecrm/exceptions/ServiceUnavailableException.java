@@ -5,22 +5,4 @@ package com.onepagecrm.exceptions;
  */
 public class ServiceUnavailableException extends APIException {
 
-    private int timestamp;
-
-    public ServiceUnavailableException(String message) {
-        super(message);
-    }
-
-    public ServiceUnavailableException() {
-
-    }
-
-    public int getTimestamp() {
-        return timestamp;
-    }
-
-    public ServiceUnavailableException setTimestamp(int timestamp) {
-        this.timestamp = timestamp;
-        return this;
-    }
 }

@@ -1,5 +1,6 @@
 package com.onepagecrm.net;
 
+@SuppressWarnings("UnusedReturnValue")
 public class Response {
 
     private int responseCode;
@@ -45,8 +46,10 @@ public class Response {
 
     @Override
     public String toString() {
-        return "Response [code=" + responseCode + ", message=" + responseMessage + ", body="
-                + responseBody + "]";
+        return "Response{" +
+                "code=" + responseCode +
+                ", message='" + responseMessage + '\'' +
+                ", body='" + responseBody + '\'' +
+                '}';
     }
-
 }
