@@ -308,10 +308,7 @@ public abstract class Request {
             String message = "Request timed out after " + (DEFAULT_TIME_OUT_MS / 1000) + " seconds";
             LOG.severe(message);
             LOG.severe(e.toString());
-            throw new TimeoutException()
-                    .setTimeMs(DEFAULT_TIME_OUT_MS)
-                    .setMessage(message)
-                    .setErrorName(message);
+            throw new TimeoutException(message);
         } catch (IOException e) {
             LOG.severe("Error connecting to url : " + url);
             LOG.severe(e.toString());

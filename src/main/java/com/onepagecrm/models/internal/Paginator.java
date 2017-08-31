@@ -6,6 +6,10 @@ import com.onepagecrm.models.serializers.RequestMetadataSerializer;
 
 import java.io.Serializable;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 31/08/2017.
+ */
+@SuppressWarnings("unused")
 public class Paginator extends BaseResource implements Serializable {
 
     private Integer currentPage;
@@ -18,8 +22,7 @@ public class Paginator extends BaseResource implements Serializable {
             currentPage++;
             return currentPage;
         } else {
-            throw new NoMorePagesException("Already at the end of the pages.")
-                    .setErrorMessage("Already at the end of the pages.");
+            throw new NoMorePagesException("Already at the end of the pages.");
         }
     }
 
@@ -28,8 +31,7 @@ public class Paginator extends BaseResource implements Serializable {
             currentPage--;
             return currentPage;
         } else {
-            throw new NoMorePagesException("Already at the start of the pages.")
-                    .setErrorMessage("Already at the start of the pages.");
+            throw new NoMorePagesException("Already at the start of the pages.");
         }
     }
 

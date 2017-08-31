@@ -26,17 +26,14 @@ public class ErrorSerializer extends BaseSerializer {
     private static final Logger LOG = Logger.getLogger(ErrorSerializer.class.getName());
 
     public static OnePageException fromResponse(Response response) {
-        final int httpCode = response.getResponseCode();
-        final String message = response.getResponseMessage();
-        final String body = response.getResponseBody();
+        final int responseCode = response.getResponseCode();
+        final String responseBody = response.getResponseBody();
 
-        OnePageException exception = fromHttpStatusCode(httpCode);
-        if (exception instanceof APIException) {
-            ((APIException) exception).setResponse(response);
-        }
+        APIException exception = fromHttpStatusCode(responseCode);
+        exception.setResponse(response);
 
         try {
-            JSONObject responseObject = new JSONObject(body);
+            JSONObject responseObject = new JSONObject(responseBody);
             exception.setStatus(responseObject.optInt(STATUS_TAG));
             exception.setMessage(responseObject.optString(MESSAGE_TAG));
             exception.setErrorName(responseObject.optString(ERROR_NAME_TAG));
@@ -46,13 +43,14 @@ public class ErrorSerializer extends BaseSerializer {
         } catch (JSONException e) {
             LOG.severe("Error parsing error JSON from response body");
             LOG.severe(e.toString());
+            exception.setStatus(responseCode);
         }
 
         return exception;
     }
 
     public static OnePageException fromString(String responseBody) {
-        OnePageException exception = new OnePageException();
+        APIException exception = new APIException();
 
         try {
             JSONObject responseObject = new JSONObject(responseBody);
@@ -72,8 +70,8 @@ public class ErrorSerializer extends BaseSerializer {
         return exception;
     }
 
-    public static OnePageException fromHttpStatusCode(int statusCode) {
-        OnePageException exception = new OnePageException();
+    public static APIException fromHttpStatusCode(int statusCode) {
+        APIException exception = new APIException();
         switch (statusCode) {
             case 400:
                 exception = new BadRequestException();
@@ -103,7 +101,7 @@ public class ErrorSerializer extends BaseSerializer {
                 exception = new ServiceUnavailableException();
                 break;
         }
-        return exception.setStatus(statusCode);
+        return exception.setCode(statusCode);
     }
 
     @SuppressWarnings("unchecked")

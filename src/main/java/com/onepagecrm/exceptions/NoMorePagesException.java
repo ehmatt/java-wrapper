@@ -1,7 +1,7 @@
 package com.onepagecrm.exceptions;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 02/12/2015.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 31/08/2017.
  */
 public class NoMorePagesException extends OnePageException {
 
@@ -9,8 +9,7 @@ public class NoMorePagesException extends OnePageException {
         super(message);
     }
 
-    public NoMorePagesException setErrorMessage(String errorMessage) {
-        super.setErrorMessage(errorMessage);
-        return this;
+    public NoMorePagesException() {
+        super();
     }
 }
