@@ -65,6 +65,7 @@ public class CallResultSerializer extends BaseSerializer {
                 try {
                     id = callResultsOrderArray.getString(i);
                     CallResult result = resultMap.get(id);
+                    result.setPosition(i);
                     orderedList.add(result);
 
                 } catch (JSONException e) {
