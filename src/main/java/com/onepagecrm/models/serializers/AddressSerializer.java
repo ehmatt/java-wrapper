@@ -14,8 +14,11 @@ public class AddressSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(AddressSerializer.class.getName());
 
+    private static Address DEFAULT = new Address();
+
     public static Address fromJsonArray(JSONArray addressArray) {
         ArrayList<Address> addresses = new ArrayList<>();
+        if (addressArray == null) return DEFAULT;
         for (int j = 0; j < addressArray.length(); j++) {
             JSONObject addressObject;
             try {
@@ -30,6 +33,9 @@ public class AddressSerializer extends BaseSerializer {
     }
 
     public static Address fromJsonObject(JSONObject addressObject) {
+        if (addressObject == null) {
+            return DEFAULT;
+        }
         Address address = new Address();
         try {
             if (addressObject.has(ADDRESS_TAG)) {
