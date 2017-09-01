@@ -1,7 +1,6 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.models.Account;
-import com.onepagecrm.models.CallResult;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.CustomField;
 import com.onepagecrm.models.User;
@@ -10,7 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -145,45 +143,5 @@ public class UserSerializer extends BaseSerializer {
         // CALL RESULTS ??
 
         return userObject.toString();
-    }
-
-    // TODO delete below
-    @SuppressWarnings("unchecked")
-    public static User addCallResults(JSONObject dataObject, User user) {
-        ArrayList<CallResult> callResults = new ArrayList<>();
-        int index = 0;
-        try {
-            if (dataObject.has(CALL_RESULTS_TAG)) {
-                JSONObject callResultsObject = dataObject.getJSONObject(CALL_RESULTS_TAG);
-                Iterator<String> iterator = callResultsObject.keys();
-                while (iterator.hasNext()) {
-                    String key = iterator.next();
-                    LOG.info("key[" + index + "] : " + key);
-                    try {
-                        Object value = callResultsObject.get(key);
-                        callResults.add(new CallResult()
-                                .setPosition(index)
-                                .setId(key)
-                                .setDisplay(value.toString())
-                        );
-                    } catch (JSONException e) {
-                        LOG.severe("Failed to parse all values in call_results object");
-                        LOG.severe(e.toString());
-                    }
-                    index++;
-                }
-            } else {
-                callResults.add(new CallResult().setPosition(0).setId("interested").setDisplay("Interested"));
-                callResults.add(new CallResult().setPosition(1).setId("not_interested").setDisplay("Not interested"));
-                callResults.add(new CallResult().setPosition(2).setId("left_message").setDisplay("Left message"));
-                callResults.add(new CallResult().setPosition(3).setId("no_answer").setDisplay("No answer"));
-                callResults.add(new CallResult().setPosition(4).setId("other").setDisplay("Other"));
-            }
-        } catch (JSONException e) {
-            LOG.severe("No call_results JSON object in response");
-            LOG.severe(e.toString());
-        }
-        user.getAccount().setCallResults(callResults);
-        return user;
     }
 }
