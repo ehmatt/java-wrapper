@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 01/08/2017.
+ */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class BaseSerializer {
 
@@ -115,6 +118,7 @@ public class BaseSerializer {
     public static final String AUTHOR_TAG = "author";
     public static final String PHONE_NUMBER_TAG = "phone_number";
     public static final String RECORDING_LINK_TAG = "recording_link";
+    public static final String CALL_RESULTS_ORDER_TAG = "call_results_order";
 
     // 201 RESPONSE TAGS
     public static final String STATUS_TAG = "status";
