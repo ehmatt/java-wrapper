@@ -17,6 +17,8 @@ public class ActionSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ActionSerializer.class.getName());
 
+    private static Action DEFAULT = new Action();
+
     public static Action fromResponse(Response response) throws APIException {
         JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
         JSONObject actionObject = dataObject.optJSONObject(ACTION_TAG);
@@ -58,7 +60,7 @@ public class ActionSerializer extends BaseSerializer {
 
     public static Action fromJsonObject(JSONObject actionObject) {
         if (actionObject == null) {
-            return null;
+            return DEFAULT;
         }
         Action action = new Action();
         String status = null;
@@ -110,18 +112,18 @@ public class ActionSerializer extends BaseSerializer {
                 action.setPosition(position);
             }
             action.setDateColor(DateSerializer.getDateColour(exactTime, status));
-
             return action;
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Action object");
             LOG.severe(e.toString());
+            return DEFAULT;
         }
-        return new Action();
     }
 
     public static List<Action> fromJsonArray(JSONArray actionsArray) {
         List<Action> actions = new LinkedList<>();
+        if (actionsArray == null) return actions;
         for (int i = 0; i < actionsArray.length(); i++) {
             try {
                 actions.add(fromJsonObject(actionsArray.getJSONObject(i)));

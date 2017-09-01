@@ -1,7 +1,6 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.APIException;
-import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Company;
 import com.onepagecrm.models.CustomField;
 import com.onepagecrm.models.helpers.TagHelper;
@@ -16,8 +15,9 @@ import java.util.logging.Logger;
 import static com.onepagecrm.models.internal.Utilities.nullChecks;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 15/12/2016.
  */
+@SuppressWarnings("ForLoopReplaceableByForEach")
 public class CompanySerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CompanySerializer.class.getName());
@@ -84,6 +84,7 @@ public class CompanySerializer extends BaseSerializer {
 
     public static List<Company> fromJsonArray(JSONArray companiesArray) {
         List<Company> companies = new ArrayList<>();
+        if (companiesArray == null) return companies;
         for (int i = 0; i < companiesArray.length(); ++i) {
             JSONObject companyObject = companiesArray.optJSONObject(i);
             Company company = fromJsonObject(companyObject);
@@ -151,6 +152,7 @@ public class CompanySerializer extends BaseSerializer {
 
     public static String toJsonArray(List<Company> companies) {
         JSONArray companiesArray = new JSONArray();
+        if (companies == null) return companiesArray.toString();
         for (int i = 0; i < companies.size(); i++) {
             try {
                 companiesArray.put(new JSONObject(toJsonObject(companies.get(i))));

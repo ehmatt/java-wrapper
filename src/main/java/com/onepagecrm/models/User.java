@@ -221,7 +221,7 @@ public class User extends ApiResource implements Serializable {
     private CompanyList getCompanies(String query) throws OnePageException {
         Request request = new GetRequest(COMPANIES_ENDPOINT, query);
         Response response = request.send();
-        return CompanyListSerializer.fromString(response.getResponseBody());
+        return CompanyListSerializer.fromResponse(response);
     }
 
     /**
