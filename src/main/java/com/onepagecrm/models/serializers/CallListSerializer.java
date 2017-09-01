@@ -3,6 +3,7 @@ package com.onepagecrm.models.serializers;
 import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.CallList;
 import com.onepagecrm.models.internal.Paginator;
+import com.onepagecrm.net.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,6 +16,17 @@ public class CallListSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CallListSerializer.class.getName());
 
+    public static CallList fromResponse(Response response) throws APIException {
+        CallList calls = new CallList();
+        JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
+        Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
+        JSONArray callsArray = dataObject.optJSONArray(CALLS_TAG);
+        calls.setPaginator(paginator);
+        calls.setList(CallSerializer.fromJsonArray(callsArray));
+        return calls;
+    }
+
+    // TODO - delete
     public static CallList fromString(String responseBody) throws APIException {
         CallList calls = new CallList();
 

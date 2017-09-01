@@ -1,9 +1,9 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.APIException;
-import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Call;
 import com.onepagecrm.models.CallResult;
+import com.onepagecrm.net.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +19,12 @@ public class CallSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CallSerializer.class.getName());
 
+    public static Call fromResponse(Response response) throws APIException {
+        JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
+        return fromJsonObject(dataObject);
+    }
+
+    // TODO - delete
     public static Call fromString(String responseBody) throws APIException {
         Call call = new Call();
         try {
@@ -34,6 +40,9 @@ public class CallSerializer extends BaseSerializer {
     }
 
     public static Call fromJsonObject(JSONObject callObject) {
+        if (callObject == null) {
+            return null;
+        }
         // Fix for some objects not having name.
         if (callObject.has(CALL_TAG)) {
             callObject = callObject.optJSONObject(CALL_TAG);
@@ -76,6 +85,7 @@ public class CallSerializer extends BaseSerializer {
 
     public static List<Call> fromJsonArray(JSONArray callsArray) {
         List<Call> calls = new LinkedList<>();
+        if (callsArray == null) return calls;
         for (int i = 0; i < callsArray.length(); ++i) {
             JSONObject callObject = callsArray.optJSONObject(i);
             Call call = fromJsonObject(callObject);
