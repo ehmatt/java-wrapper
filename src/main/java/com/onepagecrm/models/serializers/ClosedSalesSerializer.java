@@ -10,11 +10,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 15/06/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 15/06/2016.
  */
+@SuppressWarnings("WeakerAccess")
 public class ClosedSalesSerializer extends BaseSerializer {
 
     public static SalesCycleClosure fromJsonObject(JSONObject closureObject, String contactId) {
+        if (closureObject == null) {
+            return null;
+        }
         return new SalesCycleClosure()
                 .setUserId(closureObject.optString(USER_ID_TAG))
                 .setClosedAt(DateSerializer.fromTimestamp(String.valueOf(closureObject.optInt(CLOSED_AT_TAG))))
@@ -24,6 +28,7 @@ public class ClosedSalesSerializer extends BaseSerializer {
 
     public static List<SalesCycleClosure> fromJsonArray(JSONArray closureArray, String contactId) {
         List<SalesCycleClosure> closures = new LinkedList<>();
+        if (closureArray == null) return closures;
         for (int i = 0; i < closureArray.length(); i++) {
             JSONObject closureObject = closureArray.optJSONObject(i);
             SalesCycleClosure closure = fromJsonObject(closureObject, contactId);
@@ -34,6 +39,7 @@ public class ClosedSalesSerializer extends BaseSerializer {
 
     public static Map<String, SalesCycleClosure> mapFromJsonArray(JSONArray closureArray, String contactId) {
         Map<String, SalesCycleClosure> closures = new HashMap<>();
+        if (closureArray == null) return closures;
         for (int i = 0; i < closureArray.length(); i++) {
             JSONObject closureObject = closureArray.optJSONObject(i);
             SalesCycleClosure closure = fromJsonObject(closureObject, contactId);

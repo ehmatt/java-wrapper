@@ -18,12 +18,11 @@ import java.util.logging.Logger;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 01/08/2017.
  */
-@SuppressWarnings({"WeakerAccess", "ForLoopReplaceableByForEach", "unused"})
+@SuppressWarnings({"WeakerAccess", "ForLoopReplaceableByForEach", "unused", "unchecked"})
 public class CallResultSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CallResultSerializer.class.getName());
 
-    @SuppressWarnings("unchecked")
     public static List<CallResult> fromJsonObject(JSONObject dataObject) {
         if (dataObject == null) {
             return null;
