@@ -8,18 +8,74 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 01/08/2017.
+ */
+@SuppressWarnings({"WeakerAccess", "ForLoopReplaceableByForEach", "unused"})
 public class CallResultSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CallResultSerializer.class.getName());
 
-    public static String toJsonKeyValuePair(CallResult callResult) {
-        if (callResult.getId() != null && callResult.getDisplay() != null) {
-            return "\"" + callResult.getId() + "\":\"" + callResult.getDisplay() + "\"";
+    @SuppressWarnings("unchecked")
+    public static List<CallResult> fromJsonObject(JSONObject dataObject) {
+        if (dataObject == null) {
+            return null;
         }
-        return null;
+
+        JSONObject callResultsObject = dataObject.optJSONObject(CALL_RESULTS_TAG);
+        if (callResultsObject == null) {
+            return defaultCallResults();
+        }
+
+        Map<String, CallResult> resultMap = new HashMap<>();
+        List<CallResult> resultList = new LinkedList<>();
+        Iterator<String> iterator = callResultsObject.keys();
+        int index = 0;
+
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            try {
+                String value = callResultsObject.getString(key);
+                CallResult callResult = new CallResult()
+                        .setId(key)
+                        .setDisplay(value)
+                        .setPosition(index);
+                resultMap.put(key, callResult);
+                resultList.add(callResult);
+
+            } catch (JSONException e) {
+                LOG.severe("Failed to parse all values in call_results object");
+                LOG.severe(e.toString());
+            }
+            index++;
+        }
+
+        JSONArray callResultsOrderArray = dataObject.optJSONArray(CALL_RESULTS_ORDER_TAG);
+        if (callResultsOrderArray != null) {
+            List<CallResult> orderedList = new LinkedList<>();
+            String id;
+            for (int i = 0; i < callResultsOrderArray.length(); i++) {
+                try {
+                    id = callResultsOrderArray.getString(i);
+                    CallResult result = resultMap.get(id);
+                    orderedList.add(result);
+
+                } catch (JSONException e) {
+                    LOG.severe("Failed to parse all values in call_results_order array");
+                    LOG.severe(e.toString());
+                }
+            }
+            return orderedList;
+        }
+
+        return resultList;
     }
 
     public static String toJsonObject(CallResult callResult) {
@@ -41,11 +97,36 @@ public class CallResultSerializer extends BaseSerializer {
         return resultsArray.toString();
     }
 
+    private static void printCallResults(List<CallResult> callResults) {
+        if (callResults == null || callResults.isEmpty()) return;
+        for (int i = 0; i < callResults.size(); i++) {
+            CallResult result = callResults.get(i);
+            LOG.info("call_result[" + i + "] : " + result.getDisplay());
+        }
+    }
+
+    public static String toJsonString(CallResult callResult) {
+        if (callResult.getId() != null && callResult.getDisplay() != null) {
+            return "\"" + callResult.getId() + "\":\"" + callResult.getDisplay() + "\"";
+        }
+        return "";
+    }
+
     public static List<CallResult> getFromLoggedUser() {
         final User loggedUser = Account.loggedInUser;
         final boolean callResultsExist = loggedUser != null && loggedUser.isValid() &&
                 loggedUser.getAccount() != null && loggedUser.getAccount().getCallResults() != null;
         return (callResultsExist) ?
                 loggedUser.getAccount().getCallResults() : new ArrayList<CallResult>();
+    }
+
+    public static List<CallResult> defaultCallResults() {
+        List<CallResult> callResults = new LinkedList<>();
+        callResults.add(new CallResult().setPosition(0).setId("interested").setDisplay("Interested"));
+        callResults.add(new CallResult().setPosition(1).setId("not_interested").setDisplay("Not interested"));
+        callResults.add(new CallResult().setPosition(2).setId("left_message").setDisplay("Left message"));
+        callResults.add(new CallResult().setPosition(3).setId("no_answer").setDisplay("No answer"));
+        callResults.add(new CallResult().setPosition(4).setId("other").setDisplay("Other"));
+        return callResults;
     }
 }
