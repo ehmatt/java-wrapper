@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
+@SuppressWarnings("ForLoopReplaceableByForEach")
 public class ActionSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ActionSerializer.class.getName());
@@ -40,7 +41,7 @@ public class ActionSerializer extends BaseSerializer {
         }
     }
 
-
+    // TODO - move below method to ActionListSerializer#fromResponse().
     public static List<Action> listFromString(String responseBody) throws OnePageException {
         String parsedResponse;
         OnePageException exception;
