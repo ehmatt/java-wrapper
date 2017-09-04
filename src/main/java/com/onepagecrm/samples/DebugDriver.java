@@ -39,7 +39,7 @@ public class DebugDriver {
             }
         }
 
-        OnePageCRM.setDEBUG(true);
+        OnePageCRM.setDebug(true);
         OnePageCRM.setServer(Request.APP_SERVER);
 
         User loggedInUser = User.login(

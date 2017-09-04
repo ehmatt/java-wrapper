@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 01/08/2017.
+ */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class BaseSerializer {
 
@@ -113,9 +116,9 @@ public class BaseSerializer {
     public static final String TEXT_TAG = "text";
     public static final String VIA_TAG = "via";
     public static final String AUTHOR_TAG = "author";
-    public static final String ATTACHMENTS_TAG = "attachment";
     public static final String PHONE_NUMBER_TAG = "phone_number";
     public static final String RECORDING_LINK_TAG = "recording_link";
+    public static final String CALL_RESULTS_ORDER_TAG = "call_results_order";
 
     // 201 RESPONSE TAGS
     public static final String STATUS_TAG = "status";
@@ -318,6 +321,16 @@ public class BaseSerializer {
     public static final String COMMISSION_BASE_TAG = "commission_base";
     public static final String COMMISSION_TYPE_TAG = "commission_type";
     public static final String COMMISSION_PERCENTAGE_TAG = "commission_percentage";
+
+    // ATTACHMENTS
+    public static final String ATTACHMENT_TAG = "attachment";
+    public static final String ATTACHMENTS_TAG = "attachments";
+    public static final String STORAGE_PROVIDER_TAG = "storage_provider";
+    public static final String FILENAME_TAG = "filename";
+    public static final String SIZE_TAG = "size";
+    public static final String URL_EXPIRES_AT_TAG = "url_expires_at";
+    public static final String CALL_ID_TAG = "call_id";
+    public static final String NOTE_ID_TAG = "note_id";
 
     /**
      * Method used to parse the base/start of response.

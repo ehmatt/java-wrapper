@@ -62,10 +62,10 @@ public class Driver {
         LOG.info("User's Contact Titles : " + loggedInUser.getAccount().contactTitles);
         LOG.info("User's Account Rights : " + loggedInUser.getAccountRights());
 
-        loggedInUser.actionStream();
+        //ContactList stream = loggedInUser.actionStream();
 
-        loggedInUser.contacts();
+        //ContactList contacts = loggedInUser.contacts();
 
-        loggedInUser.pipeline();
+        //DealList pipeline = loggedInUser.pipeline();
     }
 }

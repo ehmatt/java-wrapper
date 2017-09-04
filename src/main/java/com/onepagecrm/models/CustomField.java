@@ -1,5 +1,6 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.CustomFieldValue;
 import com.onepagecrm.models.serializers.CustomFieldSerializer;
 import com.onepagecrm.net.ApiResource;
@@ -36,7 +37,7 @@ public class CustomField extends ApiResource implements Serializable {
     private Integer reminderDays;
     private CustomFieldValue value;
 
-    public static List<CustomField> listContacts() {
+    public static List<CustomField> listContacts() throws OnePageException {
         Map<String, Object> params = new HashMap<>();
         params.put("per_page", 100);
         Request request = new GetRequest(
@@ -48,7 +49,7 @@ public class CustomField extends ApiResource implements Serializable {
         return CustomFieldSerializer.fromString(responseBody, CF_TYPE_CONTACT);
     }
 
-    public static List<CustomField> listCompanies() {
+    public static List<CustomField> listCompanies() throws OnePageException {
         Map<String, Object> params = new HashMap<>();
         params.put("per_page", 100);
         Request request = new GetRequest(
@@ -60,7 +61,7 @@ public class CustomField extends ApiResource implements Serializable {
         return CustomFieldSerializer.fromString(responseBody, CF_TYPE_COMPANY);
     }
 
-    public static List<CustomField> listDeals() {
+    public static List<CustomField> listDeals() throws OnePageException {
         Map<String, Object> params = new HashMap<>();
         params.put("per_page", 100);
         Request request = new GetRequest(
@@ -72,7 +73,7 @@ public class CustomField extends ApiResource implements Serializable {
         return CustomFieldSerializer.fromString(responseBody, CF_TYPE_DEAL);
     }
 
-    public String save() {
+    public String save() throws OnePageException {
         Request request = new PostRequest(
                 CUSTOM_FIELDS_ENDPOINT,
                 null,

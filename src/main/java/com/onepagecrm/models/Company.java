@@ -80,7 +80,7 @@ public class Company extends ApiResource implements Serializable {
         return company;
     }
 
-    public static Company getSingleCompany(String companyId) throws OnePageException {
+    public static Company byId(String companyId) throws OnePageException {
         Request request = new GetRequest(
                 addIdToEndpoint(COMPANIES_ENDPOINT, companyId),
                 null

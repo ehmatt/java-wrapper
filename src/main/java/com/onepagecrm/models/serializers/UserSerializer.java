@@ -1,7 +1,6 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.models.Account;
-import com.onepagecrm.models.CallResult;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.CustomField;
 import com.onepagecrm.models.User;
@@ -10,10 +9,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 01/08/2017.
+ */
 @SuppressWarnings("WeakerAccess")
 public class UserSerializer extends BaseSerializer {
 
@@ -26,11 +27,13 @@ public class UserSerializer extends BaseSerializer {
             String authKey = dataObject.getString(AUTH_KEY_TAG);
             String accountType = dataObject.getString(ACCOUNT_TYPE_TAG);
 
+            // Basic details.
             User user = new User()
                     .setId(userId)
                     .setAuthKey(authKey)
                     .setAccountType(accountType);
 
+            // Custom, Company and Deal fields.
             user.setAccount(new Account()
                     .setCustomFields(CustomFieldSerializer.fromJsonArray(
                             dataObject.optJSONArray(CUSTOM_FIELDS_TAG), CustomField.CF_TYPE_CONTACT))
@@ -39,8 +42,10 @@ public class UserSerializer extends BaseSerializer {
                     .setDealFields(CustomFieldSerializer.fromJsonArray(
                             dataObject.optJSONArray(DEAL_FIELDS_TAG), CustomField.CF_TYPE_DEAL)));
 
-            user = addCallResults(dataObject, user);
+            // Call Results.
+            user.getAccount().setCallResults(CallResultSerializer.fromJsonObject(dataObject));
 
+            // More user details.
             JSONObject outsideUserObject = dataObject.getJSONObject(USER_TAG);
             JSONObject userObject = outsideUserObject.getJSONObject(USER_TAG);
             user = fromJsonObject(userObject, user);
@@ -138,43 +143,5 @@ public class UserSerializer extends BaseSerializer {
         // CALL RESULTS ??
 
         return userObject.toString();
-    }
-
-    @SuppressWarnings("unchecked")
-    public static User addCallResults(JSONObject dataObject, User user) {
-        ArrayList<CallResult> callResults = new ArrayList<>();
-        int index = 0;
-        try {
-            if (dataObject.has(CALL_RESULTS_TAG)) {
-                JSONObject callResultsObject = dataObject.getJSONObject(CALL_RESULTS_TAG);
-                Iterator<String> iterator = callResultsObject.keys();
-                while (iterator.hasNext()) {
-                    String key = iterator.next();
-                    try {
-                        Object value = callResultsObject.get(key);
-                        callResults.add(new CallResult()
-                                .setIntId(index)
-                                .setId(key)
-                                .setDisplay(value.toString())
-                        );
-                    } catch (JSONException e) {
-                        LOG.severe("Failed to parse all values in call_results object");
-                        LOG.severe(e.toString());
-                    }
-                    index++;
-                }
-            } else {
-                callResults.add(new CallResult().setIntId(0).setId("interested").setDisplay("Interested"));
-                callResults.add(new CallResult().setIntId(1).setId("not_interested").setDisplay("Not interested"));
-                callResults.add(new CallResult().setIntId(2).setId("left_message").setDisplay("Left message"));
-                callResults.add(new CallResult().setIntId(3).setId("no_answer").setDisplay("No answer"));
-                callResults.add(new CallResult().setIntId(4).setId("other").setDisplay("Other"));
-            }
-        } catch (JSONException e) {
-            LOG.severe("No call_results JSON object in response");
-            LOG.severe(e.toString());
-        }
-        user.getAccount().setCallResults(callResults);
-        return user;
     }
 }
