@@ -8,7 +8,7 @@ import com.onepagecrm.exceptions.TimeoutException;
 import com.onepagecrm.models.serializers.BaseSerializer;
 import com.onepagecrm.net.Response;
 
-import javax.net.ssl.SSLHandshakeException;
+import javax.net.ssl.SSLException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -315,7 +315,7 @@ public abstract class Request {
             LOG.severe(e.toString());
             throw new TimeoutException(message);
 
-        } catch (SSLHandshakeException e) {
+        } catch (SSLException e) {
             throwInvalidSSLCertException(e);
 
         } catch (IOException e) {
@@ -423,7 +423,7 @@ public abstract class Request {
             try {
                 out = new OutputStreamWriter(connection.getOutputStream());
 
-            } catch (SSLHandshakeException e) {
+            } catch (SSLException e) {
                 throwInvalidSSLCertException(e);
 
             } catch (IOException e) {
@@ -556,7 +556,7 @@ public abstract class Request {
                 .setErrorMessage(message);
     }
 
-    private void throwInvalidSSLCertException(SSLHandshakeException e) throws OnePageException {
+    private void throwInvalidSSLCertException(SSLException e) throws OnePageException {
         String message = "Invalid SSL certificate. Please check VPN/proxy settings.";
         LOG.severe(message);
         LOG.severe(e.toString());
