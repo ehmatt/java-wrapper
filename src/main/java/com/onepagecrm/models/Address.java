@@ -15,11 +15,12 @@ public class Address extends BaseResource implements Serializable {
     private String countryCode;
 
     public Address() {
+
     }
 
     @Override
     public String toString() {
-        return AddressSerializer.toJsonArray(this);
+        return AddressSerializer.toJsonString(this);
     }
 
     public boolean isValid() {
