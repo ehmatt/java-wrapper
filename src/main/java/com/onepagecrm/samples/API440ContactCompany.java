@@ -11,8 +11,6 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import static com.onepagecrm.net.ApiResource.CONTACTS_ENDPOINT;
-
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 08/09/2017.
  */
