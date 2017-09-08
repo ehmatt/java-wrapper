@@ -1,11 +1,14 @@
 package com.onepagecrm.net.request;
 
 import com.onepagecrm.OnePageCRM;
+import com.onepagecrm.exceptions.InvalidSSLCertException;
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.OnePageIOException;
 import com.onepagecrm.exceptions.TimeoutException;
 import com.onepagecrm.models.serializers.BaseSerializer;
 import com.onepagecrm.net.Response;
 
+import javax.net.ssl.SSLHandshakeException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +16,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -304,14 +308,18 @@ public abstract class Request {
             connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(DEFAULT_TIME_OUT_MS);
             HttpURLConnection.setFollowRedirects(true);
-        } catch (java.net.SocketTimeoutException e) {
+
+        } catch (SocketTimeoutException e) {
             String message = "Request timed out after " + (DEFAULT_TIME_OUT_MS / 1000) + " seconds";
             LOG.severe(message);
             LOG.severe(e.toString());
             throw new TimeoutException(message);
+
+        } catch (SSLHandshakeException e) {
+            throwInvalidSSLCertException(e);
+
         } catch (IOException e) {
-            LOG.severe("Error connecting to url : " + url);
-            LOG.severe(e.toString());
+            throwIOException(e, "Error connecting to url : " + url);
         }
     }
 
@@ -409,15 +417,19 @@ public abstract class Request {
     /**
      * Actually write the request body using the OutputStreamWriter.
      */
-    private void writeRequestBody() {
+    private void writeRequestBody() throws OnePageException {
         if (requestBody != null && !requestBody.equals("")) {
             OutputStreamWriter out = null;
             try {
                 out = new OutputStreamWriter(connection.getOutputStream());
+
+            } catch (SSLHandshakeException e) {
+                throwInvalidSSLCertException(e);
+
             } catch (IOException e) {
-                LOG.severe("Could not open output stream to write request body");
-                LOG.severe(e.toString());
+                throwIOException(e, "Could not open output stream to write request body");
             }
+
             if (out != null) {
                 try {
                     out.write(requestBody);
@@ -438,7 +450,7 @@ public abstract class Request {
     /**
      * Acquire the HTTP response code, message and body.
      */
-    private void getResponse() {
+    private void getResponse() throws OnePageException {
         response = new Response();
 
         getResponseCode();
@@ -453,25 +465,23 @@ public abstract class Request {
         LOG.info("*************************************");
     }
 
-    private void getResponseCode() {
+    private void getResponseCode() throws OnePageException {
         try {
             response.setResponseCode(connection.getResponseCode());
         } catch (IOException e) {
-            LOG.severe("Could not get response code");
-            LOG.severe(e.toString());
+            throwIOException(e, "Could not get response code");
         }
     }
 
-    private void getResponseMessage() {
+    private void getResponseMessage() throws OnePageException {
         try {
             response.setResponseMessage(connection.getResponseMessage());
         } catch (IOException e) {
-            LOG.severe("Could not get response message");
-            LOG.severe(e.toString());
+            throwIOException(e, "Could not get response message");
         }
     }
 
-    private void getResponseBody() {
+    private void getResponseBody() throws OnePageException {
         switch (type) {
             case GET:
                 response.setResponseBody(getGetResponseBody());
@@ -487,20 +497,18 @@ public abstract class Request {
         }
     }
 
-    private String getGetResponseBody() {
+    private String getGetResponseBody() throws OnePageException {
         Scanner scan = null;
         StringBuilder responseBody = new StringBuilder();
         if (response.getResponseCode() < 300) {
             try {
                 scan = new Scanner(connection.getInputStream());
             } catch (IOException e) {
-                LOG.severe("Could not get response body");
-                LOG.severe(e.toString());
+                throwIOException(e, "Could not get response message");
             }
         } else {
             scan = new Scanner(connection.getErrorStream());
         }
-
         if (scan != null) {
             while (scan.hasNext()) {
                 responseBody.append(scan.nextLine());
@@ -510,15 +518,14 @@ public abstract class Request {
         return responseBody.toString();
     }
 
-    private String getPostResponseBody() {
+    private String getPostResponseBody() throws OnePageException {
         BufferedReader br = null;
         StringBuilder responseBody = new StringBuilder();
         if (response.getResponseCode() < 300) {
             try {
                 br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             } catch (IOException e) {
-                LOG.severe("Could not open input stream to get response body of POST request");
-                LOG.severe(e.toString());
+                throwIOException(e, "Could not open input stream to get response body of POST request");
             }
         } else {
             br = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
@@ -530,16 +537,31 @@ public abstract class Request {
                     responseBody.append(output);
                 }
             } catch (IOException e) {
-                LOG.severe("Could not read line using buffered reader");
-                LOG.severe(e.toString());
+                throwIOException(e, "Could not read line using buffered reader");
             }
             try {
                 br.close();
             } catch (IOException e) {
-                LOG.severe("Could not close buffered reader");
-                LOG.severe(e.toString());
+                throwIOException(e, "Could not close buffered reader");
             }
         }
         return responseBody.toString();
+    }
+
+    private void throwIOException(IOException e, String message) throws OnePageException {
+        LOG.severe(message);
+        LOG.severe(e.toString());
+        throw new OnePageIOException()
+                .setMessage(message)
+                .setErrorMessage(message);
+    }
+
+    private void throwInvalidSSLCertException(SSLHandshakeException e) throws OnePageException {
+        String message = "Invalid SSL certificate. Please check VPN/proxy settings.";
+        LOG.severe(message);
+        LOG.severe(e.toString());
+        throw new InvalidSSLCertException()
+                .setMessage(message)
+                .setErrorMessage(message);
     }
 }
