@@ -61,7 +61,7 @@ public class Attachment extends ApiResource implements Serializable {
                 case PROVIDER_EVERNOTE:
                     return EVERNOTE;
                 default:
-                    // Manually set provider text so we know what API sent (if error)!
+                    // Manually set provider so we know what API sent (if error)!
                     OTHER.provider = provider;
                     return OTHER;
             }

@@ -2,8 +2,10 @@ package com.onepagecrm.samples;
 
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.Action;
 import com.onepagecrm.models.Attachment;
 import com.onepagecrm.models.User;
+import com.onepagecrm.models.internal.Commission;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
@@ -48,7 +50,45 @@ public class EnumsDriver {
 
         LOG.info("Logged in User : " + loggedInUser);
 
+        Action.Status status = Action.Status.fromString("test");
         Attachment.Provider provider = Attachment.Provider.fromString("test");
+        Commission.Base base = Commission.Base.fromString("test");
+        Commission.Type type = Commission.Type.fromString("test");
+
+        switch (status) {
+            case ASAP: {
+                LOG.info("ASAP : " + status.toString());
+                break;
+            }
+            case DATE: {
+                LOG.info("DATE : " + status.toString());
+                break;
+            }
+            case DATE_TIME: {
+                LOG.info("DATE_TIME : " + status.toString());
+                break;
+            }
+            case WAITING: {
+                LOG.info("WAITING : " + status.toString());
+                break;
+            }
+            case QUEUED: {
+                LOG.info("QUEUED : " + status.toString());
+                break;
+            }
+            case QUEUED_WITH_DATE: {
+                LOG.info("QUEUED_WITH_DATE : " + status.toString());
+                break;
+            }
+            case DONE: {
+                LOG.info("DONE : " + status.toString());
+                break;
+            }
+            case OTHER: {
+                LOG.info("OTHER : " + status.toString());
+                break;
+            }
+        }
 
         switch (provider) {
             case AMAZON: {
@@ -73,5 +113,38 @@ public class EnumsDriver {
             }
         }
 
+        switch (base) {
+            case MARGIN: {
+                LOG.info("MARGIN : " + base.toString());
+                break;
+            }
+            case AMOUNT: {
+                LOG.info("AMOUNT : " + base.toString());
+                break;
+            }
+            case OTHER: {
+                LOG.info("OTHER : " + base.toString());
+                break;
+            }
+        }
+
+        switch (type) {
+            case PERCENTAGE: {
+                LOG.info("PERCENTAGE : " + type.toString());
+                break;
+            }
+            case ABSOLUTE: {
+                LOG.info("ABSOLUTE : " + type.toString());
+                break;
+            }
+            case NONE: {
+                LOG.info("NONE : " + type.toString());
+                break;
+            }
+            case OTHER: {
+                LOG.info("OTHER : " + type.toString());
+                break;
+            }
+        }
     }
 }
