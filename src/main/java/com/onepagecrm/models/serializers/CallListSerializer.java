@@ -27,7 +27,7 @@ public class CallListSerializer extends BaseSerializer {
         Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
         JSONArray callsArray = dataObject.optJSONArray(CALLS_TAG);
         calls.setPaginator(paginator);
-        calls.setList(CallSerializer.fromJsonArray(callsArray));
+        calls.setList(fromJsonArray(callsArray));
         return calls;
     }
 
@@ -49,5 +49,17 @@ public class CallListSerializer extends BaseSerializer {
         }
 
         return calls;
+    }
+
+    public static CallList fromJsonArray(JSONArray callsArray) {
+        return new CallList(CallSerializer.fromJsonArray(callsArray));
+    }
+
+    public static JSONArray toJsonArray(CallList calls) {
+        return CallSerializer.toJsonArray(new CallList(calls));
+    }
+
+    public static String toJsonString(CallList calls) {
+        return CallSerializer.toJsonString(calls.getList());
     }
 }

@@ -1,7 +1,7 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.serializers.CallSerializer;
+import com.onepagecrm.models.serializers.CallListSerializer;
 
 import java.io.Serializable;
 import java.util.List;
@@ -48,6 +48,6 @@ public class CallList extends ResourceList<Call> implements Serializable {
 
     @Override
     public String toString() {
-        return CallSerializer.toJsonString(getList());
+        return CallListSerializer.toJsonString(this);
     }
 }
