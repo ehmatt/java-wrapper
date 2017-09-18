@@ -55,7 +55,7 @@ public class Call extends ApiResource implements Serializable {
         Request request = new PutRequest(
                 addIdToEndpoint(CALLS_ENDPOINT, this.id),
                 null,
-                CallSerializer.toJsonObject(this)
+                CallSerializer.toJsonString(this)
         );
         Response response = request.send();
         return CallSerializer.fromResponse(response);
@@ -67,7 +67,7 @@ public class Call extends ApiResource implements Serializable {
         Request request = new PostRequest(
                 CALLS_ENDPOINT,
                 Query.fromParams(params),
-                CallSerializer.toJsonObject(this)
+                CallSerializer.toJsonString(this)
         );
         Response response = request.send();
         return CallSerializer.fromResponse(response);
@@ -140,7 +140,7 @@ public class Call extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return CallSerializer.toJsonObject(this);
+        return CallSerializer.toJsonString(this);
     }
 
     public String getAuthor() {

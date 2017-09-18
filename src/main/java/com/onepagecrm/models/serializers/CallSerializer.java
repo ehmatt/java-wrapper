@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 public class CallSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CallSerializer.class.getName());
+
+    private static Call DEFAULT = new Call();
 
     public static Call fromResponse(Response response) throws APIException {
         JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
@@ -41,7 +43,7 @@ public class CallSerializer extends BaseSerializer {
 
     public static Call fromJsonObject(JSONObject callObject) {
         if (callObject == null) {
-            return null;
+            return DEFAULT;
         }
         // Fix for some objects not having name.
         if (callObject.has(CALL_TAG)) {
@@ -84,20 +86,18 @@ public class CallSerializer extends BaseSerializer {
     }
 
     public static List<Call> fromJsonArray(JSONArray callsArray) {
-        List<Call> calls = new LinkedList<>();
+        List<Call> calls = new ArrayList<>();
         if (callsArray == null) return calls;
         for (int i = 0; i < callsArray.length(); ++i) {
             JSONObject callObject = callsArray.optJSONObject(i);
-            Call call = fromJsonObject(callObject);
-            if (call != null) {
-                calls.add(call);
-            }
+            calls.add(fromJsonObject(callObject));
         }
         return calls;
     }
 
-    public static String toJsonObject(Call call) {
+    public static JSONObject toJsonObject(Call call) {
         JSONObject callObject = new JSONObject();
+        if (call == null) return callObject;
         addJsonStringValue(call.getId(), callObject, ID_TAG);
         addJsonStringValue(call.getText(), callObject, TEXT_TAG);
         addJsonStringValue(call.getCallResult().getId(), callObject, CALL_RESULT_TAG);
@@ -108,19 +108,23 @@ public class CallSerializer extends BaseSerializer {
         addJsonStringValue(call.getVia(), callObject, VIA_TAG);
         addJsonStringValue(call.getAuthor(), callObject, AUTHOR_TAG);
         addJsonStringValue(call.getPhoneNumber(), callObject, PHONE_NUMBER_TAG);
-        return callObject.toString();
+        return callObject;
     }
 
-    public static String toJsonArray(List<Call> calls) {
+    public static JSONArray toJsonArray(List<Call> calls) {
         JSONArray callsArray = new JSONArray();
-        for (int i = 0; i < calls.size(); i++) {
-            try {
-                callsArray.put(new JSONObject(toJsonObject(calls.get(i))));
-            } catch (JSONException e) {
-                LOG.severe("Error creating JSON out of Call(s).");
-                LOG.severe(e.toString());
-            }
+        if (calls == null) return callsArray;
+        for (Call call : calls) {
+            callsArray.put(toJsonObject(call));
         }
-        return callsArray.toString();
+        return callsArray;
+    }
+
+    public static String toJsonString(Call call) {
+        return toJsonObject(call).toString();
+    }
+
+    public static String toJsonString(List<Call> calls) {
+        return toJsonArray(calls).toString();
     }
 }

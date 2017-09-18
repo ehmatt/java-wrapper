@@ -1,12 +1,15 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.APIException;
+import com.onepagecrm.models.Call;
 import com.onepagecrm.models.CallList;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.net.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -15,6 +18,8 @@ import java.util.logging.Logger;
 public class CallListSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CallListSerializer.class.getName());
+
+    private static List<Call> DEFAULT = new ArrayList<>();
 
     public static CallList fromResponse(Response response) throws APIException {
         CallList calls = new CallList();

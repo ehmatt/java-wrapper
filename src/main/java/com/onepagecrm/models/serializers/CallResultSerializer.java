@@ -23,9 +23,11 @@ public class CallResultSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CallResultSerializer.class.getName());
 
+    private static CallResult DEFAULT = new CallResult();
+
     public static List<CallResult> fromJsonObject(JSONObject dataObject) {
         if (dataObject == null) {
-            return null;
+            return defaultCallResults();
         }
 
         JSONObject callResultsObject = dataObject.optJSONObject(CALL_RESULTS_TAG);
@@ -78,38 +80,30 @@ public class CallResultSerializer extends BaseSerializer {
         return resultList;
     }
 
-    public static String toJsonObject(CallResult callResult) {
+    public static JSONObject toJsonObject(CallResult callResult) {
         JSONObject callObject = new JSONObject();
+        if (callResult == null) return callObject;
         addJsonStringValue(callResult.getDisplay(), callObject, callResult.getId());
-        return callObject.toString();
+        return callObject;
     }
 
-    public static String toJsonArray(List<CallResult> results) {
-        JSONArray resultsArray = new JSONArray();
-        for (int i = 0; i < results.size(); i++) {
-            try {
-                resultsArray.put(new JSONObject(toJsonObject(results.get(i))));
-            } catch (JSONException e) {
-                LOG.severe("Error creating JSONObject out of CallResult");
-                LOG.severe(e.toString());
-            }
+    public static JSONArray toJsonArray(List<CallResult> callResults) {
+        JSONArray callResultsArray = new JSONArray();
+        if (callResults == null || callResults.isEmpty()) {
+            return callResultsArray;
         }
-        return resultsArray.toString();
-    }
-
-    private static void printCallResults(List<CallResult> callResults) {
-        if (callResults == null || callResults.isEmpty()) return;
-        for (int i = 0; i < callResults.size(); i++) {
-            CallResult result = callResults.get(i);
-            LOG.info("call_result[" + i + "] : " + result.getDisplay());
+        for (CallResult callResult : callResults) {
+            callResultsArray.put(toJsonObject(callResult));
         }
+        return callResultsArray;
     }
 
     public static String toJsonString(CallResult callResult) {
-        if (callResult.getId() != null && callResult.getDisplay() != null) {
-            return "\"" + callResult.getId() + "\":\"" + callResult.getDisplay() + "\"";
-        }
-        return "";
+        return toJsonObject(callResult).toString();
+    }
+
+    public static String toJsonString(List<CallResult> callResults) {
+        return toJsonArray(callResults).toString();
     }
 
     public static List<CallResult> getFromLoggedUser() {

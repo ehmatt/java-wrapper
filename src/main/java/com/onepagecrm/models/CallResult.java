@@ -28,7 +28,7 @@ public class CallResult extends BaseResource implements Serializable {
     }
 
     public String toString() {
-        return CallResultSerializer.toJsonObject(this);
+        return CallResultSerializer.toJsonString(this);
     }
 
     public boolean equals(Object object) {
