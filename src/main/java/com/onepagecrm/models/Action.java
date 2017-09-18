@@ -67,9 +67,9 @@ public class Action extends ApiResource implements Serializable {
             return status;
         }
 
-        public static Status fromString(String string) {
-            if (string == null) return null;
-            switch (string) {
+        public static Status fromString(String status) {
+            if (status == null) return null;
+            switch (status) {
                 case STATUS_ASAP:
                     return ASAP;
                 case STATUS_DATE:
@@ -85,6 +85,8 @@ public class Action extends ApiResource implements Serializable {
                 case STATUS_DONE:
                     return DONE;
                 default:
+                    // Manually set status so we know what API sent (if error)!
+                    OTHER.status = status;
                     return OTHER;
             }
         }

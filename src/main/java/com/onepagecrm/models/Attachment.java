@@ -24,7 +24,8 @@ public class Attachment extends ApiResource implements Serializable {
     private static final String PROVIDER_AMAZON = "amazon";
     private static final String PROVIDER_DRIVE = "google_drive";
     private static final String PROVIDER_DROPBOX = "dropbox";
-    private static final String PROVIDER_OTHER = "other";
+    private static final String PROVIDER_EVERNOTE = "evernote";
+    private static final String PROVIDER_OTHER = "other"; // Catch all.
 
     /**
      * Member variables.
@@ -34,6 +35,7 @@ public class Attachment extends ApiResource implements Serializable {
         AMAZON(PROVIDER_AMAZON),
         DRIVE(PROVIDER_DRIVE),
         DROPBOX(PROVIDER_DROPBOX),
+        EVERNOTE(PROVIDER_EVERNOTE),
         OTHER(PROVIDER_OTHER);
 
         private String provider;
@@ -56,7 +58,11 @@ public class Attachment extends ApiResource implements Serializable {
                     return DRIVE;
                 case PROVIDER_DROPBOX:
                     return DROPBOX;
+                case PROVIDER_EVERNOTE:
+                    return EVERNOTE;
                 default:
+                    // Manually set provider so we know what API sent (if error)!
+                    OTHER.provider = provider;
                     return OTHER;
             }
         }
