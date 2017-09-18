@@ -10,6 +10,9 @@ import java.util.logging.Logger;
 
 import static com.onepagecrm.models.internal.Utilities.nullChecks;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 18/09/2016.
+ */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class AddressSerializer extends BaseSerializer {
 

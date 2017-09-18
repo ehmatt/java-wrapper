@@ -4,7 +4,7 @@ import com.onepagecrm.models.internal.CloseSalesCycle;
 import org.json.JSONObject;
 
 /**
- * Created by mahasamatman on 26.05.16.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 18/09/2016.
  */
 public class CloseSalesCycleSerializer extends BaseSerializer {
 

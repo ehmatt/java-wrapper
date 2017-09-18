@@ -11,6 +11,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 18/09/2016.
+ */
 public class ContactListSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ContactListSerializer.class.getName());

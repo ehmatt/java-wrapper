@@ -13,6 +13,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 18/09/2016.
+ */
 @SuppressWarnings("ForLoopReplaceableByForEach")
 public class ActionSerializer extends BaseSerializer {
 
