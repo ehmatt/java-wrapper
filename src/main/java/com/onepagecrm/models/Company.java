@@ -58,7 +58,7 @@ public class Company extends ApiResource implements Serializable {
         Request request = new PostRequest(
                 COMPANIES_ENDPOINT,
                 null,
-                CompanySerializer.toJsonObject(this)
+                CompanySerializer.toJsonString(this)
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
@@ -71,7 +71,7 @@ public class Company extends ApiResource implements Serializable {
         Request request = new PutRequest(
                 addIdToEndpoint(COMPANIES_ENDPOINT, this.id),
                 null,
-                CompanySerializer.toJsonObject(this)
+                CompanySerializer.toJsonString(this)
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
@@ -96,7 +96,7 @@ public class Company extends ApiResource implements Serializable {
         Request request = new PutRequest(
                 addIdToEndpoint(COMPANIES_ENDPOINT, this.id),
                 Query.fromParams(params),
-                CompanySerializer.toJsonObject(updateValues)
+                CompanySerializer.toJsonString(updateValues)
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
@@ -126,7 +126,7 @@ public class Company extends ApiResource implements Serializable {
         Request request = new PostRequest(
                 endpoint,
                 null,
-                CompanySerializer.toJsonObject(contactId, linkedWithId)
+                CompanySerializer.toJsonString(contactId, linkedWithId)
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
@@ -162,7 +162,7 @@ public class Company extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return CompanySerializer.toJsonObject(this);
+        return CompanySerializer.toJsonString(this);
     }
 
     public boolean dataToLoseWithDeletion() {

@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 13/04/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 13/04/2016.
  */
 public class ContactsCountSerializer extends BaseSerializer {
 

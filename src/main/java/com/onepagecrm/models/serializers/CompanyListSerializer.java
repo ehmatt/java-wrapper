@@ -17,8 +17,7 @@ public class CompanyListSerializer extends BaseSerializer {
     private static final Logger LOG = Logger.getLogger(CompanyListSerializer.class.getName());
 
     public static CompanyList fromResponse(Response response) throws APIException {
-        final String responseBody = response.getResponseBody();
-        JSONObject dataObject = (JSONObject) BaseSerializer.fromString(responseBody);
+        JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
         JSONArray companiesArray = dataObject.optJSONArray(COMPANIES_TAG);
         Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
         CompanyList companies = new CompanyList();
@@ -51,7 +50,11 @@ public class CompanyListSerializer extends BaseSerializer {
         return new CompanyList(CompanySerializer.fromJsonArray(companiesArray));
     }
 
-    public static String toJsonArray(CompanyList companies) {
-        return CompanySerializer.toJsonArray(new CompanyList(companies));
+    public static JSONArray toJsonArray(CompanyList companies) {
+        return CompanySerializer.toJsonArray(companies);
+    }
+
+    public static String toJsonString(CompanyList companies) {
+        return CompanySerializer.toJsonString(companies);
     }
 }

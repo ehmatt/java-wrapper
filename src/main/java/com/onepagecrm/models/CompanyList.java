@@ -52,6 +52,6 @@ public class CompanyList extends ResourceList<Company> implements Serializable {
     }
 
     public String toString() {
-        return CompanyListSerializer.toJsonArray(this);
+        return CompanyListSerializer.toJsonString(this);
     }
 }

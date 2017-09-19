@@ -26,6 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 19/09/2016.
+ */
 public class ContactSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ContactSerializer.class.getName());
@@ -346,13 +349,8 @@ public class ContactSerializer extends BaseSerializer {
         addJsonArray(BaseSerializer.toJsonStringArray(tagNames), contactObject, TAGS_TAG);
 
         // Serialize Company.
-        try {
-            JSONObject companyObject = new JSONObject(CompanySerializer.toJsonObject(contact.getCompany()));
-            addJsonObject(companyObject, contactObject, COMPANY_TAG);
-        } catch (JSONException e) {
-            LOG.severe("Error creating Company object while constructing Contact object");
-            LOG.severe(e.toString());
-        }
+        JSONObject companyObject = CompanySerializer.toJsonObject(contact.getCompany());
+        addJsonObject(companyObject, contactObject, COMPANY_TAG);
 
         return contactObject.toString();
     }
