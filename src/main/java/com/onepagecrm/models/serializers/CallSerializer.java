@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 /**
  * @author Cillian Myles (cillian@onepagecrm.com) on 31/07/2017.
  */
+@SuppressWarnings("WeakerAccess")
 public class CallSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CallSerializer.class.getName());

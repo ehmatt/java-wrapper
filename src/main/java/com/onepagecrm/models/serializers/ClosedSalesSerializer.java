@@ -1,11 +1,12 @@
 package com.onepagecrm.models.serializers;
 
+import com.onepagecrm.models.internal.CloseSalesCycle;
 import com.onepagecrm.models.internal.SalesCycleClosure;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,9 +16,11 @@ import java.util.Map;
 @SuppressWarnings("WeakerAccess")
 public class ClosedSalesSerializer extends BaseSerializer {
 
+    private static SalesCycleClosure DEFAULT = new SalesCycleClosure();
+
     public static SalesCycleClosure fromJsonObject(JSONObject closureObject, String contactId) {
         if (closureObject == null) {
-            return null;
+            return DEFAULT;
         }
         return new SalesCycleClosure()
                 .setUserId(closureObject.optString(USER_ID_TAG))
@@ -27,7 +30,7 @@ public class ClosedSalesSerializer extends BaseSerializer {
     }
 
     public static List<SalesCycleClosure> fromJsonArray(JSONArray closureArray, String contactId) {
-        List<SalesCycleClosure> closures = new LinkedList<>();
+        List<SalesCycleClosure> closures = new ArrayList<>();
         if (closureArray == null) return closures;
         for (int i = 0; i < closureArray.length(); i++) {
             JSONObject closureObject = closureArray.optJSONObject(i);
@@ -46,5 +49,16 @@ public class ClosedSalesSerializer extends BaseSerializer {
             closures.put(closure.getUserId(), closure);
         }
         return closures;
+    }
+
+    public static JSONObject toJsonObject(CloseSalesCycle closeSalesCycle) {
+        JSONObject closeCycleObject = new JSONObject();
+        if (closeSalesCycle == null) return closeCycleObject;
+        addJsonStringValue(closeSalesCycle.getComment(), closeCycleObject, CLOSE_SALES_CYCLE_COMMENT_TAG);
+        return closeCycleObject;
+    }
+
+    public static String toJsonString(CloseSalesCycle closeSalesCycle) {
+        return toJsonObject(closeSalesCycle).toString();
     }
 }

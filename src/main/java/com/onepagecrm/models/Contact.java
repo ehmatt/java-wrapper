@@ -5,7 +5,7 @@ import com.onepagecrm.models.internal.CloseSalesCycle;
 import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.SalesCycleClosure;
 import com.onepagecrm.models.serializers.BaseSerializer;
-import com.onepagecrm.models.serializers.CloseSalesCycleSerializer;
+import com.onepagecrm.models.serializers.ClosedSalesSerializer;
 import com.onepagecrm.models.serializers.ContactPhotoSerializer;
 import com.onepagecrm.models.serializers.ContactSerializer;
 import com.onepagecrm.models.serializers.ContactSplitSerializer;
@@ -153,7 +153,7 @@ public class Contact extends ApiResource implements Serializable {
         Request request = new PutRequest(
                 CLOSE_SALES_CYCLE_ENDPOINT.replace("{id}", this.getId()),
                 null,
-                CloseSalesCycleSerializer.toJsonObject(closeSalesCycle)
+                ClosedSalesSerializer.toJsonString(closeSalesCycle)
         );
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
