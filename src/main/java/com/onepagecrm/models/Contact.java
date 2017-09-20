@@ -90,7 +90,7 @@ public class Contact extends ApiResource implements Serializable {
         Request request = new PostRequest(
                 CONTACTS_ENDPOINT,
                 null,
-                ContactSerializer.toJsonObject(this)
+                ContactSerializer.toJsonString(this)
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
@@ -103,7 +103,7 @@ public class Contact extends ApiResource implements Serializable {
         Request request = new PutRequest(
                 addIdToEndpoint(CONTACTS_ENDPOINT, this.id),
                 "?" + EXTRA_FIELDS,
-                ContactSerializer.toJsonObject(this)
+                ContactSerializer.toJsonString(this)
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
@@ -127,7 +127,7 @@ public class Contact extends ApiResource implements Serializable {
         Request request = new PutRequest(
                 addIdToEndpoint(CONTACTS_ENDPOINT, this.id),
                 Query.fromParams(params) + "&" + EXTRA_FIELDS,
-                ContactSerializer.toJsonObject(updateValues)
+                ContactSerializer.toJsonString(updateValues)
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
@@ -229,7 +229,7 @@ public class Contact extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return ContactSerializer.toJsonObject(this);
+        return ContactSerializer.toJsonString(this);
     }
 
     public String getSimpleName() {

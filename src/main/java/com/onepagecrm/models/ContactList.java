@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 20/09/2017.
+ */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class ContactList extends ResourceList<Contact> implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(ContactList.class.getName());
@@ -103,7 +107,7 @@ public class ContactList extends ResourceList<Contact> implements Serializable {
     }
 
     public String toString() {
-        return ContactListSerializer.toJsonObject(this);
+        return ContactListSerializer.toJsonString(this);
     }
 
     /**

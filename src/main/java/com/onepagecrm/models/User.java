@@ -21,6 +21,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 20/09/2017.
+ */
 @SuppressWarnings({"WeakerAccess", "unused", "UnusedReturnValue"})
 public class User extends ApiResource implements Serializable {
 
@@ -165,7 +168,7 @@ public class User extends ApiResource implements Serializable {
         query += "&" + Contact.EXTRA_FIELDS;
         Request request = new GetRequest(endpoint, query);
         Response response = request.send();
-        return ContactListSerializer.fromString(response.getResponseBody());
+        return ContactListSerializer.fromResponse(response);
     }
 
     /**

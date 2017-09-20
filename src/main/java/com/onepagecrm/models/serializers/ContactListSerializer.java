@@ -4,11 +4,13 @@ import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.internal.Paginator;
+import com.onepagecrm.net.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -18,13 +20,15 @@ public class ContactListSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ContactListSerializer.class.getName());
 
-    /**
-     * Parse response from contacts/action_stream request to construct Contact
-     * object(s).
-     *
-     * @param responseBody
-     * @return
-     */
+    private static ContactList DEFAULT = new ContactList();
+
+    public static ContactList fromResponse(Response response) throws APIException {
+        JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
+        JSONArray contacts = dataObject.optJSONArray(CONTACTS_TAG);
+        return fromJsonArray(contacts);
+    }
+
+    // TODO: delete
     public static ContactList fromString(String responseBody) throws APIException {
         ContactList contacts = new ContactList();
 
@@ -44,59 +48,53 @@ public class ContactListSerializer extends BaseSerializer {
         return contacts;
     }
 
-    /**
-     * Parse response from contacts/action_stream request to construct Contact
-     * object(s).
-     *
-     * @param contactsArray
-     * @return
-     */
-    public static ContactList fromJsonArray(JSONArray contactsArray) {
-        Contact.nextIntId = 1;
-        ArrayList<Contact> contacts = new ArrayList<>();
-        try {
-            for (int i = 0; i < contactsArray.length(); i++) {
-                JSONObject contactObject = contactsArray.getJSONObject(i);
-                contacts.add(ContactSerializer.fromJsonObject(contactObject));
-            }
-        } catch (JSONException e) {
-            LOG.severe("Error parsing Contacts array from response body");
-            LOG.severe(e.toString());
+    public static ContactList fromJsonObject(JSONObject contactsObject) {
+        if (contactsObject == null) {
+            return DEFAULT;
         }
+
+        JSONArray contactsArray = contactsObject.optJSONArray(CONTACTS_TAG);
+        ContactList contacts = fromJsonArray(contactsArray);
+        Paginator paginator = RequestMetadataSerializer.fromJsonObject(contactsObject);
+        contacts.setPaginator(paginator);
+        return contacts;
+    }
+
+    public static ContactList fromJsonArray(JSONArray contactsArray) {
+        if (contactsArray == null) {
+            return DEFAULT;
+        }
+
+        List<Contact> contacts = new ArrayList<>();
+        Contact.nextIntId = 1;
+
+        for (int i = 0; i < contactsArray.length(); i++) {
+            JSONObject contactObject = contactsArray.optJSONObject(i);
+            contacts.add(ContactSerializer.fromJsonObject(contactObject));
+        }
+
         return new ContactList(contacts);
     }
 
-    public static String toJsonObject(ContactList contacts) {
+    public static JSONObject toJsonObject(ContactList contacts) {
         JSONObject contactsListObject = new JSONObject();
-        try {
-            JSONArray contactsArray = new JSONArray(ContactSerializer.toJsonArray(contacts));
-            addJsonArray(contactsArray, contactsListObject, CONTACTS_TAG);
-            Paginator paginator = contacts.getPaginator();
-            if (paginator != null) {
-                addJsonIntegerValue(paginator.getTotalCount(), contactsListObject, TOTAL_COUNT_TAG);
-                addJsonIntegerValue(paginator.getCurrentPage(), contactsListObject, PAGE_TAG);
-                addJsonIntegerValue(paginator.getMaxPage(), contactsListObject, MAX_PAGE_TAG);
-                addJsonIntegerValue(paginator.getPerPage(), contactsListObject, PER_PAGE_TAG);
-            }
-        } catch (JSONException e) {
-            LOG.severe("Error serializing Contacts array from ContactList object");
-            LOG.severe(e.toString());
+        if (contacts == null) return contactsListObject;
+
+        JSONArray contactsArray = ContactSerializer.toJsonArray(contacts);
+        addJsonArray(contactsArray, contactsListObject, CONTACTS_TAG);
+
+        Paginator paginator = contacts.getPaginator();
+        if (paginator != null) {
+            addJsonIntegerValue(paginator.getTotalCount(), contactsListObject, TOTAL_COUNT_TAG);
+            addJsonIntegerValue(paginator.getCurrentPage(), contactsListObject, PAGE_TAG);
+            addJsonIntegerValue(paginator.getMaxPage(), contactsListObject, MAX_PAGE_TAG);
+            addJsonIntegerValue(paginator.getPerPage(), contactsListObject, PER_PAGE_TAG);
         }
-        return contactsListObject.toString();
+
+        return contactsListObject;
     }
 
-    public static ContactList fromJsonObject(JSONObject contactsObject) {
-        ContactList contacts = new ContactList();
-        try {
-            JSONArray contactsArray = contactsObject.getJSONArray(CONTACTS_TAG);
-            contacts = fromJsonArray(contactsArray);
-            Paginator paginator = RequestMetadataSerializer.fromJsonObject(contactsObject);
-            contacts.setPaginator(paginator);
-
-        } catch (JSONException e) {
-            LOG.severe("Error parsing Contacts array from Contacts object");
-            LOG.severe(e.toString());
-        }
-        return contacts;
+    public static String toJsonString(ContactList contacts) {
+        return toJsonObject(contacts).toString();
     }
 }

@@ -56,11 +56,9 @@ public class ContactListSerializerDriver {
 
         ContactList stream = loggedInUser.actionStream();
 
-        String serialized = ContactListSerializer.toJsonObject(stream);
+        String serialized = ContactListSerializer.toJsonString(stream);
 
-        ContactList serializedAndParsed = ContactListSerializer.fromJsonObject(
-                new JSONObject(serialized)
-        );
+        ContactList serializedAndParsed = ContactListSerializer.fromJsonObject(new JSONObject(serialized));
 
         LOG.info("stream : " + stream);
         LOG.info("stream.getPaginator() : " + stream.getPaginator());
