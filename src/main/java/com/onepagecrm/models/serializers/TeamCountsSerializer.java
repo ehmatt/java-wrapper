@@ -2,67 +2,63 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.models.internal.TeamCount;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 20/09/2016.
+ */
+@SuppressWarnings("unused")
 public class TeamCountsSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(TeamCountsSerializer.class.getName());
 
+    private static TeamCount DEFAULT = new TeamCount();
+
+    public static TeamCount fromJsonObject(JSONObject teamCountObject) {
+        if (teamCountObject == null) {
+            return DEFAULT;
+        }
+        return new TeamCount()
+                .setUserId(teamCountObject.optString(USER_ID_TAG))
+                .setCount(teamCountObject.optInt(COUNTS_TAG));
+    }
+
     public static List<TeamCount> fromJsonArray(JSONArray teamCountArray) {
         List<TeamCount> teamCounts = new ArrayList<>();
-        for (int j = 0; j < teamCountArray.length(); j++) {
-            JSONObject teamCountsObject;
-            try {
-                teamCountsObject = teamCountArray.getJSONObject(j);
-                teamCounts.add(fromJsonObject(teamCountsObject));
-            } catch (JSONException e) {
-                LOG.severe("Error parsing TeamCount array");
-                LOG.severe(e.toString());
-            }
+        if (teamCountArray == null) return teamCounts;
+        for (int i = 0; i < teamCountArray.length(); i++) {
+            JSONObject teamCountsObject = teamCountArray.optJSONObject(i);
+            teamCounts.add(fromJsonObject(teamCountsObject));
         }
         return teamCounts;
     }
 
-    public static TeamCount fromJsonObject(JSONObject teamCountObject) {
-        TeamCount teamCount = new TeamCount();
-        try {
-            if (teamCountObject.has(USER_ID_TAG)) {
-                teamCount.setUserId(teamCountObject.getString(USER_ID_TAG));
-            }
-            if (teamCountObject.has(COUNTS_TAG)) {
-                teamCount.setCount(teamCountObject.getInt(COUNTS_TAG));
-            }
-        } catch (JSONException e) {
-            LOG.severe("Error parsing TeamCount object");
-            LOG.severe(e.toString());
-        }
-        return teamCount;
-    }
-
-    public static String toJsonObject(TeamCount teamCount) {
+    public static JSONObject toJsonObject(TeamCount teamCount) {
         JSONObject teamCountObject = new JSONObject();
+        if (teamCount == null) return teamCountObject;
         addJsonStringValue(teamCount.getUserId(), teamCountObject, USER_ID_TAG);
         addJsonIntValue(teamCount.getCount(), teamCountObject, COUNTS_TAG);
-        return teamCountObject.toString();
+        return teamCountObject;
     }
 
-    public static String toJsonArray(List<TeamCount> teamCounts) {
+    public static JSONArray toJsonArray(List<TeamCount> teamCounts) {
         JSONArray teamCountsArray = new JSONArray();
-        if (teamCounts != null && !teamCounts.isEmpty()) {
-            for (int i = 0; i < teamCounts.size(); i++) {
-                try {
-                    teamCountsArray.put(new JSONObject(toJsonObject(teamCounts.get(i))));
-                } catch (JSONException e) {
-                    LOG.severe("Error creating JSONArray out of TeamCounts");
-                    LOG.severe(e.toString());
-                }
-            }
+        if (teamCounts == null) return teamCountsArray;
+        for (TeamCount teamCount : teamCounts) {
+            teamCountsArray.put(toJsonObject(teamCount));
         }
-        return teamCountsArray.toString();
+        return teamCountsArray;
+    }
+
+    public static String toJsonString(TeamCount teamCount) {
+        return toJsonObject(teamCount).toString();
+    }
+
+    public static String toJsonString(List<TeamCount> teamCounts) {
+        return toJsonArray(teamCounts).toString();
     }
 }

@@ -1,6 +1,7 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.models.LeadSource;
+import com.onepagecrm.models.internal.TeamCount;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,7 +48,9 @@ public class LeadSourceSerializer extends BaseSerializer {
                 leadSource.setActionStreamCount(leadSourceObject.getInt(ACTION_STREAM_COUNT_TAG));
             }
             if (leadSourceObject.has(TEAM_COUNTS_TAG)) {
-                leadSource.setTeamCounts(TeamCountsSerializer.fromJsonArray(leadSourceObject.getJSONArray(TEAM_COUNTS_TAG)));
+                JSONArray teamCountsArray = leadSourceObject.optJSONArray(TEAM_COUNTS_TAG);
+                List<TeamCount> teamCounts = TeamCountsSerializer.fromJsonArray(teamCountsArray);
+                leadSource.setTeamCounts(teamCounts);
             }
             return leadSource;
         } catch (JSONException e) {
@@ -65,13 +68,8 @@ public class LeadSourceSerializer extends BaseSerializer {
         addJsonIntegerValue(leadSource.getTotalCount(), leadSourceObject, TOTAL_COUNT_TAG);
         addJsonIntegerValue(leadSource.getActionStreamCount(), leadSourceObject, ACTION_STREAM_COUNT_TAG);
 
-        try {
-            JSONArray teamCountsArray = new JSONArray(TeamCountsSerializer.toJsonArray(leadSource.getTeamCounts()));
-            addJsonArray(teamCountsArray, leadSourceObject, TEAM_COUNTS_TAG);
-        } catch (JSONException e) {
-            LOG.severe("Error creating TeamCounts array while constructing LeadSource object");
-            LOG.severe(e.toString());
-        }
+        JSONArray teamCountsArray = TeamCountsSerializer.toJsonArray(leadSource.getTeamCounts());
+        addJsonArray(teamCountsArray, leadSourceObject, TEAM_COUNTS_TAG);
 
         return leadSourceObject.toString();
     }

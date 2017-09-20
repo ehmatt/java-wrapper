@@ -1,6 +1,7 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.models.Status;
+import com.onepagecrm.models.internal.TeamCount;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,7 +58,9 @@ public class StatusSerializer extends BaseSerializer {
                 status.setActionStreamCount(statusObject.getInt(ACTION_STREAM_COUNT_TAG));
             }
             if (statusObject.has(TEAM_COUNTS_TAG)) {
-                status.setTeamCounts(TeamCountsSerializer.fromJsonArray(statusObject.getJSONArray(TEAM_COUNTS_TAG)));
+                JSONArray teamCountsArray = statusObject.optJSONArray(TEAM_COUNTS_TAG);
+                List<TeamCount> teamCounts = TeamCountsSerializer.fromJsonArray(teamCountsArray);
+                status.setTeamCounts(teamCounts);
             }
             return status;
         } catch (JSONException e) {
@@ -78,13 +81,8 @@ public class StatusSerializer extends BaseSerializer {
         addJsonIntegerValue(status.getTotalCount(), statusObject, TOTAL_COUNT_TAG);
         addJsonIntegerValue(status.getActionStreamCount(), statusObject, ACTION_STREAM_COUNT_TAG);
 
-        try {
-            JSONArray teamCountsArray = new JSONArray(TeamCountsSerializer.toJsonArray(status.getTeamCounts()));
-            addJsonArray(teamCountsArray, statusObject, TEAM_COUNTS_TAG);
-        } catch (JSONException e) {
-            LOG.severe("Error creating TeamCounts array while constructing Status object");
-            LOG.severe(e.toString());
-        }
+        JSONArray teamCountsArray = TeamCountsSerializer.toJsonArray(status.getTeamCounts());
+        addJsonArray(teamCountsArray, statusObject, TEAM_COUNTS_TAG);
 
         return statusObject.toString();
     }
