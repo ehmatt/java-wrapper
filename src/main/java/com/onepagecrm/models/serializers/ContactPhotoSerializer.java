@@ -2,6 +2,7 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.Contact;
+import com.onepagecrm.net.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,6 +15,12 @@ public class ContactPhotoSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ContactPhotoSerializer.class.getName());
 
+    public static Contact fromResponse(Response response) throws APIException {
+        JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
+        return ContactSerializer.fromJsonObject(dataObject);
+    }
+
+    // TODO: delete
     public static Contact fromString(String responseBody) throws APIException {
         try {
             String dataString = (String) BaseSerializer.fromString(responseBody);
@@ -27,9 +34,14 @@ public class ContactPhotoSerializer extends BaseSerializer {
         return new Contact();
     }
 
-    public static String toJsonObject(String base64EncodedImageString) {
+
+    public static JSONObject toJsonObject(String base64EncodedImageString) {
         JSONObject imageObject = new JSONObject();
         addJsonStringValue(base64EncodedImageString, imageObject, IMAGE_TAG);
-        return imageObject.toString();
+        return imageObject;
+    }
+
+    public static String toJsonString(String base64EncodedImageString) {
+        return toJsonObject(base64EncodedImageString).toString();
     }
 }

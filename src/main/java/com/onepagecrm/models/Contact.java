@@ -4,6 +4,7 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.CloseSalesCycle;
 import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.SalesCycleClosure;
+import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.models.serializers.BaseSerializer;
 import com.onepagecrm.models.serializers.ClosedSalesSerializer;
 import com.onepagecrm.models.serializers.ContactPhotoSerializer;
@@ -29,7 +30,7 @@ import java.util.logging.Logger;
 
 import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 
-@SuppressWarnings({"unused", "WeakerAccess"})
+@SuppressWarnings({"unused", "WeakerAccess", "UnusedReturnValue"})
 public class Contact extends ApiResource implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(Contact.class.getSimpleName());
@@ -139,11 +140,11 @@ public class Contact extends ApiResource implements Serializable {
         Request request = new PutRequest(
                 subEndpoint(BaseSerializer.CONTACT_PHOTO_TAG),
                 null,
-                ContactPhotoSerializer.toJsonObject(base64EncodedImageString)
+                ContactPhotoSerializer.toJsonString(base64EncodedImageString)
         );
         Response response = request.send();
         Contact photoContact = ContactPhotoSerializer.fromString(response.getResponseBody());
-        if (this.isValid() && photoContact.photoUrl != null && !photoContact.photoUrl.equals("")) {
+        if (this.isValid() && Utilities.notNullOrEmpty(photoContact.photoUrl)) {
             this.photoUrl = photoContact.photoUrl;
         }
         return this;
@@ -193,7 +194,7 @@ public class Contact extends ApiResource implements Serializable {
         Request request = new PutRequest(
                 subEndpoint(BaseSerializer.SPLIT_TAG),
                 null,
-                ContactSplitSerializer.toJsonObject(newCompanyName)
+                ContactSplitSerializer.toJsonString(newCompanyName)
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
