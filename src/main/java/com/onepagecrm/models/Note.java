@@ -33,10 +33,11 @@ public class Note extends ApiResource implements Serializable {
     private String author;
     private String text;
     private String contactId;
-    private Date createdAt;
     private Date date;
     private String linkedDealId;
     private List<Attachment> attachments;
+    private Date createdAt;
+    private Date modifiedAt;
 
     /**
      * API methods
@@ -165,15 +166,6 @@ public class Note extends ApiResource implements Serializable {
         return contactId;
     }
 
-    public Note setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
     public Note setDate(Date date) {
         this.date = date;
         return this;
@@ -198,6 +190,24 @@ public class Note extends ApiResource implements Serializable {
 
     public Note setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
+        return this;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Note setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
+
+    public Date getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public Note setModifiedAt(Date modifiedAt) {
+        this.modifiedAt = modifiedAt;
         return this;
     }
 }
