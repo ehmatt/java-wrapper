@@ -5,6 +5,7 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Account;
 import com.onepagecrm.models.CompanyList;
 import com.onepagecrm.models.ContactList;
+import com.onepagecrm.models.Countries;
 import com.onepagecrm.models.DealList;
 import com.onepagecrm.models.User;
 import com.onepagecrm.net.request.Request;
@@ -72,5 +73,7 @@ public class Driver {
         DealList pipeline = loggedInUser.pipeline();
 
         CompanyList companies = loggedInUser.companies();
+
+        Countries countries = Countries.list();
     }
 }

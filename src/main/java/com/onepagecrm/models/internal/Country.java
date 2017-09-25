@@ -18,7 +18,7 @@ public class Country implements Serializable {
 
     @Override
     public String toString() {
-        return CountrySerializer.toJsonObject(this);
+        return CountrySerializer.toJsonString(this);
     }
 
     @Override

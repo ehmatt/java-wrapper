@@ -3,6 +3,7 @@ package com.onepagecrm.models.serializers;
 import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.Countries;
 import com.onepagecrm.models.internal.Country;
+import com.onepagecrm.net.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,10 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 25/09/2017.
+ */
 public class CountrySerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CountrySerializer.class.getName());
 
+    private static Country DEFAULT = new Country();
+
+    public static Countries fromResponse(Response response) throws APIException {
+        JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
+        JSONArray countriesArray = dataObject.optJSONArray(COUNTRIES_TAG);
+        return fromJsonArray(countriesArray);
+    }
+
+    // TODO: delete
     public static Countries fromString(String responseBody) throws APIException {
         try {
             String dataString = (String) BaseSerializer.fromString(responseBody);
@@ -29,69 +42,55 @@ public class CountrySerializer extends BaseSerializer {
         return new Countries();
     }
 
+    public static Country fromJsonObject(JSONObject countryObject) {
+        if (countryObject == null) {
+            return DEFAULT;
+        }
+        if (countryObject.has(COUNTRY_TAG)) {
+            countryObject = countryObject.optJSONObject(COUNTRY_TAG);
+        }
+        return new Country()
+                .setName(countryObject.optString(NAME_TAG))
+                .setCode(countryObject.optString(CODE_TAG))
+                .setPrefix(countryObject.optString(PHONE_PREFIX_TAG))
+                .setCurrency(countryObject.optString(CURRENCY_TAG));
+    }
+
     public static Countries fromJsonArray(JSONArray countryArray) {
         List<Country> countries = new ArrayList<>();
+        if (countryArray == null) return new Countries();
         for (int j = 0; j < countryArray.length(); j++) {
-            JSONObject countryObject;
-            try {
-                countryObject = countryArray.getJSONObject(j);
-                countryObject = countryObject.getJSONObject(COUNTRY_TAG);
-                countries.add(fromJsonObject(countryObject));
-            } catch (JSONException e) {
-                LOG.severe("Error parsing Country array");
-                LOG.severe(e.toString());
-            }
+            JSONObject countryObject = countryArray.optJSONObject(j);
+            countries.add(fromJsonObject(countryObject));
         }
         return new Countries(countries);
     }
 
-    public static Country fromJsonObject(JSONObject countryObject) {
-        Country country = new Country();
-        try {
-            if (countryObject.has(NAME_TAG)) {
-                country.setName(countryObject.getString(NAME_TAG));
-            }
-            if (countryObject.has(CODE_TAG)) {
-                country.setCode(countryObject.getString(CODE_TAG));
-            }
-            if (countryObject.has(PHONE_PREFIX_TAG)) {
-                country.setPrefix(countryObject.getString(PHONE_PREFIX_TAG));
-            }
-            if (countryObject.has(CURRENCY_TAG)) {
-                country.setCurrency(countryObject.getString(CURRENCY_TAG));
-            }
-            return country;
-        } catch (JSONException e) {
-            LOG.severe("Error parsing Country object");
-            LOG.severe(e.toString());
-        }
-        return country;
-    }
-
-    public static String toJsonObject(Country country) {
+    public static JSONObject toJsonObject(Country country) {
         JSONObject countryObject = new JSONObject();
+        if (country == null) return countryObject;
         addJsonStringValue(country.getName(), countryObject, NAME_TAG);
         addJsonStringValue(country.getCode(), countryObject, CODE_TAG);
         addJsonStringValue(country.getPrefix(), countryObject, PHONE_PREFIX_TAG);
         addJsonStringValue(country.getCurrency(), countryObject, CURRENCY_TAG);
         addJsonIntegerValue(country.getPopularity(), countryObject, POPULARITY_TAG);
-        return countryObject.toString();
+        return countryObject;
     }
 
-    public static String toJsonArray(Countries countries) {
+    public static JSONArray toJsonArray(List<Country> countries) {
         JSONArray countryArray = new JSONArray();
-        List<Country> countryList = countries.getCountryList();
-        for (int i = 0; i < countryList.size(); i++) {
-            try {
-                JSONObject outerObject = new JSONObject();
-                JSONObject countryObject = new JSONObject(toJsonObject(countryList.get(i)));
-                addJsonObject(countryObject, outerObject, COUNTRY_TAG);
-                addJsonObject(outerObject, countryArray);
-            } catch (JSONException e) {
-                LOG.severe("Error creating JSONObject out of Country");
-                LOG.severe(e.toString());
-            }
+        if (countries == null) return countryArray;
+        for (Country country : countries) {
+            countryArray.put(toJsonObject(country));
         }
-        return countryArray.toString();
+        return countryArray;
+    }
+
+    public static String toJsonString(Country country) {
+        return toJsonObject(country).toString();
+    }
+
+    public static String toJsonString(List<Country> countries) {
+        return toJsonArray(countries).toString();
     }
 }

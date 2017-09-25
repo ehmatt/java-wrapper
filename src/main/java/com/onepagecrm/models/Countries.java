@@ -9,7 +9,11 @@ import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class Countries extends ArrayList<Country> implements Serializable {
 
@@ -21,24 +25,38 @@ public class Countries extends ArrayList<Country> implements Serializable {
     public static Countries list() throws OnePageException {
         Request request = new GetRequest(COUNTRIES_ENDPOINT);
         Response response = request.send();
-        return CountrySerializer.fromString(response.getResponseBody());
+        return CountrySerializer.fromResponse(response);
     }
 
     public Countries(List<Country> countryList) {
-        this.countryList = new ArrayList<>();
-        this.countryMap = new HashMap<>();
-        if (countryList != null && !countryList.isEmpty()) {
-            for (int i = 0; i < countryList.size(); i++) {
-                Country country = countryList.get(i);
-                this.countryList.add(country);
-                this.countryMap.put(country.getCode(), country);
-            }
-        }
+        initLists();
+        setCountriesListInt(countryList);
     }
 
     public Countries(Map<String, Country> countryMap) {
+        initLists();
+        setCountriesMapInt(countryMap);
+    }
+
+    public Countries() {
+        initLists();
+    }
+
+    private void initLists() {
         this.countryList = new ArrayList<>();
         this.countryMap = new HashMap<>();
+    }
+
+    private void setCountriesListInt(List<Country> countryList) {
+        if (countryList == null) return;
+        for (Country country : countryList) {
+            this.countryList.add(country);
+            this.countryMap.put(country.getCode(), country);
+        }
+    }
+
+    private void setCountriesMapInt(Map<String, Country> countryMap) {
+        if (countryMap == null) return;
         Iterator it = countryMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
@@ -50,14 +68,9 @@ public class Countries extends ArrayList<Country> implements Serializable {
         }
     }
 
-    public Countries() {
-        this.countryList = new ArrayList<>();
-        this.countryMap = new HashMap<>();
-    }
-
     @Override
     public String toString() {
-        return CountrySerializer.toJsonArray(this);
+        return CountrySerializer.toJsonString(this);
     }
 
     public List<Country> getCountryList() {
@@ -65,13 +78,8 @@ public class Countries extends ArrayList<Country> implements Serializable {
     }
 
     public Countries setCountryList(List<Country> countryList) {
-        if (countryList != null && !countryList.isEmpty()) {
-            for (int i = 0; i < countryList.size(); i++) {
-                Country country = countryList.get(i);
-                this.countryList.add(country);
-                this.countryMap.put(country.getCode(), country);
-            }
-        }
+        initLists();
+        setCountriesListInt(countryList);
         return this;
     }
 
@@ -80,15 +88,8 @@ public class Countries extends ArrayList<Country> implements Serializable {
     }
 
     public Countries setCountryMap(Map<String, Country> countryMap) {
-        Iterator it = countryMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            String countryCode = ((Country) pair.getKey()).getCode();
-            Country country = (Country) pair.getValue();
-            this.countryMap.put(countryCode, country);
-            this.countryList.add(country);
-            it.remove();
-        }
+        initLists();
+        setCountriesMapInt(countryMap);
         return this;
     }
 
