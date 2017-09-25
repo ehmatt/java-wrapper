@@ -1,6 +1,7 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.APIException;
+import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.Request;
 import org.json.JSONArray;
@@ -442,7 +443,7 @@ public class BaseSerializer {
     }
 
     public static Number parseNumber(JSONObject object, String key) {
-        if (object.has(key)) {
+        if (object != null && object.has(key)) {
             try {
                 Object valueObject = object.get(key);
                 if (valueObject instanceof Number) {
@@ -466,6 +467,9 @@ public class BaseSerializer {
     }
 
     public static Number parseNumber(String numberAsString) {
+        if (!Utilities.notNullOrEmpty(numberAsString)) {
+            return null;
+        }
         Number number = null;
         try {
             number = Long.valueOf(numberAsString);

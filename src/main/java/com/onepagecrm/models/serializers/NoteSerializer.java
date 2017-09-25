@@ -43,9 +43,10 @@ public class NoteSerializer extends BaseSerializer {
                 .setAuthor(noteObject.optString(AUTHOR_TAG))
                 .setText(noteObject.optString(TEXT_TAG))
                 .setContactId(noteObject.optString(CONTACT_ID_TAG))
-                .setCreatedAt(DateSerializer.fromFormattedString(noteObject.optString(CREATED_AT_TAG)))
                 .setDate(DateSerializer.fromFormattedString(noteObject.optString(DATE_TAG)))
                 .setLinkedDealId(!noteObject.isNull(LINKED_DEAL_ID_TAG) ? noteObject.optString(LINKED_DEAL_ID_TAG) : null)
+                .setCreatedAt(DateSerializer.fromFormattedString(noteObject.optString(CREATED_AT_TAG)))
+                .setModifiedAt(DateSerializer.fromFormattedString(noteObject.optString(MODIFIED_AT_TAG)))
                 .setAttachments(AttachmentSerializer.fromJsonArray(noteObject.optJSONArray(ATTACHMENTS_TAG)));
     }
 

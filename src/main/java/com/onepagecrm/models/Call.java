@@ -35,13 +35,13 @@ public class Call extends ApiResource implements Serializable {
     private CallResult callResult;
     private Date time;
     private String contactId;
-    private Date createdAt;
     private String phoneNumber;
-    private Date modifiedAt;
     private String via;
     private String recordingLink;
     private String text;
     private List<Attachment> attachments;
+    private Date createdAt;
+    private Date modifiedAt;
 
     /**
      * API methods
@@ -179,30 +179,12 @@ public class Call extends ApiResource implements Serializable {
         return this;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public Call setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public Call setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-        return this;
-    }
-
-    public Date getModifiedAt() {
-        return modifiedAt;
-    }
-
-    public Call setModifiedAt(Date modifiedAt) {
-        this.modifiedAt = modifiedAt;
         return this;
     }
 
@@ -239,6 +221,24 @@ public class Call extends ApiResource implements Serializable {
 
     public Call setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
+        return this;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Call setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
+
+    public Date getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public Call setModifiedAt(Date modifiedAt) {
+        this.modifiedAt = modifiedAt;
         return this;
     }
 }
