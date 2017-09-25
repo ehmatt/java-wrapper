@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Cillian Myles (cillian@onepagecrm.com) on 11/24/15.
+ * @author Cillian Myles (cillian@onepagecrm.com) on 11/24/15.
  */
 public class DealList extends ResourceList<Deal> implements Serializable {
 
@@ -40,6 +40,6 @@ public class DealList extends ResourceList<Deal> implements Serializable {
     }
 
     public String toString() {
-        return DealSerializer.toJsonArray(this);
+        return DealSerializer.toJsonString(this);
     }
 }

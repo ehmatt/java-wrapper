@@ -62,7 +62,7 @@ public class Company extends ApiResource implements Serializable {
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
-        Company company = CompanySerializer.fromString(responseBody);
+        Company company = CompanySerializer.fromResponse(response);
         LoginSerializer.updateDynamicResources(responseBody);
         return company;
     }
@@ -75,7 +75,7 @@ public class Company extends ApiResource implements Serializable {
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
-        Company company = CompanySerializer.fromString(responseBody);
+        Company company = CompanySerializer.fromResponse(response);
         LoginSerializer.updateDynamicResources(responseBody);
         return company;
     }
@@ -86,8 +86,7 @@ public class Company extends ApiResource implements Serializable {
                 null
         );
         Response response = request.send();
-        String responseBody = response.getResponseBody();
-        return CompanySerializer.fromString(responseBody);
+        return CompanySerializer.fromResponse(response);
     }
 
     public Company partialUpdate(Company updateValues) throws OnePageException {
@@ -100,7 +99,7 @@ public class Company extends ApiResource implements Serializable {
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
-        Company company = CompanySerializer.fromString(responseBody);
+        Company company = CompanySerializer.fromResponse(response);
         LoginSerializer.updateDynamicResources(responseBody);
         return company;
     }

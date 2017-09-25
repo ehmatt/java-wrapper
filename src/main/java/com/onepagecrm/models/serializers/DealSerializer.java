@@ -3,13 +3,15 @@ package com.onepagecrm.models.serializers;
 import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.CustomField;
 import com.onepagecrm.models.Deal;
-import com.onepagecrm.models.DealList;
 import com.onepagecrm.models.internal.Commission;
+import com.onepagecrm.net.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -18,6 +20,13 @@ import java.util.logging.Logger;
 public class DealSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(DealSerializer.class.getName());
+
+    private static Deal DEFAULT = new Deal();
+
+    public static Deal fromResponse(Response response) throws APIException {
+        JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
+        return fromJsonObject(dataObject);
+    }
 
     public static Deal fromString(String responseBody) throws APIException {
         Deal deal = new Deal();
@@ -34,6 +43,9 @@ public class DealSerializer extends BaseSerializer {
     }
 
     public static Deal fromJsonObject(JSONObject dataObject) {
+        if (dataObject == null) {
+            return DEFAULT;
+        }
         Deal deal = new Deal();
         JSONObject dealObject;
         try {
@@ -156,8 +168,19 @@ public class DealSerializer extends BaseSerializer {
         return deal;
     }
 
-    public static String toJsonObject(Deal deal) {
+    public static List<Deal> fromJsonArray(JSONArray dealsArray) {
+        List<Deal> deals = new ArrayList<>();
+        if (dealsArray == null) return deals;
+        for (int i = 0; i < dealsArray.length(); i++) {
+            JSONObject dealObject = dealsArray.optJSONObject(i);
+            deals.add(fromJsonObject(dealObject));
+        }
+        return deals;
+    }
+
+    public static JSONObject toJsonObject(Deal deal) {
         JSONObject dealObject = new JSONObject();
+        if (deal == null) return dealObject;
         addJsonStringValue(deal.getId(), dealObject, ID_TAG);
         addJsonDoubleValue(deal.getAmount(), dealObject, AMOUNT_TAG);
         addJsonStringValue(deal.getAuthor(), dealObject, AUTHOR_TAG);
@@ -209,21 +232,23 @@ public class DealSerializer extends BaseSerializer {
             LOG.severe("Error creating Deal Fields array while constructing Deal object");
             LOG.severe(e.toString());
         }
-        return dealObject.toString();
+        return dealObject;
     }
 
-    public static String toJsonArray(DealList deals) {
+    public static JSONArray toJsonArray(List<Deal> deals) {
         JSONArray dealsArray = new JSONArray();
-        if (deals != null && !deals.isEmpty()) {
-            for (int i = 0; i < deals.size(); i++) {
-                try {
-                    dealsArray.put(new JSONObject(toJsonObject(deals.get(i))));
-                } catch (JSONException e) {
-                    LOG.severe("Error creating JSONArray out of Deals");
-                    LOG.severe(e.toString());
-                }
-            }
+        if (deals == null) return dealsArray;
+        for (Deal deal : deals) {
+            dealsArray.put(toJsonObject(deal));
         }
-        return dealsArray.toString();
+        return dealsArray;
+    }
+
+    public static String toJsonString(Deal deal) {
+        return toJsonObject(deal).toString();
+    }
+
+    public static String toJsonString(List<Deal> deals) {
+        return toJsonArray(deals).toString();
     }
 }

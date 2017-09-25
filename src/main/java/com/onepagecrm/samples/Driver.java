@@ -3,6 +3,7 @@ package com.onepagecrm.samples;
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Account;
+import com.onepagecrm.models.CompanyList;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.DealList;
 import com.onepagecrm.models.User;
@@ -69,5 +70,7 @@ public class Driver {
         ContactList contacts = loggedInUser.contacts();
 
         DealList pipeline = loggedInUser.pipeline();
+
+        CompanyList companies = loggedInUser.companies();
     }
 }

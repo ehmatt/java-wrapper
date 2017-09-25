@@ -89,7 +89,7 @@ public class Deal extends ApiResource implements Serializable {
         Request request = new PostRequest(
                 DEALS_ENDPOINT,
                 null,
-                DealSerializer.toJsonObject(this)
+                DealSerializer.toJsonString(this)
         );
         Response response = request.send();
         return DealSerializer.fromString(response.getResponseBody());
@@ -99,7 +99,7 @@ public class Deal extends ApiResource implements Serializable {
         Request request = new PutRequest(
                 addIdToEndpoint(DEALS_ENDPOINT, this.id),
                 null,
-                DealSerializer.toJsonObject(this)
+                DealSerializer.toJsonString(this)
         );
         Response response = request.send();
         return DealSerializer.fromString(response.getResponseBody());
@@ -168,7 +168,7 @@ public class Deal extends ApiResource implements Serializable {
         Request request = new PatchRequest(
                 addIdToEndpoint(DEALS_ENDPOINT, this.id),
                 null,
-                DealSerializer.toJsonObject(this)
+                DealSerializer.toJsonString(this)
         );
         Response response = request.send();
         return DealSerializer.fromString(response.getResponseBody());
@@ -231,7 +231,7 @@ public class Deal extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return DealSerializer.toJsonObject(this);
+        return DealSerializer.toJsonString(this);
     }
 
     @Override

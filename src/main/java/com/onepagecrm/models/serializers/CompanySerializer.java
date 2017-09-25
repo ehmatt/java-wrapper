@@ -31,6 +31,7 @@ public class CompanySerializer extends BaseSerializer {
         return fromJsonObject(companyObject);
     }
 
+    // TODO: delete
     public static Company fromString(String responseBody) throws APIException {
         Company company = new Company();
         try {
@@ -53,7 +54,7 @@ public class CompanySerializer extends BaseSerializer {
         if (companyObject.has(COMPANY_TAG)) {
             companyObject = companyObject.optJSONObject(COMPANY_TAG);
         }
-        Company company = new Company()
+        return new Company()
                 .setId(companyObject.optString(ID_TAG))
                 .setName(companyObject.optString(NAME_TAG))
                 .setDescription(companyObject.optString(DESCRIPTION_TAG))
@@ -72,24 +73,9 @@ public class CompanySerializer extends BaseSerializer {
                 .setSyncingStatus(companyObject.optBoolean(SYNCING_STATUS_TAG))
                 .setSyncedStatusId(nullChecks(companyObject.optString(SYNCED_STATUS_ID_TAG)))
                 .setSyncingTags(companyObject.optBoolean(SYNCING_TAGS_TAG))
-                .setSyncedTags(TagHelper.asTags(BaseSerializer.toListOfStrings(companyObject.optJSONArray(SYNCED_TAGS_TAG))));
-
-        try {
-            if (companyObject.has(CONTACTS_TAG)) {
-                JSONArray contactsObject = companyObject.getJSONArray(CONTACTS_TAG);
-                company.setContacts(ContactListSerializer.fromJsonArray(contactsObject));
-            }
-            if (companyObject.has(PENDING_DEALS_TAG)) {
-                JSONArray dealsObject = companyObject.getJSONArray(PENDING_DEALS_TAG);
-                company.setPendingDeals(DealListSerializer.fromJsonArray(dealsObject));
-            }
-            return company;
-
-        } catch (JSONException e) {
-            LOG.severe("Error parsing Company object");
-            LOG.severe(e.toString());
-            return DEFAULT;
-        }
+                .setSyncedTags(TagHelper.asTags(BaseSerializer.toListOfStrings(companyObject.optJSONArray(SYNCED_TAGS_TAG))))
+                .setContacts(ContactListSerializer.fromJsonArray(companyObject.optJSONArray(CONTACTS_TAG)))
+                .setPendingDeals(DealListSerializer.fromJsonArray(companyObject.optJSONArray(PENDING_DEALS_TAG)));
     }
 
     public static List<Company> fromJsonArray(JSONArray companiesArray) {
