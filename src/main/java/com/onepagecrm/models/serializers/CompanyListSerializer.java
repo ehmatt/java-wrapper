@@ -16,14 +16,11 @@ public class CompanyListSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CompanyListSerializer.class.getName());
 
+    private static CompanyList DEFAULT = new CompanyList();
+
     public static CompanyList fromResponse(Response response) throws APIException {
         JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
-        JSONArray companiesArray = dataObject.optJSONArray(COMPANIES_TAG);
-        Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
-        CompanyList companies = new CompanyList();
-        companies.setPaginator(paginator);
-        companies.setList(CompanySerializer.fromJsonArray(companiesArray));
-        return companies;
+        return fromJsonObject(dataObject);
     }
 
     // TODO remove
@@ -43,6 +40,18 @@ public class CompanyListSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
 
+        return companies;
+    }
+
+    public static CompanyList fromJsonObject(JSONObject dataObject) {
+        if (dataObject == null) {
+            return DEFAULT;
+        }
+
+        JSONArray companiesArray = dataObject.optJSONArray(COMPANIES_TAG);
+        CompanyList companies = fromJsonArray(companiesArray);
+        Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
+        companies.setPaginator(paginator);
         return companies;
     }
 

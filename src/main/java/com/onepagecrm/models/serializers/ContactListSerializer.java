@@ -47,14 +47,14 @@ public class ContactListSerializer extends BaseSerializer {
         return contacts;
     }
 
-    public static ContactList fromJsonObject(JSONObject contactsObject) {
-        if (contactsObject == null) {
+    public static ContactList fromJsonObject(JSONObject dataObject) {
+        if (dataObject == null) {
             return DEFAULT;
         }
 
-        JSONArray contactsArray = contactsObject.optJSONArray(CONTACTS_TAG);
+        JSONArray contactsArray = dataObject.optJSONArray(CONTACTS_TAG);
         ContactList contacts = fromJsonArray(contactsArray);
-        Paginator paginator = RequestMetadataSerializer.fromJsonObject(contactsObject);
+        Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
         contacts.setPaginator(paginator);
         return contacts;
     }
