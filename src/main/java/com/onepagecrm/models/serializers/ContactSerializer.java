@@ -262,13 +262,8 @@ public class ContactSerializer extends BaseSerializer {
         addJsonStringValue(contact.getPhotoUrl(), contactObject, PHOTO_URL_TAG);
         addJsonBooleanValue(contact.getStarred(), contactObject, STARRED_TAG);
         // Custom Fields.
-        try {
-            JSONArray customFieldsArray = new JSONArray(CustomFieldSerializer.toJsonArray(contact.getCustomFields()));
-            addJsonArray(customFieldsArray, contactObject, CUSTOM_FIELDS_TAG);
-        } catch (JSONException e) {
-            LOG.severe("Error creating CustomField array while constructing Contact object");
-            LOG.severe(e.toString());
-        }
+        JSONArray customFieldsArray = CustomFieldSerializer.toJsonArray(contact.getCustomFields());
+        addJsonArray(customFieldsArray, contactObject, CUSTOM_FIELDS_TAG);
         // Address.
         JSONArray addressArray = AddressSerializer.singleToJsonArray(contact.getAddress());
         addJsonArray(addressArray, contactObject, ADDRESS_LIST_TAG);

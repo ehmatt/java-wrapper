@@ -107,13 +107,10 @@ public class CompanySerializer extends BaseSerializer {
         addJsonStringValue(company.getDescription(), companyObject, DESCRIPTION_TAG);
         addJsonStringValue(company.getPhone(), companyObject, PHONE_TAG);
         addJsonStringValue(company.getUrl(), companyObject, URL_TAG);
-        try {
-            JSONArray companyFieldsArray = new JSONArray(CustomFieldSerializer.toJsonArray(company.getCompanyFields()));
-            addJsonArray(companyFieldsArray, companyObject, COMPANY_FIELDS_TAG);
-        } catch (JSONException e) {
-            LOG.severe("Error creating Company Fields array while constructing Company object");
-            LOG.severe(e.toString());
-        }
+        // Company fields.
+        JSONArray companyFieldsArray = CustomFieldSerializer.toJsonArray(company.getCompanyFields());
+        addJsonArray(companyFieldsArray, companyObject, COMPANY_FIELDS_TAG);
+        // Address.
         JSONObject addressArray = AddressSerializer.toJsonObject(company.getAddress());
         addJsonObject(addressArray, companyObject, ADDRESS_TAG);
         addJsonIntegerValue(company.getWonDealsCount(), companyObject, WON_DEALS_COUNT_TAG);
@@ -131,13 +128,9 @@ public class CompanySerializer extends BaseSerializer {
             LOG.severe("Problems generating JSONArray of Tags for this company.");
             LOG.severe(e.toString());
         }
-        try {
-            JSONArray contactsArray = new JSONArray(ContactSerializer.toJsonArray(company.getContacts()));
-            addJsonArray(contactsArray, companyObject, CONTACTS_TAG);
-        } catch (JSONException e) {
-            LOG.severe("Problems generating JSONArray of Contacts for this company.");
-            LOG.severe(e.toString());
-        }
+        // Contacts.
+        JSONArray contactsArray = ContactSerializer.toJsonArray(company.getContacts());
+        addJsonArray(contactsArray, companyObject, CONTACTS_TAG);
         return companyObject;
     }
 
