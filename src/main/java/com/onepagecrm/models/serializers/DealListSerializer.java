@@ -17,13 +17,11 @@ public class DealListSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(DealListSerializer.class.getName());
 
+    private static DealList DEFAULT = new DealList();
+
     public static DealList fromResponse(Response response) throws APIException {
         JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
-        JSONArray dealsArray = dataObject.optJSONArray(DEALS_TAG);
-        DealList deals = fromJsonArray(dealsArray);
-        Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
-        deals.setPaginator(paginator);
-        return deals;
+        return fromJsonObject(dataObject);
     }
 
     // TODO: delete me
@@ -43,6 +41,18 @@ public class DealListSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
 
+        return deals;
+    }
+
+    public static DealList fromJsonObject(JSONObject dataObject) {
+        if (dataObject == null) {
+            return DEFAULT;
+        }
+
+        JSONArray dealsArray = dataObject.optJSONArray(DEALS_TAG);
+        DealList deals = fromJsonArray(dealsArray);
+        Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
+        deals.setPaginator(paginator);
         return deals;
     }
 

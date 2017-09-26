@@ -24,8 +24,7 @@ public class ContactListSerializer extends BaseSerializer {
 
     public static ContactList fromResponse(Response response) throws APIException {
         JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
-        JSONArray contacts = dataObject.optJSONArray(CONTACTS_TAG);
-        return fromJsonArray(contacts);
+        return fromJsonObject(dataObject);
     }
 
     // TODO: delete
