@@ -10,8 +10,9 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 16/05/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 16/05/2016.
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class ActionList extends ResourceList<Action> implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(ActionList.class.getName());
@@ -43,6 +44,6 @@ public class ActionList extends ResourceList<Action> implements Serializable {
 
     @Override
     public String toString() {
-        return ActionSerializer.toJsonArray(this.list);
+        return ActionSerializer.toJsonString(this.list);
     }
 }

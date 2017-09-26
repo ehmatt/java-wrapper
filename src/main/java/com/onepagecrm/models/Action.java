@@ -116,14 +116,18 @@ public class Action extends ApiResource implements Serializable {
         Request request = new PutRequest(
                 addActionIdToEndpoint(ACTIONS_ENDPOINT),
                 null,
-                ActionSerializer.toJsonObject(this)
+                ActionSerializer.toJsonString(this)
         );
         Response response = request.send();
         return ActionSerializer.fromResponse(response);
     }
 
     private Action create() throws OnePageException {
-        Request request = new PostRequest(ACTIONS_ENDPOINT, null, ActionSerializer.toJsonObject(this));
+        Request request = new PostRequest(
+                ACTIONS_ENDPOINT,
+                null,
+                ActionSerializer.toJsonString(this)
+        );
         Response response = request.send();
         return ActionSerializer.fromResponse(response);
     }
@@ -134,15 +138,21 @@ public class Action extends ApiResource implements Serializable {
     }
 
     public Action markComplete() throws OnePageException {
-        String endpoint = MARK_COMPLETE_ENDPOINT.replace("{id}", this.getId());
-        Request request = new PutRequest(endpoint, null, ActionSerializer.toJsonObject(this));
+        Request request = new PutRequest(
+                MARK_COMPLETE_ENDPOINT.replace("{id}", this.getId()),
+                null,
+                ActionSerializer.toJsonString(this)
+        );
         Response response = request.send();
         return ActionSerializer.fromResponse(response);
     }
 
     public Action undoCompletion() throws OnePageException {
-        String endpoint = UNDO_COMPLETION_ENDPOINT.replace("{id}", this.getId());
-        Request request = new PutRequest(endpoint, null, ActionSerializer.toJsonObject(this));
+        Request request = new PutRequest(
+                UNDO_COMPLETION_ENDPOINT.replace("{id}", this.getId()),
+                null,
+                ActionSerializer.toJsonString(this)
+        );
         Response response = request.send();
         return ActionSerializer.fromResponse(response);
     }
@@ -233,7 +243,7 @@ public class Action extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return ActionSerializer.toJsonObject(this);
+        return ActionSerializer.toJsonString(this);
     }
 
     @Override

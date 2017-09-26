@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +17,6 @@ import java.util.logging.Logger;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 18/09/2016.
  */
-@SuppressWarnings("ForLoopReplaceableByForEach")
 public class ActionSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(ActionSerializer.class.getName());
@@ -126,77 +126,74 @@ public class ActionSerializer extends BaseSerializer {
     }
 
     public static List<Action> fromJsonArray(JSONArray actionsArray) {
-        List<Action> actions = new LinkedList<>();
+        List<Action> actions = new ArrayList<>();
         if (actionsArray == null) return actions;
         for (int i = 0; i < actionsArray.length(); i++) {
-            try {
-                actions.add(fromJsonObject(actionsArray.getJSONObject(i)));
-            } catch (JSONException e) {
-                LOG.severe("Error parsing Action array");
-                LOG.severe(e.toString());
-            }
+            JSONObject actionObject = actionsArray.optJSONObject(i);
+            actions.add(fromJsonObject(actionObject));
         }
         return actions;
     }
 
-    public static String toJsonObject(Action action) {
+    public static JSONObject toJsonObject(Action action) {
         JSONObject actionObject = new JSONObject();
-        if (action != null) {
-            addJsonStringValue(action.getId(), actionObject, ID_TAG);
-            addJsonStringValue(action.getContactId(), actionObject, CONTACT_ID_TAG);
-            addJsonStringValue(action.getText(), actionObject, TEXT_TAG);
-            addJsonStringValue(action.getAssigneeId(), actionObject, ASSIGNEE_ID_TAG);
-            addJsonStringValue(
-                    DateSerializer.toFormattedDateTimeString(action.getCreatedAt()),
-                    actionObject,
-                    CREATED_AT_TAG
-            );
-            addJsonStringValue(
-                    DateSerializer.toFormattedDateTimeString(action.getModifiedAt()),
-                    actionObject,
-                    MODIFIED_AT_TAG
-            );
-            if (action.getStatus() != null) {
-                addJsonStringValue(action.getStatus().toString(), actionObject, STATUS_TAG);
-                switch (action.getStatus()) {
-                    case DATE:
-                    case QUEUED_WITH_DATE:
-                        addJsonStringValue(
-                                DateSerializer.toFormattedDateString(action.getDate()),
-                                actionObject,
-                                DATE_TAG
-                        );
-                        break;
-                    case DATE_TIME:
-                        addJsonStringValue(
-                                DateSerializer.toFormattedDateString(action.getDate()),
-                                actionObject,
-                                DATE_TAG
-                        );
-                        addJsonLongValue(
-                                DateSerializer.toTimestamp(action.getExactTime()),
-                                actionObject,
-                                EXACT_TIME_TAG
-                        );
-                        break;
-                }
+        if (action == null) return actionObject;
+        addJsonStringValue(action.getId(), actionObject, ID_TAG);
+        addJsonStringValue(action.getContactId(), actionObject, CONTACT_ID_TAG);
+        addJsonStringValue(action.getText(), actionObject, TEXT_TAG);
+        addJsonStringValue(action.getAssigneeId(), actionObject, ASSIGNEE_ID_TAG);
+        addJsonStringValue(
+                DateSerializer.toFormattedDateTimeString(action.getCreatedAt()),
+                actionObject,
+                CREATED_AT_TAG
+        );
+        addJsonStringValue(
+                DateSerializer.toFormattedDateTimeString(action.getModifiedAt()),
+                actionObject,
+                MODIFIED_AT_TAG
+        );
+        if (action.getStatus() != null) {
+            addJsonStringValue(action.getStatus().toString(), actionObject, STATUS_TAG);
+            switch (action.getStatus()) {
+                case DATE:
+                case QUEUED_WITH_DATE:
+                    addJsonStringValue(
+                            DateSerializer.toFormattedDateString(action.getDate()),
+                            actionObject,
+                            DATE_TAG
+                    );
+                    break;
+                case DATE_TIME:
+                    addJsonStringValue(
+                            DateSerializer.toFormattedDateString(action.getDate()),
+                            actionObject,
+                            DATE_TAG
+                    );
+                    addJsonLongValue(
+                            DateSerializer.toTimestamp(action.getExactTime()),
+                            actionObject,
+                            EXACT_TIME_TAG
+                    );
+                    break;
             }
         }
-        return actionObject.toString();
+        return actionObject;
     }
 
-    public static String toJsonArray(List<Action> actions) {
+    public static String toJsonString(Action action) {
+        return toJsonObject(action).toString();
+    }
+
+    public static JSONArray toJsonArray(List<Action> actions) {
         JSONArray actionsArray = new JSONArray();
-        if (actions != null && !actions.isEmpty()) {
-            for (int i = 0; i < actions.size(); i++) {
-                try {
-                    actionsArray.put(new JSONObject(toJsonObject(actions.get(i))));
-                } catch (JSONException e) {
-                    LOG.severe("Error creating JSONArray out of list of Actions.");
-                    LOG.severe(e.toString());
-                }
-            }
+        if (actions == null) return actionsArray;
+        for (Action action : actions) {
+            actionsArray.put(toJsonObject(action));
         }
-        return actionsArray.toString();
+        return actionsArray;
+    }
+
+    public static String toJsonString(List<Action> actions) {
+        return toJsonArray(actions).toString();
     }
 }
