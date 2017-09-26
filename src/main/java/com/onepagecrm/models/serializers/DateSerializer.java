@@ -9,6 +9,9 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.logging.Logger;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 26/09/2017.
+ */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class DateSerializer extends BaseSerializer {
 

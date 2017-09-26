@@ -28,6 +28,7 @@ public class DealSerializer extends BaseSerializer {
         return fromJsonObject(dataObject);
     }
 
+    // TODO: delete me
     public static Deal fromString(String responseBody) throws APIException {
         Deal deal = new Deal();
         try {

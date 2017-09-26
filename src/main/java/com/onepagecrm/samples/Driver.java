@@ -52,29 +52,26 @@ public class Driver {
 
         LOG.info("Logged in User : " + loggedInUser);
 
-        LOG.info("User's Team : " + Account.team);
-        LOG.info("User's Settings : " + Account.settings);
-        LOG.info("User's Statuses : " + loggedInUser.getAccount().statuses);
-        LOG.info("User's Lead Sources : " + loggedInUser.getAccount().leadSources);
-        LOG.info("User's Custom Fields : " + loggedInUser.getAccount().customFields);
-        LOG.info("User's Company Fields : " + loggedInUser.getAccount().companyFields);
-        LOG.info("User's Deal Fields : " + loggedInUser.getAccount().dealFields);
-        LOG.info("User's Call Results : " + loggedInUser.getAccount().callResults);
-        LOG.info("User's Filters : " + loggedInUser.getAccount().filters);
-        LOG.info("User's ContactsCounts : " + loggedInUser.getAccount().contactsCount);
-        LOG.info("User's StreamCount : " + loggedInUser.getAccount().streamCount);
-        LOG.info("User's Predefined Actions : " + loggedInUser.getAccount().predefinedActions);
-        LOG.info("User's Contact Titles : " + loggedInUser.getAccount().contactTitles);
-        LOG.info("User's Account Rights : " + loggedInUser.getAccountRights());
+        LOG.info("Team : " + Account.team);
+        LOG.info("Settings : " + Account.settings);
+        LOG.info("Statuses : " + loggedInUser.getAccount().statuses);
+        LOG.info("Lead Sources : " + loggedInUser.getAccount().leadSources);
+        LOG.info("Deal Stages : " + Account.settings.getDealStages());
+        LOG.info("Custom Fields : " + loggedInUser.getAccount().customFields);
+        LOG.info("Company Fields : " + loggedInUser.getAccount().companyFields);
+        LOG.info("Deal Fields : " + loggedInUser.getAccount().dealFields);
+        LOG.info("Predefined Actions : " + loggedInUser.getAccount().predefinedActions);
+        LOG.info("Call Results : " + loggedInUser.getAccount().callResults);
+        LOG.info("Filters : " + loggedInUser.getAccount().filters);
+        LOG.info("Contacts counts : " + loggedInUser.getAccount().contactsCount);
+        LOG.info("Stream count : " + loggedInUser.getAccount().streamCount);
+        LOG.info("Contact Titles : " + loggedInUser.getAccount().contactTitles);
+        LOG.info("Account Rights : " + loggedInUser.getAccountRights());
 
-        ContactList stream = loggedInUser.actionStream();
-
-        ContactList contacts = loggedInUser.contacts();
-
-        DealList pipeline = loggedInUser.pipeline();
-
-        CompanyList companies = loggedInUser.companies();
-
-        Countries countries = Countries.list();
+//        ContactList stream = loggedInUser.actionStream();
+//        ContactList contacts = loggedInUser.contacts();
+//        DealList pipeline = loggedInUser.pipeline();
+//        CompanyList companies = loggedInUser.companies();
+//        Countries countries = Countries.list();
     }
 }
