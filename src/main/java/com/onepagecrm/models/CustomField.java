@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 25/09/2017.
+ */
 public class CustomField extends ApiResource implements Serializable {
 
     public static final String CF_TYPE_CONTACT = "contact";
@@ -45,8 +48,7 @@ public class CustomField extends ApiResource implements Serializable {
                 Query.fromParams(params)
         );
         Response response = request.send();
-        String responseBody = response.getResponseBody();
-        return CustomFieldSerializer.fromString(responseBody, CF_TYPE_CONTACT);
+        return CustomFieldSerializer.fromResponse(response, CF_TYPE_CONTACT);
     }
 
     public static List<CustomField> listCompanies() throws OnePageException {
@@ -57,8 +59,7 @@ public class CustomField extends ApiResource implements Serializable {
                 Query.fromParams(params)
         );
         Response response = request.send();
-        String responseBody = response.getResponseBody();
-        return CustomFieldSerializer.fromString(responseBody, CF_TYPE_COMPANY);
+        return CustomFieldSerializer.fromResponse(response, CF_TYPE_COMPANY);
     }
 
     public static List<CustomField> listDeals() throws OnePageException {
@@ -69,15 +70,14 @@ public class CustomField extends ApiResource implements Serializable {
                 Query.fromParams(params)
         );
         Response response = request.send();
-        String responseBody = response.getResponseBody();
-        return CustomFieldSerializer.fromString(responseBody, CF_TYPE_DEAL);
+        return CustomFieldSerializer.fromResponse(response, CF_TYPE_DEAL);
     }
 
     public String save() throws OnePageException {
         Request request = new PostRequest(
                 CUSTOM_FIELDS_ENDPOINT,
                 null,
-                CustomFieldSerializer.toJsonObjectNew(this)
+                CustomFieldSerializer.toJsonString(this)
         );
         Response response = request.send();
         return response.getResponseBody();
@@ -110,7 +110,7 @@ public class CustomField extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return CustomFieldSerializer.toJsonObject(this);
+        return CustomFieldSerializer.toJsonStringFull(this);
     }
 
     public String getName() {

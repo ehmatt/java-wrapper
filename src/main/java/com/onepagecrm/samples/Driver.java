@@ -58,6 +58,7 @@ public class Driver {
         LOG.info("User's Lead Sources : " + loggedInUser.getAccount().leadSources);
         LOG.info("User's Custom Fields : " + loggedInUser.getAccount().customFields);
         LOG.info("User's Company Fields : " + loggedInUser.getAccount().companyFields);
+        LOG.info("User's Deal Fields : " + loggedInUser.getAccount().dealFields);
         LOG.info("User's Call Results : " + loggedInUser.getAccount().callResults);
         LOG.info("User's Filters : " + loggedInUser.getAccount().filters);
         LOG.info("User's ContactsCounts : " + loggedInUser.getAccount().contactsCount);

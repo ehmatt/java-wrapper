@@ -6,6 +6,9 @@ import com.onepagecrm.models.serializers.CustomFieldValueSerializer;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 26/09/2017.
+ */
 public class CustomFieldValue implements Serializable {
 
     private String stringValue;
@@ -58,7 +61,7 @@ public class CustomFieldValue implements Serializable {
 
     @Override
     public String toString() {
-        return CustomFieldValueSerializer.toJsonObject(this);
+        return CustomFieldValueSerializer.toJsonString(this);
     }
 
     public Serializable setValue(String stringValue) {
