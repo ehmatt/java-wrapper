@@ -4,9 +4,11 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.serializers.S3FileSerializer;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.MultipartUpload;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 27/09/2017.
@@ -32,11 +34,22 @@ public class S3File implements Serializable {
      * API Methods.
      */
 
-    public static S3File uploadForm(String contactId) throws OnePageException {
+    public static S3File form(String contactId) throws OnePageException {
         String query = "?" + "contact_id" + "=" + contactId;
         Request request = new GetRequest(S3_FORM_ENDPOINT, query);
         Response response = request.send();
         return S3FileSerializer.fromString(response.getResponseBody());
+    }
+
+    public void upload(String contactId, String filePath, String fileName, String contentType, String fileContents) throws OnePageException {
+//        Request request = new PostRequest(
+//                "",
+//                "",
+//                S3FileSerializer.toJsonString(this, contactId, fileName, contentType, fileContents)
+//        );
+//        request.send();
+        Map<String, String> params = S3FileSerializer.toParamMap(this, contactId, fileName, contentType, fileContents);
+        MultipartUpload.perform(url, params, filePath, fileName, contentType);
     }
 
     /*
@@ -49,7 +62,7 @@ public class S3File implements Serializable {
 
     @Override
     public String toString() {
-        return S3FileSerializer.toJsonString(this);
+        return S3FileSerializer.toJsonStringFull(this);
     }
 
     public Long getQuota() {

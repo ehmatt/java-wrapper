@@ -346,6 +346,7 @@ public class BaseSerializer {
     public static final String X_AMZ_CREDENTIAL_TAG = "x-amz-credential";
     public static final String X_AMZ_DATE_TAG = "x-amz-date";
     public static final String X_AMZ_SIGNATURE_TAG = "x-amz-signature";
+    public static final String FILE_TAG = "file";
 
     /**
      * Method used to parse the base/start of response.

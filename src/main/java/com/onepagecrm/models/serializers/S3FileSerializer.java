@@ -2,9 +2,14 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.S3File;
+import com.onepagecrm.models.internal.Utilities;
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -57,7 +62,75 @@ public class S3FileSerializer extends BaseSerializer {
                 .setxAmzSignature(fieldsObject.optString(X_AMZ_SIGNATURE_TAG));
     }
 
-    public static JSONObject toJsonObject(S3File s3File) {
+    public static Map<String, String> toParamMap(S3File s3File, String contactId, String fileName, String contentType, String fileContents) {
+        Map<String, String> paramMap = new LinkedHashMap<>();
+        if (s3File == null) return paramMap;
+
+        String key = contactId + "/" + System.currentTimeMillis() + "/" + fileName;
+        paramMap.put(KEY_TAG, key);
+
+        int successStatus = s3File.getSuccessStatus() != null ? s3File.getSuccessStatus() : 201;
+        paramMap.put(SUCCESS_ACTION_STATUS_TAG, String.valueOf(successStatus));
+
+        paramMap.put(ACL_TAG, s3File.getAcl());
+
+        //paramMap.put("Content-Type", contentType);
+
+        paramMap.put(X_IGNORE_PATTERN_TAG, s3File.getxIgnorePattern());
+
+        paramMap.put(X_AMZ_CREDENTIAL_TAG, s3File.getxAmzCredential());
+
+        paramMap.put(X_AMZ_ALGORITHM_TAG, s3File.getxAmzAlgorithm());
+
+        paramMap.put(X_AMZ_DATE_TAG, s3File.getxAmzDate());
+
+        String policy = s3File.getPolicy();
+        byte[] policyBytes = policy.getBytes(StandardCharsets.UTF_8);
+        String policyBase64 = Base64.encodeBase64String(policyBytes);
+        paramMap.put("Policy", policy);
+
+        paramMap.put(X_AMZ_SIGNATURE_TAG, s3File.getxAmzSignature());
+
+        paramMap.put(FILENAME_TAG, fileName);
+
+        String content = Utilities.notNullOrEmpty(fileContents) ? fileContents : "";
+        byte[] contentBytes = content.getBytes(StandardCharsets.UTF_8);
+        String contentBase64 = Base64.encodeBase64String(contentBytes);
+        //paramMap.put(FILE_TAG, contentBase64);
+
+        return paramMap;
+    }
+
+    public static JSONObject toJsonObject(S3File s3File, String contactId, String fileName, String contentType, String fileContents) {
+        JSONObject s3FileObject = new JSONObject();
+        if (s3File == null) return s3FileObject;
+        String key = contactId + "/" + Utilities.getUnixTime() + "/" + fileName;
+        addJsonStringValue(key, s3FileObject, KEY_TAG);
+        addJsonIntegerValue(s3File.getSuccessStatus(), s3FileObject, SUCCESS_ACTION_STATUS_TAG);
+        addJsonStringValue(contentType, s3FileObject, "Content-Type");
+        addJsonStringValue(s3File.getAcl(), s3FileObject, ACL_TAG);
+        String policy = s3File.getPolicy();
+        byte[] policyBytes = policy.getBytes(StandardCharsets.UTF_8);
+        String policyBase64 = Base64.encodeBase64String(policyBytes);
+        addJsonStringValue(policyBase64, s3FileObject, "Policy");
+        addJsonStringValue(s3File.getxIgnorePattern(), s3FileObject, X_IGNORE_PATTERN_TAG);
+        addJsonStringValue(s3File.getxAmzAlgorithm(), s3FileObject, X_AMZ_ALGORITHM_TAG);
+        addJsonStringValue(s3File.getxAmzCredential(), s3FileObject, X_AMZ_CREDENTIAL_TAG);
+        addJsonStringValue(s3File.getxAmzDate(), s3FileObject, X_AMZ_DATE_TAG);
+        addJsonStringValue(s3File.getxAmzSignature(), s3FileObject, X_AMZ_SIGNATURE_TAG);
+        addJsonStringValue(fileName, s3FileObject, FILENAME_TAG);
+        String content = Utilities.notNullOrEmpty(fileContents) ? fileContents : "";
+        byte[] contentBytes = content.getBytes(StandardCharsets.UTF_8);
+        String contentBase64 = Base64.encodeBase64String(contentBytes);
+        addJsonStringValue(contentBase64, s3FileObject, FILE_TAG);
+        return s3FileObject;
+    }
+
+    public static String toJsonString(S3File s3File, String contactId, String filename, String contentType, String fileContents) {
+        return toJsonObject(s3File, contactId, filename, contentType, fileContents).toString();
+    }
+
+    public static JSONObject toJsonObjectFull(S3File s3File) {
         JSONObject s3FileObject = new JSONObject();
         if (s3File == null) return s3FileObject;
         addJsonLongValue(s3File.getQuota(), s3FileObject, QUOTA_TAG);
@@ -77,7 +150,7 @@ public class S3FileSerializer extends BaseSerializer {
         return s3FileObject;
     }
 
-    public static String toJsonString(S3File s3File) {
-        return toJsonObject(s3File).toString();
+    public static String toJsonStringFull(S3File s3File) {
+        return toJsonObjectFull(s3File).toString();
     }
 }
