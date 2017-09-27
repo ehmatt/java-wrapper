@@ -1,6 +1,10 @@
 package com.onepagecrm.models.internal;
 
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.serializers.S3FileSerializer;
+import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
 
@@ -8,6 +12,8 @@ import java.io.Serializable;
  * @author Cillian Myles <cillian@onepagecrm.com> on 27/09/2017.
  */
 public class S3File implements Serializable {
+
+    private static final String S3_FORM_ENDPOINT = "attachments/s3_form";
 
     private Long quota;
     private String displayQuota;
@@ -21,6 +27,21 @@ public class S3File implements Serializable {
     private String xAmzCredential;
     private String xAmzDate;
     private String xAmzSignature;
+
+    /*
+     * API Methods.
+     */
+
+    public static S3File uploadForm(String contactId) throws OnePageException {
+        String query = "?" + "contact_id" + "=" + contactId;
+        Request request = new GetRequest(S3_FORM_ENDPOINT, query);
+        Response response = request.send();
+        return S3FileSerializer.fromString(response.getResponseBody());
+    }
+
+    /*
+     * Object Methods.
+     */
 
     public S3File() {
 

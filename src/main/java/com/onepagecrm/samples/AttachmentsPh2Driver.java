@@ -4,9 +4,6 @@ import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.S3File;
-import com.onepagecrm.models.serializers.S3FileSerializer;
-import com.onepagecrm.net.Response;
-import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
@@ -51,12 +48,8 @@ public class AttachmentsPh2Driver {
 
         LOG.info("Logged in User : " + loggedInUser);
 
-        String endpoint = "attachments/s3_form";
         String contactId = "56fa81eb9007ba07fc000080";
-        String query = "?" + "contact_id=" + contactId;
-        Request request = new GetRequest(endpoint, query);
-        Response response = request.send();
-        S3File s3File = S3FileSerializer.fromString(response.getResponseBody());
+        S3File s3File = S3File.uploadForm(contactId);
 
         LOG.info("S3 File : " + s3File);
 
