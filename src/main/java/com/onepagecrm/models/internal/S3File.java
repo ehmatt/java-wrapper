@@ -2,9 +2,9 @@ package com.onepagecrm.models.internal;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.serializers.S3FileSerializer;
+import com.onepagecrm.net.MultipartUpload;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
-import com.onepagecrm.net.MultipartUpload;
 import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
@@ -41,14 +41,8 @@ public class S3File implements Serializable {
         return S3FileSerializer.fromString(response.getResponseBody());
     }
 
-    public void upload(String contactId, String filePath, String fileName, String contentType, String fileContents) throws OnePageException {
-//        Request request = new PostRequest(
-//                "",
-//                "",
-//                S3FileSerializer.toJsonString(this, contactId, fileName, contentType, fileContents)
-//        );
-//        request.send();
-        Map<String, String> params = S3FileSerializer.toParamMap(this, contactId, fileName, contentType, fileContents);
+    public void upload(String contactId, String filePath, String fileName, String contentType) throws OnePageException {
+        Map<String, String> params = S3FileSerializer.toParamMap(this, contactId, fileName);
         MultipartUpload.perform(url, params, filePath, fileName, contentType);
     }
 

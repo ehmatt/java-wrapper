@@ -4,7 +4,6 @@ import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.S3File;
-import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
@@ -62,8 +61,7 @@ public class AttachmentsPh2Driver {
         String fileName = "cillian.jpg";
         String contentType = "image/jpeg";
         String filePath = "./src/test/res/image_encode/" + fileName;
-        String fileContents = Utilities.getResourceContents(filePath);
 
-        s3File.upload(contactId, filePath, fileName, contentType, fileContents);
+        s3File.upload(contactId, filePath, fileName, contentType);
     }
 }

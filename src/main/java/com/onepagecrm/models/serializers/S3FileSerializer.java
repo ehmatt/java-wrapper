@@ -62,42 +62,21 @@ public class S3FileSerializer extends BaseSerializer {
                 .setxAmzSignature(fieldsObject.optString(X_AMZ_SIGNATURE_TAG));
     }
 
-    public static Map<String, String> toParamMap(S3File s3File, String contactId, String fileName, String contentType, String fileContents) {
+    public static Map<String, String> toParamMap(S3File s3File, String contactId, String fileName) {
         Map<String, String> paramMap = new LinkedHashMap<>();
         if (s3File == null) return paramMap;
-
         String key = contactId + "/" + System.currentTimeMillis() + "/" + fileName;
         paramMap.put(KEY_TAG, key);
-
         int successStatus = s3File.getSuccessStatus() != null ? s3File.getSuccessStatus() : 201;
         paramMap.put(SUCCESS_ACTION_STATUS_TAG, String.valueOf(successStatus));
-
         paramMap.put(ACL_TAG, s3File.getAcl());
-
-        //paramMap.put("Content-Type", contentType);
-
         paramMap.put(X_IGNORE_PATTERN_TAG, s3File.getxIgnorePattern());
-
         paramMap.put(X_AMZ_CREDENTIAL_TAG, s3File.getxAmzCredential());
-
         paramMap.put(X_AMZ_ALGORITHM_TAG, s3File.getxAmzAlgorithm());
-
         paramMap.put(X_AMZ_DATE_TAG, s3File.getxAmzDate());
-
-        String policy = s3File.getPolicy();
-        byte[] policyBytes = policy.getBytes(StandardCharsets.UTF_8);
-        String policyBase64 = Base64.encodeBase64String(policyBytes);
-        paramMap.put("Policy", policy);
-
+        paramMap.put(POLICY_TAG, s3File.getPolicy());
         paramMap.put(X_AMZ_SIGNATURE_TAG, s3File.getxAmzSignature());
-
         paramMap.put(FILENAME_TAG, fileName);
-
-        String content = Utilities.notNullOrEmpty(fileContents) ? fileContents : "";
-        byte[] contentBytes = content.getBytes(StandardCharsets.UTF_8);
-        String contentBase64 = Base64.encodeBase64String(contentBytes);
-        //paramMap.put(FILE_TAG, contentBase64);
-
         return paramMap;
     }
 
