@@ -1,7 +1,7 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.internal.Utilities;
+import com.onepagecrm.models.internal.FileUtils;
 import com.onepagecrm.models.serializers.AttachmentSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
@@ -26,6 +26,11 @@ public class Attachment extends ApiResource implements Serializable {
     private static final String PROVIDER_DROPBOX = "dropbox";
     private static final String PROVIDER_EVERNOTE = "evernote";
     private static final String PROVIDER_OTHER = "other"; // Catch all.
+
+    private static final String REFERENCE_TYPE_DEAL = "deal";
+    private static final String REFERENCE_TYPE_CALL = "call";
+    private static final String REFERENCE_TYPE_NOTE = "note";
+    private static final String REFERENCE_TYPE_OTHER = "other"; // Catch all.
 
     /**
      * Member variables.
@@ -68,12 +73,51 @@ public class Attachment extends ApiResource implements Serializable {
         }
     }
 
+    public enum ReferenceType {
+        DEAL(REFERENCE_TYPE_DEAL),
+        CALL(REFERENCE_TYPE_CALL),
+        NOTE(REFERENCE_TYPE_NOTE),
+        OTHER(REFERENCE_TYPE_OTHER);
+
+        private String resource;
+
+        ReferenceType(String resource) {
+            this.resource = resource;
+        }
+
+        public static ReferenceType fromString(String resource) {
+            if (resource == null) return null;
+            switch (resource) {
+                case REFERENCE_TYPE_DEAL:
+                    return DEAL;
+                case REFERENCE_TYPE_CALL:
+                    return CALL;
+                case REFERENCE_TYPE_NOTE:
+                    return NOTE;
+                case REFERENCE_TYPE_OTHER:
+                    return OTHER;
+                default:
+                    OTHER.resource = resource;
+                    return OTHER;
+            }
+        }
+
+        @Override
+        public String toString() {
+            return resource;
+        }
+    }
+
     private String id;
     private String filename;
     private Provider provider;
     private String url;
     private Long size;
     private Date expiresAt;
+
+    private String referenceId;
+    private ReferenceType referenceType;
+    private String externalUrl;
 
     /**
      * API methods
@@ -111,8 +155,7 @@ public class Attachment extends ApiResource implements Serializable {
      */
 
     public String getFileExtension() {
-        return Utilities.notNullOrEmpty(filename) && filename.contains(".") ?
-                filename.substring(filename.lastIndexOf(".")).replace(".", "") : "";
+        return FileUtils.extensionFromName(filename);
     }
 
     /**
@@ -177,6 +220,33 @@ public class Attachment extends ApiResource implements Serializable {
 
     public Attachment setExpiresAt(Date expiresAt) {
         this.expiresAt = expiresAt;
+        return this;
+    }
+
+    public String getReferenceId() {
+        return referenceId;
+    }
+
+    public Attachment setReferenceId(String referenceId) {
+        this.referenceId = referenceId;
+        return this;
+    }
+
+    public ReferenceType getReferenceType() {
+        return referenceType;
+    }
+
+    public Attachment setReferenceType(ReferenceType referenceType) {
+        this.referenceType = referenceType;
+        return this;
+    }
+
+    public String getExternalUrl() {
+        return externalUrl;
+    }
+
+    public Attachment setExternalUrl(String externalUrl) {
+        this.externalUrl = externalUrl;
         return this;
     }
 }

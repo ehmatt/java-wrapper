@@ -347,6 +347,10 @@ public class BaseSerializer {
     public static final String X_AMZ_DATE_TAG = "x-amz-date";
     public static final String X_AMZ_SIGNATURE_TAG = "x-amz-signature";
     public static final String FILE_TAG = "file";
+    public static final String REFERENCE_TYPE_TAG = "reference_type";
+    public static final String REFERENCE_ID_TAG = "reference_id";
+    public static final String EXTERNAL_URL_TAG = "external_url";
+    public static final String LINK_TYPE_TAG = "link_type";
 
     /**
      * Method used to parse the base/start of response.
@@ -778,6 +782,18 @@ public class BaseSerializer {
             }
         } catch (JSONException e) {
             LOG.severe("Error serializing JSON array : " + input);
+            LOG.severe(e.toString());
+        }
+    }
+
+    /**
+     * Adds a NULL value to a JSONObject with the specified key.
+     */
+    public static void addNullValue(JSONObject object, String key) {
+        try {
+            object.put(key, JSONObject.NULL);
+        } catch (JSONException e) {
+            LOG.severe("Error adding NULL value");
             LOG.severe(e.toString());
         }
     }

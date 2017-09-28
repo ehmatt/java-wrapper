@@ -1,21 +1,13 @@
 package com.onepagecrm.models.internal;
 
-import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.serializers.S3FileSerializer;
-import com.onepagecrm.net.MultipartUpload;
-import com.onepagecrm.net.Response;
-import com.onepagecrm.net.request.GetRequest;
-import com.onepagecrm.net.request.Request;
+import com.onepagecrm.models.serializers.S3DataSerializer;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 27/09/2017.
  */
-public class S3File implements Serializable {
-
-    private static final String S3_FORM_ENDPOINT = "attachments/s3_form";
+public class S3Data implements Serializable {
 
     private Long quota;
     private String displayQuota;
@@ -30,40 +22,20 @@ public class S3File implements Serializable {
     private String xAmzDate;
     private String xAmzSignature;
 
-    /*
-     * API Methods.
-     */
-
-    public static S3File form(String contactId) throws OnePageException {
-        String query = "?" + "contact_id" + "=" + contactId;
-        Request request = new GetRequest(S3_FORM_ENDPOINT, query);
-        Response response = request.send();
-        return S3FileSerializer.fromString(response.getResponseBody());
-    }
-
-    public void upload(String contactId, String filePath, String fileName, String contentType) throws OnePageException {
-        Map<String, String> params = S3FileSerializer.toParamMap(this, contactId, fileName);
-        MultipartUpload.perform(url, params, filePath, fileName, contentType);
-    }
-
-    /*
-     * Object Methods.
-     */
-
-    public S3File() {
+    public S3Data() {
 
     }
 
     @Override
     public String toString() {
-        return S3FileSerializer.toJsonStringFull(this);
+        return S3DataSerializer.toJsonString(this);
     }
 
     public Long getQuota() {
         return quota;
     }
 
-    public S3File setQuota(Long quota) {
+    public S3Data setQuota(Long quota) {
         this.quota = quota;
         return this;
     }
@@ -72,7 +44,7 @@ public class S3File implements Serializable {
         return displayQuota;
     }
 
-    public S3File setDisplayQuota(String displayQuota) {
+    public S3Data setDisplayQuota(String displayQuota) {
         this.displayQuota = displayQuota;
         return this;
     }
@@ -81,7 +53,7 @@ public class S3File implements Serializable {
         return url;
     }
 
-    public S3File setUrl(String url) {
+    public S3Data setUrl(String url) {
         this.url = url;
         return this;
     }
@@ -90,7 +62,7 @@ public class S3File implements Serializable {
         return key;
     }
 
-    public S3File setKey(String key) {
+    public S3Data setKey(String key) {
         this.key = key;
         return this;
     }
@@ -99,7 +71,7 @@ public class S3File implements Serializable {
         return successStatus;
     }
 
-    public S3File setSuccessStatus(Integer successStatus) {
+    public S3Data setSuccessStatus(Integer successStatus) {
         this.successStatus = successStatus;
         return this;
     }
@@ -108,7 +80,7 @@ public class S3File implements Serializable {
         return acl;
     }
 
-    public S3File setAcl(String acl) {
+    public S3Data setAcl(String acl) {
         this.acl = acl;
         return this;
     }
@@ -117,7 +89,7 @@ public class S3File implements Serializable {
         return policy;
     }
 
-    public S3File setPolicy(String policy) {
+    public S3Data setPolicy(String policy) {
         this.policy = policy;
         return this;
     }
@@ -126,7 +98,7 @@ public class S3File implements Serializable {
         return xIgnorePattern;
     }
 
-    public S3File setxIgnorePattern(String xIgnorePattern) {
+    public S3Data setxIgnorePattern(String xIgnorePattern) {
         this.xIgnorePattern = xIgnorePattern;
         return this;
     }
@@ -135,7 +107,7 @@ public class S3File implements Serializable {
         return xAmzAlgorithm;
     }
 
-    public S3File setxAmzAlgorithm(String xAmzAlgorithm) {
+    public S3Data setxAmzAlgorithm(String xAmzAlgorithm) {
         this.xAmzAlgorithm = xAmzAlgorithm;
         return this;
     }
@@ -144,7 +116,7 @@ public class S3File implements Serializable {
         return xAmzCredential;
     }
 
-    public S3File setxAmzCredential(String xAmzCredential) {
+    public S3Data setxAmzCredential(String xAmzCredential) {
         this.xAmzCredential = xAmzCredential;
         return this;
     }
@@ -153,7 +125,7 @@ public class S3File implements Serializable {
         return xAmzDate;
     }
 
-    public S3File setxAmzDate(String xAmzDate) {
+    public S3Data setxAmzDate(String xAmzDate) {
         this.xAmzDate = xAmzDate;
         return this;
     }
@@ -162,7 +134,7 @@ public class S3File implements Serializable {
         return xAmzSignature;
     }
 
-    public S3File setxAmzSignature(String xAmzSignature) {
+    public S3Data setxAmzSignature(String xAmzSignature) {
         this.xAmzSignature = xAmzSignature;
         return this;
     }

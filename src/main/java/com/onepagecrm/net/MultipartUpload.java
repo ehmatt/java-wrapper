@@ -1,6 +1,9 @@
 package com.onepagecrm.net;
 
 import com.onepagecrm.OnePageCRM;
+import com.onepagecrm.models.internal.FileReference;
+import com.onepagecrm.models.internal.S3Data;
+import com.onepagecrm.models.internal.S3FileReference;
 import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.net.request.Request;
 
@@ -13,13 +16,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 27/09/2017.
  */
-@SuppressWarnings("PointlessArithmeticExpression")
+@SuppressWarnings({"PointlessArithmeticExpression", "WeakerAccess"})
 public class MultipartUpload {
 
     private static final Logger LOG = Logger.getLogger(MultipartUpload.class.getSimpleName());
@@ -32,7 +36,38 @@ public class MultipartUpload {
     /**
      * Upload a file to a server using multi-part upload.
      */
-    public static void perform(String urlTo, Map<String, String> params, String filePath, String fileName, String mimeType) {
+    public static S3FileReference perform(S3Data data, Map<String, String> params, String filePath) {
+        return perform(data.getUrl(), params, new FileReference(filePath));
+    }
+
+    /**
+     * Upload a file to a server using multi-part upload.
+     */
+    public static S3FileReference perform(S3Data data, Map<String, String> params, FileReference fileRef) {
+        return perform(data.getUrl(), params, fileRef);
+    }
+
+    /**
+     * Upload a file to a server using multi-part upload.
+     */
+    public static S3FileReference perform(String urlTo, Map<String, String> params, FileReference fileRef) {
+        if (!Utilities.notNullOrEmpty(urlTo) || fileRef == null) {
+            return null;
+        }
+
+        S3FileReference createdFileRef = new S3FileReference(fileRef);
+        params = params != null ? params : new HashMap<String, String>();
+
+        HttpURLConnection connection;
+        DataOutputStream outputStream;
+        InputStream inputStream;
+
+        String filePath = fileRef.getPath();
+        String fileName = fileRef.getName();
+        String mimeType = fileRef.getMimeType();
+
+        String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
+
         // -------------------------------
         if (OnePageCRM.DEBUG) {
             LOG.info("url: " + urlTo);
@@ -43,18 +78,8 @@ public class MultipartUpload {
         }
         // -------------------------------
 
-        HttpURLConnection connection;
-        DataOutputStream outputStream;
-        InputStream inputStream;
-
-        String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
-
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
-
-        String[] segments = filePath.split("/");
-        int lastIndex = segments.length - 1;
-        String nameFromPath = segments[lastIndex]; // TODO: use or remove!?
 
         try {
             URL url = new URL(urlTo);
@@ -108,6 +133,7 @@ public class MultipartUpload {
 
             // Read from file and write to server (via DataOutputStream).
             File file = new File(filePath);
+            createdFileRef.setSize(file.length());
             FileInputStream fileInputStream = new FileInputStream(file);
 
             bytesAvailable = fileInputStream.available();
@@ -133,6 +159,8 @@ public class MultipartUpload {
             }
             String result = convertStreamToString(inputStream);
 
+            // TODO: parse XML and add to S3FileRef data.
+
             // -------------------------------
             LOG.info("--- RESPONSE ---");
             LOG.info("Code: " + connection.getResponseCode());
@@ -152,6 +180,8 @@ public class MultipartUpload {
             LOG.severe(e.toString());
             e.printStackTrace();
         }
+
+        return createdFileRef;
     }
 
     private static String convertStreamToString(InputStream is) {
