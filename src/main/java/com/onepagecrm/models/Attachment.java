@@ -119,6 +119,10 @@ public class Attachment extends ApiResource implements Serializable {
     private ReferenceType referenceType;
     private String externalUrl;
 
+    // TODO: update AttachmentSerializer to use new fields e.g. ref_id !?
+
+    // TODO: update API methods to reflect new objects/logic/flow
+
     /**
      * API methods
      */
