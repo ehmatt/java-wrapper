@@ -1,25 +1,24 @@
 package com.onepagecrm.samples;
 
 import com.onepagecrm.OnePageCRM;
-import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Company;
-import com.onepagecrm.models.CompanyList;
-import com.onepagecrm.models.CustomField;
 import com.onepagecrm.models.User;
+import com.onepagecrm.net.request.PutRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class CompaniesDriver {
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 08/09/2017.
+ */
+public class API440ContactCompany {
 
-    private static final Logger LOG = Logger.getLogger(CompaniesDriver.class.getName());
+    private static final Logger LOG = Logger.getLogger(API440ContactCompany.class.getName());
 
-    public static void main(String[] args) throws OnePageException {
+    public static void main(String[] args) throws Exception {
         Properties prop = new Properties();
         InputStream input = null;
 
@@ -43,21 +42,16 @@ public class CompaniesDriver {
             }
         }
 
-        OnePageCRM.setServer(Request.APP_SERVER);
+        OnePageCRM.setServer(Request.STAGING_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
                 prop.getProperty("password"));
 
-        CompanyList companies = loggedInUser.companies();
-        Company company = Company.byId(companies.get(0).getId());
-
-        List<CustomField> customFieldList = CustomField.listContacts();
-        List<CustomField> companyFieldList = CustomField.listCompanies();
-
-        LOG.info("Companies : " + companies);
-        LOG.info("Company : " + company);
-        LOG.info("Custom fields : " + customFieldList);
-        LOG.info("Company fields : " + companyFieldList);
+        final String endpoint = "contacts/59b2a7f59007ba09298e0048";
+        final String query = "?fields=all,deals(all),notes(all),calls(all)";
+        final String body = "{\"id\":\"59b2a7f59007ba09298e0048\",\"last_name\":\"API-440\",\"company_name\":\"OnePageCRM\",\"status_id\":\"559cd19f6f6e656707000005\",\"owner_id\":\"559cd1866f6e656707000001\",\"starred\":false,\"address_list\":[{}],\"tags\":[\"\"]}";
+        PutRequest errorRequest = new PutRequest(endpoint, query, body);
+        errorRequest.send();
     }
 }

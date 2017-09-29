@@ -1,6 +1,7 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.internal.Utilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 01/08/2017.
+ */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class BaseSerializer {
 
@@ -113,9 +117,9 @@ public class BaseSerializer {
     public static final String TEXT_TAG = "text";
     public static final String VIA_TAG = "via";
     public static final String AUTHOR_TAG = "author";
-    public static final String ATTACHMENTS_TAG = "attachment";
     public static final String PHONE_NUMBER_TAG = "phone_number";
     public static final String RECORDING_LINK_TAG = "recording_link";
+    public static final String CALL_RESULTS_ORDER_TAG = "call_results_order";
 
     // 201 RESPONSE TAGS
     public static final String STATUS_TAG = "status";
@@ -319,6 +323,16 @@ public class BaseSerializer {
     public static final String COMMISSION_TYPE_TAG = "commission_type";
     public static final String COMMISSION_PERCENTAGE_TAG = "commission_percentage";
 
+    // ATTACHMENTS
+    public static final String ATTACHMENT_TAG = "attachment";
+    public static final String ATTACHMENTS_TAG = "attachments";
+    public static final String STORAGE_PROVIDER_TAG = "storage_provider";
+    public static final String FILENAME_TAG = "filename";
+    public static final String SIZE_TAG = "size";
+    public static final String URL_EXPIRES_AT_TAG = "url_expires_at";
+    public static final String CALL_ID_TAG = "call_id";
+    public static final String NOTE_ID_TAG = "note_id";
+
     /**
      * Method used to parse the base/start of response.
      *
@@ -388,7 +402,7 @@ public class BaseSerializer {
     }
 
     public static Number parseNumber(JSONObject object, String key) {
-        if (object.has(key)) {
+        if (object != null && object.has(key)) {
             try {
                 Object valueObject = object.get(key);
                 if (valueObject instanceof Number) {
@@ -412,6 +426,9 @@ public class BaseSerializer {
     }
 
     public static Number parseNumber(String numberAsString) {
+        if (!Utilities.notNullOrEmpty(numberAsString)) {
+            return null;
+        }
         Number number = null;
         try {
             number = Long.valueOf(numberAsString);

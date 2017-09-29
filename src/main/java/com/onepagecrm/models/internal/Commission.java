@@ -42,14 +42,16 @@ public abstract class Commission implements Serializable {
             return cost;
         }
 
-        public static Base fromString(String string) {
-            if (string == null) return null;
-            switch (string) {
+        public static Base fromString(String cost) {
+            if (cost == null) return null;
+            switch (cost) {
                 case BASE_MARGIN:
                     return MARGIN;
                 case BASE_AMOUNT:
                     return AMOUNT;
                 default:
+                    // Manually set cost so we know what API sent (if error)!
+                    OTHER.cost = cost;
                     return OTHER;
             }
         }
@@ -72,9 +74,9 @@ public abstract class Commission implements Serializable {
             return type;
         }
 
-        public static Type fromString(String string) {
-            if (string == null) return null;
-            switch (string) {
+        public static Type fromString(String type) {
+            if (type == null) return null;
+            switch (type) {
                 case TYPE_PERCENTAGE:
                     return PERCENTAGE;
                 case TYPE_ABSOLUTE:
@@ -82,6 +84,8 @@ public abstract class Commission implements Serializable {
                 case TYPE_NONE:
                     return NONE;
                 default:
+                    // Manually set type so we know what API sent (if error)!
+                    OTHER.type = type;
                     return OTHER;
             }
         }

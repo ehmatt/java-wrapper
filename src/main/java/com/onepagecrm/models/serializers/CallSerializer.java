@@ -11,6 +11,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * @author Cillian Myles (cillian@onepagecrm.com) on 31/07/2017.
+ */
 public class CallSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CallSerializer.class.getName());
@@ -69,7 +72,8 @@ public class CallSerializer extends BaseSerializer {
                 .setContactId(callObject.optString(CONTACT_ID_TAG))
                 .setRecordingLink(callObject.optString(RECORDING_LINK_TAG))
                 .setCreatedAt(DateSerializer.fromFormattedString(callObject.optString(CREATED_AT_TAG)))
-                .setModifiedAt(DateSerializer.fromFormattedString(callObject.optString(MODIFIED_AT_TAG)));
+                .setModifiedAt(DateSerializer.fromFormattedString(callObject.optString(MODIFIED_AT_TAG)))
+                .setAttachments(AttachmentSerializer.fromJsonArray(callObject.optJSONArray(ATTACHMENTS_TAG)));
     }
 
     public static List<Call> fromJsonArray(JSONArray callsArray) {

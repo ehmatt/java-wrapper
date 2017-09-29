@@ -29,6 +29,7 @@ public abstract class ApiResource extends BaseResource implements Serializable {
     public static final String LINKED_CONTACTS_ENDPOINT = "companies/{id}/linked_contacts";
     public static final String COMPANY_FIELDS_ENDPOINT = "company_fields";
     public static final String DEAL_FIELDS_ENDPOINT = "deal_fields";
+    public static final String ATTACHMENTS_ENDPOINT = "attachments";
 
     public abstract String getId();
 

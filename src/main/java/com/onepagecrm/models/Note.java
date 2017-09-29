@@ -17,17 +17,31 @@ import com.onepagecrm.net.request.Request;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Cillian Myles (cillian@onepagecrm.com) on 31/07/2017.
+ */
 public class Note extends ApiResource implements Serializable {
+
+    /**
+     * Member variables.
+     */
 
     private String id;
     private String author;
     private String text;
     private String contactId;
-    private Date createdAt;
     private Date date;
     private String linkedDealId;
+    private List<Attachment> attachments;
+    private Date createdAt;
+    private Date modifiedAt;
+
+    /**
+     * API methods
+     */
 
     public Note save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -47,7 +61,7 @@ public class Note extends ApiResource implements Serializable {
 
     private Note update() throws OnePageException {
         Request request = new PutRequest(
-                addNoteIdToEndpoint(NOTES_ENDPOINT),
+                addIdToEndpoint(NOTES_ENDPOINT, this.id),
                 null,
                 NoteSerializer.toJsonObject(this)
         );
@@ -55,8 +69,14 @@ public class Note extends ApiResource implements Serializable {
         return NoteSerializer.fromString(response.getResponseBody());
     }
 
+    public static Note byId(String noteId) throws OnePageException {
+        Request request = new GetRequest(addIdToEndpoint(NOTES_ENDPOINT, noteId), null);
+        Response response = request.send();
+        return NoteSerializer.fromString(response.getResponseBody());
+    }
+
     public DeleteResult delete() throws OnePageException {
-        Request request = new DeleteRequest(addNoteIdToEndpoint(NOTES_ENDPOINT));
+        Request request = new DeleteRequest(addIdToEndpoint(NOTES_ENDPOINT, this.id));
         Response response = request.send();
         return DeleteResultSerializer.fromString(this.id, response.getResponseBody());
     }
@@ -87,9 +107,21 @@ public class Note extends ApiResource implements Serializable {
         return NoteListSerializer.fromString(response.getResponseBody());
     }
 
-    private String addNoteIdToEndpoint(String endpoint) {
-        return endpoint + "/" + this.id;
+    private static String addIdToEndpoint(String endpoint, String noteId) {
+        return endpoint + "/" + noteId;
     }
+
+    /**
+     * Utility methods
+     */
+
+    public boolean hasAttachments() {
+        return this.attachments != null && !attachments.isEmpty();
+    }
+
+    /**
+     * Object methods
+     */
 
     @Override
     public String getId() {
@@ -134,15 +166,6 @@ public class Note extends ApiResource implements Serializable {
         return contactId;
     }
 
-    public Note setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
     public Note setDate(Date date) {
         this.date = date;
         return this;
@@ -159,5 +182,32 @@ public class Note extends ApiResource implements Serializable {
 
     public String getLinkedDealId() {
         return linkedDealId;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public Note setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+        return this;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Note setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
+
+    public Date getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public Note setModifiedAt(Date modifiedAt) {
+        this.modifiedAt = modifiedAt;
+        return this;
     }
 }

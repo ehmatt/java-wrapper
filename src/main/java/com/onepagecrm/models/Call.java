@@ -20,20 +20,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Cillian Myles (cillian@onepagecrm.com) on 31/07/2017.
+ */
 public class Call extends ApiResource implements Serializable {
+
+    /**
+     * Member variables.
+     */
 
     private String id;
     private String author;
     private CallResult callResult;
     private Date time;
     private String contactId;
-    private Date createdAt;
     private String phoneNumber;
-    private Date modifiedAt;
     private String via;
     private String recordingLink;
+    private String text;
     private List<Attachment> attachments;
-    private String mText;
+    private Date createdAt;
+    private Date modifiedAt;
+
+    /**
+     * API methods
+     */
 
     public Call save() throws OnePageException {
         return this.isValid() ? update() : create();
@@ -41,7 +52,7 @@ public class Call extends ApiResource implements Serializable {
 
     private Call update() throws OnePageException {
         Request request = new PutRequest(
-                addCallIdToEndpoint(CALLS_ENDPOINT),
+                addIdToEndpoint(CALLS_ENDPOINT, this.id),
                 null,
                 CallSerializer.toJsonObject(this)
         );
@@ -61,8 +72,14 @@ public class Call extends ApiResource implements Serializable {
         return CallSerializer.fromString(response.getResponseBody());
     }
 
+    public static Call byId(String callId) throws OnePageException {
+        Request request = new GetRequest(addIdToEndpoint(CALLS_ENDPOINT, callId), null);
+        Response response = request.send();
+        return CallSerializer.fromString(response.getResponseBody());
+    }
+
     public DeleteResult delete() throws OnePageException {
-        Request request = new DeleteRequest(addCallIdToEndpoint(CALLS_ENDPOINT));
+        Request request = new DeleteRequest(addIdToEndpoint(CALLS_ENDPOINT, this.id));
         Response response = request.send();
         return DeleteResultSerializer.fromString(this.id, response.getResponseBody());
     }
@@ -93,13 +110,21 @@ public class Call extends ApiResource implements Serializable {
         return CallListSerializer.fromString(response.getResponseBody());
     }
 
-    private String addCallIdToEndpoint(String endpoint) {
-        return endpoint + "/" + this.id;
+    private static String addIdToEndpoint(String endpoint, String callId) {
+        return endpoint + "/" + callId;
     }
 
-    public Call() {
+    /**
+     * Utility methods
+     */
 
+    public boolean hasAttachments() {
+        return this.attachments != null && !attachments.isEmpty();
     }
+
+    /**
+     * Object methods
+     */
 
     @Override
     public String getId() {
@@ -153,30 +178,12 @@ public class Call extends ApiResource implements Serializable {
         return this;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public Call setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public Call setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-        return this;
-    }
-
-    public Date getModifiedAt() {
-        return modifiedAt;
-    }
-
-    public Call setModifiedAt(Date modifiedAt) {
-        this.modifiedAt = modifiedAt;
         return this;
     }
 
@@ -198,6 +205,15 @@ public class Call extends ApiResource implements Serializable {
         return this;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public Call setText(String text) {
+        this.text = text;
+        return this;
+    }
+
     public List<Attachment> getAttachments() {
         return attachments;
     }
@@ -207,12 +223,21 @@ public class Call extends ApiResource implements Serializable {
         return this;
     }
 
-    public String getText() {
-        return mText;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public Call setText(String pText) {
-        mText = pText;
+    public Call setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
+
+    public Date getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public Call setModifiedAt(Date modifiedAt) {
+        this.modifiedAt = modifiedAt;
         return this;
     }
 }

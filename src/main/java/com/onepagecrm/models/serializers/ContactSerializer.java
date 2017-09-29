@@ -51,13 +51,15 @@ public class ContactSerializer extends BaseSerializer {
         Contact contact = new Contact();
         List<Action> actions = new LinkedList<>();
         try {
+            // Handle nesting/nested objects.
             JSONObject contactObject = new JSONObject();
-
-            if (contactsElementObject.has(LINKED_CONTACT_TAG))
+            if (contactsElementObject.has(LINKED_CONTACT_TAG)) {
                 contactsElementObject = contactsElementObject.getJSONObject(LINKED_CONTACT_TAG);
-
-            contactObject = contactsElementObject.getJSONObject(CONTACT_TAG);
-
+            }
+            if (contactsElementObject.has(CONTACT_TAG)) {
+                contactObject = contactsElementObject.getJSONObject(CONTACT_TAG);
+            }
+            // Do actual parsing of contact data.
             if (contactObject.has(ID_TAG)) {
                 contact.setId(contactObject.getString(ID_TAG));
             }
@@ -100,8 +102,8 @@ public class ContactSerializer extends BaseSerializer {
             if (contactObject.has(TOTAL_PENDINGS_TAG)) {
                 contact.setTotalPending(contactObject.getDouble(TOTAL_PENDINGS_TAG));
             }
-            if (contactObject.has(TOTAL_DEALS_COUNT_TAG)) {
-                contact.setTotalDealsCount(contactObject.getInt(TOTAL_DEALS_COUNT_TAG));
+            if (contactObject.has(TOTAL_DEALS_COUNT_TAG) && !contactObject.isNull(TOTAL_DEALS_COUNT_TAG)) {
+                contact.setTotalDealsCount(contactObject.optInt(TOTAL_DEALS_COUNT_TAG));
             }
             if (contactObject.has(PHOTO_URL_TAG)) {
                 contact.setPhotoUrl(contactObject.getString(PHOTO_URL_TAG));
@@ -131,37 +133,37 @@ public class ContactSerializer extends BaseSerializer {
                 Date modifiedAt = DateSerializer.fromFormattedString(modifiedAtStr);
                 contact.setModifiedAt(modifiedAt);
             }
-            // Add Tags.
+            // Tags.
             if (contactObject.has(TAGS_TAG)) {
                 List<String> tagNames = BaseSerializer.toListOfStrings(contactObject.getJSONArray(TAGS_TAG));
                 contact.setTags(TagHelper.asTags(tagNames));
             }
-            // Add Custom Fields.
+            // Custom Fields.
             if (contactObject.has(CUSTOM_FIELDS_TAG)) {
                 JSONArray customFieldsArray = contactObject.getJSONArray(CUSTOM_FIELDS_TAG);
                 List<CustomField> customFields =
                         CustomFieldSerializer.fromJsonArray(customFieldsArray, CustomField.CF_TYPE_CONTACT);
                 if (!customFields.isEmpty()) contact.setCustomFields(customFields);
             }
-            // Add Phones.
+            // Phones.
             if (contactObject.has(PHONES_TAG)) {
                 JSONArray phonesArray = contactObject.getJSONArray(PHONES_TAG);
                 List<Phone> phones = PhoneSerializer.fromJsonArray(phonesArray);
                 if (!phones.isEmpty()) contact.setPhones(phones);
             }
-            // Add Emails.
+            // Emails.
             if (contactObject.has(EMAILS_TAG)) {
                 JSONArray emailsArray = contactObject.getJSONArray(EMAILS_TAG);
                 List<Email> emails = EmailSerializer.fromJsonArray(emailsArray);
                 if (!emails.isEmpty()) contact.setEmails(emails);
             }
-            // Add Websites.
+            // Websites.
             if (contactObject.has(URLS_TAG)) {
                 JSONArray urlsArray = contactObject.getJSONArray(URLS_TAG);
                 List<Url> urls = UrlSerializer.fromJsonArray(urlsArray);
                 if (!urls.isEmpty()) contact.setUrls(urls);
             }
-            // Add Address.
+            // Address.
             if (contactObject.has(ADDRESS_LIST_TAG)) {
                 JSONArray addressArray = contactObject.getJSONArray(ADDRESS_LIST_TAG);
                 Address address = AddressSerializer.fromJsonArray(addressArray);
@@ -209,7 +211,7 @@ public class ContactSerializer extends BaseSerializer {
                 JSONObject companyObject = contactsElementObject.optJSONObject(COMPANY_TAG);
                 contact.setCompany(CompanySerializer.fromJsonObject(companyObject));
             }
-            //Linked ids.
+            // Linked ids.
             List<String> linkedWith = new ArrayList<>();
             if (contactsElementObject.has(LINKED_WITH_TAG)) {
                 JSONArray linkedWithArray = contactsElementObject.getJSONArray(LINKED_WITH_TAG);

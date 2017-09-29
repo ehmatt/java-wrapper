@@ -4,19 +4,16 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.CustomField;
 import com.onepagecrm.models.Deal;
 import com.onepagecrm.models.DealList;
-import com.onepagecrm.models.Note;
 import com.onepagecrm.models.internal.Commission;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * @author Cillian Myles (cillian@onepagecrm.com) on 11/24/15.
+ * @author Cillian Myles (cillian@onepagecrm.com) on 24/11/2015.
  */
 public class DealSerializer extends BaseSerializer {
 
@@ -39,12 +36,15 @@ public class DealSerializer extends BaseSerializer {
         return deal;
     }
 
-    public static Deal fromJsonObject(JSONObject dealObject) {
+    public static Deal fromJsonObject(JSONObject dataObject) {
         Deal deal = new Deal();
+        JSONObject dealObject;
         try {
             // Fix for some objects not having name.
-            if (dealObject.has(DEAL_TAG)) {
-                dealObject = dealObject.getJSONObject(DEAL_TAG);
+            if (dataObject.has(DEAL_TAG)) {
+                dealObject = dataObject.getJSONObject(DEAL_TAG);
+            } else {
+                dealObject = dataObject;
             }
             // Now parse info.
             if (dealObject.has(ID_TAG)) {
@@ -145,27 +145,18 @@ public class DealSerializer extends BaseSerializer {
             if (dealObject.has(COMMISSION_PERCENTAGE_TAG) && !dealObject.isNull(COMMISSION_PERCENTAGE_TAG)) {
                 deal.setCommissionPercentage(dealObject.getDouble(COMMISSION_PERCENTAGE_TAG));
             }
+            if (dealObject.has(ATTACHMENTS_TAG)) {
+                deal.setAttachments(AttachmentSerializer.fromJsonArray(dealObject.optJSONArray(ATTACHMENTS_TAG)));
+            }
+            // Related notes (outer object).
+            if (dataObject.has(RELATED_NOTES_TAG)) {
+                deal.setRelatedNotes(NoteSerializer.fromJsonArray(dataObject.optJSONArray(RELATED_NOTES_TAG)));
+            }
         } catch (JSONException e) {
             LOG.severe("Error parsing Deal object");
             LOG.severe(e.toString());
         }
         return deal;
-    }
-
-    public static List<Note> getNotesFromString(String pResponseBody) {
-        List<Note> notes = new ArrayList<>();
-        try {
-            JSONObject responseObject = new JSONObject(pResponseBody);
-            JSONObject dataObject = responseObject.getJSONObject("data");
-            if (dataObject.has("related_notes")) {
-                JSONArray relatedNotes = dataObject.getJSONArray("related_notes");
-                notes = NoteSerializer.fromJsonArray(relatedNotes);
-            }
-        } catch (JSONException e) {
-            LOG.severe("Error parsing Deal object from response body");
-            LOG.severe(e.toString());
-        }
-        return notes;
     }
 
     public static String toJsonObject(Deal deal) {

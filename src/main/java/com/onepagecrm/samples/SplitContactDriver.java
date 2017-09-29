@@ -53,7 +53,7 @@ public class SplitContactDriver {
 
         ContactList searchResults = loggedInUser.searchActionStream("Java");
         Contact contact = searchResults.get(0);
-        Company company = Company.getSingleCompany(contact.getCompanyId());
+        Company company = Company.byId(contact.getCompanyId());
 
         LOG.info("Search Results : " + searchResults);
         LOG.info("First Contact : " + contact);

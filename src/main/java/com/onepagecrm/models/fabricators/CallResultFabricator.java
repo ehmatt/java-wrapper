@@ -2,7 +2,7 @@ package com.onepagecrm.models.fabricators;
 
 import com.onepagecrm.models.CallResult;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -17,29 +17,29 @@ public class CallResultFabricator extends BaseFabricator {
     }
 
     public static List<CallResult> list() {
-        List<CallResult> basics = new ArrayList<>();
+        List<CallResult> basics = new LinkedList<>();
         basics.add(new CallResult()
-                .setIntId(0)
+                .setPosition(0)
                 .setId("interested")
                 .setDisplay("Interested")
         );
         basics.add(new CallResult()
-                .setIntId(1)
+                .setPosition(1)
                 .setId("not_interested")
                 .setDisplay("Not interested")
         );
         basics.add(new CallResult()
-                .setIntId(2)
+                .setPosition(2)
                 .setId("left_message")
                 .setDisplay("Left message")
         );
         basics.add(new CallResult()
-                .setIntId(3)
+                .setPosition(3)
                 .setId("no_answer")
                 .setDisplay("No answer")
         );
         basics.add(new CallResult()
-                .setIntId(4)
+                .setPosition(4)
                 .setId("other")
                 .setDisplay("Other")
         );
