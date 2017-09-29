@@ -10,9 +10,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-compileJava.options.fork = true
-compileJava.options.forkOptions.executable = '/usr/lib/jvm/java-7-oracle/bin/javac'
-
 jar {
     manifest {
         attributes 'Created-By': 'Cillian Myles (OnePageCRM)'
