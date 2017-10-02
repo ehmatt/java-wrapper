@@ -59,13 +59,7 @@ public class AttachmentsPh2Driver {
         String contactId = "56fa81eb9007ba07fc000080";
         S3Form form = S3.form(contactId);
         S3Data data = form.getData();
-
         LOG.info("S3 data : " + data);
-
-        //String endpoint = s3File.getUrl();
-        //OnePageCRM.setCustomUrl(endpoint);
-        //OnePageCRM.setServer(Request.CUSTOM_URL_SERVER);
-        //Request.format = "";
 
         String fileName = "cillian.jpg";
         String contentType = "image/jpeg";
@@ -81,10 +75,16 @@ public class AttachmentsPh2Driver {
         //S3FileReference uploaded = S3.upload(contactId, data, file);
 
         // OPTION 3: fake
+        String hardcodedLocation = "https://s3-us-west-1.amazonaws.com/onepagecrm-ud2-us-west-1/56fa81eb9007ba07fc000080%2F1506589944670%2Fcillian.jpg";
+        String hardcodedBucket = "onepagecrm-ud2-us-west-1";
         String hardcodedKey = "56fa81eb9007ba07fc000080/1506589944670/cillian.jpg";
+        String hardcodedEtag = "b771fbbc72899aecedaf3aa77fcce2c1";
         long hardcodedSize = 31528L;
         S3FileReference uploaded = new S3FileReference(file)
+                .setLocation(hardcodedLocation)
+                .setBucket(hardcodedBucket)
                 .setKey(hardcodedKey)
+                .setEtag(hardcodedEtag)
                 .setSize(hardcodedSize);
 
         LOG.info("" + uploaded.toString());

@@ -23,6 +23,21 @@ public class S3FileReference extends FileReference {
 
     }
 
+    @Override
+    public String toString() {
+        return "S3FileReference{" +
+                "location='" + location + '\'' +
+                ", bucket='" + bucket + '\'' +
+                ", key='" + key + '\'' +
+                ", etag='" + etag + '\'' +
+                ", path='" + getPath() + '\'' +
+                ", name='" + getName() + '\'' +
+                ", extension='" + getExtension() + '\'' +
+                ", mimeType='" + getMimeType() + '\'' +
+                ", size=" + getSize() +
+                '}';
+    }
+
     public String getLocation() {
         return location;
     }
