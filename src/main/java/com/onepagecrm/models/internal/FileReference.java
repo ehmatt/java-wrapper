@@ -1,12 +1,14 @@
 package com.onepagecrm.models.internal;
 
+import java.io.Serializable;
+
 import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 28/09/2017.
  */
 @SuppressWarnings({"WeakerAccess", "UnusedReturnValue"})
-public class FileReference {
+public class FileReference implements Serializable {
 
     private String path;
     private String name;

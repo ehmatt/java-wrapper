@@ -1,11 +1,13 @@
 package com.onepagecrm.models.internal;
 
+import java.io.Serializable;
+
 import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 28/09/2017.
  */
-public class S3FileReference extends FileReference {
+public class S3FileReference extends FileReference implements Serializable {
 
     private String location;
     private String bucket;
