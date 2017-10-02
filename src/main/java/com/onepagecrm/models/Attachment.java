@@ -2,7 +2,9 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.FileUtils;
+import com.onepagecrm.models.internal.S3FileReference;
 import com.onepagecrm.models.serializers.AttachmentSerializer;
+import com.onepagecrm.models.serializers.S3Serializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.PostRequest;
@@ -121,31 +123,30 @@ public class Attachment extends ApiResource implements Serializable {
 
     // TODO: update AttachmentSerializer to use new fields e.g. ref_id !?
 
-    // TODO: update API methods to reflect new objects/logic/flow
-
     /**
      * API methods
      */
 
-    public Attachment save() throws OnePageException {
-        return isValid() ? update() : create();
+    public Attachment save(String contactId, S3FileReference fileRef) throws OnePageException {
+        return isValid() ? update(contactId, fileRef) : create(contactId, fileRef);
     }
 
-    private Attachment update() throws OnePageException {
+    private Attachment update(String contactId, S3FileReference fileRef) throws OnePageException {
         Request request = new PutRequest(
                 addIdToEndpoint(ATTACHMENTS_ENDPOINT),
                 null,
-                AttachmentSerializer.toJsonObject(this)
+                S3Serializer.toJsonString(fileRef, this, contactId)
         );
         Response response = request.send();
         return AttachmentSerializer.fromString(response.getResponseBody());
     }
 
-    private Attachment create() throws OnePageException {
+    private Attachment create(String contactId, S3FileReference fileRef) throws OnePageException {
         Request request = new PostRequest(
                 ATTACHMENTS_ENDPOINT,
                 null,
-                AttachmentSerializer.toJsonObject(this));
+                S3Serializer.toJsonString(fileRef, this, contactId)
+        );
         Response response = request.send();
         return AttachmentSerializer.fromString(response.getResponseBody());
     }
@@ -165,6 +166,28 @@ public class Attachment extends ApiResource implements Serializable {
     /**
      * Object methods
      */
+
+    public Attachment() {
+
+    }
+
+    public Attachment(Deal reference) {
+        if (reference == null) return;
+        referenceId = reference.getId();
+        referenceType = ReferenceType.DEAL;
+    }
+
+    public Attachment(Note reference) {
+        if (reference == null) return;
+        referenceId = reference.getId();
+        referenceType = ReferenceType.NOTE;
+    }
+
+    public Attachment(Call reference) {
+        if (reference == null) return;
+        referenceId = reference.getId();
+        referenceType = ReferenceType.CALL;
+    }
 
     @Override
     public String getId() {

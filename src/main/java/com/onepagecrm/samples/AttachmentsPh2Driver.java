@@ -3,15 +3,13 @@ package com.onepagecrm.samples;
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Attachment;
+import com.onepagecrm.models.Deal;
 import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.FileReference;
 import com.onepagecrm.models.internal.S3;
 import com.onepagecrm.models.internal.S3Data;
 import com.onepagecrm.models.internal.S3FileReference;
 import com.onepagecrm.models.internal.S3Form;
-import com.onepagecrm.models.serializers.S3Serializer;
-import com.onepagecrm.net.ApiResource;
-import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
@@ -89,15 +87,14 @@ public class AttachmentsPh2Driver {
 
         LOG.info("" + uploaded.toString());
 
-        Attachment attachment = new Attachment()
-                .setId(null)
-                .setProvider(Attachment.Provider.AMAZON)
-                .setFilename(fileName)
-                .setReferenceId("59cccf4b9007ba0db50775a0")
-                .setReferenceType(Attachment.ReferenceType.DEAL);
+        Deal reference = new Deal()
+                .setId("59cccf4b9007ba0db50775a0");
 
-        String body = S3Serializer.toJsonString(uploaded, attachment, contactId);
-        Request referenceRequest = new PostRequest(ApiResource.ATTACHMENTS_ENDPOINT, "", body);
-        referenceRequest.send();
+        Attachment attachment = new Attachment(reference)
+                .setFilename(fileName)
+                .setProvider(Attachment.Provider.AMAZON);
+
+        Attachment saved = attachment.save(contactId, uploaded);
+        LOG.info("SAVED: " + saved);
     }
 }

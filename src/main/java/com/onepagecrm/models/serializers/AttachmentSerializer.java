@@ -23,8 +23,7 @@ public class AttachmentSerializer extends BaseSerializer {
         try {
             parsedResponse = (String) BaseSerializer.fromString(responseBody);
             JSONObject responseObject = new JSONObject(parsedResponse);
-            JSONObject attachmentObject = responseObject.optJSONObject(ATTACHMENT_TAG);
-            return fromJsonObject(attachmentObject);
+            return fromJsonObject(responseObject);
 
         } catch (ClassCastException e) {
             exception = (OnePageException) BaseSerializer.fromString(responseBody);
