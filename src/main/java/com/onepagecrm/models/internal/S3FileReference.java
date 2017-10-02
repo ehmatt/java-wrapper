@@ -13,16 +13,15 @@ public class S3FileReference extends FileReference {
     private String etag;
 
     public S3FileReference(FileReference fileReference) {
-        if (fileReference == null) return;
-        this.setPath(fileReference.getPath());
-        this.setName(fileReference.getName());
-        this.setExtension(fileReference.getExtension());
-        this.setMimeType(fileReference.getMimeType());
-        this.setSize(fileReference.getSize());
+        super(fileReference);
+    }
+
+    public S3FileReference(String path) {
+        super(path);
     }
 
     public S3FileReference() {
-
+        super();
     }
 
     @Override

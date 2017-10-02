@@ -1,7 +1,7 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.internal.FileUtils;
+import com.onepagecrm.models.internal.FileRefUtils;
 import com.onepagecrm.models.internal.S3FileReference;
 import com.onepagecrm.models.serializers.AttachmentSerializer;
 import com.onepagecrm.models.serializers.S3Serializer;
@@ -160,7 +160,7 @@ public class Attachment extends ApiResource implements Serializable {
      */
 
     public String getFileExtension() {
-        return FileUtils.extensionFromName(filename);
+        return FileRefUtils.extensionFromName(filename);
     }
 
     /**

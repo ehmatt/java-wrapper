@@ -1,10 +1,12 @@
 package com.onepagecrm.models.internal;
 
+import javax.activation.MimetypesFileTypeMap;
+
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 28/09/2017.
  */
 @SuppressWarnings("WeakerAccess")
-public class FileUtils {
+public class FileRefUtils {
 
     public static String nameFromPath(String path) {
         final String empty = "";
@@ -25,5 +27,14 @@ public class FileUtils {
 
         return !filename.contains(".") ? empty :
                 filename.substring(filename.lastIndexOf(".")).replace(".", "");
+    }
+
+    public static String mimeTypeFromPath(String path) {
+        final String empty = "";
+        if (!Utilities.notNullOrEmpty(path)) {
+            return empty;
+        }
+
+        return MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(path);
     }
 }

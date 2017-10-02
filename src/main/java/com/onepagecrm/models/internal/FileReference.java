@@ -1,7 +1,5 @@
 package com.onepagecrm.models.internal;
 
-import javax.activation.MimetypesFileTypeMap;
-
 import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 
 /**
@@ -16,6 +14,16 @@ public class FileReference {
     private String mimeType;
     private long size;
 
+    public FileReference(FileReference fileReference) {
+        this();
+        if (fileReference == null) return;
+        this.setPath(fileReference.getPath());
+        this.setName(fileReference.getName());
+        this.setExtension(fileReference.getExtension());
+        this.setMimeType(fileReference.getMimeType());
+        this.setSize(fileReference.getSize());
+    }
+
     public FileReference(String path) {
         initPath(path);
     }
@@ -26,9 +34,9 @@ public class FileReference {
 
     private void initPath(String path) {
         this.path = path;
-        this.name = FileUtils.nameFromPath(path);
-        this.extension = FileUtils.extensionFromName(name);
-        this.mimeType = MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(path);
+        this.name = FileRefUtils.nameFromPath(path);
+        this.extension = FileRefUtils.extensionFromName(name);
+        this.mimeType = FileRefUtils.mimeTypeFromPath(path);
     }
 
     @Override
