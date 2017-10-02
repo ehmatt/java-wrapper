@@ -9,7 +9,7 @@ import com.onepagecrm.models.internal.S3;
 import com.onepagecrm.models.internal.S3Data;
 import com.onepagecrm.models.internal.S3FileReference;
 import com.onepagecrm.models.internal.S3Form;
-import com.onepagecrm.models.serializers.S3DataSerializer;
+import com.onepagecrm.models.serializers.S3Serializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.Request;
@@ -96,7 +96,7 @@ public class AttachmentsPh2Driver {
                 .setReferenceId("59cccf4b9007ba0db50775a0")
                 .setReferenceType(Attachment.ReferenceType.DEAL);
 
-        String body = S3DataSerializer.toJsonString(uploaded, attachment, contactId);
+        String body = S3Serializer.toJsonString(uploaded, attachment, contactId);
         Request referenceRequest = new PostRequest(ApiResource.ATTACHMENTS_ENDPOINT, "", body);
         referenceRequest.send();
     }

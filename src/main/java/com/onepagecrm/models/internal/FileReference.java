@@ -2,6 +2,8 @@ package com.onepagecrm.models.internal;
 
 import javax.activation.MimetypesFileTypeMap;
 
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
+
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 28/09/2017.
  */
@@ -38,6 +40,10 @@ public class FileReference {
                 ", mimeType='" + mimeType + '\'' +
                 ", size=" + size +
                 '}';
+    }
+
+    public boolean isValid() {
+        return notNullOrEmpty(path) && notNullOrEmpty(name);
     }
 
     public String getPath() {

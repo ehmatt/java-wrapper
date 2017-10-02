@@ -5,6 +5,7 @@ import com.onepagecrm.models.Attachment;
 import com.onepagecrm.models.internal.FileReference;
 import com.onepagecrm.models.internal.S3Data;
 import com.onepagecrm.models.internal.S3FileReference;
+import com.onepagecrm.models.internal.Utilities;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,11 +16,12 @@ import java.util.logging.Logger;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 27/09/2017.
  */
-public class S3DataSerializer extends BaseSerializer {
+public class S3Serializer extends BaseSerializer {
 
-    private static Logger LOG = Logger.getLogger(S3DataSerializer.class.getSimpleName());
+    private static Logger LOG = Logger.getLogger(S3Serializer.class.getSimpleName());
 
-    private static S3Data DEFAULT = new S3Data();
+    private static S3Data DEFAULT_S3_DATA = new S3Data();
+    private static S3FileReference DEFAULT_S3_FILE = new S3FileReference();
 
 //    public static S3Data fromResponse(Response response) throws OnePageException {
 //        JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
@@ -35,13 +37,13 @@ public class S3DataSerializer extends BaseSerializer {
         } catch (JSONException e) {
             LOG.severe("Error with JSON");
             LOG.severe(e.toString());
-            return DEFAULT;
+            return DEFAULT_S3_DATA;
         }
     }
 
     public static S3Data fromJsonObject(JSONObject dataObject) {
         if (dataObject == null) {
-            return DEFAULT;
+            return DEFAULT_S3_DATA;
         }
 
         JSONObject fieldsObject = dataObject.optJSONObject(FIELDS_TAG);
@@ -137,5 +139,14 @@ public class S3DataSerializer extends BaseSerializer {
 
     public static String toJsonString(S3FileReference file, Attachment attachment, String contactId) {
         return toJsonObject(file, attachment, contactId).toString();
+    }
+
+    public static S3FileReference fromXml(String responseBody) {
+        if (!Utilities.notNullOrEmpty(responseBody)) {
+            return DEFAULT_S3_FILE;
+        }
+
+        // TODO: parse XML here and return
+        return DEFAULT_S3_FILE;
     }
 }

@@ -1,5 +1,7 @@
 package com.onepagecrm.models.internal;
 
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
+
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 28/09/2017.
  */
@@ -36,6 +38,11 @@ public class S3FileReference extends FileReference {
                 ", mimeType='" + getMimeType() + '\'' +
                 ", size=" + getSize() +
                 '}';
+    }
+
+    @Override
+    public boolean isValid() {
+        return notNullOrEmpty(key) && notNullOrEmpty(getName());
     }
 
     public String getLocation() {
