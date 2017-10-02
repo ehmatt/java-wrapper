@@ -67,25 +67,25 @@ public class AttachmentsPh2Driver {
         FileReference file = new FileReference(filePath).setMimeType(contentType);
         LOG.info("" + file.toString());
 
-        // OPTION 1: form
+        // OPTION 1: data + file
+        S3FileReference uploaded = S3.upload(contactId, data, file);
+
+        // OPTION 2: form
         //form.setFileReference(file);
         //S3FileReference uploaded = S3.upload(contactId, form);
 
-        // OPTION 2: data + file
-        //S3FileReference uploaded = S3.upload(contactId, data, file);
-
         // OPTION 3: fake
-        String hardcodedLocation = "https://s3-us-west-1.amazonaws.com/onepagecrm-ud2-us-west-1/56fa81eb9007ba07fc000080%2F1506589944670%2Fcillian.jpg";
-        String hardcodedBucket = "onepagecrm-ud2-us-west-1";
-        String hardcodedKey = "56fa81eb9007ba07fc000080/1506589944670/cillian.jpg";
-        String hardcodedEtag = "b771fbbc72899aecedaf3aa77fcce2c1";
-        long hardcodedSize = 31528L;
-        S3FileReference uploaded = new S3FileReference(file)
-                .setLocation(hardcodedLocation)
-                .setBucket(hardcodedBucket)
-                .setKey(hardcodedKey)
-                .setEtag(hardcodedEtag)
-                .setSize(hardcodedSize);
+        //String hardcodedLocation = "https://s3-us-west-1.amazonaws.com/onepagecrm-ud2-us-west-1/56fa81eb9007ba07fc000080%2F1506589944670%2Fcillian.jpg";
+        //String hardcodedBucket = "onepagecrm-ud2-us-west-1";
+        //String hardcodedKey = "56fa81eb9007ba07fc000080/1506589944670/cillian.jpg";
+        //String hardcodedEtag = "b771fbbc72899aecedaf3aa77fcce2c1";
+        //long hardcodedSize = 31528L;
+        //S3FileReference uploaded = new S3FileReference(file)
+        //        .setLocation(hardcodedLocation)
+        //        .setBucket(hardcodedBucket)
+        //        .setKey(hardcodedKey)
+        //        .setEtag(hardcodedEtag)
+        //        .setSize(hardcodedSize);
 
         LOG.info("" + uploaded.toString());
 

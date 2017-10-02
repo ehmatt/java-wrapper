@@ -17,7 +17,7 @@ public class AttachmentSerializerTest extends BaseTest {
     private static final String HARDCODED_LOCATION = "https://s3-us-west-1.amazonaws.com/onepagecrm-ud2-us-west-1/56fa81eb9007ba07fc000080%2F1506589944670%2Fcillian.jpg";
     private static final String HARDCODED_BUCKET = "onepagecrm-ud2-us-west-1";
     private static final String HARDCODED_KEY = "56fa81eb9007ba07fc000080/1506589944670/cillian.jpg";
-    private static final String HARDCODED_ETAG = "b771fbbc72899aecedaf3aa77fcce2c1";
+    private static final String HARDCODED_ETAG = "\"b771fbbc72899aecedaf3aa77fcce2c1\"";
 
     private S3FileReference expected;
 
@@ -51,6 +51,6 @@ public class AttachmentSerializerTest extends BaseTest {
         assertEquals("Locations must be equal", expected.getLocation(), actual.getLocation());
         assertEquals("Buckets must be equal", expected.getBucket(), actual.getBucket());
         assertEquals("Keys must be equal", expected.getKey(), actual.getKey());
-        assertEquals("Etags must be equal", expected.getEtag(), actual.getEtag());
+        assertEquals("ETags must be equal", expected.getEtag(), actual.getEtag());
     }
 }

@@ -42,7 +42,7 @@ public class S3FileReference extends FileReference {
 
     @Override
     public boolean isValid() {
-        return notNullOrEmpty(key) && notNullOrEmpty(getName());
+        return notNullOrEmpty(key);
     }
 
     public String getLocation() {
