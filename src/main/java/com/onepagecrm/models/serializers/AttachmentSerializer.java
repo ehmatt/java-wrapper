@@ -64,6 +64,8 @@ public class AttachmentSerializer extends BaseSerializer {
                 attachmentObject,
                 URL_EXPIRES_AT_TAG
         );
+        addJsonObjectValue(attachment.getReferenceType(), attachmentObject, REFERENCE_TYPE_TAG);
+        addJsonStringValue(attachment.getReferenceId(), attachmentObject, REFERENCE_ID_TAG);
         return attachmentObject.toString();
     }
 
