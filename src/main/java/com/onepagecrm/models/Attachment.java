@@ -17,9 +17,10 @@ import java.util.Date;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 31/07/2017.
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class Attachment extends ApiResource implements Serializable {
 
-    /**
+    /*
      * Constants.
      */
 
@@ -34,7 +35,7 @@ public class Attachment extends ApiResource implements Serializable {
     private static final String REFERENCE_TYPE_NOTE = "note";
     private static final String REFERENCE_TYPE_OTHER = "other"; // Catch all.
 
-    /**
+    /*
      * Member variables.
      */
 
@@ -121,9 +122,7 @@ public class Attachment extends ApiResource implements Serializable {
     private ReferenceType referenceType;
     private String externalUrl;
 
-    // TODO: update AttachmentSerializer to use new fields e.g. ref_id !?
-
-    /**
+    /*
      * API methods
      */
 
@@ -138,7 +137,10 @@ public class Attachment extends ApiResource implements Serializable {
                 S3Serializer.toJsonString(fileRef, this, contactId)
         );
         Response response = request.send();
-        return AttachmentSerializer.fromString(response.getResponseBody());
+        String responseBody = response.getResponseBody();
+        return AttachmentSerializer.fromString(responseBody)
+                .setReferenceId(referenceId)
+                .setReferenceType(referenceType);
     }
 
     private Attachment create(String contactId, S3FileReference fileRef) throws OnePageException {
@@ -148,14 +150,17 @@ public class Attachment extends ApiResource implements Serializable {
                 S3Serializer.toJsonString(fileRef, this, contactId)
         );
         Response response = request.send();
-        return AttachmentSerializer.fromString(response.getResponseBody());
+        String responseBody = response.getResponseBody();
+        return AttachmentSerializer.fromString(responseBody)
+                .setReferenceId(referenceId)
+                .setReferenceType(referenceType);
     }
 
     private String addIdToEndpoint(String endpoint) {
         return endpoint + "/" + this.id;
     }
 
-    /**
+    /*
      * Utility methods
      */
 
@@ -163,7 +168,7 @@ public class Attachment extends ApiResource implements Serializable {
         return FileRefUtils.extensionFromName(filename);
     }
 
-    /**
+    /*
      * Object methods
      */
 
