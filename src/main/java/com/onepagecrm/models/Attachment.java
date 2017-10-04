@@ -4,7 +4,6 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.FileRefUtils;
 import com.onepagecrm.models.internal.S3FileReference;
 import com.onepagecrm.models.serializers.AttachmentSerializer;
-import com.onepagecrm.models.serializers.S3Serializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.PostRequest;
@@ -134,7 +133,7 @@ public class Attachment extends ApiResource implements Serializable {
         Request request = new PutRequest(
                 addIdToEndpoint(ATTACHMENTS_ENDPOINT),
                 null,
-                S3Serializer.toJsonString(fileRef, this, contactId)
+                AttachmentSerializer.toJsonString(this, contactId, fileRef)
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
@@ -147,7 +146,7 @@ public class Attachment extends ApiResource implements Serializable {
         Request request = new PostRequest(
                 ATTACHMENTS_ENDPOINT,
                 null,
-                S3Serializer.toJsonString(fileRef, this, contactId)
+                AttachmentSerializer.toJsonString(this, contactId, fileRef)
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
@@ -207,7 +206,7 @@ public class Attachment extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return AttachmentSerializer.toJsonObject(this);
+        return AttachmentSerializer.toJsonString(this);
     }
 
     public String getFilename() {

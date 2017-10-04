@@ -1,6 +1,6 @@
 package com.onepagecrm.models.internal;
 
-import com.onepagecrm.models.serializers.S3Serializer;
+import com.onepagecrm.models.serializers.S3DataSerializer;
 
 import java.io.Serializable;
 
@@ -28,7 +28,7 @@ public class S3Data implements Serializable {
 
     @Override
     public String toString() {
-        return S3Serializer.toJsonString(this);
+        return S3DataSerializer.toJsonString(this);
     }
 
     public Long getQuota() {

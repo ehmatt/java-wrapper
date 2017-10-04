@@ -5,7 +5,7 @@ import com.onepagecrm.models.internal.FileReference;
 import com.onepagecrm.models.internal.S3Data;
 import com.onepagecrm.models.internal.S3FileReference;
 import com.onepagecrm.models.internal.Utilities;
-import com.onepagecrm.models.serializers.S3Serializer;
+import com.onepagecrm.models.serializers.S3FileReferenceSerializer;
 import com.onepagecrm.net.request.Request;
 
 import java.io.BufferedReader;
@@ -161,7 +161,7 @@ public class MultipartUpload {
             String result = convertStreamToString(inputStream);
 
             // Parse XML response and add to S3FileRef data.
-            S3FileReference parsed = S3Serializer.fromXml(result);
+            S3FileReference parsed = S3FileReferenceSerializer.fromString(result);
             createdFileRef.setLocation(parsed.getLocation());
             createdFileRef.setBucket(parsed.getBucket());
             createdFileRef.setKey(parsed.getKey());
