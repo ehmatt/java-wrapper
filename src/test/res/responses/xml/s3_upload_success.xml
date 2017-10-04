@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PostResponse>
-    <Location>
-        https://s3-us-west-1.amazonaws.com/onepagecrm-ud2-us-west-1/56fa81eb9007ba07fc000080%2F1506589944670%2Fcillian.jpg
-    </Location>
+    <Location>https://s3-us-west-1.amazonaws.com/onepagecrm-ud2-us-west-1/56fa81eb9007ba07fc000080%2F1506589944670%2Fcillian.jpg</Location>
     <Bucket>onepagecrm-ud2-us-west-1</Bucket>
     <Key>56fa81eb9007ba07fc000080/1506589944670/cillian.jpg</Key>
     <ETag>"b771fbbc72899aecedaf3aa77fcce2c1"</ETag>

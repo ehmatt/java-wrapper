@@ -1,5 +1,7 @@
 package com.onepagecrm.models.serializers;
 
+import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.S3Exception;
 import com.onepagecrm.models.internal.Utilities;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -15,12 +17,23 @@ import java.util.logging.Logger;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 04/10/2017.
  */
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class XMLSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(XMLSerializer.class.getSimpleName());
 
-    public static Document documentFromString(String xml) throws Exception {
+    protected static final String LOCATION_TAG = "Location";
+    protected static final String BUCKET_TAG = "Bucket";
+    protected static final String KEY_TAG = "Key";
+    protected static final String ETAG_TAG = "ETag";
+
+    protected static final String ERROR_TAG = "Error";
+    protected static final String CODE_TAG = "Code";
+    protected static final String MESSAGE_TAG = "Message";
+    protected static final String REQUEST_ID_TAG = "RequestId";
+    protected static final String HOST_ID_TAG = "HostId";
+
+    public static Document documentFromString(String xml) throws OnePageException {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -28,11 +41,22 @@ public class XMLSerializer extends BaseSerializer {
             return builder.parse(is);
 
         } catch (Exception e) {
-            LOG.severe("Problems parsing XML to Document.");
+            final String message = "Problems parsing XML to Document.";
+            LOG.severe(message);
             LOG.severe(e.toString());
             e.printStackTrace();
-            throw e;
+            throw new S3Exception(message).setErrorMessage(message);
         }
+    }
+
+    public static Element rootElementFromDoc(Document document) throws OnePageException {
+        document.getDocumentElement().normalize();
+        Element rootElement = document.getDocumentElement();
+        if (ERROR_TAG.equals(rootElement.getTagName())) {
+            final String message = XMLSerializer.stringFromElement(rootElement, MESSAGE_TAG);
+            throw new S3Exception(message).setErrorMessage(message);
+        }
+        return rootElement;
     }
 
     public static String stringFromElement(Element element, String tagName) {

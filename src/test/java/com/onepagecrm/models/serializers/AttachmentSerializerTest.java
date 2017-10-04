@@ -1,6 +1,7 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.BaseTest;
+import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.S3FileReference;
 import com.onepagecrm.models.internal.Utilities;
 
@@ -9,6 +10,7 @@ import java.util.logging.Logger;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 02/10/2017.
  */
+@SuppressWarnings("unused")
 public class AttachmentSerializerTest extends BaseTest {
 
     private static Logger LOG = Logger.getLogger(AttachmentSerializerTest.class.getName());
@@ -37,10 +39,10 @@ public class AttachmentSerializerTest extends BaseTest {
         super.tearDown();
     }
 
-    public void testS3XmlSerialization() throws Exception {
+    public void testUploadS3_successXML() throws Exception {
         String filePath = "./src/test/res/responses/xml/s3_upload_success.xml";
         String successXml = Utilities.getResourceContents(filePath);
-        S3FileReference actual = S3Serializer.fromXml(successXml);
+        S3FileReference actual = S3FileReferenceSerializer.fromString(successXml);
 
         // Make sure both are non-null and valid s3 file refs.
         assertTrue("Expected must be non-null and valid s3 file ref.",
@@ -52,5 +54,22 @@ public class AttachmentSerializerTest extends BaseTest {
         assertEquals("Buckets must be equal", expected.getBucket(), actual.getBucket());
         assertEquals("Keys must be equal", expected.getKey(), actual.getKey());
         assertEquals("ETags must be equal", expected.getEtag(), actual.getEtag());
+    }
+
+    public void testUploadS3_failureXML() throws Exception {
+        String filePath = "./src/test/res/responses/xml/s3_upload_fail_too_large.xml";
+        String failureXml = Utilities.getResourceContents(filePath);
+
+        S3FileReference expectedFile = null;
+        Exception expectedException = null;
+
+        try {
+            expectedFile = S3FileReferenceSerializer.fromString(failureXml);
+        } catch (Exception e) {
+            expectedException = e;
+        }
+
+        assertTrue("Exception is never thrown.", expectedFile == null && expectedException != null);
+        assertTrue("Exception is not of expected type.", expectedException instanceof OnePageException);
     }
 }

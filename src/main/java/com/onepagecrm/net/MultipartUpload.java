@@ -1,7 +1,8 @@
 package com.onepagecrm.net;
 
 import com.onepagecrm.OnePageCRM;
-import com.onepagecrm.exceptions.S3UploadException;
+import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.S3Exception;
 import com.onepagecrm.models.internal.FileReference;
 import com.onepagecrm.models.internal.S3Data;
 import com.onepagecrm.models.internal.S3FileReference;
@@ -38,27 +39,28 @@ public class MultipartUpload {
     /**
      * Upload a file to a server using multi-part upload.
      */
-    public static S3FileReference perform(S3Data data, Map<String, String> params, String filePath) {
+    public static S3FileReference perform(S3Data data, Map<String, String> params, String filePath) throws OnePageException {
         return perform(data.getUrl(), params, new FileReference(filePath));
     }
 
     /**
      * Upload a file to a server using multi-part upload.
      */
-    public static S3FileReference perform(S3Data data, Map<String, String> params, FileReference fileRef) {
+    public static S3FileReference perform(S3Data data, Map<String, String> params, FileReference fileRef) throws OnePageException {
         return perform(data.getUrl(), params, fileRef);
     }
 
     /**
      * Upload a file to a server using multi-part upload.
      */
-    public static S3FileReference perform(String urlTo, Map<String, String> params, FileReference fileRef) {
+    public static S3FileReference perform(String urlTo, Map<String, String> params, FileReference fileRef) throws OnePageException {
         if (!Utilities.notNullOrEmpty(urlTo) || fileRef == null) {
             return null;
         }
 
         S3FileReference createdFileRef = new S3FileReference(fileRef);
         params = params != null ? params : new HashMap<String, String>();
+        OnePageException toBeThrown = null;
 
         HttpURLConnection connection;
         DataOutputStream outputStream;
@@ -138,7 +140,8 @@ public class MultipartUpload {
             if (file.length() > S3FileReference.MAX_SIZE_BYTES) {
                 final String format = "File size exceeds limit. File: %d bytes. Limit: %d bytes.";
                 final String message = String.format(format, file.length(), S3FileReference.MAX_SIZE_BYTES);
-                throw new S3UploadException(message).setErrorMessage(message);
+                toBeThrown = new S3Exception(message).setErrorMessage(message);
+                throw toBeThrown;
             }
             createdFileRef.setSize(file.length());
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -166,13 +169,6 @@ public class MultipartUpload {
             }
             String result = convertStreamToString(inputStream);
 
-            // Parse XML response and add to S3FileRef data.
-            S3FileReference parsed = S3FileReferenceSerializer.fromString(result);
-            createdFileRef.setLocation(parsed.getLocation());
-            createdFileRef.setBucket(parsed.getBucket());
-            createdFileRef.setKey(parsed.getKey());
-            createdFileRef.setEtag(parsed.getEtag());
-
             // -------------------------------
             LOG.info("--- RESPONSE ---");
             LOG.info("Code: " + connection.getResponseCode());
@@ -180,6 +176,18 @@ public class MultipartUpload {
             LOG.info("Body: " + result);
             LOG.info("*************************************");
             // -------------------------------
+
+            // Parse XML response and add to S3FileRef data.
+            try {
+                S3FileReference parsed = S3FileReferenceSerializer.fromString(result);
+                createdFileRef.setLocation(parsed.getLocation());
+                createdFileRef.setBucket(parsed.getBucket());
+                createdFileRef.setKey(parsed.getKey());
+                createdFileRef.setEtag(parsed.getEtag());
+
+            } catch (OnePageException e) {
+                toBeThrown = e;
+            }
 
             // Finish / tidy up.
             fileInputStream.close();
@@ -191,6 +199,10 @@ public class MultipartUpload {
             LOG.severe("Error in multi-part upload");
             LOG.severe(e.toString());
             e.printStackTrace();
+        }
+
+        if (toBeThrown != null) {
+            throw toBeThrown;
         }
 
         return createdFileRef;

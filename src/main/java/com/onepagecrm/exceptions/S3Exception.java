@@ -5,13 +5,13 @@ import java.util.Map;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 04/10/2017.
  */
-public class S3UploadException extends OnePageException {
+public class S3Exception extends OnePageException {
 
-    public S3UploadException(String message) {
+    public S3Exception(String message) {
         super(message);
     }
 
-    public S3UploadException() {
+    public S3Exception() {
 
     }
 
@@ -21,7 +21,7 @@ public class S3UploadException extends OnePageException {
     }
 
     @Override
-    public S3UploadException setErrorName(String errorName) {
+    public S3Exception setErrorName(String errorName) {
         super.setErrorName(errorName);
         return this;
     }
@@ -32,7 +32,7 @@ public class S3UploadException extends OnePageException {
     }
 
     @Override
-    public S3UploadException setStatus(int status) {
+    public S3Exception setStatus(int status) {
         super.setStatus(status);
         return this;
     }
@@ -43,7 +43,7 @@ public class S3UploadException extends OnePageException {
     }
 
     @Override
-    public S3UploadException setMessage(String message) {
+    public S3Exception setMessage(String message) {
         super.setMessage(message);
         return this;
     }
@@ -54,7 +54,7 @@ public class S3UploadException extends OnePageException {
     }
 
     @Override
-    public S3UploadException setErrorMessage(String errorMessage) {
+    public S3Exception setErrorMessage(String errorMessage) {
         super.setErrorMessage(errorMessage);
         return this;
     }
@@ -65,7 +65,7 @@ public class S3UploadException extends OnePageException {
     }
 
     @Override
-    public S3UploadException setErrors(Map<String, String> errors) {
+    public S3Exception setErrors(Map<String, String> errors) {
         super.setErrors(errors);
         return this;
     }
