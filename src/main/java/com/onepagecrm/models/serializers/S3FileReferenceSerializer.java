@@ -14,6 +14,11 @@ public class S3FileReferenceSerializer extends BaseSerializer {
 
     private static Logger LOG = Logger.getLogger(S3FileReferenceSerializer.class.getSimpleName());
 
+    private static final String LOCATION_TAG = "Location";
+    private static final String BUCKET_TAG = "Bucket";
+    private static final String KEY_TAG = "Key";
+    private static final String ETAG_TAG = "ETag";
+
     private static S3FileReference DEFAULT = new S3FileReference();
 
     // TODO: parse errors
@@ -26,20 +31,18 @@ public class S3FileReferenceSerializer extends BaseSerializer {
         }
 
         try {
-            Document document = loadXMLFromString(responseBody);
+            Document document = XMLSerializer.documentFromString(responseBody);
             document.getDocumentElement().normalize();
             Element rootElement = document.getDocumentElement();
 
             return new S3FileReference()
-                    .setLocation(rootElement.getElementsByTagName("Location").item(0).getTextContent())
-                    .setBucket(rootElement.getElementsByTagName("Bucket").item(0).getTextContent())
-                    .setKey(rootElement.getElementsByTagName("Key").item(0).getTextContent())
-                    .setEtag(rootElement.getElementsByTagName("ETag").item(0).getTextContent());
+                    .setLocation(XMLSerializer.stringFromElement(rootElement, LOCATION_TAG))
+                    .setBucket(XMLSerializer.stringFromElement(rootElement, BUCKET_TAG))
+                    .setKey(XMLSerializer.stringFromElement(rootElement, KEY_TAG))
+                    .setEtag(XMLSerializer.stringFromElement(rootElement, ETAG_TAG));
 
         } catch (Exception e) {
-            LOG.severe("Problems parsing XML.");
-            LOG.severe(e.toString());
-            e.printStackTrace();
+            // No need to print... already done in XMLSerializer class.
             return DEFAULT;
         }
     }
