@@ -9,6 +9,8 @@ import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
  */
 public class S3FileReference extends FileReference implements Serializable {
 
+    public static final long MAX_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB / 10485760 bytes
+
     private String location;
     private String bucket;
     private String key;

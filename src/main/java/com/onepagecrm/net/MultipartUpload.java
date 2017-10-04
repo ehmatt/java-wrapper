@@ -1,6 +1,7 @@
 package com.onepagecrm.net;
 
 import com.onepagecrm.OnePageCRM;
+import com.onepagecrm.exceptions.S3UploadException;
 import com.onepagecrm.models.internal.FileReference;
 import com.onepagecrm.models.internal.S3Data;
 import com.onepagecrm.models.internal.S3FileReference;
@@ -30,7 +31,7 @@ public class MultipartUpload {
     private static final Logger LOG = Logger.getLogger(MultipartUpload.class.getSimpleName());
 
     private static final String DEFAULT_USER_AGENT = "Java/1.7.0_80";
-    private static final int MAX_BUFFER_SIZE = 1 * 1024 * 1024;
+    private static final int MAX_BUFFER_SIZE = 1 * 1024 * 1024; // 1 MB
     private static final String TWO_HYPHENS = "--";
     private static final String LINE_END = "\r\n";
 
@@ -134,6 +135,11 @@ public class MultipartUpload {
 
             // Read from file and write to server (via DataOutputStream).
             File file = new File(filePath);
+            if (file.length() > S3FileReference.MAX_SIZE_BYTES) {
+                final String format = "File size exceeds limit. File: %d bytes. Limit: %d bytes.";
+                final String message = String.format(format, file.length(), S3FileReference.MAX_SIZE_BYTES);
+                throw new S3UploadException(message).setErrorMessage(message);
+            }
             createdFileRef.setSize(file.length());
             FileInputStream fileInputStream = new FileInputStream(file);
 
