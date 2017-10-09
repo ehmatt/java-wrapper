@@ -146,18 +146,7 @@ public class MultipartUpload {
             }
             createdFileRef.setSize(file.length());
             FileInputStream fileInputStream = new FileInputStream(file);
-
-            bytesAvailable = fileInputStream.available();
-            bufferSize = Math.min(bytesAvailable, MAX_BUFFER_SIZE);
-            buffer = new byte[bufferSize];
-
-            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-            while (bytesRead > 0) {
-                outputStream.write(buffer, 0, bufferSize);
-                bytesAvailable = fileInputStream.available();
-                bufferSize = Math.min(bytesAvailable, MAX_BUFFER_SIZE);
-                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-            }
+            FileUtilities.copy(fileInputStream, outputStream, false);
             outputStream.writeBytes(LINE_END);
 
             // Finish communication with server.

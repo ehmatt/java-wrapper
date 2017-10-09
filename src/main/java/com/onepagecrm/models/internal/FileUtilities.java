@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 09/10/2017.
  */
-@SuppressWarnings({"UnusedReturnValue", "unused"})
+@SuppressWarnings({"UnusedReturnValue", "unused", "WeakerAccess"})
 public class FileUtilities {
 
     private static final Logger LOG = Logger.getLogger(FileUtilities.class.getName());
@@ -98,6 +98,10 @@ public class FileUtilities {
     }
 
     public static boolean copy(InputStream is, OutputStream os) {
+        return copy(is, os, true);
+    }
+
+    public static boolean copy(InputStream is, OutputStream os, boolean close) {
         if (is == null || os == null) return false;
 
         int bytesRead, bytesAvailable, bufferSize;
@@ -116,9 +120,11 @@ public class FileUtilities {
                 bytesRead = is.read(buffer, 0, bufferSize);
             }
 
-            is.close();
-            os.flush();
-            os.close();
+            if (close) {
+                is.close();
+                os.flush();
+                os.close();
+            }
             return true;
 
         } catch (IOException e) {
