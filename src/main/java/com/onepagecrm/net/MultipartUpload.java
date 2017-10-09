@@ -4,6 +4,7 @@ import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.exceptions.S3Exception;
 import com.onepagecrm.models.internal.FileReference;
+import com.onepagecrm.models.internal.FileUtilities;
 import com.onepagecrm.models.internal.S3Data;
 import com.onepagecrm.models.internal.S3FileReference;
 import com.onepagecrm.models.internal.Utilities;

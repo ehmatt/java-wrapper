@@ -15,9 +15,12 @@ import java.util.logging.Logger;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 09/10/2017.
  */
+@SuppressWarnings({"UnusedReturnValue", "unused"})
 public class FileUtilities {
 
     private static final Logger LOG = Logger.getLogger(FileUtilities.class.getName());
+
+    private static final int MAX_BUFFER_SIZE = 1024 * 1024; // 1 MB
 
     /**
      * Get the String file contents at a given path.
@@ -94,20 +97,27 @@ public class FileUtilities {
         return Base64.decodeBase64(imageDataString);
     }
 
-    // TODO: use this method everywhere we are copying files
     public static boolean copy(InputStream is, OutputStream os) {
         if (is == null || os == null) return false;
 
-        try {
-            // TODO: improve efficiency / buffer size
-            byte[] buffer = new byte[1024];
-            int length;
+        int bytesRead, bytesAvailable, bufferSize;
+        byte[] buffer;
 
-            while ((length = is.read(buffer)) != -1) {
-                os.write(buffer, 0, length);
+        try {
+            bytesAvailable = is.available();
+            bufferSize = Math.min(bytesAvailable, MAX_BUFFER_SIZE);
+            buffer = new byte[bufferSize];
+
+            bytesRead = is.read(buffer, 0, bufferSize);
+            while (bytesRead > 0) {
+                os.write(buffer, 0, bufferSize);
+                bytesAvailable = is.available();
+                bufferSize = Math.min(bytesAvailable, MAX_BUFFER_SIZE);
+                bytesRead = is.read(buffer, 0, bufferSize);
             }
 
             is.close();
+            os.flush();
             os.close();
             return true;
 
