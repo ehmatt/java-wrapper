@@ -2,8 +2,8 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.BaseTest;
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.internal.FileUtilities;
 import com.onepagecrm.models.internal.S3FileReference;
-import com.onepagecrm.models.internal.Utilities;
 
 import java.util.logging.Logger;
 
@@ -41,7 +41,7 @@ public class AttachmentSerializerTest extends BaseTest {
 
     public void testUploadS3_successXML() throws Exception {
         String filePath = "./src/test/res/responses/xml/s3_upload_success.xml";
-        String successXml = Utilities.getResourceContents(filePath);
+        String successXml = FileUtilities.getResourceContents(filePath);
         S3FileReference actual = S3FileReferenceSerializer.fromString(successXml);
 
         // Make sure both are non-null and valid s3 file refs.
@@ -58,7 +58,7 @@ public class AttachmentSerializerTest extends BaseTest {
 
     public void testUploadS3_failureXML() throws Exception {
         String filePath = "./src/test/res/responses/xml/s3_upload_fail_too_large.xml";
-        String failureXml = Utilities.getResourceContents(filePath);
+        String failureXml = FileUtilities.getResourceContents(filePath);
 
         S3FileReference expectedFile = null;
         Exception expectedException = null;

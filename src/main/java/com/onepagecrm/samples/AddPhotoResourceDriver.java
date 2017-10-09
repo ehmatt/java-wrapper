@@ -5,10 +5,13 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
-import com.onepagecrm.models.internal.Utilities;
+import com.onepagecrm.models.internal.FileUtilities;
 import com.onepagecrm.net.request.Request;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -53,12 +56,12 @@ public class AddPhotoResourceDriver {
 
         String imagePath = "src/test/res/cillian.jpg";
 
-        String resource = Utilities.getResourceContents(imagePath);
+        String resource = FileUtilities.getResourceContents(imagePath);
         LOG.info("RAW : " + resource);
 
         File imageFile = new File(imagePath);
 
-        String b64EncodedString = Utilities.encodeImage(imagePath);
+        String b64EncodedString = FileUtilities.encodeImage(imagePath);
         LOG.info("Base64 encoded String : " + b64EncodedString);
 
         contact.addPhoto(b64EncodedString);
