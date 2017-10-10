@@ -33,7 +33,6 @@ public class MultipartUpload {
     private static final Logger LOG = Logger.getLogger(MultipartUpload.class.getSimpleName());
 
     private static final String DEFAULT_USER_AGENT = "Java/1.7.0_80";
-    private static final int MAX_BUFFER_SIZE = 1 * 1024 * 1024; // 1 MB
     private static final String TWO_HYPHENS = "--";
     private static final String LINE_END = "\r\n";
 
@@ -41,20 +40,34 @@ public class MultipartUpload {
      * Upload a file to a server using multi-part upload.
      */
     public static S3FileReference perform(S3Data data, Map<String, String> params, String filePath) throws OnePageException {
-        return perform(data.getUrl(), params, new FileReference(filePath));
+        return perform(data.getUrl(), params, new FileReference(filePath), null);
+    }
+
+    /**
+     * Upload a file to a server using multi-part upload.
+     */
+    public static S3FileReference perform(S3Data data, Map<String, String> params, String filePath, InputStream uploadStream) throws OnePageException {
+        return perform(data.getUrl(), params, new FileReference(filePath), uploadStream);
     }
 
     /**
      * Upload a file to a server using multi-part upload.
      */
     public static S3FileReference perform(S3Data data, Map<String, String> params, FileReference fileRef) throws OnePageException {
-        return perform(data.getUrl(), params, fileRef);
+        return perform(data.getUrl(), params, fileRef, null);
     }
 
     /**
      * Upload a file to a server using multi-part upload.
      */
-    public static S3FileReference perform(String urlTo, Map<String, String> params, FileReference fileRef) throws OnePageException {
+    public static S3FileReference perform(S3Data data, Map<String, String> params, FileReference fileRef, InputStream uploadStream) throws OnePageException {
+        return perform(data.getUrl(), params, fileRef, uploadStream);
+    }
+
+    /**
+     * Upload a file to a server using multi-part upload.
+     */
+    public static S3FileReference perform(String urlTo, Map<String, String> params, FileReference fileRef, InputStream uploadStream) throws OnePageException {
         if (!Utilities.notNullOrEmpty(urlTo) || fileRef == null) {
             return null;
         }
@@ -64,8 +77,8 @@ public class MultipartUpload {
         OnePageException toBeThrown = null;
 
         HttpURLConnection connection;
-        DataOutputStream outputStream;
-        InputStream inputStream;
+        DataOutputStream requestStream;
+        InputStream responseStream;
 
         String filePath = fileRef.getPath();
         String fileName = fileRef.getName();
@@ -82,9 +95,6 @@ public class MultipartUpload {
             LOG.info("mimeType: " + mimeType);
         }
         // -------------------------------
-
-        int bytesRead, bytesAvailable, bufferSize;
-        byte[] buffer;
 
         try {
             URL url = new URL(urlTo);
@@ -112,29 +122,29 @@ public class MultipartUpload {
             LOG.info("User-Agent: " + userAgent);
             // -------------------------------
 
-            outputStream = new DataOutputStream(connection.getOutputStream());
-            outputStream.writeBytes(TWO_HYPHENS + boundary + LINE_END);
+            requestStream = new DataOutputStream(connection.getOutputStream());
+            requestStream.writeBytes(TWO_HYPHENS + boundary + LINE_END);
 
             // Upload POST Data
             for (String key : params.keySet()) {
                 String value = params.get(key);
                 LOG.info(key + ": " + value);
 
-                outputStream.writeBytes(TWO_HYPHENS + boundary + LINE_END);
-                outputStream.writeBytes("Content-Disposition: form-data; name=\"" + key + "\"" + LINE_END);
-                outputStream.writeBytes("Content-Type: text/plain" + LINE_END);
-                outputStream.writeBytes(LINE_END);
-                outputStream.writeBytes(value);
-                outputStream.writeBytes(LINE_END);
+                requestStream.writeBytes(TWO_HYPHENS + boundary + LINE_END);
+                requestStream.writeBytes("Content-Disposition: form-data; name=\"" + key + "\"" + LINE_END);
+                requestStream.writeBytes("Content-Type: text/plain" + LINE_END);
+                requestStream.writeBytes(LINE_END);
+                requestStream.writeBytes(value);
+                requestStream.writeBytes(LINE_END);
             }
 
-            outputStream.writeBytes(LINE_END);
+            requestStream.writeBytes(LINE_END);
 
-            outputStream.writeBytes(TWO_HYPHENS + boundary + LINE_END);
-            outputStream.writeBytes("Content-Disposition: form-data; name=\"" + "file" + "\"; filename=\"" + fileName + "\"" + LINE_END);
-            outputStream.writeBytes("Content-Type: " + mimeType + LINE_END);
-            outputStream.writeBytes("Content-Transfer-Encoding: binary" + LINE_END);
-            outputStream.writeBytes(LINE_END);
+            requestStream.writeBytes(TWO_HYPHENS + boundary + LINE_END);
+            requestStream.writeBytes("Content-Disposition: form-data; name=\"" + "file" + "\"; filename=\"" + fileName + "\"" + LINE_END);
+            requestStream.writeBytes("Content-Type: " + mimeType + LINE_END);
+            requestStream.writeBytes("Content-Transfer-Encoding: binary" + LINE_END);
+            requestStream.writeBytes(LINE_END);
 
             // Read from file and write to server (via DataOutputStream).
             File file = new File(filePath);
@@ -145,19 +155,21 @@ public class MultipartUpload {
                 throw toBeThrown;
             }
             createdFileRef.setSize(file.length());
-            FileInputStream fileInputStream = new FileInputStream(file);
-            FileUtilities.copy(fileInputStream, outputStream, false);
-            outputStream.writeBytes(LINE_END);
+            if (uploadStream == null) {
+                uploadStream = new FileInputStream(file);
+            }
+            FileUtilities.copy(uploadStream, requestStream, false);
+            requestStream.writeBytes(LINE_END);
 
             // Finish communication with server.
-            outputStream.writeBytes(TWO_HYPHENS + boundary + TWO_HYPHENS + LINE_END);
+            requestStream.writeBytes(TWO_HYPHENS + boundary + TWO_HYPHENS + LINE_END);
 
             if (connection.getResponseCode() >= 400) {
-                inputStream = connection.getErrorStream();
+                responseStream = connection.getErrorStream();
             } else {
-                inputStream = connection.getInputStream();
+                responseStream = connection.getInputStream();
             }
-            String result = convertStreamToString(inputStream);
+            String result = convertStreamToString(responseStream);
 
             // -------------------------------
             LOG.info("--- RESPONSE ---");
@@ -180,10 +192,10 @@ public class MultipartUpload {
             }
 
             // Finish / tidy up.
-            fileInputStream.close();
-            inputStream.close();
-            outputStream.flush();
-            outputStream.close();
+            uploadStream.close();
+            responseStream.close();
+            requestStream.flush();
+            requestStream.close();
 
         } catch (Exception e) {
             LOG.severe("Error in multi-part upload");
@@ -199,26 +211,23 @@ public class MultipartUpload {
     }
 
     private static String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-        String line;
         try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            StringBuilder sb = new StringBuilder();
+
+            String line;
             while ((line = reader.readLine()) != null) {
                 sb.append(line);
             }
+
+            is.close();
+            return sb.toString();
+
         } catch (IOException e) {
-            LOG.severe("Error reading from InputStream");
+            LOG.severe("Error reading from response stream.");
             LOG.severe(e.toString());
             e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                LOG.severe("Error closing InputStream");
-                LOG.severe(e.toString());
-                e.printStackTrace();
-            }
+            return null;
         }
-        return sb.toString();
     }
 }

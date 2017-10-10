@@ -115,7 +115,7 @@ public class FileUtilities {
      *
      * @param is - the {@link InputStream input stream} to be read from.
      * @param os - the {@link OutputStream output stream} to being written to.
-     * @return
+     * @return - true if successfully finished copying, false otherwise.
      */
     public static boolean copy(InputStream is, OutputStream os) {
         return copy(is, os, true);
@@ -127,7 +127,7 @@ public class FileUtilities {
      * @param is    - the {@link InputStream input stream} to be read from.
      * @param os    - the {@link OutputStream output stream} to being written to.
      * @param close - whether the streams should be closed/flushed on finish.
-     * @return
+     * @return - true if successfully finished copying, false otherwise.
      */
     public static boolean copy(InputStream is, OutputStream os, boolean close) {
         if (is == null || os == null) return false;
