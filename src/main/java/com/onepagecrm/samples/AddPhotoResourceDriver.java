@@ -8,7 +8,6 @@ import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.FileUtilities;
 import com.onepagecrm.net.request.Request;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,15 +50,13 @@ public class AddPhotoResourceDriver {
 
         LOG.info("Logged in User : " + loggedInUser);
 
-        ContactList stream = loggedInUser.actionStream();
+        ContactList stream = loggedInUser.searchActionStream("AND-724");
         Contact contact = stream.get(0);
 
-        String imagePath = "src/test/res/cillian.jpg";
+        String imagePath = "src/test/res/image_encode/cillian.jpg";
 
         String resource = FileUtilities.getResourceContents(imagePath);
         LOG.info("RAW : " + resource);
-
-        File imageFile = new File(imagePath);
 
         String b64EncodedString = FileUtilities.encodeImage(imagePath);
         LOG.info("Base64 encoded String : " + b64EncodedString);
@@ -67,38 +64,5 @@ public class AddPhotoResourceDriver {
         contact.addPhoto(b64EncodedString);
 
         LOG.info(contact.toString());
-
-//        try {
-//            // Reading Image file from file system.
-//            FileInputStream imageInFile = new FileInputStream(imageFile);
-//            byte[] imageData = new byte[(int) imageFile.length()];
-//            imageInFile.read(imageData);
-//
-//            // Converting Image byte array to Base64 encoded String.
-//            String imageDataString = Utilities.encodeImage(imageData);
-//            LOG.info("Base64 encoded String : " + imageDataString);
-//
-//            contact.addPhoto(imageDataString);
-//            imageInFile.close();
-//
-//            // ******** BELOW COMMENTED AS WE DON'T WANT TO ADD EXTRA FILES TO REPO ********** //
-////            // Converting a Base64 String into Image byte array
-////            byte[] imageByteArray = Utilities.decodeImage(imageDataString);
-////
-////            // Write a image byte array into file system
-////            FileOutputStream imageOutFile = new FileOutputStream("src/test/res/cillian-output.jpg");
-////
-////            // Write the image date (array of bytes) to a file.
-////            imageOutFile.write(imageByteArray);
-////
-////            imageOutFile.close();
-//
-//            LOG.info("Image Successfully Manipulated!");
-//
-//        } catch (FileNotFoundException e) {
-//            LOG.severe("Image not found\n" + e);
-//        } catch (IOException e) {
-//            LOG.severe("Exception while reading the Image\n" + e);
-//        }
     }
 }
