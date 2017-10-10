@@ -7,6 +7,7 @@ import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.Request;
 
+import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -30,8 +31,17 @@ public class S3 {
         return upload(contactId, form.getData(), form.getFileReference());
     }
 
+    public static S3FileReference upload(String contactId, S3Form form, InputStream uploadStream) throws OnePageException {
+        return upload(contactId, form.getData(), form.getFileReference(), uploadStream);
+    }
+
     public static S3FileReference upload(String contactId, S3Data data, FileReference fileReference) throws OnePageException {
         Map<String, String> params = S3DataSerializer.toParamMap(contactId, data, fileReference);
         return MultipartUpload.perform(data, params, fileReference);
+    }
+
+    public static S3FileReference upload(String contactId, S3Data data, FileReference fileReference, InputStream uploadStream) throws OnePageException {
+        Map<String, String> params = S3DataSerializer.toParamMap(contactId, data, fileReference);
+        return MultipartUpload.perform(data, params, fileReference, uploadStream);
     }
 }
