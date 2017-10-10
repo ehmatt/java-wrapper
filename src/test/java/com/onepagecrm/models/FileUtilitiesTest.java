@@ -61,4 +61,36 @@ public class FileUtilitiesTest extends BaseTest {
             // Not expecting this
         }
     }
+
+    public void testBytesToKb() throws Exception {
+        final long expected = 1L; // 1 kB
+        final long bytes = 1024; // 1024 bytes
+
+        assertEquals("Byte conversion failed.",
+                expected, FileUtilities.bytesToKb(bytes));
+    }
+
+    public void testBytesToMb() throws Exception {
+        final long expected = 1L; // 1 MB
+        final long bytes = 1024 * 1024; // 1048576 bytes
+
+        assertEquals("Byte conversion failed.",
+                expected, FileUtilities.bytesToMb(bytes));
+    }
+
+    public void testKbToBytes() throws Exception {
+        final long expected = 1024; // 1024 bytes
+        final long kiloBytes = 1L; // 1 kB
+
+        assertEquals("Byte conversion failed.",
+                expected, FileUtilities.kbToBytes(kiloBytes));
+    }
+
+    public void testMbToBytes() throws Exception {
+        final long expected = 1024 * 1024; // 1048576 bytes
+        final long megaBytes = 1L; // 1 MB
+
+        assertEquals("Byte conversion failed.",
+                expected, FileUtilities.mbToBytes(megaBytes));
+    }
 }

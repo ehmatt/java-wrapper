@@ -1,10 +1,15 @@
 package com.onepagecrm.exceptions;
 
+import com.onepagecrm.models.internal.FileUtilities;
+import com.onepagecrm.models.internal.S3FileReference;
+
+import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 04/10/2017.
  */
+@SuppressWarnings("WeakerAccess")
 public class S3Exception extends OnePageException {
 
     public S3Exception(String message) {
@@ -68,5 +73,14 @@ public class S3Exception extends OnePageException {
     public S3Exception setErrors(Map<String, String> errors) {
         super.setErrors(errors);
         return this;
+    }
+
+    public static String tooLargeMessage() {
+        return tooLargeMessage(S3FileReference.MAX_SIZE_BYTES);
+    }
+
+    public static String tooLargeMessage(long maxSizeBytes) {
+        return String.format(Locale.ENGLISH, "File size exceeds limit: %dMB.",
+                FileUtilities.bytesToMb(maxSizeBytes));
     }
 }

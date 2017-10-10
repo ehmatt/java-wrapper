@@ -19,7 +19,8 @@ public class FileUtilities {
 
     private static final Logger LOG = Logger.getLogger(FileUtilities.class.getName());
 
-    private static final int MAX_BUFFER_SIZE = 1024 * 1024; // 1 MB
+    @SuppressWarnings("PointlessArithmeticExpression")
+    private static final int MAX_BUFFER_SIZE_BYTES = 1 * 1024 * 1024; // 1 MB
 
     /**
      * Get the contents of a file at a given path as a String.
@@ -78,14 +79,14 @@ public class FileUtilities {
             StringBuilder sb = new StringBuilder();
 
             bytesAvailable = is.available();
-            bufferSize = Math.min(bytesAvailable, MAX_BUFFER_SIZE);
+            bufferSize = Math.min(bytesAvailable, MAX_BUFFER_SIZE_BYTES);
             buffer = new byte[bufferSize];
 
             bytesRead = is.read(buffer, 0, bufferSize);
             while (bytesRead > 0) {
                 sb.append(Base64.encodeBase64String(buffer));
                 bytesAvailable = is.available();
-                bufferSize = Math.min(bytesAvailable, MAX_BUFFER_SIZE);
+                bufferSize = Math.min(bytesAvailable, MAX_BUFFER_SIZE_BYTES);
                 bytesRead = is.read(buffer, 0, bufferSize);
             }
 
@@ -137,14 +138,14 @@ public class FileUtilities {
 
         try {
             bytesAvailable = is.available();
-            bufferSize = Math.min(bytesAvailable, MAX_BUFFER_SIZE);
+            bufferSize = Math.min(bytesAvailable, MAX_BUFFER_SIZE_BYTES);
             buffer = new byte[bufferSize];
 
             bytesRead = is.read(buffer, 0, bufferSize);
             while (bytesRead > 0) {
                 os.write(buffer, 0, bufferSize);
                 bytesAvailable = is.available();
-                bufferSize = Math.min(bytesAvailable, MAX_BUFFER_SIZE);
+                bufferSize = Math.min(bytesAvailable, MAX_BUFFER_SIZE_BYTES);
                 bytesRead = is.read(buffer, 0, bufferSize);
             }
 
@@ -161,5 +162,21 @@ public class FileUtilities {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static long bytesToKb(long bytes) {
+        return bytes / 1024;
+    }
+
+    public static long bytesToMb(long bytes) {
+        return bytes / (1024 * 1024);
+    }
+
+    public static long kbToBytes(long kb) {
+        return kb * 1024;
+    }
+
+    public static long mbToBytes(long mb) {
+        return mb * 1024 * 1024;
     }
 }

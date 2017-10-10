@@ -83,16 +83,18 @@ public class MultipartUpload {
         String filePath = fileRef.getPath();
         String fileName = fileRef.getName();
         String mimeType = fileRef.getMimeType();
+        long fileSize = fileRef.getSize();
 
         String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
 
         // -------------------------------
         if (OnePageCRM.DEBUG) {
             LOG.info("url: " + urlTo);
+            LOG.info("path: " + filePath);
+            LOG.info("name: " + fileName);
+            LOG.info("mime: " + mimeType);
+            LOG.info("size: " + fileSize);
             LOG.info("params: " + params);
-            LOG.info("filePath: " + filePath);
-            LOG.info("fileName: " + fileName);
-            LOG.info("mimeType: " + mimeType);
         }
         // -------------------------------
 
@@ -147,17 +149,17 @@ public class MultipartUpload {
             requestStream.writeBytes(LINE_END);
 
             // Read from file and write to server (via DataOutputStream).
-            File file = new File(filePath);
-            if (file.length() > S3FileReference.MAX_SIZE_BYTES) {
-                final String format = "File size exceeds limit. File: %d bytes. Limit: %d bytes.";
-                final String message = String.format(format, file.length(), S3FileReference.MAX_SIZE_BYTES);
+            if (uploadStream == null) {
+                File localFile = new File(filePath);
+                fileSize = localFile.length();
+                uploadStream = new FileInputStream(localFile);
+            }
+            if (fileSize > S3FileReference.MAX_SIZE_BYTES) {
+                final String message = S3Exception.tooLargeMessage();
                 toBeThrown = new S3Exception(message).setErrorMessage(message);
                 throw toBeThrown;
             }
-            createdFileRef.setSize(file.length());
-            if (uploadStream == null) {
-                uploadStream = new FileInputStream(file);
-            }
+            createdFileRef.setSize(fileSize);
             FileUtilities.copy(uploadStream, requestStream, false);
             requestStream.writeBytes(LINE_END);
 
