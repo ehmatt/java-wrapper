@@ -47,12 +47,11 @@ public class AND750Driver {
                 prop.getProperty("password"));
 
         String endpoint = "deals/59d362df9007ba15df5bfe11";
-        // As app sends.
         String body = "{\"id\":\"59d362df9007ba15df5bfe11\",\"amount\":9.99,\"contact_id\":\"59ccce7d9007ba0db5077565\",\"name\":\"AND-724\",\"status\":\"won\",\"close_date\":\"2017-10-09\",\"cost\":0,\"commission_base\":\"margin\",\"commission_type\":\"none\",\"deal_fields\":[{\"deal_field\":{\"id\":\"5947a6279007ba40b8ecbb0a\",\"choices\":[\"\"],\"name\":\"DealSingleLine\",\"position\":0,\"type\":\"single_line_text\"}},{\"deal_field\":{\"id\":\"5947a6479007ba40b8ecbb0b\",\"choices\":[\"\"],\"name\":\"DealMultiLine\",\"position\":1,\"type\":\"multi_line_text\"}},{\"deal_field\":{\"id\":\"5947a6569007ba40b8ecbb0c\",\"choices\":[\"\"],\"name\":\"DealNumber\",\"position\":2,\"type\":\"number\"}},{\"deal_field\":{\"id\":\"5947a6749007ba40b8ecbb0d\",\"choices\":[\"First\",\"Second\",\"Third\"],\"name\":\"DealDropdown\",\"position\":3,\"type\":\"select_box\"}},{\"deal_field\":{\"id\":\"5947a6849007ba40b8ecbb11\",\"choices\":[\"\"],\"name\":\"DealDate\",\"position\":4,\"type\":\"date\"}},{\"deal_field\":{\"id\":\"5947a6aa9007ba40b8ecbb12\",\"choices\":[\"First\",\"Second\",\"Third\"],\"name\":\"DealMultipleChoice\",\"position\":5,\"type\":\"multiple_choice\"}}]}";
-        // Fix error (including stage = 50 even though "won").
-        String body2 = "{\"id\":\"59d362df9007ba15df5bfe11\",\"amount\":9.99,\"stage\":50,\"contact_id\":\"59ccce7d9007ba0db5077565\",\"name\":\"AND-724\",\"status\":\"won\",\"close_date\":\"2017-10-09\",\"cost\":0,\"commission_base\":\"margin\",\"commission_type\":\"none\"}";
+        String bodyPending = "{\"id\":\"59d362df9007ba15df5bfe11\",\"amount\":9.99,\"stage\":50,\"contact_id\":\"59ccce7d9007ba0db5077565\",\"name\":\"AND-724\",\"status\":\"pending\",\"close_date\":\"2017-10-09\",\"cost\":0,\"commission_base\":\"margin\",\"commission_type\":\"none\"}";
+        String bodyWon = "{\"id\":\"59d362df9007ba15df5bfe11\",\"amount\":9.99,\"contact_id\":\"59ccce7d9007ba0db5077565\",\"name\":\"AND-724\",\"status\":\"won\",\"close_date\":\"2017-10-09\",\"cost\":0,\"commission_base\":\"margin\",\"commission_type\":\"none\"}";
 
-        Request request = new PutRequest(endpoint, "", body2);
+        Request request = new PutRequest(endpoint, "?partial=1", bodyWon);
         request.send();
     }
 }
