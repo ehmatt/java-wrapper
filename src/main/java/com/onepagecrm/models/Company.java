@@ -91,12 +91,10 @@ public class Company extends ApiResource implements Serializable {
         return CompanySerializer.fromString(responseBody);
     }
 
-    public Company partialUpdate(Company updateValues) throws OnePageException {
-        Map<String, Object> params = new HashMap<>();
-        params.put("partial", true);
+    public Company partial(Company updateValues) throws OnePageException {
         Request request = new PutRequest(
                 addIdToEndpoint(COMPANIES_ENDPOINT, this.id),
-                Query.fromParams(params),
+                "?" + QUERY_PARTIAL,
                 CompanySerializer.toJsonObject(updateValues)
         );
         Response response = request.send();

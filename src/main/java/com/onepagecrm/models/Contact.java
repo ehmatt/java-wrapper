@@ -22,14 +22,13 @@ import com.onepagecrm.net.request.Request;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 
-@SuppressWarnings({"unused", "WeakerAccess"})
+@SuppressWarnings({"unused", "WeakerAccess", "UnusedReturnValue"})
 public class Contact extends ApiResource implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(Contact.class.getSimpleName());
@@ -120,12 +119,10 @@ public class Contact extends ApiResource implements Serializable {
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
-    public Contact partialUpdate(Contact updateValues) throws OnePageException {
-        Map<String, Object> params = new HashMap<>();
-        params.put("partial", true);
+    public Contact partial(Contact updateValues) throws OnePageException {
         Request request = new PutRequest(
                 addIdToEndpoint(CONTACTS_ENDPOINT, this.id),
-                Query.fromParams(params) + "&" + EXTRA_FIELDS,
+                "?" + QUERY_PARTIAL + "&" + EXTRA_FIELDS,
                 ContactSerializer.toJsonObject(updateValues)
         );
         Response response = request.send();
