@@ -2,6 +2,7 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.DeleteResult;
+import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.serializers.CompanySerializer;
 import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.models.serializers.LinkedContactSerializer;
@@ -110,8 +111,12 @@ public class Company extends ApiResource implements Serializable {
     }
 
     public static ContactList getLinkedContacts(String companyId) throws OnePageException {
+        return getLinkedContacts(companyId, new Paginator());
+    }
+
+    public static ContactList getLinkedContacts(String companyId, Paginator paginator) throws OnePageException {
         String endpoint = LINKED_CONTACTS_ENDPOINT.replace("{id}", companyId);
-        Request request = new GetRequest(endpoint, null);
+        Request request = new GetRequest(endpoint, Query.query(paginator));
         Response response = request.send();
         String responseBody = response.getResponseBody();
         return LinkedContactsSerializer.fromString(responseBody);
