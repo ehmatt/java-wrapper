@@ -7,7 +7,7 @@ public class GoogleLoginRequest extends Request {
 
     public GoogleLoginRequest(String oauth2Code) {
         setType();
-        setEndpointUrl("google_plus");
+        setEndpointUrl("google_plus/signup");
         JSONObject params = new JSONObject();
         try {
             params.put("code", oauth2Code);
