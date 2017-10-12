@@ -49,11 +49,14 @@ public class LinkedContactList implements Serializable {
         return links != null ? links.get(position).getCompanyId() : null;
     }
 
-    public List<Contact> getContacts() {
-        List<Contact> contacts = new ArrayList<>();
+    public ContactList getContacts() {
+        ContactList contacts = new ContactList();
         if (links == null) return contacts;
         for (int i = 0; i < links.size(); i++) {
             contacts.add(getContact(i));
+        }
+        if (paginator != null) {
+            contacts.setPaginator(paginator);
         }
         return contacts;
     }
