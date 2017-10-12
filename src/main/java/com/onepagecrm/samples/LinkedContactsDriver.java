@@ -58,6 +58,8 @@ public class LinkedContactsDriver {
         LinkedContactList linkedContacts = company.getLinkedContacts();
 
         LOG.info("Found " + linkedContacts.getLinks().size() + " linked contacts!");
+        LOG.info("Paginator: " + linkedContacts.getPaginator());
+
         for (int i = 0; i < linkedContacts.size(); i++) {
             LOG.info("Link[" + i + "]: " + linkedContacts.get(i));
             LOG.info("Contact[" + i + "]: " + linkedContacts.getContact(i));

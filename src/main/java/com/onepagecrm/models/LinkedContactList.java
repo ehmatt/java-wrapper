@@ -1,5 +1,7 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.models.internal.Paginator;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +15,7 @@ import java.util.Map;
 public class LinkedContactList implements Serializable {
 
     private List<LinkedContact> links;
+    private Paginator paginator;
     private Map<String, Contact> contactMap;
     private Map<String, Company> companyMap;
 
@@ -83,6 +86,15 @@ public class LinkedContactList implements Serializable {
         return this;
     }
 
+    public Paginator getPaginator() {
+        return paginator;
+    }
+
+    public LinkedContactList setPaginator(Paginator paginator) {
+        this.paginator = paginator;
+        return this;
+    }
+
     public Map<String, Contact> getContactMap() {
         return contactMap;
     }
@@ -92,9 +104,10 @@ public class LinkedContactList implements Serializable {
         return this;
     }
 
-    public LinkedContactList setContactMap(List<Contact> contacts) {
+    public LinkedContactList setContactMap(ContactList contacts) {
         this.contactMap = new HashMap<>();
         if (contacts == null) return this;
+        this.paginator = contacts.getPaginator();
         for (Contact contact : contacts) {
             this.contactMap.put(contact.getId(), contact);
         }

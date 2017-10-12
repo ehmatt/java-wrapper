@@ -4,6 +4,7 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.LinkedContact;
 import com.onepagecrm.models.LinkedContactList;
+import com.onepagecrm.models.internal.Paginator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,16 +37,18 @@ public class LinkedContactsSerializer extends BaseSerializer {
         return linkedContacts;
     }
 
-    public static LinkedContactList fromJsonObject(JSONObject linkedContactsObject) {
+    public static LinkedContactList fromJsonObject(JSONObject dataObject) {
         LinkedContactList linkedContacts = new LinkedContactList();
 
         try {
 
-            if (linkedContactsObject.has(LINKED_CONTACTS_TAG)) {
+            if (dataObject.has(LINKED_CONTACTS_TAG)) {
                 // Contacts.
-                JSONArray linkedContactsArray = linkedContactsObject.getJSONArray(LINKED_CONTACTS_TAG);
+                JSONArray linkedContactsArray = dataObject.getJSONArray(LINKED_CONTACTS_TAG);
                 ContactList contacts = ContactListSerializer.fromJsonArray(linkedContactsArray);
-                linkedContacts.setContactMap(contacts.getList());
+                Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
+                contacts.setPaginator(paginator);
+                linkedContacts.setContactMap(contacts);
 
                 // LinkedContacts (links).
                 List<LinkedContact> links = new ArrayList<>();
