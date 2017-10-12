@@ -18,9 +18,7 @@ import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 
@@ -104,15 +102,15 @@ public class Company extends ApiResource implements Serializable {
         return company;
     }
 
-    public ContactList getLinkedContacts() throws OnePageException {
+    public LinkedContactList getLinkedContacts() throws OnePageException {
         return getLinkedContacts(this.id);
     }
 
-    public static ContactList getLinkedContacts(String companyId) throws OnePageException {
+    public static LinkedContactList getLinkedContacts(String companyId) throws OnePageException {
         return getLinkedContacts(companyId, new Paginator());
     }
 
-    public static ContactList getLinkedContacts(String companyId, Paginator paginator) throws OnePageException {
+    public static LinkedContactList getLinkedContacts(String companyId, Paginator paginator) throws OnePageException {
         String endpoint = LINKED_CONTACTS_ENDPOINT.replace("{id}", companyId);
         Request request = new GetRequest(endpoint, Query.query(paginator));
         Response response = request.send();
