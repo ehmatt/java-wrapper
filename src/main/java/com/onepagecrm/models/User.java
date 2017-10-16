@@ -4,12 +4,7 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.internal.Sales;
-import com.onepagecrm.models.serializers.BaseSerializer;
-import com.onepagecrm.models.serializers.CompanyListSerializer;
-import com.onepagecrm.models.serializers.ContactListSerializer;
-import com.onepagecrm.models.serializers.DealListSerializer;
-import com.onepagecrm.models.serializers.LoginSerializer;
-import com.onepagecrm.models.serializers.UserSerializer;
+import com.onepagecrm.models.serializers.*;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
@@ -24,10 +19,12 @@ import java.util.Map;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 20/09/2017.
  */
-@SuppressWarnings({"WeakerAccess", "unused", "UnusedReturnValue"})
+@SuppressWarnings({"WeakerAccess", "UnusedReturnValue", "unused"})
 public class User extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = 1383622287570201668L;
+
+    public Account account;
 
     private String id;
     private String authKey;
@@ -38,8 +35,7 @@ public class User extends ApiResource implements Serializable {
     private String firstName;
     private String lastName;
     private String photoUrl;
-    private Sales sales;
-    public Account account;
+    private String countryCode;
 
     private Integer allCount;
     private Integer streamCount;
@@ -47,9 +43,9 @@ public class User extends ApiResource implements Serializable {
 
     private List<String> accountRights;
 
-    /**
-     * Login requests.
-     */
+    private Sales sales;
+
+    /* Login */
 
     public static User login(String username, String password) throws OnePageException {
         Request request = new LoginRequest(username, password);
@@ -69,9 +65,7 @@ public class User extends ApiResource implements Serializable {
         return LoginSerializer.fromResponse(response);
     }
 
-    /**
-     * Stream requests.
-     */
+    /* Stream */
 
     public ContactList actionStream() throws OnePageException {
         return getContacts(ACTION_STREAM_ENDPOINT, Query.queryDefault());
@@ -106,9 +100,7 @@ public class User extends ApiResource implements Serializable {
         return getContacts(ACTION_STREAM_ENDPOINT, Query.queryLetter(paginator, letter));
     }
 
-    /**
-     * Contacts requests.
-     */
+    /* Contacts */
 
     public ContactList contacts() throws OnePageException {
         return getContacts(CONTACTS_ENDPOINT, Query.query(true));
@@ -151,9 +143,7 @@ public class User extends ApiResource implements Serializable {
         return getContacts(CONTACTS_ENDPOINT, Query.queryLetter(paginator, letter, true));
     }
 
-    /**
-     * Team Stream requests.
-     */
+    /* Team Stream */
 
     public ContactList teamStream(Map<String, Object> params) throws OnePageException {
         return getContacts(TEAM_STREAM_ENDPOINT, Query.fromParams(params));
@@ -171,9 +161,7 @@ public class User extends ApiResource implements Serializable {
         return ContactListSerializer.fromResponse(response);
     }
 
-    /**
-     * Pipeline requests.
-     */
+    /* Pipeline */
 
     public DealList pipeline() throws OnePageException {
         Request request = new GetRequest(DEALS_ENDPOINT, Query.query(true));
@@ -200,9 +188,7 @@ public class User extends ApiResource implements Serializable {
         return DealListSerializer.fromString(response.getResponseBody());
     }
 
-    /**
-     * Companies requests.
-     */
+    /* Companies requests */
 
     public CompanyList companies() throws OnePageException {
         return getCompanies(Query.queryDefault());
@@ -227,9 +213,7 @@ public class User extends ApiResource implements Serializable {
         return CompanyListSerializer.fromResponse(response);
     }
 
-    /**
-     * Actions requests.
-     */
+    /* Actions */
 
     public ActionList actions(Paginator paginator) throws OnePageException {
         return Action.list(this.id, paginator);
@@ -247,9 +231,7 @@ public class User extends ApiResource implements Serializable {
         return Action.listPredefined();
     }
 
-    /**
-     * Object methods.
-     */
+    /* Object methods */
 
     public User() {
 
@@ -282,9 +264,7 @@ public class User extends ApiResource implements Serializable {
         return idValid && authKeyValid;
     }
 
-    /**
-     * Utility methods.
-     */
+    /* Utility methods */
 
     public String getSimpleName() {
         if (lastName != null && !lastName.equals("")) {
@@ -331,9 +311,7 @@ public class User extends ApiResource implements Serializable {
         return accountRights != null && accountRights.contains(BaseSerializer.ACCOUNT_OWNER_TAG);
     }
 
-    /**
-     * Accessor methods.
-     */
+    /* Accessor methods */
 
     @Override
     public String getId() {
@@ -469,6 +447,15 @@ public class User extends ApiResource implements Serializable {
 
     public User setAccountRights(List<String> accountRights) {
         this.accountRights = accountRights;
+        return this;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public User setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
         return this;
     }
 }

@@ -5,25 +5,14 @@ import com.onepagecrm.models.internal.CloseSalesCycle;
 import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.SalesCycleClosure;
 import com.onepagecrm.models.internal.Utilities;
-import com.onepagecrm.models.serializers.BaseSerializer;
-import com.onepagecrm.models.serializers.ClosedSalesSerializer;
-import com.onepagecrm.models.serializers.ContactPhotoSerializer;
-import com.onepagecrm.models.serializers.ContactSerializer;
-import com.onepagecrm.models.serializers.ContactSplitSerializer;
-import com.onepagecrm.models.serializers.DeleteResultSerializer;
-import com.onepagecrm.models.serializers.LoginSerializer;
+import com.onepagecrm.models.serializers.*;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
-import com.onepagecrm.net.request.DeleteRequest;
-import com.onepagecrm.net.request.GetRequest;
-import com.onepagecrm.net.request.PostRequest;
-import com.onepagecrm.net.request.PutRequest;
-import com.onepagecrm.net.request.Request;
+import com.onepagecrm.net.request.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -121,12 +110,10 @@ public class Contact extends ApiResource implements Serializable {
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
-    public Contact partialUpdate(Contact updateValues) throws OnePageException {
-        Map<String, Object> params = new HashMap<>();
-        params.put("partial", true);
+    public Contact partial(Contact updateValues) throws OnePageException {
         Request request = new PutRequest(
                 addIdToEndpoint(CONTACTS_ENDPOINT, this.id),
-                Query.fromParams(params) + "&" + EXTRA_FIELDS,
+                "?" + QUERY_PARTIAL + "&" + EXTRA_FIELDS,
                 ContactSerializer.toJsonString(updateValues)
         );
         Response response = request.send();

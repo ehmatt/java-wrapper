@@ -93,12 +93,16 @@ public class UserSerializer extends BaseSerializer {
             if (userObject.has(BCC_EMAIL_TAG)) {
                 user.setBccEmail(userObject.getString(BCC_EMAIL_TAG));
             }
+            if (userObject.has(COUNTRY_CODE_TAG)) {
+                user.setCountryCode(userObject.optString(COUNTRY_CODE_TAG));
+            }
             if (userObject.has(ACCOUNT_RIGHTS_TAG)) {
                 JSONArray accountRightsArray = userObject.getJSONArray(ACCOUNT_RIGHTS_TAG);
                 List<String> accountRights = BaseSerializer.toListOfStrings(accountRightsArray);
                 user.setAccountRights(accountRights);
             }
             return user;
+
         } catch (JSONException e) {
             LOG.severe("Error parsing user JSON object");
             LOG.severe(e.toString());
@@ -135,6 +139,7 @@ public class UserSerializer extends BaseSerializer {
         addJsonStringValue(user.getFirstName(), userObject, FIRST_NAME_TAG);
         addJsonStringValue(user.getLastName(), userObject, LAST_NAME_TAG);
         addJsonStringValue(user.getPhotoUrl(), userObject, PHOTO_URL_TAG);
+        addJsonStringValue(user.getCountryCode(), userObject, COUNTRY_CODE_TAG);
 
         // SALES ??
 

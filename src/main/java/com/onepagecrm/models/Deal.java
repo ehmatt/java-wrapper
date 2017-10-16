@@ -10,19 +10,10 @@ import com.onepagecrm.models.serializers.DealSerializer;
 import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
-import com.onepagecrm.net.request.DeleteRequest;
-import com.onepagecrm.net.request.GetRequest;
-import com.onepagecrm.net.request.PatchRequest;
-import com.onepagecrm.net.request.PostRequest;
-import com.onepagecrm.net.request.PutRequest;
-import com.onepagecrm.net.request.Request;
+import com.onepagecrm.net.request.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.onepagecrm.models.internal.Commission.Type.ABSOLUTE;
 import static com.onepagecrm.models.internal.Commission.Type.PERCENTAGE;
@@ -165,9 +156,9 @@ public class Deal extends ApiResource implements Serializable {
     }
 
     public Deal partial() throws OnePageException {
-        Request request = new PatchRequest(
+        Request request = new PutRequest(
                 addIdToEndpoint(DEALS_ENDPOINT, this.id),
-                null,
+                "?" + QUERY_PARTIAL,
                 DealSerializer.toJsonString(this)
         );
         Response response = request.send();

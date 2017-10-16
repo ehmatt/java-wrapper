@@ -57,7 +57,7 @@ public class Paginator extends BaseResource implements Serializable {
 
     @Override
     public String toString() {
-        return RequestMetadataSerializer.toJsonKeyValuePair(this);
+        return RequestMetadataSerializer.toJsonObject(this);
     }
 
     @Override
