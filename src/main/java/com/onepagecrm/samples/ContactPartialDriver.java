@@ -61,7 +61,7 @@ public class ContactPartialDriver {
                 .setLastName(lastName)
                 .save();
 
-        Contact updated = contact.partialUpdate(
+        Contact updated = contact.partial(
                 new Contact().setBackground(background));
 
         if (firstName.equals(contact.getFirstName()) &&

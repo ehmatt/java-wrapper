@@ -7,6 +7,7 @@ import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 /**
  * Created by Nichollas on 08/03/17.
  */
+@SuppressWarnings("WeakerAccess")
 public class LinkedContact extends BaseResource implements Serializable {
 
     private String contactId;

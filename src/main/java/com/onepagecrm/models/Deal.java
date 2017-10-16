@@ -12,7 +12,6 @@ import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.DeleteRequest;
 import com.onepagecrm.net.request.GetRequest;
-import com.onepagecrm.net.request.PatchRequest;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.PutRequest;
 import com.onepagecrm.net.request.Request;
@@ -165,9 +164,9 @@ public class Deal extends ApiResource implements Serializable {
     }
 
     public Deal partial() throws OnePageException {
-        Request request = new PatchRequest(
+        Request request = new PutRequest(
                 addIdToEndpoint(DEALS_ENDPOINT, this.id),
-                null,
+                "?" + QUERY_PARTIAL,
                 DealSerializer.toJsonObject(this)
         );
         Response response = request.send();

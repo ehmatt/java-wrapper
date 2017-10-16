@@ -1,3 +1,6 @@
+# Config files for user/pass
+config.properties
+
 # built application files
 *.apk
 *.ap_
