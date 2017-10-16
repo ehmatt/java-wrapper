@@ -1,0 +1,22 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'jars')
+    testCompile 'junit:junit:4.12'
+}
+
+jar {
+    manifest {
+        attributes 'Created-By': 'Cillian Myles (OnePageCRM)'
+        attributes 'Implementation-Version': '1.0'
+    }
+    exclude('com/onepagecrm/samples/**')
+    into 'resources', {
+        from './src/test/res/responses/perfect'
+    }
+}
