@@ -21,10 +21,12 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "UnusedReturnValue", "unused"})
 public class User extends ApiResource implements Serializable {
 
     private static final long serialVersionUID = 1383622287570201668L;
+
+    public Account account;
 
     private String id;
     private String authKey;
@@ -35,14 +37,15 @@ public class User extends ApiResource implements Serializable {
     private String firstName;
     private String lastName;
     private String photoUrl;
-    private Sales sales;
-    public Account account;
+    private String countryCode;
 
     private Integer allCount;
     private Integer streamCount;
     private Integer contactsCount;
 
     private List<String> accountRights;
+
+    private Sales sales;
 
     public static User login(String username, String password) throws OnePageException {
         Request request = new LoginRequest(username, password);
@@ -426,6 +429,15 @@ public class User extends ApiResource implements Serializable {
 
     public User setAccountRights(List<String> accountRights) {
         this.accountRights = accountRights;
+        return this;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public User setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
         return this;
     }
 }
