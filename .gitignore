@@ -1,5 +1,5 @@
 # Config files for user/pass
-config.properties
+/config.properties
 
 # built application files
 *.apk
