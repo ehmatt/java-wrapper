@@ -1,6 +1,3 @@
-# Config files for user/pass
-/config.properties
-
 # built application files
 *.apk
 *.ap_
@@ -17,6 +14,7 @@ gen/
 
 # Local configuration file (sdk path, etc)
 local.properties
+config.properties
 
 # Eclipse project files
 .classpath
@@ -35,5 +33,4 @@ proguard/
 .gradletasknamecache
 .gradle/
 build/
-bin/
 out/
