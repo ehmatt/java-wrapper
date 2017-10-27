@@ -9,26 +9,26 @@ public class LoginResultObject implements Serializable {
 
     private final boolean fullResponse;
     private final User user;
-    private final ContactList contacts;
+    private final ContactList actionStream;
 
     public LoginResultObject(User user, boolean fullResponse) {
         this.fullResponse = fullResponse;
         this.user = user;
-        contacts = null;
+        actionStream = null;
     }
 
-    public LoginResultObject(User user, ContactList contacts, boolean fullResponse) {
+    public LoginResultObject(User user, ContactList actionStream, boolean fullResponse) {
         this.fullResponse = fullResponse;
         this.user = user;
-        this.contacts = contacts;
+        this.actionStream = actionStream;
     }
 
     public User getUser() {
         return user;
     }
 
-    public ContactList getContacts() {
-        return contacts;
+    public ContactList getActionStream() {
+        return actionStream;
     }
 
     public boolean isFullResponse() {

@@ -29,7 +29,20 @@ public class LoginSerializer extends BaseSerializer {
 
     public static LoginResultObject fromString(String responseBody, boolean fullResponse) throws OnePageException {
         User user = getLoggedInUser(responseBody);
-        return new LoginResultObject(user, fullResponse);
+        ContactList actionStream = null;
+        if (fullResponse) {
+            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            try {
+                JSONObject responseObject = new JSONObject(parsedResponse);
+                if (responseObject.has(ACTION_STREAM_DATA_TAG)) {
+                    actionStream = ContactListSerializer.fromJsonObject(responseObject.getJSONObject(ACTION_STREAM_DATA_TAG));
+                }
+            } catch (JSONException e) {
+                LOG.severe("Error parsing Login object");
+                LOG.severe(e.toString());
+            }
+        }
+        return new LoginResultObject(user, actionStream, fullResponse);
     }
 
     public static void updateLoginOnlyResources(String responseBody) {
