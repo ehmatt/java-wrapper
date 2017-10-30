@@ -11,19 +11,22 @@ public class LoginResultObject implements Serializable {
     private final User user;
     private final ContactList actionStream;
     private final ContactList contacts;
+    private final DealList deals;
 
     public LoginResultObject(User user, boolean fullResponse) {
         this.fullResponse = fullResponse;
         this.user = user;
         actionStream = null;
         contacts = null;
+        deals = null;
     }
 
-    public LoginResultObject(User user, ContactList actionStream, ContactList contacts, boolean fullResponse) {
+    public LoginResultObject(User user, ContactList actionStream, ContactList contacts, DealList deals, boolean fullResponse) {
         this.fullResponse = fullResponse;
         this.user = user;
         this.actionStream = actionStream;
         this.contacts = contacts;
+        this.deals = deals;
     }
 
     public User getUser() {
@@ -36,6 +39,10 @@ public class LoginResultObject implements Serializable {
 
     public ContactList getContacts() {
         return contacts;
+    }
+
+    public DealList getDeals() {
+        return deals;
     }
 
     public boolean isFullResponse() {

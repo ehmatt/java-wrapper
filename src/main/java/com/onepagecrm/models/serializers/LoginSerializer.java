@@ -31,6 +31,7 @@ public class LoginSerializer extends BaseSerializer {
         User user = getLoggedInUser(responseBody);
         ContactList actionStream = null;
         ContactList contacts = null;
+        DealList deals = null;
         if (fullResponse) {
             String parsedResponse = (String) BaseSerializer.fromString(responseBody);
             try {
@@ -41,12 +42,15 @@ public class LoginSerializer extends BaseSerializer {
                 if (responseObject.has(CONTACT_DATA_TAG)) {
                     contacts = ContactListSerializer.fromJsonObject(responseObject.getJSONObject(CONTACT_DATA_TAG));
                 }
+                if(responseObject.has(DEAL_DATA_TAG)) {
+                    deals = DealListSerializer.fromJsonObject(responseObject.getJSONObject(DEAL_DATA_TAG));
+                }
             } catch (JSONException e) {
                 LOG.severe("Error parsing Login object");
                 LOG.severe(e.toString());
             }
         }
-        return new LoginResultObject(user, actionStream, contacts, fullResponse);
+        return new LoginResultObject(user, actionStream, contacts, deals, fullResponse);
     }
 
     public static void updateLoginOnlyResources(String responseBody) {

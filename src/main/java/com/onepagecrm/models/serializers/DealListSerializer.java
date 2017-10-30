@@ -66,4 +66,19 @@ public class DealListSerializer extends BaseSerializer {
         }
         return new DealList(deals);
     }
+
+    public static DealList fromJsonObject(JSONObject dealsObject) {
+        DealList deals = new DealList();
+        try {
+            JSONArray dealsArray = dealsObject.getJSONArray(DEALS_TAG);
+            deals = fromJsonArray(dealsArray);
+            Paginator paginator = RequestMetadataSerializer.fromJsonObject(dealsObject);
+            deals.setPaginator(paginator);
+
+        } catch (JSONException e) {
+            LOG.severe("Error parsing Deals array from Deals object");
+            LOG.severe(e.toString());
+        }
+        return deals;
+    }
 }

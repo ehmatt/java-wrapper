@@ -36,6 +36,7 @@ public class BaseSerializer {
     public static final String BOOTSTRAP_TAG = "bootstrap";
     public static final String ACTION_STREAM_DATA_TAG = "action_stream_data";
     public static final String CONTACT_DATA_TAG = "contact_data";
+    public static final String DEAL_DATA_TAG = "deal_data";
     public static final String USER_TAG = "user";
     public static final String FIRST_NAME_TAG = "first_name";
     public static final String LAST_NAME_TAG = "last_name";
