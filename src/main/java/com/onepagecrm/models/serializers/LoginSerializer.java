@@ -30,6 +30,7 @@ public class LoginSerializer extends BaseSerializer {
     public static LoginResultObject fromString(String responseBody, boolean fullResponse) throws OnePageException {
         User user = getLoggedInUser(responseBody);
         ContactList actionStream = null;
+        ContactList contacts = null;
         if (fullResponse) {
             String parsedResponse = (String) BaseSerializer.fromString(responseBody);
             try {
@@ -37,12 +38,15 @@ public class LoginSerializer extends BaseSerializer {
                 if (responseObject.has(ACTION_STREAM_DATA_TAG)) {
                     actionStream = ContactListSerializer.fromJsonObject(responseObject.getJSONObject(ACTION_STREAM_DATA_TAG));
                 }
+                if (responseObject.has(CONTACT_DATA_TAG)) {
+                    contacts = ContactListSerializer.fromJsonObject(responseObject.getJSONObject(CONTACT_DATA_TAG));
+                }
             } catch (JSONException e) {
                 LOG.severe("Error parsing Login object");
                 LOG.severe(e.toString());
             }
         }
-        return new LoginResultObject(user, actionStream, fullResponse);
+        return new LoginResultObject(user, actionStream, contacts, fullResponse);
     }
 
     public static void updateLoginOnlyResources(String responseBody) {
