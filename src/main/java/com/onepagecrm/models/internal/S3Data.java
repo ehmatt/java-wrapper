@@ -31,6 +31,10 @@ public class S3Data implements Serializable {
         return S3DataSerializer.toJsonString(this);
     }
 
+    public boolean isValid() {
+        return Utilities.notNullOrEmpty(url);
+    }
+
     public Long getQuota() {
         return quota;
     }

@@ -65,6 +65,11 @@ public class AttachmentsPh2Driver {
         FileReference file = new FileReference(filePath).setMimeType(contentType);
         LOG.info("" + file.toString());
 
+        if (data == null || !data.isValid()) {
+            LOG.severe("S3 data invalid!");
+            return; // Cancel!
+        }
+
         // OPTION 1: data + file
         S3FileReference uploaded = S3.upload(contactId, data, file);
 
