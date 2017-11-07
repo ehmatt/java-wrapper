@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static com.onepagecrm.models.Account.getLoggedInUser;
 import static com.onepagecrm.models.Account.loggedInUser;
 
 @SuppressWarnings("WeakerAccess")
@@ -27,7 +26,7 @@ public class LoginSerializer extends BaseSerializer {
         return getLoggedInUser(responseBody);
     }
 
-    public static LoginResultObject fromString(String responseBody, boolean fullResponse) throws OnePageException {
+    public static StartupObject fromString(String responseBody, boolean fullResponse) throws OnePageException {
         User user = getLoggedInUser(responseBody);
         ContactList actionStream = null;
         ContactList contacts = null;
@@ -50,7 +49,7 @@ public class LoginSerializer extends BaseSerializer {
                 LOG.severe(e.toString());
             }
         }
-        return new LoginResultObject(user, actionStream, contacts, deals, fullResponse);
+        return new StartupObject(user, actionStream, contacts, deals, fullResponse);
     }
 
     public static void updateLoginOnlyResources(String responseBody) {

@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Nichollas on 27/10/17.
  */
-public class LoginResultObject implements Serializable {
+public class StartupObject implements Serializable {
 
     private final boolean fullResponse;
     private final User user;
@@ -13,7 +13,7 @@ public class LoginResultObject implements Serializable {
     private final ContactList contacts;
     private final DealList deals;
 
-    public LoginResultObject(User user, boolean fullResponse) {
+    public StartupObject(User user, boolean fullResponse) {
         this.fullResponse = fullResponse;
         this.user = user;
         actionStream = null;
@@ -21,7 +21,7 @@ public class LoginResultObject implements Serializable {
         deals = null;
     }
 
-    public LoginResultObject(User user, ContactList actionStream, ContactList contacts, DealList deals, boolean fullResponse) {
+    public StartupObject(User user, ContactList actionStream, ContactList contacts, DealList deals, boolean fullResponse) {
         this.fullResponse = fullResponse;
         this.user = user;
         this.actionStream = actionStream;
