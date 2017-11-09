@@ -5,9 +5,9 @@ import org.json.JSONObject;
 
 public class GoogleLoginRequest extends Request {
 
-    public GoogleLoginRequest(String oauth2Code) {
+    public GoogleLoginRequest(String oauth2Code, boolean login) {
         setType();
-        setEndpointUrl("google_plus/signup");
+        setEndpointUrl(login ? "google_plus" : "google_plus/signup");
         JSONObject params = new JSONObject();
         try {
             params.put("code", oauth2Code);
