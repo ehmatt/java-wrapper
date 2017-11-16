@@ -1,7 +1,8 @@
 package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.internal.Utilities;
+import com.onepagecrm.models.internal.FileRefUtils;
+import com.onepagecrm.models.internal.S3FileReference;
 import com.onepagecrm.models.serializers.AttachmentSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
@@ -15,9 +16,10 @@ import java.util.Date;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 31/07/2017.
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class Attachment extends ApiResource implements Serializable {
 
-    /**
+    /*
      * Constants.
      */
 
@@ -27,7 +29,12 @@ public class Attachment extends ApiResource implements Serializable {
     private static final String PROVIDER_EVERNOTE = "evernote";
     private static final String PROVIDER_OTHER = "other"; // Catch all.
 
-    /**
+    private static final String REFERENCE_TYPE_DEAL = "deal";
+    private static final String REFERENCE_TYPE_CALL = "call";
+    private static final String REFERENCE_TYPE_NOTE = "note";
+    private static final String REFERENCE_TYPE_OTHER = "other"; // Catch all.
+
+    /*
      * Member variables.
      */
 
@@ -68,6 +75,41 @@ public class Attachment extends ApiResource implements Serializable {
         }
     }
 
+    public enum ReferenceType {
+        DEAL(REFERENCE_TYPE_DEAL),
+        CALL(REFERENCE_TYPE_CALL),
+        NOTE(REFERENCE_TYPE_NOTE),
+        OTHER(REFERENCE_TYPE_OTHER);
+
+        private String resource;
+
+        ReferenceType(String resource) {
+            this.resource = resource;
+        }
+
+        public static ReferenceType fromString(String resource) {
+            if (resource == null) return null;
+            switch (resource) {
+                case REFERENCE_TYPE_DEAL:
+                    return DEAL;
+                case REFERENCE_TYPE_CALL:
+                    return CALL;
+                case REFERENCE_TYPE_NOTE:
+                    return NOTE;
+                case REFERENCE_TYPE_OTHER:
+                    return OTHER;
+                default:
+                    OTHER.resource = resource;
+                    return OTHER;
+            }
+        }
+
+        @Override
+        public String toString() {
+            return resource;
+        }
+    }
+
     private String id;
     private String filename;
     private Provider provider;
@@ -75,49 +117,79 @@ public class Attachment extends ApiResource implements Serializable {
     private Long size;
     private Date expiresAt;
 
-    /**
+    private String referenceId;
+    private ReferenceType referenceType;
+    private String externalUrl;
+
+    /*
      * API methods
      */
 
-    public Attachment save() throws OnePageException {
-        return isValid() ? update() : create();
+    public Attachment save(String contactId, S3FileReference fileRef) throws OnePageException {
+        return isValid() ? update(contactId, fileRef) : create(contactId, fileRef);
     }
 
-    private Attachment update() throws OnePageException {
+    private Attachment update(String contactId, S3FileReference fileRef) throws OnePageException {
         Request request = new PutRequest(
                 addIdToEndpoint(ATTACHMENTS_ENDPOINT),
                 null,
-                AttachmentSerializer.toJsonObject(this)
+                AttachmentSerializer.toJsonString(this, contactId, fileRef)
         );
         Response response = request.send();
-        return AttachmentSerializer.fromResponse(response);
+        return AttachmentSerializer.fromResponse(response)
+                .setReferenceId(referenceId)
+                .setReferenceType(referenceType);
     }
 
-    private Attachment create() throws OnePageException {
+    private Attachment create(String contactId, S3FileReference fileRef) throws OnePageException {
         Request request = new PostRequest(
                 ATTACHMENTS_ENDPOINT,
                 null,
-                AttachmentSerializer.toJsonObject(this));
+                AttachmentSerializer.toJsonString(this, contactId, fileRef)
+        );
         Response response = request.send();
-        return AttachmentSerializer.fromResponse(response);
+        return AttachmentSerializer.fromResponse(response)
+                .setReferenceId(referenceId)
+                .setReferenceType(referenceType);
     }
 
     private String addIdToEndpoint(String endpoint) {
         return endpoint + "/" + this.id;
     }
 
-    /**
+    /*
      * Utility methods
      */
 
     public String getFileExtension() {
-        return Utilities.notNullOrEmpty(filename) && filename.contains(".") ?
-                filename.substring(filename.lastIndexOf(".")).replace(".", "") : "";
+        return FileRefUtils.extensionFromName(filename);
     }
 
-    /**
+    /*
      * Object methods
      */
+
+    public Attachment() {
+
+    }
+
+    public Attachment(Deal reference) {
+        if (reference == null) return;
+        referenceId = reference.getId();
+        referenceType = ReferenceType.DEAL;
+    }
+
+    public Attachment(Note reference) {
+        if (reference == null) return;
+        referenceId = reference.getId();
+        referenceType = ReferenceType.NOTE;
+    }
+
+    public Attachment(Call reference) {
+        if (reference == null) return;
+        referenceId = reference.getId();
+        referenceType = ReferenceType.CALL;
+    }
 
     @Override
     public String getId() {
@@ -132,7 +204,7 @@ public class Attachment extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return AttachmentSerializer.toJsonObject(this);
+        return AttachmentSerializer.toJsonString(this);
     }
 
     public String getFilename() {
@@ -177,6 +249,33 @@ public class Attachment extends ApiResource implements Serializable {
 
     public Attachment setExpiresAt(Date expiresAt) {
         this.expiresAt = expiresAt;
+        return this;
+    }
+
+    public String getReferenceId() {
+        return referenceId;
+    }
+
+    public Attachment setReferenceId(String referenceId) {
+        this.referenceId = referenceId;
+        return this;
+    }
+
+    public ReferenceType getReferenceType() {
+        return referenceType;
+    }
+
+    public Attachment setReferenceType(ReferenceType referenceType) {
+        this.referenceType = referenceType;
+        return this;
+    }
+
+    public String getExternalUrl() {
+        return externalUrl;
+    }
+
+    public Attachment setExternalUrl(String externalUrl) {
+        this.externalUrl = externalUrl;
         return this;
     }
 }

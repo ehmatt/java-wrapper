@@ -8,7 +8,7 @@ import com.onepagecrm.models.Call;
 import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
-import com.onepagecrm.models.internal.Utilities;
+import com.onepagecrm.models.internal.FileUtilities;
 import com.onepagecrm.models.serializers.BaseSerializer;
 import com.onepagecrm.models.serializers.CallSerializer;
 import com.onepagecrm.models.serializers.ContactListSerializer;
@@ -379,7 +379,7 @@ public class ResponseHandlerTest extends BaseTest {
      * ContactList with 18 Contact objects.
      */
     public void testParseActionStreamPerPage_Successful() {
-        String response = Utilities.getResourceContents(
+        String response = FileUtilities.getResourceContents(
                 "src/test/res/responses/handler_test/request_01_action_stream_response.json"
         );
 
@@ -399,7 +399,7 @@ public class ResponseHandlerTest extends BaseTest {
      * ContactList with 18 Contact objects.
      */
     public void testParseContactsPerPage_Successful() {
-        String response = Utilities.getResourceContents(
+        String response = FileUtilities.getResourceContents(
                 "src/test/res/responses/handler_test/request_02_contacts_response.json"
         );
 
@@ -418,7 +418,7 @@ public class ResponseHandlerTest extends BaseTest {
      * Test makes sure that a CALL resource has been added correctly.
      */
     public void testParseAddCall_Successful() {
-        String response = Utilities.getResourceContents(
+        String response = FileUtilities.getResourceContents(
                 "src/test/res/responses/handler_test/request_03_add_call_response.json"
         );
 
@@ -436,7 +436,7 @@ public class ResponseHandlerTest extends BaseTest {
      * Test makes sure that a CONTACT resource has been added correctly.
      */
     public void testParseAddContact_Successful() {
-        String response = Utilities.getResourceContents(
+        String response = FileUtilities.getResourceContents(
                 "src/test/res/responses/handler_test/request_04_add_contact_response.json"
         );
 

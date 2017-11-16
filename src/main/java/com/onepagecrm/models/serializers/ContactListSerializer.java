@@ -33,11 +33,8 @@ public class ContactListSerializer extends BaseSerializer {
 
         try {
             String dataString = (String) BaseSerializer.fromString(responseBody);
-            JSONObject responseObject = new JSONObject(dataString);
-            JSONArray contactsArray = responseObject.getJSONArray(CONTACTS_TAG);
-            contacts = fromJsonArray(contactsArray);
-            Paginator paginator = RequestMetadataSerializer.fromJsonObject(responseObject);
-            contacts.setPaginator(paginator);
+            JSONObject dataObject = new JSONObject(dataString);
+            contacts = fromJsonObject(dataObject);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing Contacts array from response body");
@@ -50,6 +47,12 @@ public class ContactListSerializer extends BaseSerializer {
     public static ContactList fromJsonObject(JSONObject dataObject) {
         if (dataObject == null) {
             return DEFAULT;
+        }
+
+        if (dataObject.has(ACTION_STREAM_DATA_TAG)) {
+            dataObject = dataObject.optJSONObject(ACTION_STREAM_DATA_TAG);
+        } else if (dataObject.has(CONTACT_DATA_TAG)) {
+            dataObject = dataObject.optJSONObject(CONTACT_DATA_TAG);
         }
 
         JSONArray contactsArray = dataObject.optJSONArray(CONTACTS_TAG);

@@ -107,6 +107,7 @@ public abstract class Request {
 
     public static void setCustomUrl(String customUrl) {
         CUSTOM_URL = customUrl;
+        sServerUrlMap.put(CUSTOM_URL_SERVER, CUSTOM_URL);
     }
 
     private static final Map<Integer, String> sServerNameMap = new HashMap<>();
@@ -251,7 +252,7 @@ public abstract class Request {
 
     protected static final String AUTHORIZATION = "Authorization";
 
-    protected static final int DEFAULT_TIME_OUT_MS = 10000; // 10 seconds
+    public static final int DEFAULT_TIME_OUT_MS = 10000; // 10 seconds
 
     protected HttpURLConnection connection;
 

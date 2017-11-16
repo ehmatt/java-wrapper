@@ -2,21 +2,23 @@ package com.onepagecrm.samples;
 
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Contact;
-import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.User;
-import com.onepagecrm.models.internal.FileUtilities;
+import com.onepagecrm.models.internal.Device;
 import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class AddPhotoResourceDriver {
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 14/11/2017.
+ */
+public class DeleteDevicesDriver {
 
-    private static final Logger LOG = Logger.getLogger(AddPhotoResourceDriver.class.getName());
+    private static final Logger LOG = Logger.getLogger(DeleteDevicesDriver.class.getName());
 
     public static void main(String[] args) throws OnePageException {
         Properties prop = new Properties();
@@ -50,19 +52,23 @@ public class AddPhotoResourceDriver {
 
         LOG.info("Logged in User : " + loggedInUser);
 
-        ContactList stream = loggedInUser.searchActionStream("AND-724");
-        Contact contact = stream.get(0);
+        // List all devices.
+        List<Device> devices = Device.list();
+        int i = 0;
+        for (Device device : devices) {
+            LOG.info("Device[" + (i++) + "] : " + device);
+        }
 
-        String imagePath = "src/test/res/image_encode/cillian.jpg";
+        // Delete all devices.
+        for (Device device : devices) {
+            device.delete();
+        }
 
-        String resource = FileUtilities.getResourceContents(imagePath);
-        LOG.info("RAW : " + resource);
-
-        String b64EncodedString = FileUtilities.encodeImage(imagePath);
-        LOG.info("Base64 encoded String : " + b64EncodedString);
-
-        contact.addPhoto(b64EncodedString);
-
-        LOG.info(contact.toString());
+        // List again (should be none).
+        devices = Device.list();
+        i = 0;
+        for (Device device : devices) {
+            LOG.info("Device[" + (i++) + "] : " + device);
+        }
     }
 }

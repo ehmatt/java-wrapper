@@ -4,7 +4,7 @@ import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Account;
 import com.onepagecrm.models.User;
-import com.onepagecrm.models.internal.Utilities;
+import com.onepagecrm.models.internal.FileUtilities;
 import com.onepagecrm.models.serializers.LoginSerializer;
 
 import java.util.ArrayList;
@@ -12,8 +12,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
  */
+@SuppressWarnings("WeakerAccess")
 public class UserFabricator extends BaseFabricator {
 
     private static final Logger LOG = Logger.getLogger(UserFabricator.class.getName());
@@ -44,7 +45,7 @@ public class UserFabricator extends BaseFabricator {
     private static User loggedUser() {
         User loggedUser = new User();
         String path = OnePageCRM.ASSET_PATH + "login.json";
-        String response = Utilities.getResourceContents(path);
+        String response = FileUtilities.getResourceContents(path);
         if (response != null) {
             try {
                 loggedUser = LoginSerializer.fromString(response);

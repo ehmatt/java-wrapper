@@ -4,7 +4,12 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.internal.Sales;
-import com.onepagecrm.models.serializers.*;
+import com.onepagecrm.models.serializers.BaseSerializer;
+import com.onepagecrm.models.serializers.CompanyListSerializer;
+import com.onepagecrm.models.serializers.ContactListSerializer;
+import com.onepagecrm.models.serializers.DealListSerializer;
+import com.onepagecrm.models.serializers.LoginSerializer;
+import com.onepagecrm.models.serializers.UserSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.GetRequest;
@@ -48,13 +53,23 @@ public class User extends ApiResource implements Serializable {
     /* Login */
 
     public static User login(String username, String password) throws OnePageException {
-        Request request = new LoginRequest(username, password);
+        return login(username, password, false).getUser();
+    }
+
+    public static StartupObject login(String username, String password, boolean fullResponse) throws OnePageException {
+        Request request = new LoginRequest(username, password, fullResponse);
+        Response response = request.send();
+        return LoginSerializer.fromResponse(response, fullResponse);
+    }
+
+    public static User googleLogin(String authCode) throws OnePageException {
+        Request request = new GoogleLoginRequest(authCode, true);
         Response response = request.send();
         return LoginSerializer.fromResponse(response);
     }
 
-    public static User googleLogin(String authCode) throws OnePageException {
-        Request request = new GoogleLoginRequest(authCode);
+    public static User googleSignup(String authCode) throws OnePageException {
+        Request request = new GoogleLoginRequest(authCode, false);
         Response response = request.send();
         return LoginSerializer.fromResponse(response);
     }
@@ -63,6 +78,12 @@ public class User extends ApiResource implements Serializable {
         Request request = new GetRequest(BOOTSTRAP_ENDPOINT);
         Response response = request.send();
         return LoginSerializer.fromResponse(response);
+    }
+
+    public StartupObject startup() throws OnePageException {
+        Request request = new GetRequest(STARTUP_ENDPOINT);
+        Response response = request.send();
+        return LoginSerializer.fromString(response.getResponseBody(), true);
     }
 
     /* Stream */
