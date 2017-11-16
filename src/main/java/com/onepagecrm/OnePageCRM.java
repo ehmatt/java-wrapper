@@ -16,6 +16,7 @@ public final class OnePageCRM {
     public static int SERVER = Request.APP_SERVER;
     public static String SOURCE = "java-wrapper";
     public static boolean COMPLEX_AUTH = false;
+    public static boolean MOBILE = false;
 
     public static OnePageCRM getInstance() {
         if (instance == null) {
@@ -56,6 +57,11 @@ public final class OnePageCRM {
 
     public static OnePageCRM setComplexAuth(boolean complexAuth) {
         COMPLEX_AUTH = complexAuth;
+        return getInstance();
+    }
+
+    public static OnePageCRM setMobile(boolean mobile) {
+        MOBILE = mobile;
         return getInstance();
     }
 }

@@ -338,6 +338,25 @@ public class BaseSerializer {
     public static final String CALL_ID_TAG = "call_id";
     public static final String NOTE_ID_TAG = "note_id";
 
+    // S3 / ATTACHMENTS
+    public static final String QUOTA_TAG = "quota";
+    public static final String DISPLAY_QUOTA_TAG = "display_quota";
+    public static final String FIELDS_TAG = "fields";
+    public static final String KEY_TAG = "key";
+    public static final String SUCCESS_ACTION_STATUS_TAG = "success_action_status";
+    public static final String ACL_TAG = "acl";
+    public static final String POLICY_TAG = "policy";
+    public static final String X_IGNORE_PATTERN_TAG = "x-ignore-pattern";
+    public static final String X_AMZ_ALGORITHM_TAG = "x-amz-algorithm";
+    public static final String X_AMZ_CREDENTIAL_TAG = "x-amz-credential";
+    public static final String X_AMZ_DATE_TAG = "x-amz-date";
+    public static final String X_AMZ_SIGNATURE_TAG = "x-amz-signature";
+    public static final String FILE_TAG = "file";
+    public static final String REFERENCE_TYPE_TAG = "reference_type";
+    public static final String REFERENCE_ID_TAG = "reference_id";
+    public static final String EXTERNAL_URL_TAG = "external_url";
+    public static final String LINK_TYPE_TAG = "link_type";
+
     /**
      * Method used to parse the base/start of response.
      *
@@ -768,6 +787,18 @@ public class BaseSerializer {
             }
         } catch (JSONException e) {
             LOG.severe("Error serializing JSON array : " + input);
+            LOG.severe(e.toString());
+        }
+    }
+
+    /**
+     * Adds a NULL value to a JSONObject with the specified key.
+     */
+    public static void addNullValue(JSONObject object, String key) {
+        try {
+            object.put(key, JSONObject.NULL);
+        } catch (JSONException e) {
+            LOG.severe("Error adding NULL value");
             LOG.severe(e.toString());
         }
     }
