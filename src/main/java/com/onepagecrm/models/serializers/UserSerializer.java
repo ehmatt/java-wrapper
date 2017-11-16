@@ -23,6 +23,7 @@ public class UserSerializer extends BaseSerializer {
     public static User fromString(String dataString) {
         try {
             JSONObject dataObject = new JSONObject(dataString);
+            if (dataObject.has(BOOTSTRAP_TAG)) dataObject = dataObject.getJSONObject(BOOTSTRAP_TAG);
             String userId = dataObject.getString(USER_ID_TAG);
             String authKey = dataObject.getString(AUTH_KEY_TAG);
             String accountType = dataObject.getString(ACCOUNT_TYPE_TAG);
