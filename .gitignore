@@ -34,3 +34,6 @@ proguard/
 .gradle/
 build/
 out/
+
+#Misc.
+*.DS_Store

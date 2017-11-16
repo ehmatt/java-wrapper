@@ -74,6 +74,18 @@ public class DateSerializer extends BaseSerializer {
         return null;
     }
 
+    public static Date fromFriendlyFormattedString(String dateStr) {
+        if (Utilities.notNullOrEmpty(dateStr)) {
+            try {
+                return friendlyDateAndYearFormat.parse(dateStr);
+            } catch (ParseException e) {
+                LOG.severe("Error parsing date string to date object");
+                LOG.severe(e.toString());
+            }
+        }
+        return null;
+    }
+
     public static Date fromCallFormattedString(String dateStr) {
         try {
             return dateCallTimeFormat.parse(dateStr);

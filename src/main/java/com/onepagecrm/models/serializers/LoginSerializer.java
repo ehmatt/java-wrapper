@@ -1,12 +1,7 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Account;
-import com.onepagecrm.models.Filter;
-import com.onepagecrm.models.LeadSource;
-import com.onepagecrm.models.Status;
-import com.onepagecrm.models.Tag;
-import com.onepagecrm.models.User;
+import com.onepagecrm.models.*;
 import com.onepagecrm.models.internal.ContactsCount;
 import com.onepagecrm.models.internal.PredefinedAction;
 import com.onepagecrm.models.internal.PredefinedActionList;
@@ -28,20 +23,33 @@ public class LoginSerializer extends BaseSerializer {
     private static final Logger LOG = Logger.getLogger(LoginSerializer.class.getName());
 
     public static User fromString(String responseBody) throws OnePageException {
-        String parsedResponse;
-        OnePageException exception;
+        return getLoggedInUser(responseBody);
+    }
 
-        try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            loggedInUser = UserSerializer.fromString(parsedResponse);
-            updateLoginOnlyResources(responseBody);
-            updateDynamicResources(responseBody);
-            return loggedInUser;
-
-        } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
+    public static StartupObject fromString(String responseBody, boolean fullResponse) throws OnePageException {
+        User user = getLoggedInUser(responseBody);
+        ContactList actionStream = null;
+        ContactList contacts = null;
+        DealList deals = null;
+        if (fullResponse) {
+            String parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            try {
+                JSONObject responseObject = new JSONObject(parsedResponse);
+                if (responseObject.has(ACTION_STREAM_DATA_TAG)) {
+                    actionStream = ContactListSerializer.fromJsonObject(responseObject.getJSONObject(ACTION_STREAM_DATA_TAG));
+                }
+                if (responseObject.has(CONTACT_DATA_TAG)) {
+                    contacts = ContactListSerializer.fromJsonObject(responseObject.getJSONObject(CONTACT_DATA_TAG));
+                }
+                if(responseObject.has(DEAL_DATA_TAG)) {
+                    deals = DealListSerializer.fromJsonObject(responseObject.getJSONObject(DEAL_DATA_TAG));
+                }
+            } catch (JSONException e) {
+                LOG.severe("Error parsing Login object");
+                LOG.severe(e.toString());
+            }
         }
+        return new StartupObject(user, actionStream, contacts, deals, fullResponse);
     }
 
     public static void updateLoginOnlyResources(String responseBody) {
@@ -64,6 +72,7 @@ public class LoginSerializer extends BaseSerializer {
         try {
             JSONObject responseObject = new JSONObject(responseBody);
             JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+            if (dataObject.has(BOOTSTRAP_TAG)) dataObject = dataObject.getJSONObject(BOOTSTRAP_TAG);
             addSettings(dataObject);
         } catch (Exception e) {
             LOG.severe("Error parsing Settings array");
@@ -76,16 +85,34 @@ public class LoginSerializer extends BaseSerializer {
         loggedInUser.getAccount().setSettings(settings);
     }
 
-    public static String toJsonObject(String username, String password) {
+    public static String toJsonObject(String username, String password, boolean fullResponse) {
         JSONObject loginObject = new JSONObject();
         try {
             loginObject.put(LOGIN_TAG, username);
             loginObject.put(PASSWORD_TAG, password);
+            loginObject.put(FULL_RESPONSE_TAG, fullResponse);
         } catch (JSONException e) {
             LOG.severe("Error creating JSONObject from login values");
             LOG.severe(e.toString());
         }
         return loginObject.toString();
+    }
+
+    private static User getLoggedInUser(String responseBody) throws OnePageException {
+        String parsedResponse;
+        OnePageException exception;
+
+        try {
+            parsedResponse = (String) BaseSerializer.fromString(responseBody);
+            loggedInUser = UserSerializer.fromString(parsedResponse);
+            updateLoginOnlyResources(responseBody);
+            updateDynamicResources(responseBody);
+        } catch (ClassCastException e) {
+            exception = (OnePageException) BaseSerializer.fromString(responseBody);
+            throw exception;
+        }
+
+        return loggedInUser;
     }
 
     private static void addTagsToAccount(String responseBody) {
@@ -149,6 +176,7 @@ public class LoginSerializer extends BaseSerializer {
         try {
             responseObject = new JSONObject(responseBody);
             JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+            if (dataObject.has(BOOTSTRAP_TAG)) dataObject = dataObject.getJSONObject(BOOTSTRAP_TAG);
             if (dataObject.has(FILTERS_TAG)) {
                 addFilters(dataObject.getJSONArray(FILTERS_TAG));
             }
@@ -204,6 +232,7 @@ public class LoginSerializer extends BaseSerializer {
         try {
             responseObject = new JSONObject(responseBody);
             JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+            if (dataObject.has(BOOTSTRAP_TAG)) dataObject = dataObject.getJSONObject(BOOTSTRAP_TAG);
             if (dataObject.has(PREDEFINED_ACTIONS_TAG)) {
                 addPredefinedActions(dataObject.getJSONArray(PREDEFINED_ACTIONS_TAG));
             }
@@ -223,6 +252,7 @@ public class LoginSerializer extends BaseSerializer {
         try {
             responseObject = new JSONObject(responseBody);
             JSONObject dataObject = responseObject.getJSONObject(DATA_TAG);
+            if (dataObject.has(BOOTSTRAP_TAG)) dataObject = dataObject.getJSONObject(BOOTSTRAP_TAG);
             if (dataObject.has(CONTACT_TITLES_TAG)) {
                 addContactTitles(dataObject.getJSONArray(CONTACT_TITLES_TAG));
                 Account.settings.setContactTitleEnabled(true);
