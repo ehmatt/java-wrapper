@@ -58,7 +58,13 @@ public class User extends ApiResource implements Serializable {
     }
 
     public static User googleLogin(String authCode) throws OnePageException {
-        Request request = new GoogleLoginRequest(authCode);
+        Request request = new GoogleLoginRequest(authCode, true);
+        Response response = request.send();
+        return LoginSerializer.fromString(response.getResponseBody());
+    }
+
+    public static User googleSignup(String authCode) throws OnePageException {
+        Request request = new GoogleLoginRequest(authCode, false);
         Response response = request.send();
         return LoginSerializer.fromString(response.getResponseBody());
     }
