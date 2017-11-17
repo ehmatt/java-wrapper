@@ -337,7 +337,7 @@ public class BaseSerializer {
     public static final String URL_EXPIRES_AT_TAG = "url_expires_at";
     public static final String CALL_ID_TAG = "call_id";
     public static final String NOTE_ID_TAG = "note_id";
-
+    
     // S3 / ATTACHMENTS
     public static final String QUOTA_TAG = "quota";
     public static final String DISPLAY_QUOTA_TAG = "display_quota";
@@ -356,6 +356,17 @@ public class BaseSerializer {
     public static final String REFERENCE_ID_TAG = "reference_id";
     public static final String EXTERNAL_URL_TAG = "external_url";
     public static final String LINK_TYPE_TAG = "link_type";
+
+    // NOTIFICATIONS
+    public static final String ACTION_TYPE_TAG = "action_type";
+    public static final String OPEN_NOTE_TAG = "open_note";
+
+    // VIDEO LINKS
+    public static final String VIDEO_TUTORIALS_TAG = "video_tutorials";
+    public static final String LINKS_TAG = "links";
+    public static final String LINK_TAG = "link";
+    public static final String RESOLUTION_TAG = "resolution";
+    public static final String VIDEO_NAME_TAG = "name";
 
     /**
      * Method used to parse the base/start of response.
