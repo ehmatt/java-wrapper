@@ -26,12 +26,17 @@ public class BaseSerializer {
     // LOGIN TAGS
     public static final String LOGIN_TAG = "login";
     public static final String PASSWORD_TAG = "password";
+    public static final String FULL_RESPONSE_TAG = "full_response";
     public static final String DATA_TAG = "data";
     public static final String USER_ID_TAG = "user_id";
     public static final String AUTH_KEY_TAG = "auth_key";
     public static final String ACCOUNT_TYPE_TAG = "account_type";
 
     // LOGIN RESPONSE / USER TAGS
+    public static final String BOOTSTRAP_TAG = "bootstrap";
+    public static final String ACTION_STREAM_DATA_TAG = "action_stream_data";
+    public static final String CONTACT_DATA_TAG = "contact_data";
+    public static final String DEAL_DATA_TAG = "deal_data";
     public static final String USER_TAG = "user";
     public static final String FIRST_NAME_TAG = "first_name";
     public static final String LAST_NAME_TAG = "last_name";
@@ -332,6 +337,36 @@ public class BaseSerializer {
     public static final String URL_EXPIRES_AT_TAG = "url_expires_at";
     public static final String CALL_ID_TAG = "call_id";
     public static final String NOTE_ID_TAG = "note_id";
+
+    // S3 / ATTACHMENTS
+    public static final String QUOTA_TAG = "quota";
+    public static final String DISPLAY_QUOTA_TAG = "display_quota";
+    public static final String FIELDS_TAG = "fields";
+    public static final String KEY_TAG = "key";
+    public static final String SUCCESS_ACTION_STATUS_TAG = "success_action_status";
+    public static final String ACL_TAG = "acl";
+    public static final String POLICY_TAG = "policy";
+    public static final String X_IGNORE_PATTERN_TAG = "x-ignore-pattern";
+    public static final String X_AMZ_ALGORITHM_TAG = "x-amz-algorithm";
+    public static final String X_AMZ_CREDENTIAL_TAG = "x-amz-credential";
+    public static final String X_AMZ_DATE_TAG = "x-amz-date";
+    public static final String X_AMZ_SIGNATURE_TAG = "x-amz-signature";
+    public static final String FILE_TAG = "file";
+    public static final String REFERENCE_TYPE_TAG = "reference_type";
+    public static final String REFERENCE_ID_TAG = "reference_id";
+    public static final String EXTERNAL_URL_TAG = "external_url";
+    public static final String LINK_TYPE_TAG = "link_type";
+
+    // NOTIFICATIONS
+    public static final String ACTION_TYPE_TAG = "action_type";
+    public static final String OPEN_NOTE_TAG = "open_note";
+
+    // VIDEO LINKS
+    public static final String VIDEO_TUTORIALS_TAG = "video_tutorials";
+    public static final String LINKS_TAG = "links";
+    public static final String LINK_TAG = "link";
+    public static final String RESOLUTION_TAG = "resolution";
+    public static final String VIDEO_NAME_TAG = "name";
 
     /**
      * Method used to parse the base/start of response.
@@ -763,6 +798,18 @@ public class BaseSerializer {
             }
         } catch (JSONException e) {
             LOG.severe("Error serializing JSON array : " + input);
+            LOG.severe(e.toString());
+        }
+    }
+
+    /**
+     * Adds a NULL value to a JSONObject with the specified key.
+     */
+    public static void addNullValue(JSONObject object, String key) {
+        try {
+            object.put(key, JSONObject.NULL);
+        } catch (JSONException e) {
+            LOG.severe("Error adding NULL value");
             LOG.severe(e.toString());
         }
     }

@@ -48,13 +48,23 @@ public class User extends ApiResource implements Serializable {
     private Sales sales;
 
     public static User login(String username, String password) throws OnePageException {
-        Request request = new LoginRequest(username, password);
+        return login(username, password, false).getUser();
+    }
+
+    public static StartupObject login(String username, String password, boolean fullResponse) throws OnePageException {
+        Request request = new LoginRequest(username, password, fullResponse);
+        Response response = request.send();
+        return LoginSerializer.fromString(response.getResponseBody(), fullResponse);
+    }
+
+    public static User googleLogin(String authCode) throws OnePageException {
+        Request request = new GoogleLoginRequest(authCode, true);
         Response response = request.send();
         return LoginSerializer.fromString(response.getResponseBody());
     }
 
-    public static User googleLogin(String authCode) throws OnePageException {
-        Request request = new GoogleLoginRequest(authCode);
+    public static User googleSignup(String authCode) throws OnePageException {
+        Request request = new GoogleLoginRequest(authCode, false);
         Response response = request.send();
         return LoginSerializer.fromString(response.getResponseBody());
     }
@@ -63,6 +73,12 @@ public class User extends ApiResource implements Serializable {
         Request request = new GetRequest(BOOTSTRAP_ENDPOINT);
         Response response = request.send();
         return LoginSerializer.fromString(response.getResponseBody());
+    }
+
+    public StartupObject startup() throws OnePageException {
+        Request request = new GetRequest(STARTUP_ENDPOINT);
+        Response response = request.send();
+        return LoginSerializer.fromString(response.getResponseBody(), true);
     }
 
     public ContactList actionStream() throws OnePageException {

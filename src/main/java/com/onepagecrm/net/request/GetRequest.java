@@ -9,16 +9,20 @@ import com.onepagecrm.net.OnePageAuthData;
 public class GetRequest extends SignedRequest {
 
     public GetRequest(String endpoint) {
-        setType();
-        setEndpointUrl(endpoint);
-        setAuthData((!OnePageCRM.COMPLEX_AUTH) ?
-                new BasicAuthData(Account.loggedInUser) :
-                new OnePageAuthData(Account.loggedInUser, Request.GET, endpointUrl, requestBody));
+        getRequest(endpoint, null, false);
     }
 
     public GetRequest(String endpoint, String query) {
+        getRequest(endpoint, query, false);
+    }
+
+    public GetRequest(String endpoint, String query, boolean external) {
+        getRequest(endpoint, query, external);
+    }
+
+    private void getRequest(String endpoint, String query, boolean external) {
         setType();
-        setEndpointUrl(endpoint);
+        setEndpointUrl(endpoint, external);
         addQuery(query);
         authenticate();
     }

@@ -1,10 +1,12 @@
 package com.onepagecrm.models.internal;
 
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.models.serializers.DeviceListSerializer;
 import com.onepagecrm.models.serializers.DeviceSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
+import com.onepagecrm.net.request.DeleteRequest;
 import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.PostRequest;
 import com.onepagecrm.net.request.Request;
@@ -42,8 +44,22 @@ public class Device extends ApiResource {
         return DeviceSerializer.fromString(response.getResponseBody());
     }
 
+    public DeleteResult delete() throws OnePageException {
+        final String resourceId = this.id;
+        Request request = new DeleteRequest(
+                withId(DEVICE_ENDPOINT, resourceId),
+                null
+        );
+        Response response = request.send();
+        return DeleteResultSerializer.fromString(resourceId, response.getResponseBody());
+    }
+
     public Device() {
 
+    }
+
+    private String withId(String endpoint, String id) {
+        return endpoint + "/" + id;
     }
 
     @Override

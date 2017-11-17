@@ -28,6 +28,11 @@ public class ContactListSerializer extends BaseSerializer {
         try {
             String parsedResponse = (String) BaseSerializer.fromString(responseBody);
             JSONObject responseObject = new JSONObject(parsedResponse);
+            if (responseObject.has(ACTION_STREAM_DATA_TAG)) {
+                responseObject = responseObject.getJSONObject(ACTION_STREAM_DATA_TAG);
+            } else if (responseObject.has(CONTACT_DATA_TAG)) {
+                responseObject = responseObject.getJSONObject(CONTACT_DATA_TAG);
+            }
             JSONArray contactsArray = responseObject.getJSONArray(CONTACTS_TAG);
             contacts = fromJsonArray(contactsArray);
             Paginator paginator = RequestMetadataSerializer.fromJsonObject(responseObject);

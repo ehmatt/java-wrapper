@@ -11,6 +11,7 @@ public abstract class ApiResource extends BaseResource implements Serializable {
 
     public static final String LOGIN_ENDPOINT = "login";
     public static final String BOOTSTRAP_ENDPOINT = "bootstrap";
+    public static final String STARTUP_ENDPOINT = "mobile/startup";
     public static final String ACTION_STREAM_ENDPOINT = "action_stream";
     public static final String CONTACTS_ENDPOINT = "contacts";
     public static final String CLOSE_SALES_CYCLE_ENDPOINT = "contacts/{id}/close_sales_cycle";

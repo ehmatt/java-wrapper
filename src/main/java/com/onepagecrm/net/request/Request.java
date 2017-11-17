@@ -104,6 +104,7 @@ public abstract class Request {
 
     public static void setCustomUrl(String customUrl) {
         CUSTOM_URL = customUrl;
+        sServerUrlMap.put(CUSTOM_URL_SERVER, CUSTOM_URL);
     }
 
     private static final Map<Integer, String> sServerNameMap = new HashMap<>();
@@ -248,19 +249,27 @@ public abstract class Request {
 
     protected static final String AUTHORIZATION = "Authorization";
 
-    protected static final int DEFAULT_TIME_OUT_MS = 10000; // 10 seconds
+    public static final int DEFAULT_TIME_OUT_MS = 10000; // 10 seconds
 
     protected HttpURLConnection connection;
 
     public abstract void setType();
 
     public void setEndpointUrl(String endpoint) {
-        setEndpointUrl(endpoint, format);
+        setEndpointUrl(endpoint, format, false);
     }
 
-    public void setEndpointUrl(String endpoint, String format) {
+    public void setEndpointUrl(String endpoint, boolean external) {
+        setEndpointUrl(endpoint, format, external);
+    }
+
+    public void setEndpointUrl(String endpoint, String format, boolean externalEndpoint) {
         if (Utilities.notNullOrEmpty(endpoint)) {
-            this.endpointUrl = sServerUrlMap.get(OnePageCRM.SERVER) + endpoint + format;
+            if (externalEndpoint) {
+                endpointUrl = endpoint;
+            } else {
+                endpointUrl = sServerUrlMap.get(OnePageCRM.SERVER) + endpoint + format;
+            }
         }
     }
 

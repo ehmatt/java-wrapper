@@ -4,7 +4,7 @@ import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
-import com.onepagecrm.models.internal.Utilities;
+import com.onepagecrm.models.internal.FileUtilities;
 import com.onepagecrm.models.serializers.ContactListSerializer;
 
 import java.util.logging.Logger;
@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 /**
  * Created by Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class ContactFabricator extends BaseFabricator {
 
     private static final Logger LOG = Logger.getLogger(ContactFabricator.class.getName());
@@ -98,7 +99,7 @@ public class ContactFabricator extends BaseFabricator {
     private static ContactList fromPath(String fileName) {
         ContactList contacts = new ContactList();
         String path = OnePageCRM.ASSET_PATH + fileName;
-        String response = Utilities.getResourceContents(path);
+        String response = FileUtilities.getResourceContents(path);
         if (response != null) {
             try {
                 contacts = ContactListSerializer.fromString(response);
