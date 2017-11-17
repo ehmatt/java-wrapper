@@ -361,6 +361,13 @@ public class BaseSerializer {
     public static final String ACTION_TYPE_TAG = "action_type";
     public static final String OPEN_NOTE_TAG = "open_note";
 
+    // VIDEO LINKS
+    public static final String VIDEO_TUTORIALS_TAG = "video_tutorials";
+    public static final String LINKS_TAG = "links";
+    public static final String LINK_TAG = "link";
+    public static final String RESOLUTION_TAG = "resolution";
+    public static final String VIDEO_NAME_TAG = "name";
+
     /**
      * Method used to parse the base/start of response.
      *
