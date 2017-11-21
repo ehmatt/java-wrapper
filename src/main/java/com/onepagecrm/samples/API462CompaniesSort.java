@@ -12,7 +12,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -80,13 +79,10 @@ public class API462CompaniesSort {
         CompanyList modifiedAtManual = new CompanyList(modifiedAtAPI.getList());
 
         // Default sorting (az).
-        Collections.sort(defaultManual.getList(), new Comparator<Company>() {
-            @Override
-            public int compare(Company c1, Company c2) {
-                final String cmp1 = notNullOrEmpty(c1.getName()) ? c1.getName() : "";
-                final String cmp2 = notNullOrEmpty(c2.getName()) ? c2.getName() : "";
-                return cmp1.compareToIgnoreCase(cmp2);
-            }
+        Collections.sort(defaultManual.getList(), (c1, c2) -> {
+            final String cmp1 = notNullOrEmpty(c1.getName()) ? c1.getName() : "";
+            final String cmp2 = notNullOrEmpty(c2.getName()) ? c2.getName() : "";
+            return cmp1.compareToIgnoreCase(cmp2);
         });
 
         // Default checking.
@@ -102,13 +98,10 @@ public class API462CompaniesSort {
         }
 
         // AZ sorting.
-        Collections.sort(azManual.getList(), new Comparator<Company>() {
-            @Override
-            public int compare(Company c1, Company c2) {
-                final String cmp1 = notNullOrEmpty(c1.getName()) ? c1.getName() : "";
-                final String cmp2 = notNullOrEmpty(c2.getName()) ? c2.getName() : "";
-                return cmp1.compareToIgnoreCase(cmp2);
-            }
+        Collections.sort(azManual.getList(), (c1, c2) -> {
+            final String cmp1 = notNullOrEmpty(c1.getName()) ? c1.getName() : "";
+            final String cmp2 = notNullOrEmpty(c2.getName()) ? c2.getName() : "";
+            return cmp1.compareToIgnoreCase(cmp2);
         });
 
         // AZ checking.
@@ -124,13 +117,10 @@ public class API462CompaniesSort {
         }
 
         // created_at sorting.
-        Collections.sort(createdAtManual.getList(), new Comparator<Company>() {
-            @Override
-            public int compare(Company c1, Company c2) {
-                final long cmp1 = c1.getCreatedAt() != null ? DateSerializer.toTimestamp(c1.getCreatedAt()) : 0L;
-                final long cmp2 = c2.getCreatedAt() != null ? DateSerializer.toTimestamp(c2.getCreatedAt()) : 0L;
-                return Long.compare(cmp1, cmp2);
-            }
+        Collections.sort(createdAtManual.getList(), (c1, c2) -> {
+            final long cmp1 = c1.getCreatedAt() != null ? DateSerializer.toTimestamp(c1.getCreatedAt()) : 0L;
+            final long cmp2 = c2.getCreatedAt() != null ? DateSerializer.toTimestamp(c2.getCreatedAt()) : 0L;
+            return Long.compare(cmp1, cmp2);
         });
 
         // created_at checking.
@@ -147,13 +137,10 @@ public class API462CompaniesSort {
         }
 
         // modified_at sorting.
-        Collections.sort(modifiedAtManual.getList(), new Comparator<Company>() {
-            @Override
-            public int compare(Company c1, Company c2) {
-                final long cmp1 = c1.getModifiedAt() != null ? DateSerializer.toTimestamp(c1.getModifiedAt()) : 0L;
-                final long cmp2 = c2.getModifiedAt() != null ? DateSerializer.toTimestamp(c2.getModifiedAt()) : 0L;
-                return Long.compare(cmp1, cmp2);
-            }
+        Collections.sort(modifiedAtManual.getList(), (c1, c2) -> {
+            final long cmp1 = c1.getModifiedAt() != null ? DateSerializer.toTimestamp(c1.getModifiedAt()) : 0L;
+            final long cmp2 = c2.getModifiedAt() != null ? DateSerializer.toTimestamp(c2.getModifiedAt()) : 0L;
+            return Long.compare(cmp1, cmp2);
         });
 
         // modified_at checking.
