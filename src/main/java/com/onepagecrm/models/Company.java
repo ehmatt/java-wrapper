@@ -3,6 +3,7 @@ package com.onepagecrm.models;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.Paginator;
+import com.onepagecrm.models.serializers.CompanyListSerializer;
 import com.onepagecrm.models.serializers.CompanySerializer;
 import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.models.serializers.LinkedContactSerializer;
@@ -100,6 +101,16 @@ public class Company extends ApiResource implements Serializable {
         Company company = CompanySerializer.fromString(responseBody);
         LoginSerializer.updateDynamicResources(responseBody);
         return company;
+    }
+
+    public static CompanyList list() throws OnePageException {
+        Request request = new GetRequest(
+                COMPANIES_ENDPOINT,
+                null
+        );
+        Response response = request.send();
+        String responseBody = response.getResponseBody();
+        return CompanyListSerializer.fromString(responseBody);
     }
 
     public LinkedContactList getLinkedContacts() throws OnePageException {
