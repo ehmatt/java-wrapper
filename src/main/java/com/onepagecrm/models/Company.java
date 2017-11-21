@@ -20,6 +20,7 @@ import com.onepagecrm.net.request.Request;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
 
@@ -104,10 +105,15 @@ public class Company extends ApiResource implements Serializable {
     }
 
     public static CompanyList list() throws OnePageException {
-        Request request = new GetRequest(
-                COMPANIES_ENDPOINT,
-                null
-        );
+        return getCompanies(COMPANIES_ENDPOINT, null);
+    }
+
+    public static CompanyList list(Map<String, Object> params) throws OnePageException {
+        return getCompanies(COMPANIES_ENDPOINT, Query.fromParams(params));
+    }
+
+    private static CompanyList getCompanies(String endpoint, String query) throws OnePageException {
+        Request request = new GetRequest(endpoint, query);
         Response response = request.send();
         String responseBody = response.getResponseBody();
         return CompanyListSerializer.fromString(responseBody);

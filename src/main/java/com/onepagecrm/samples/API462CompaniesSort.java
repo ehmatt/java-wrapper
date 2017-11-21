@@ -12,8 +12,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -56,7 +58,9 @@ public class API462CompaniesSort {
 
         LOG.info("Logged in User : " + loggedInUser);
 
-        CompanyList companies = Company.list();
+        Map<String, Object> params = new HashMap<>();
+        //params.put("sort_by", "name"); // TODO: API does not support sort by name??
+        CompanyList companies = Company.list(params);
 
         List<String> namesFromAPI = new LinkedList<>();
         List<String> namesFromSort = new LinkedList<>();
@@ -79,7 +83,5 @@ public class API462CompaniesSort {
             LOG.info("API: \"" + apiName + "\" - SORT: \"" + sortedName
                     + "\" - match: " + sortedName.equalsIgnoreCase(apiName));
         }
-
-        LOG.info("PASS");
     }
 }
