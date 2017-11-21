@@ -109,7 +109,7 @@ public class Company extends ApiResource implements Serializable {
     }
 
     public static CompanyList list(Map<String, Object> params) throws OnePageException {
-        return getCompanies(COMPANIES_ENDPOINT, Query.fromParams(params));
+        return getCompanies(COMPANIES_ENDPOINT, params != null && !params.isEmpty() ? Query.fromParams(params) : null);
     }
 
     private static CompanyList getCompanies(String endpoint, String query) throws OnePageException {
