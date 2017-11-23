@@ -95,10 +95,6 @@ public class CompanySerializer extends BaseSerializer {
         return jsonObject;
     }
 
-    public static String toJsonString(String contactId, String linkedWithId) {
-        return toJsonObject(contactId, linkedWithId).toString();
-    }
-
     public static JSONObject toJsonObject(Company company) {
         JSONObject companyObject = new JSONObject();
         if (company == null) return companyObject;
@@ -134,10 +130,6 @@ public class CompanySerializer extends BaseSerializer {
         return companyObject;
     }
 
-    public static String toJsonString(Company company) {
-        return toJsonObject(company).toString();
-    }
-
     public static JSONArray toJsonArray(List<Company> companies) {
         JSONArray companiesArray = new JSONArray();
         if (companies == null) return companiesArray;
@@ -145,6 +137,14 @@ public class CompanySerializer extends BaseSerializer {
             companiesArray.put(toJsonObject(company));
         }
         return companiesArray;
+    }
+
+    public static String toJsonString(String contactId, String linkedWithId) {
+        return toJsonObject(contactId, linkedWithId).toString();
+    }
+
+    public static String toJsonString(Company company) {
+        return toJsonObject(company).toString();
     }
 
     public static String toJsonString(List<Company> companies) {
