@@ -259,7 +259,15 @@ public abstract class Request {
     public abstract void setType();
 
     public void setEndpointUrl(String endpoint) {
-        endpointUrl = sServerUrlMap.get(OnePageCRM.SERVER) + endpoint + format;
+        setEndpointUrl(endpoint, false);
+    }
+
+    public void setEndpointUrl(String endpoint, boolean externalEndpoint) {
+        if (externalEndpoint) {
+            endpointUrl = endpoint;
+        } else {
+            endpointUrl = sServerUrlMap.get(OnePageCRM.SERVER) + endpoint + format;
+        }
     }
 
     /**
