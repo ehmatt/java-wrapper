@@ -33,8 +33,8 @@ public class ActionSerializer extends BaseSerializer {
     public static Action fromString(String responseBody) throws APIException {
         try {
             String dataString = (String) BaseSerializer.fromString(responseBody);
-            JSONObject responseObject = new JSONObject(dataString);
-            JSONObject actionObject = responseObject.optJSONObject(ACTION_TAG);
+            JSONObject dataObject = new JSONObject(dataString);
+            JSONObject actionObject = dataObject.optJSONObject(ACTION_TAG);
             return fromJsonObject(actionObject);
 
         } catch (JSONException e) {

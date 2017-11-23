@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+@SuppressWarnings("unused")
 public class VideoTutorial extends ApiResource implements Serializable {
 
     private static final Logger LOG = Logger.getLogger(VideoTutorial.class.getSimpleName());
@@ -31,18 +32,16 @@ public class VideoTutorial extends ApiResource implements Serializable {
     }
 
     public VideoTutorial() {
+
     }
 
     @Override
     public String toString() {
-        return VideoTutorialSerializer.toJsonObject(this);
+        return VideoTutorialSerializer.toJsonString(this);
     }
 
     /**
      * Method to compare VideoLinks to one another based off of their name.
-     *
-     * @param object
-     * @return
      */
     @Override
     public boolean equals(Object object) {

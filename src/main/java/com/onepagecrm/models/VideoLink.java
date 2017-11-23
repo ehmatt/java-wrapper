@@ -1,7 +1,10 @@
 package com.onepagecrm.models;
 
+import com.onepagecrm.models.serializers.VideoLinkSerializer;
+
 import java.io.Serializable;
 
+@SuppressWarnings("unused")
 public class VideoLink extends BaseResource implements Serializable {
 
     private String link;
@@ -13,18 +16,15 @@ public class VideoLink extends BaseResource implements Serializable {
     }
 
     public VideoLink() {
+
     }
 
     public String toString() {
-        return "";
-        //return UrlSerializer.toJsonObject(this);
+        return VideoLinkSerializer.toJsonString(this);
     }
 
     /**
-     * Method to compare VideoLink obj's to one another based off of their value attr.
-     *
-     * @param object
-     * @return
+     * Method to compare VideoLink obj's to one another based off of their link attr.
      */
     @Override
     public boolean equals(Object object) {
