@@ -10,7 +10,6 @@ import com.onepagecrm.models.Deal;
 import com.onepagecrm.models.Email;
 import com.onepagecrm.models.Note;
 import com.onepagecrm.models.Phone;
-import com.onepagecrm.models.Tag;
 import com.onepagecrm.models.Url;
 import com.onepagecrm.models.helpers.TagHelper;
 import com.onepagecrm.models.internal.SalesCycleClosure;
@@ -277,14 +276,8 @@ public class ContactSerializer extends BaseSerializer {
         JSONArray urlsArray = UrlSerializer.toJsonArray(contact.getUrls());
         addJsonArray(urlsArray, contactObject, URLS_TAG);
         // Tags.
-        List<Tag> tags = contact.getTags();
-        List<String> tagNames = new ArrayList<>();
-        if (tags != null && !tags.isEmpty()) {
-            for (int i = 0; i < contact.getTags().size(); i++) {
-                tagNames.add(contact.getTags().get(i).getName());
-            }
-        }
-        addJsonArray(BaseSerializer.toJsonStringArray(tagNames), contactObject, TAGS_TAG);
+        JSONArray tagArray = BaseSerializer.toJsonStringArray(TagHelper.asStrings(contact.getTags()));
+        addJsonArray(tagArray, contactObject, TAGS_TAG);
         // Company.
         JSONObject companyObject = CompanySerializer.toJsonObject(contact.getCompany());
         addJsonObject(companyObject, contactObject, COMPANY_TAG);

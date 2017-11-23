@@ -541,13 +541,8 @@ public class BaseSerializer {
         if (stringArray == null) return new String[0];
         String[] choices = new String[stringArray.length()];
         for (int i = 0; i < stringArray.length(); i++) {
-            try {
-                String choice = stringArray.getString(i);
-                choices[i] = choice;
-            } catch (JSONException e) {
-                LOG.severe("Error parsing array of Strings");
-                LOG.severe(e.toString());
-            }
+            String choice = stringArray.optString(i);
+            choices[i] = choice;
         }
         return choices;
     }
@@ -556,13 +551,8 @@ public class BaseSerializer {
         List<String> choices = new ArrayList<>();
         if (stringArray == null) return choices;
         for (int i = 0; i < stringArray.length(); i++) {
-            try {
-                String choice = stringArray.getString(i);
-                choices.add(choice);
-            } catch (JSONException e) {
-                LOG.severe("Error parsing array of Strings");
-                LOG.severe(e.toString());
-            }
+            String choice = stringArray.optString(i);
+            choices.add(choice);
         }
         return choices;
     }
