@@ -275,7 +275,7 @@ public abstract class Request {
      *
      * @return response
      */
-    public Response send() throws OnePageException {
+    public Response send() throws OnePageException { // TODO: throw APIException
         boolean mockingRequest = (OnePageCRM.SERVER == MOCK_REQUEST_SERVER);
         if (!mockingRequest) {
             setupAndConnect();

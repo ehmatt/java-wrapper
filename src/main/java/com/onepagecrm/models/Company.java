@@ -135,12 +135,12 @@ public class Company extends ApiResource implements Serializable {
         return linkedContact;
     }
 
-    public static DeleteResult unlinkContact(String companyId, String contactId) throws OnePageException {
+    public static DeleteResult unlinkContact(String companyId, String contactId) throws OnePageException { // TODO: throw APIException
         String endpoint = LINKED_CONTACTS_ENDPOINT.replace("{id}", companyId);
         Request request = new DeleteRequest(addIdToEndpoint(endpoint, contactId), null);
         Response response = request.send();
         String responseBody = response.getResponseBody();
-        DeleteResult deleteResult = DeleteResultSerializer.fromString(contactId, responseBody);
+        DeleteResult deleteResult = DeleteResultSerializer.fromResponse(contactId, response);
         LoginSerializer.updateDynamicResources(responseBody);
         return deleteResult;
     }

@@ -79,10 +79,10 @@ public class Call extends ApiResource implements Serializable {
         return CallSerializer.fromResponse(response);
     }
 
-    public DeleteResult delete() throws OnePageException {
+    public DeleteResult delete() throws OnePageException { // TODO: throw APIException
         Request request = new DeleteRequest(addIdToEndpoint(CALLS_ENDPOINT, this.id));
         Response response = request.send();
-        return DeleteResultSerializer.fromString(this.id, response.getResponseBody());
+        return DeleteResultSerializer.fromResponse(this.id, response);
     }
 
     public static CallList list(String contactId) throws OnePageException {

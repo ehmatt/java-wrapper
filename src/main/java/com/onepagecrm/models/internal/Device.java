@@ -44,14 +44,14 @@ public class Device extends ApiResource {
         return DeviceSerializer.fromString(response.getResponseBody());
     }
 
-    public DeleteResult delete() throws OnePageException {
+    public DeleteResult delete() throws OnePageException { // TODO: throw APIException
         final String resourceId = this.id;
         Request request = new DeleteRequest(
                 withId(DEVICE_ENDPOINT, resourceId),
                 null
         );
         Response response = request.send();
-        return DeleteResultSerializer.fromString(resourceId, response.getResponseBody());
+        return DeleteResultSerializer.fromResponse(resourceId, response);
     }
 
     public Device() {

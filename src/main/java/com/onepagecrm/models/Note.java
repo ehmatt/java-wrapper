@@ -75,10 +75,10 @@ public class Note extends ApiResource implements Serializable {
         return NoteSerializer.fromString(response.getResponseBody());
     }
 
-    public DeleteResult delete() throws OnePageException {
+    public DeleteResult delete() throws OnePageException { // TODO: throw APIException
         Request request = new DeleteRequest(addIdToEndpoint(NOTES_ENDPOINT, this.id));
         Response response = request.send();
-        return DeleteResultSerializer.fromString(this.id, response.getResponseBody());
+        return DeleteResultSerializer.fromResponse(this.id, response);
     }
 
     public static NoteList list(String contactId) throws OnePageException {

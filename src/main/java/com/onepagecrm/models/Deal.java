@@ -10,10 +10,18 @@ import com.onepagecrm.models.serializers.DealSerializer;
 import com.onepagecrm.models.serializers.DeleteResultSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
-import com.onepagecrm.net.request.*;
+import com.onepagecrm.net.request.DeleteRequest;
+import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.request.PostRequest;
+import com.onepagecrm.net.request.PutRequest;
+import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.onepagecrm.models.internal.Commission.Type.ABSOLUTE;
 import static com.onepagecrm.models.internal.Commission.Type.PERCENTAGE;
@@ -165,10 +173,10 @@ public class Deal extends ApiResource implements Serializable {
         return DealSerializer.fromString(response.getResponseBody());
     }
 
-    public DeleteResult delete() throws OnePageException {
+    public DeleteResult delete() throws OnePageException { // TODO: throw APIException
         Request request = new DeleteRequest(addIdToEndpoint(DEALS_ENDPOINT, this.id));
         Response response = request.send();
-        return DeleteResultSerializer.fromString(this.id, response.getResponseBody());
+        return DeleteResultSerializer.fromResponse(this.id, response);
     }
 
     public List<Note> relatedNotes() throws OnePageException {

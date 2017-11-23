@@ -5,10 +5,20 @@ import com.onepagecrm.models.internal.CloseSalesCycle;
 import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.SalesCycleClosure;
 import com.onepagecrm.models.internal.Utilities;
-import com.onepagecrm.models.serializers.*;
+import com.onepagecrm.models.serializers.BaseSerializer;
+import com.onepagecrm.models.serializers.ClosedSalesSerializer;
+import com.onepagecrm.models.serializers.ContactPhotoSerializer;
+import com.onepagecrm.models.serializers.ContactSerializer;
+import com.onepagecrm.models.serializers.ContactSplitSerializer;
+import com.onepagecrm.models.serializers.DeleteResultSerializer;
+import com.onepagecrm.models.serializers.LoginSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
-import com.onepagecrm.net.request.*;
+import com.onepagecrm.net.request.DeleteRequest;
+import com.onepagecrm.net.request.GetRequest;
+import com.onepagecrm.net.request.PostRequest;
+import com.onepagecrm.net.request.PutRequest;
+import com.onepagecrm.net.request.Request;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -147,11 +157,11 @@ public class Contact extends ApiResource implements Serializable {
         return ContactSerializer.fromString(response.getResponseBody());
     }
 
-    public DeleteResult delete() throws OnePageException {
+    public DeleteResult delete() throws OnePageException { // TODO: throw APIException
         Request request = new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id), null);
         Response response = request.send();
         String responseBody = response.getResponseBody();
-        DeleteResult deleteResult = DeleteResultSerializer.fromString(this.id, responseBody);
+        DeleteResult deleteResult = DeleteResultSerializer.fromResponse(this.id, response);
         LoginSerializer.updateDynamicResources(responseBody);
         return deleteResult;
     }
