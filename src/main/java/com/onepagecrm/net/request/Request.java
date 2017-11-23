@@ -328,7 +328,7 @@ public abstract class Request {
             throwInvalidSSLCertException(e);
 
         } catch (IOException e) {
-            throwIOException(e, "Error connecting to url : " + url);
+            throwIOException(e, "Error connecting to url: " + url);
         }
     }
 
