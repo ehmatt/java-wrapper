@@ -42,10 +42,6 @@ public class VideoLinkSerializer extends BaseSerializer {
         return videoLinkObject;
     }
 
-    public static String toJsonString(VideoLink videoLink) {
-        return toJsonObject(videoLink).toString();
-    }
-
     public static JSONArray toJsonArray(List<VideoLink> videoLinks) {
         JSONArray videoLinkArray = new JSONArray();
         if (videoLinks == null) return videoLinkArray;
@@ -53,6 +49,10 @@ public class VideoLinkSerializer extends BaseSerializer {
             videoLinkArray.put(toJsonObject(videoLink));
         }
         return videoLinkArray;
+    }
+
+    public static String toJsonString(VideoLink videoLink) {
+        return toJsonObject(videoLink).toString();
     }
 
     public static String toJsonString(List<VideoLink> videoLinks) {

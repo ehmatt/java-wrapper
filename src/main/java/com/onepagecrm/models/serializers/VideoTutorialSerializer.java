@@ -39,6 +39,15 @@ public class VideoTutorialSerializer extends BaseSerializer {
         }
     }
 
+    public static VideoTutorial fromJsonObject(JSONObject videoTutorialObject) {
+        if (videoTutorialObject == null) {
+            return DEFAULT;
+        }
+        return new VideoTutorial()
+                .setName(videoTutorialObject.optString(VIDEO_NAME_TAG))
+                .setVideoLinks(VideoLinkSerializer.fromJsonArray(videoTutorialObject.optJSONArray(LINKS_TAG)));
+    }
+
     public static List<VideoTutorial> fromJsonArray(JSONArray videoTutorialArray) {
         List<VideoTutorial> videoTutorials = new ArrayList<>();
         if (videoTutorialArray == null) return videoTutorials;
@@ -51,15 +60,6 @@ public class VideoTutorialSerializer extends BaseSerializer {
         return videoTutorials;
     }
 
-    public static VideoTutorial fromJsonObject(JSONObject videoTutorialObject) {
-        if (videoTutorialObject == null) {
-            return DEFAULT;
-        }
-        return new VideoTutorial()
-                .setName(videoTutorialObject.optString(VIDEO_NAME_TAG))
-                .setVideoLinks(VideoLinkSerializer.fromJsonArray(videoTutorialObject.optJSONArray(LINKS_TAG)));
-    }
-
     public static JSONObject toJsonObject(VideoTutorial videoTutorial) {
         JSONObject videoTutorialObject = new JSONObject();
         if (videoTutorial == null) return videoTutorialObject;
@@ -69,10 +69,6 @@ public class VideoTutorialSerializer extends BaseSerializer {
         return videoTutorialObject;
     }
 
-    public static String toJsonString(VideoTutorial videoTutorial) {
-        return toJsonObject(videoTutorial).toString();
-    }
-
     public static JSONArray toJsonArray(List<VideoTutorial> videoTutorials) {
         JSONArray videoTutorialsArray = new JSONArray();
         if (videoTutorials == null) return videoTutorialsArray;
@@ -80,6 +76,10 @@ public class VideoTutorialSerializer extends BaseSerializer {
             videoTutorialsArray.put(toJsonObject(videoTutorial));
         }
         return videoTutorialsArray;
+    }
+
+    public static String toJsonString(VideoTutorial videoTutorial) {
+        return toJsonObject(videoTutorial).toString();
     }
 
     public static String toJsonString(List<VideoTutorial> videoTutorials) {
