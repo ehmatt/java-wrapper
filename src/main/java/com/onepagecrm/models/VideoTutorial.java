@@ -28,7 +28,7 @@ public class VideoTutorial extends ApiResource implements Serializable {
         Map<String, Object> params = new HashMap<>();
         Request request = new GetRequest(VIDEO_TUTORIALS_LINK, Query.fromParams(params), true);
         Response response = request.send();
-        return VideoTutorialSerializer.fromString(response.getResponseBody());
+        return VideoTutorialSerializer.fromResponse(response);
     }
 
     public VideoTutorial() {
