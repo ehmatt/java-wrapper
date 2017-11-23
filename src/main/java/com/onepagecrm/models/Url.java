@@ -4,6 +4,10 @@ import com.onepagecrm.models.serializers.UrlSerializer;
 
 import java.io.Serializable;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 23/11/2017.
+ */
+@SuppressWarnings("unused")
 public class Url extends BaseResource implements Serializable {
 
     public static final String TYPE_WEBSITE = "website";
@@ -23,17 +27,15 @@ public class Url extends BaseResource implements Serializable {
     }
 
     public Url() {
+
     }
 
     public String toString() {
-        return UrlSerializer.toJsonObject(this);
+        return UrlSerializer.toJsonString(this);
     }
 
     /**
      * Method to compare Url obj's to one another based off of their value attr.
-     *
-     * @param object
-     * @return
      */
     @Override
     public boolean equals(Object object) {

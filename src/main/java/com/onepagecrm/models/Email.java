@@ -19,17 +19,15 @@ public class Email extends BaseResource implements Serializable {
     }
 
     public Email() {
+
     }
 
     public String toString() {
-        return EmailSerializer.toJsonObject(this);
+        return EmailSerializer.toJsonString(this);
     }
 
     /**
      * Method to compare Email obj's to one another based off of their value attr.
-     *
-     * @param object
-     * @return
      */
     @Override
     public boolean equals(Object object) {

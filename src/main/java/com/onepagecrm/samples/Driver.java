@@ -44,7 +44,7 @@ public class Driver {
             }
         }
 
-        OnePageCRM.setServer(Request.DEV_SERVER);
+        OnePageCRM.setServer(Request.STAGING_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),

@@ -5,6 +5,10 @@ import com.onepagecrm.models.serializers.PhoneSerializer;
 
 import java.io.Serializable;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 23/11/2017.
+ */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class Phone extends BaseResource implements Serializable {
 
     static final long serialVersionUID = 3927723378236473122L;
@@ -27,17 +31,15 @@ public class Phone extends BaseResource implements Serializable {
     }
 
     public Phone() {
+
     }
 
     public String toString() {
-        return PhoneSerializer.toJsonObject(this);
+        return PhoneSerializer.toJsonString(this);
     }
 
     /**
      * Method to compare Phone obj's to one another based off of their value attr.
-     *
-     * @param object
-     * @return
      */
     @Override
     public boolean equals(Object object) {

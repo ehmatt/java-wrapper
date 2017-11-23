@@ -268,29 +268,14 @@ public class ContactSerializer extends BaseSerializer {
         JSONArray addressArray = AddressSerializer.singleToJsonArray(contact.getAddress());
         addJsonArray(addressArray, contactObject, ADDRESS_LIST_TAG);
         // Phones.
-        try {
-            JSONArray phonesArray = new JSONArray(PhoneSerializer.toJsonArray(contact.getPhones()));
-            addJsonArray(phonesArray, contactObject, PHONES_TAG);
-        } catch (JSONException e) {
-            LOG.severe("Error creating Phone array while constructing Contact object");
-            LOG.severe(e.toString());
-        }
+        JSONArray phonesArray = PhoneSerializer.toJsonArray(contact.getPhones());
+        addJsonArray(phonesArray, contactObject, PHONES_TAG);
         // Emails.
-        try {
-            JSONArray emailsArray = new JSONArray(EmailSerializer.toJsonArray(contact.getEmails()));
-            addJsonArray(emailsArray, contactObject, EMAILS_TAG);
-        } catch (JSONException e) {
-            LOG.severe("Error creating Email array while constructing Contact object");
-            LOG.severe(e.toString());
-        }
+        JSONArray emailsArray = EmailSerializer.toJsonArray(contact.getEmails());
+        addJsonArray(emailsArray, contactObject, EMAILS_TAG);
         // Urls.
-        try {
-            JSONArray urlsArray = new JSONArray(UrlSerializer.toJsonArray(contact.getUrls()));
-            addJsonArray(urlsArray, contactObject, URLS_TAG);
-        } catch (JSONException e) {
-            LOG.severe("Error creating Url array while constructing Contact object");
-            LOG.severe(e.toString());
-        }
+        JSONArray urlsArray = UrlSerializer.toJsonArray(contact.getUrls());
+        addJsonArray(urlsArray, contactObject, URLS_TAG);
         // Tags.
         List<Tag> tags = contact.getTags();
         List<String> tagNames = new ArrayList<>();

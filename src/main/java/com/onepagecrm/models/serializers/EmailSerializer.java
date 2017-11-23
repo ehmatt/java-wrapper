@@ -2,72 +2,65 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.models.Email;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * @author Cillian Myles <cillian@onepagecrm.com> on 23/11/2017.
+ */
 public class EmailSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(EmailSerializer.class.getName());
 
+    private static Email DEFAULT = new Email();
+
+    public static Email fromJsonObject(JSONObject emailObject) {
+        if (emailObject == null) {
+            return DEFAULT;
+        }
+        if (emailObject.has(EMAIL_TAG)) {
+            emailObject = emailObject.optJSONObject(EMAIL_TAG);
+        }
+        return new Email()
+                .setType(emailObject.optString(TYPE_TAG))
+                .setValue(emailObject.optString(VALUE_TAG));
+    }
+
     public static List<Email> fromJsonArray(JSONArray emailsArray) {
         List<Email> emails = new ArrayList<>();
-        for (int j = 0; j < emailsArray.length(); j++) {
-            JSONObject emailObject;
-            try {
-                emailObject = emailsArray.getJSONObject(j);
-                emails.add(fromJsonObject(emailObject));
-            } catch (JSONException e) {
-                LOG.severe("Error parsing email array");
-                LOG.severe(e.toString());
-            }
+        if (emailsArray == null) return emails;
+        for (int i = 0; i < emailsArray.length(); i++) {
+            JSONObject emailObject = emailsArray.optJSONObject(i);
+            emails.add(fromJsonObject(emailObject));
         }
         return emails;
     }
 
-    public static Email fromJsonObject(JSONObject emailObject) {
-        Email email = new Email();
-        try {
-            String type = emailObject.getString(TYPE_TAG);
-            String value = emailObject.getString(VALUE_TAG);
-            return email
-                    .setType(type)
-                    .setValue(value);
-        } catch (JSONException e) {
-            LOG.severe("Error parsing email object");
-            LOG.severe(e.toString());
-        }
-        return email;
+    public static JSONObject toJsonObject(Email email) {
+        JSONObject emailObject = new JSONObject();
+        if (email == null) return emailObject;
+        addJsonStringValue(email.getType().toLowerCase(), emailObject, TYPE_TAG);
+        addJsonStringValue(email.getValue(), emailObject, VALUE_TAG);
+        return emailObject;
     }
 
-    public static String toJsonObject(Email email) {
-        if (email.getValue() != null) {
-            JSONObject emailObject = new JSONObject();
-            addJsonStringValue(email.getType().toLowerCase(), emailObject, TYPE_TAG);
-            addJsonStringValue(email.getValue(), emailObject, VALUE_TAG);
-            return emailObject.toString();
-        } else {
-            return null;
-        }
-    }
-
-    public static String toJsonArray(List<Email> emails) {
+    public static JSONArray toJsonArray(List<Email> emails) {
         JSONArray emailsArray = new JSONArray();
-        if (emails != null && !emails.isEmpty()) {
-            for (int i = 0; i < emails.size(); i++) {
-                try {
-                    if (emails.get(i).getValue() != null) {
-                        emailsArray.put(new JSONObject(toJsonObject(emails.get(i))));
-                    }
-                } catch (JSONException e) {
-                    LOG.severe("Error creating JSONArray out of Emails");
-                    LOG.severe(e.toString());
-                }
-            }
+        if (emails == null) return emailsArray;
+        for (Email email : emails) {
+            emailsArray.put(toJsonObject(email));
         }
-        return emailsArray.toString();
+        return emailsArray;
+    }
+
+    public static String toJsonString(Email email) {
+        return toJsonObject(email).toString();
+    }
+
+    public static String toJsonString(List<Email> emails) {
+        return toJsonArray(emails).toString();
     }
 }
