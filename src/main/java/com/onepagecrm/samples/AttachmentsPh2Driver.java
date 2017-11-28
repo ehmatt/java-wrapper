@@ -59,7 +59,6 @@ public class AttachmentsPh2Driver {
         final String dealId = "575e8de59007ba0788493bd0"; // Big deal
         S3Form form = S3.form(contactId);
         S3Data data = form.getData();
-        LOG.info("S3 data: " + data);
 
         String fileName = "cillian.jpg";
         String contentType = "image/jpeg";
@@ -102,6 +101,7 @@ public class AttachmentsPh2Driver {
 
         final DeleteResult deleted = saved.delete();
 
+        LOG.info("S3 data: " + data);
         LOG.info("Uploaded: " + uploaded.toString());
         LOG.info("Saved: " + saved);
         LOG.info("Deleted: " + deleted);
