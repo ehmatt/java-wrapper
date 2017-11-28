@@ -51,7 +51,7 @@ public class API462CompaniesSort {
             }
         }
 
-        OnePageCRM.setServer(Request.DEV_SERVER);
+        OnePageCRM.setServer(Request.STAGING_SERVER);
 
         User loggedInUser = User.login(
                 prop.getProperty("username"),
@@ -65,7 +65,7 @@ public class API462CompaniesSort {
         CompanyList defaultAPI = Company.list();
         CompanyList defaultManual = new CompanyList(defaultAPI.getList());
 
-        params.put("sort_by", "company_name"); // TODO: sort by "name"??
+        params.put("sort_by", "name");
         CompanyList azAPI = Company.list(params);
         CompanyList azManual = new CompanyList(azAPI.getList());
 
