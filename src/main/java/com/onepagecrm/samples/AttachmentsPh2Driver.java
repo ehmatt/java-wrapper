@@ -102,7 +102,7 @@ public class AttachmentsPh2Driver {
         final DeleteResult deleted = saved.delete();
 
         LOG.info("S3 data: " + data);
-        LOG.info("Uploaded: " + uploaded.toString());
+        LOG.info("Uploaded: " + uploaded);
         LOG.info("Saved: " + saved);
         LOG.info("Deleted: " + deleted);
     }
