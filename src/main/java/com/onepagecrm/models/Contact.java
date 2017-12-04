@@ -4,13 +4,7 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.CloseSalesCycle;
 import com.onepagecrm.models.internal.DeleteResult;
 import com.onepagecrm.models.internal.SalesCycleClosure;
-import com.onepagecrm.models.serializers.BaseSerializer;
-import com.onepagecrm.models.serializers.CloseSalesCycleSerializer;
-import com.onepagecrm.models.serializers.ContactPhotoSerializer;
-import com.onepagecrm.models.serializers.ContactSerializer;
-import com.onepagecrm.models.serializers.ContactSplitSerializer;
-import com.onepagecrm.models.serializers.DeleteResultSerializer;
-import com.onepagecrm.models.serializers.LoginSerializer;
+import com.onepagecrm.models.serializers.*;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.DeleteRequest;
@@ -117,6 +111,12 @@ public class Contact extends ApiResource implements Serializable {
         );
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
+    }
+
+    public static ContactList byIds(String contactIds) throws OnePageException {
+        Request request = new GetRequest(addIdToEndpoint(MULTIPLE_CONTACTS_ENDPOINT, contactIds));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public Contact partial(Contact updateValues) throws OnePageException {
