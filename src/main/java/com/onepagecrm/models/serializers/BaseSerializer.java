@@ -47,6 +47,7 @@ public class BaseSerializer {
     public static final String SALES_TAG = "sales";
     public static final String ACCOUNT_TAG = "account";
     public static final String SETTINGS_TAG = "settings";
+    public static final String NEW_USER_TAG = "new_user";
 
     // CONTACT TAGS
     public static final String CONTACTS_TAG = "contacts";
