@@ -340,6 +340,7 @@ public class BaseSerializer {
 
     // S3 / ATTACHMENTS
     public static final String QUOTA_TAG = "quota";
+    public static final String STORAGE_LEFT_TAG = "storage_left";
     public static final String DISPLAY_QUOTA_TAG = "display_quota";
     public static final String FIELDS_TAG = "fields";
     public static final String KEY_TAG = "key";
