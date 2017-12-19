@@ -7,6 +7,7 @@ import com.onepagecrm.models.internal.SalesCycleClosure;
 import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.models.serializers.BaseSerializer;
 import com.onepagecrm.models.serializers.ClosedSalesSerializer;
+import com.onepagecrm.models.serializers.ContactListSerializer;
 import com.onepagecrm.models.serializers.ContactPhotoSerializer;
 import com.onepagecrm.models.serializers.ContactSerializer;
 import com.onepagecrm.models.serializers.ContactSplitSerializer;
@@ -118,6 +119,12 @@ public class Contact extends ApiResource implements Serializable {
         );
         Response response = request.send();
         return ContactSerializer.fromString(response.getResponseBody());
+    }
+
+    public static ContactList byIds(String contactIds) throws OnePageException {
+        Request request = new GetRequest(addIdToEndpoint(MULTIPLE_CONTACTS_ENDPOINT, contactIds));
+        Response response = request.send();
+        return ContactListSerializer.fromString(response.getResponseBody());
     }
 
     public Contact partial(Contact updateValues) throws OnePageException {
