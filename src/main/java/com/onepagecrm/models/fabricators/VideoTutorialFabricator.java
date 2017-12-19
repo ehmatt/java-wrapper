@@ -1,12 +1,6 @@
 package com.onepagecrm.models.fabricators;
 
-import com.onepagecrm.OnePageCRM;
-import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.Contact;
-import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.VideoTutorial;
-import com.onepagecrm.models.internal.FileUtilities;
-import com.onepagecrm.models.serializers.ContactListSerializer;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -159,7 +159,7 @@ public class Attachment extends ApiResource implements Serializable {
     public DeleteResult delete() throws OnePageException {
         Request request = new DeleteRequest(addIdToEndpoint(ATTACHMENTS_ENDPOINT), null);
         Response response = request.send();
-        return DeleteResultSerializer.fromString(this.id, response.getResponseBody());
+        return DeleteResultSerializer.fromResponse(this.id, response);
     }
 
     private String addIdToEndpoint(String endpoint) {

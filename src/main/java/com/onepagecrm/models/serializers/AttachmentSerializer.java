@@ -21,8 +21,7 @@ public class AttachmentSerializer extends BaseSerializer {
 
     public static Attachment fromResponse(Response response) throws APIException {
         JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
-        JSONObject attachmentObject = dataObject.optJSONObject(ATTACHMENT_TAG);
-        return fromJsonObject(attachmentObject);
+        return fromJsonObject(dataObject);
     }
 
     // TODO - delete

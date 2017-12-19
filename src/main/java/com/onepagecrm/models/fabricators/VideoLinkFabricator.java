@@ -1,7 +1,6 @@
 package com.onepagecrm.models.fabricators;
 
 import com.onepagecrm.models.VideoLink;
-import com.onepagecrm.models.VideoTutorial;
 
 import java.util.ArrayList;
 import java.util.List;
