@@ -341,6 +341,7 @@ public class BaseSerializer {
 
     // S3 / ATTACHMENTS
     public static final String QUOTA_TAG = "quota";
+    public static final String STORAGE_LEFT_TAG = "storage_left";
     public static final String DISPLAY_QUOTA_TAG = "display_quota";
     public static final String FIELDS_TAG = "fields";
     public static final String KEY_TAG = "key";
@@ -359,8 +360,10 @@ public class BaseSerializer {
     public static final String LINK_TYPE_TAG = "link_type";
 
     // NOTIFICATIONS
+    public static final String CONTACT_IDS_TAG = "contact_ids";
     public static final String ACTION_TYPE_TAG = "action_type";
     public static final String OPEN_NOTE_TAG = "open_note";
+    public static final String OPEN_CONTACT_TAG = "open_contact";
 
     // VIDEO LINKS
     public static final String VIDEO_TUTORIALS_TAG = "video_tutorials";
