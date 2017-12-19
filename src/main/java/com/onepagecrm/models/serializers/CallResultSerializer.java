@@ -110,8 +110,7 @@ public class CallResultSerializer extends BaseSerializer {
         final User loggedUser = Account.loggedInUser;
         final boolean callResultsExist = loggedUser != null && loggedUser.isValid() &&
                 loggedUser.getAccount() != null && loggedUser.getAccount().getCallResults() != null;
-        return (callResultsExist) ?
-                loggedUser.getAccount().getCallResults() : new ArrayList<CallResult>();
+        return (callResultsExist) ? loggedUser.getAccount().getCallResults() : new ArrayList<>();
     }
 
     public static List<CallResult> defaultCallResults() {

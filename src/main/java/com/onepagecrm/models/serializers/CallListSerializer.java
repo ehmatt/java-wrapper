@@ -1,15 +1,12 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.APIException;
-import com.onepagecrm.models.Call;
 import com.onepagecrm.models.CallList;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.net.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -19,16 +16,11 @@ public class CallListSerializer extends BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(CallListSerializer.class.getName());
 
-    private static List<Call> DEFAULT = new ArrayList<>();
+    private static CallList DEFAULT = new CallList();
 
     public static CallList fromResponse(Response response) throws APIException {
-        CallList calls = new CallList();
         JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
-        Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
-        JSONArray callsArray = dataObject.optJSONArray(CALLS_TAG);
-        calls.setPaginator(paginator);
-        calls.setList(fromJsonArray(callsArray));
-        return calls;
+        return fromJsonObject(dataObject);
     }
 
     // TODO - delete
@@ -48,6 +40,18 @@ public class CallListSerializer extends BaseSerializer {
             LOG.severe(e.toString());
         }
 
+        return calls;
+    }
+
+    public static CallList fromJsonObject(JSONObject dataObject) {
+        if (dataObject == null) {
+            return DEFAULT;
+        }
+
+        JSONArray callsArray = dataObject.optJSONArray(CALLS_TAG);
+        CallList calls = fromJsonArray(callsArray);
+        Paginator paginator = RequestMetadataSerializer.fromJsonObject(dataObject);
+        calls.setPaginator(paginator);
         return calls;
     }
 

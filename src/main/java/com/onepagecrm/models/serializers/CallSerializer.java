@@ -112,6 +112,10 @@ public class CallSerializer extends BaseSerializer {
         return callObject;
     }
 
+    public static String toJsonString(Call call) {
+        return toJsonObject(call).toString();
+    }
+
     public static JSONArray toJsonArray(List<Call> calls) {
         JSONArray callsArray = new JSONArray();
         if (calls == null) return callsArray;
@@ -119,10 +123,6 @@ public class CallSerializer extends BaseSerializer {
             callsArray.put(toJsonObject(call));
         }
         return callsArray;
-    }
-
-    public static String toJsonString(Call call) {
-        return toJsonObject(call).toString();
     }
 
     public static String toJsonString(List<Call> calls) {

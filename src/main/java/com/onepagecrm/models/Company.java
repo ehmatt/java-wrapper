@@ -114,8 +114,7 @@ public class Company extends ApiResource implements Serializable {
     private static CompanyList getCompanies(String endpoint, String query) throws OnePageException {
         Request request = new GetRequest(endpoint, query);
         Response response = request.send();
-        String responseBody = response.getResponseBody();
-        return CompanyListSerializer.fromString(responseBody);
+        return CompanyListSerializer.fromResponse(response);
     }
 
     public LinkedContactList getLinkedContacts() throws OnePageException {

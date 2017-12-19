@@ -110,6 +110,10 @@ public class AttachmentSerializer extends BaseSerializer {
         return jsonObject;
     }
 
+    public static String toJsonString(Attachment attachment, String contactId, S3FileReference file) {
+        return toJsonObject(attachment, contactId, file).toString();
+    }
+
     public static JSONArray toJsonArray(List<Attachment> attachments) {
         JSONArray attachmentsArray = new JSONArray();
         if (attachments == null) return attachmentsArray;
@@ -117,10 +121,6 @@ public class AttachmentSerializer extends BaseSerializer {
             attachmentsArray.put(toJsonObject(attachment));
         }
         return attachmentsArray;
-    }
-
-    public static String toJsonString(Attachment attachment, String contactId, S3FileReference file) {
-        return toJsonObject(attachment, contactId, file).toString();
     }
 
     public static String toJsonString(List<Attachment> attachments) {

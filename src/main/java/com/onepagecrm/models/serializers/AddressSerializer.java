@@ -53,9 +53,8 @@ public class AddressSerializer extends BaseSerializer {
     public static List<Address> fromJsonArray(JSONArray addressArray) {
         List<Address> addresses = new ArrayList<>();
         if (addressArray == null) return addresses;
-        JSONObject addressObject;
         for (int i = 0; i < addressArray.length(); i++) {
-            addressObject = addressArray.optJSONObject(i);
+            JSONObject addressObject = addressArray.optJSONObject(i);
             addresses.add(fromJsonObject(addressObject));
         }
         return addresses;
@@ -72,6 +71,10 @@ public class AddressSerializer extends BaseSerializer {
         return addressObject;
     }
 
+    public static String toJsonString(Address address) {
+        return toJsonObject(address).toString();
+    }
+
     public static JSONArray toJsonArray(List<Address> addresses) {
         JSONArray addressArray = new JSONArray();
         if (addresses == null) return addressArray;
@@ -79,6 +82,10 @@ public class AddressSerializer extends BaseSerializer {
             addressArray.put(toJsonObject(address));
         }
         return addressArray;
+    }
+
+    public static String toJsonString(List<Address> addresses) {
+        return toJsonArray(addresses).toString();
     }
 
     public static JSONArray singleToJsonArray(Address address) {
@@ -92,13 +99,5 @@ public class AddressSerializer extends BaseSerializer {
     public static Address singleFromJsonArray(JSONArray addressArray) {
         List<Address> addresses = fromJsonArray(addressArray);
         return !addresses.isEmpty() ? addresses.get(0) : DEFAULT;
-    }
-
-    public static String toJsonString(Address address) {
-        return toJsonObject(address).toString();
-    }
-
-    public static String toJsonString(List<Address> addresses) {
-        return toJsonArray(addresses).toString();
     }
 }

@@ -158,6 +158,10 @@ public class ActionSerializer extends BaseSerializer {
         return actionObject;
     }
 
+    public static String toJsonString(Action action) {
+        return toJsonObject(action).toString();
+    }
+
     public static JSONArray toJsonArray(List<Action> actions) {
         JSONArray actionsArray = new JSONArray();
         if (actions == null) return actionsArray;
@@ -165,10 +169,6 @@ public class ActionSerializer extends BaseSerializer {
             actionsArray.put(toJsonObject(action));
         }
         return actionsArray;
-    }
-
-    public static String toJsonString(Action action) {
-        return toJsonObject(action).toString();
     }
 
     public static String toJsonString(List<Action> actions) {
