@@ -1,7 +1,6 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.APIException;
-import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Action;
 import com.onepagecrm.net.Response;
 import org.json.JSONArray;
@@ -10,7 +9,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -33,31 +31,12 @@ public class ActionSerializer extends BaseSerializer {
         try {
             String dataString = (String) BaseSerializer.fromString(responseBody);
             JSONObject dataObject = new JSONObject(dataString);
-            JSONObject actionObject = dataObject.optJSONObject(ACTION_TAG);
-            return fromJsonObject(actionObject);
+            return fromJsonObject(dataObject);
 
         } catch (JSONException e) {
             LOG.severe("Could not find action object tags");
             LOG.severe(e.toString());
             return new Action();
-        }
-    }
-
-    // TODO - move below method to ActionListSerializer#fromResponse().
-    public static List<Action> listFromString(String responseBody) throws OnePageException {
-        String parsedResponse;
-        OnePageException exception;
-        try {
-            parsedResponse = (String) BaseSerializer.fromString(responseBody);
-            JSONObject responseObject = new JSONObject(parsedResponse);
-            return fromJsonArray(responseObject.optJSONArray(ACTIONS_TAG));
-
-        } catch (ClassCastException e) {
-            exception = (OnePageException) BaseSerializer.fromString(responseBody);
-            throw exception;
-        } catch (JSONException e) {
-            LOG.severe("Error parsing JSON" + e);
-            return new LinkedList<>();
         }
     }
 

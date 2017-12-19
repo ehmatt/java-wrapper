@@ -4,6 +4,7 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.internal.PredefinedAction;
 import com.onepagecrm.models.internal.PredefinedActionList;
+import com.onepagecrm.models.serializers.ActionListSerializer;
 import com.onepagecrm.models.serializers.ActionSerializer;
 import com.onepagecrm.models.serializers.DateSerializer;
 import com.onepagecrm.models.serializers.PredefinedActionSerializer;
@@ -162,7 +163,7 @@ public class Action extends ApiResource implements Serializable {
         params.put("assignee_id", assigneeId);
         Request request = new GetRequest(ACTIONS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-        return new ActionList(ActionSerializer.listFromString(response.getResponseBody()));
+        return new ActionList(ActionListSerializer.fromResponse(response));
     }
 
     public static ActionList list(String assigneeId, Paginator paginator) throws OnePageException {
@@ -170,7 +171,7 @@ public class Action extends ApiResource implements Serializable {
         params.put("assignee_id", assigneeId);
         Request request = new GetRequest(ACTIONS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-        return new ActionList(ActionSerializer.listFromString(response.getResponseBody()));
+        return new ActionList(ActionListSerializer.fromResponse(response));
     }
 
     public static PredefinedActionList listPredefined() throws OnePageException {
