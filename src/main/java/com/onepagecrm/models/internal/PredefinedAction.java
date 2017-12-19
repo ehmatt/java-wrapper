@@ -6,7 +6,7 @@ import com.onepagecrm.net.ApiResource;
 import java.io.Serializable;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 17/05/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 17/05/2016.
  */
 public class PredefinedAction extends ApiResource implements Serializable {
 
@@ -31,7 +31,7 @@ public class PredefinedAction extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return PredefinedActionSerializer.toJsonObject(this);
+        return PredefinedActionSerializer.toJsonString(this);
     }
 
     public String getText() {

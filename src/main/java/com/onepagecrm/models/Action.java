@@ -177,13 +177,13 @@ public class Action extends ApiResource implements Serializable {
     public static PredefinedActionList listPredefined() throws OnePageException {
         Request request = new GetRequest(PREDEFFINED_ACTIONS_ENDPOINT, Query.queryDefault());
         Response response = request.send();
-        return new PredefinedActionList(PredefinedActionSerializer.fromString(response.getResponseBody()));
+        return new PredefinedActionList(PredefinedActionSerializer.fromResponse(response));
     }
 
     public static PredefinedActionList listPredefined(Paginator paginator) throws OnePageException {
         Request request = new GetRequest(PREDEFFINED_ACTIONS_ENDPOINT, Query.query(paginator));
         Response response = request.send();
-        return new PredefinedActionList(PredefinedActionSerializer.fromString(response.getResponseBody()));
+        return new PredefinedActionList(PredefinedActionSerializer.fromResponse(response));
     }
 
     /**

@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 16/05/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 16/05/2016.
  */
 public class PredefinedActionList extends ResourceList<PredefinedAction> implements Serializable {
 
@@ -43,6 +43,6 @@ public class PredefinedActionList extends ResourceList<PredefinedAction> impleme
 
     @Override
     public String toString() {
-        return PredefinedActionSerializer.toJsonArray(this.list);
+        return PredefinedActionSerializer.toJsonString(this.list);
     }
 }
