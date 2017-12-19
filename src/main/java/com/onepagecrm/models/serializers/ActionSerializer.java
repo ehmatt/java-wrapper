@@ -25,8 +25,7 @@ public class ActionSerializer extends BaseSerializer {
 
     public static Action fromResponse(Response response) throws APIException {
         JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
-        JSONObject actionObject = dataObject.optJSONObject(ACTION_TAG);
-        return fromJsonObject(actionObject);
+        return fromJsonObject(dataObject);
     }
 
     // TODO - delete
