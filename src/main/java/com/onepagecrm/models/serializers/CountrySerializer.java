@@ -77,6 +77,10 @@ public class CountrySerializer extends BaseSerializer {
         return countryObject;
     }
 
+    public static String toJsonString(Country country) {
+        return toJsonObject(country).toString();
+    }
+
     public static JSONArray toJsonArray(List<Country> countries) {
         JSONArray countryArray = new JSONArray();
         if (countries == null) return countryArray;
@@ -84,10 +88,6 @@ public class CountrySerializer extends BaseSerializer {
             countryArray.put(toJsonObject(country));
         }
         return countryArray;
-    }
-
-    public static String toJsonString(Country country) {
-        return toJsonObject(country).toString();
     }
 
     public static String toJsonString(List<Country> countries) {

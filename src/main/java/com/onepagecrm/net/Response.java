@@ -17,6 +17,10 @@ public class Response {
 
     }
 
+    public static Response okay(String body) {
+        return new Response(200, "OK", body);
+    }
+
     public String getResponseMessage() throws NullPointerException {
         return responseMessage;
     }

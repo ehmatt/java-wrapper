@@ -1,11 +1,12 @@
 package com.onepagecrm.models.fabricators;
 
 import com.onepagecrm.OnePageCRM;
-import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.Countries;
 import com.onepagecrm.models.internal.Country;
 import com.onepagecrm.models.internal.FileUtilities;
 import com.onepagecrm.models.serializers.CountrySerializer;
+import com.onepagecrm.net.Response;
 
 import java.util.logging.Logger;
 
@@ -31,14 +32,13 @@ public class CountryFabricator extends BaseFabricator {
     public static Countries list() {
         Countries countries = new Countries();
         String path = OnePageCRM.ASSET_PATH + "countries.json";
-        String response = FileUtilities.getResourceContents(path);
-        if (response != null) {
-            try {
-                countries = CountrySerializer.fromString(response);
-            } catch (OnePageException e) {
-                LOG.severe("Problem creating countries list from JSON file.");
-                LOG.severe(e.toString());
-            }
+        String body = FileUtilities.getResourceContents(path);
+        Response response = Response.okay(body);
+        try {
+            countries = CountrySerializer.fromResponse(response);
+        } catch (APIException e) {
+            LOG.severe("Problem creating countries list from JSON file.");
+            LOG.severe(e.toString());
         }
         return countries;
     }
