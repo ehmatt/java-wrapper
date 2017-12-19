@@ -124,7 +124,7 @@ public class Contact extends ApiResource implements Serializable {
     public static ContactList byIds(String contactIds) throws OnePageException {
         Request request = new GetRequest(addIdToEndpoint(MULTIPLE_CONTACTS_ENDPOINT, contactIds));
         Response response = request.send();
-        return ContactListSerializer.fromString(response.getResponseBody());
+        return ContactListSerializer.fromResponse(response);
     }
 
     public Contact partial(Contact updateValues) throws OnePageException {
@@ -147,7 +147,7 @@ public class Contact extends ApiResource implements Serializable {
                 ContactPhotoSerializer.toJsonString(base64EncodedImageString)
         );
         Response response = request.send();
-        Contact photoContact = ContactPhotoSerializer.fromString(response.getResponseBody());
+        Contact photoContact = ContactPhotoSerializer.fromResponse(response);
         if (this.isValid() && Utilities.notNullOrEmpty(photoContact.photoUrl)) {
             this.photoUrl = photoContact.photoUrl;
         }
