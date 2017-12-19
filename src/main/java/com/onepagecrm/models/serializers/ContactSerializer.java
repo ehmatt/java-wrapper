@@ -284,6 +284,10 @@ public class ContactSerializer extends BaseSerializer {
         return contactObject;
     }
 
+    public static String toJsonString(Contact contact) {
+        return toJsonObject(contact).toString();
+    }
+
     public static JSONArray toJsonArray(List<Contact> contacts) {
         JSONArray contactsArray = new JSONArray();
         if (contacts == null) return contactsArray;
@@ -291,10 +295,6 @@ public class ContactSerializer extends BaseSerializer {
             contactsArray.put(toJsonObject(contact));
         }
         return contactsArray;
-    }
-
-    public static String toJsonString(Contact contact) {
-        return toJsonObject(contact).toString();
     }
 
     public static String toJsonString(List<Contact> contacts) {

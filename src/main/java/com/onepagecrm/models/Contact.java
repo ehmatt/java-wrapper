@@ -94,7 +94,7 @@ public class Contact extends ApiResource implements Serializable {
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
-        Contact contact = ContactSerializer.fromString(responseBody);
+        Contact contact = ContactSerializer.fromResponse(response);
         LoginSerializer.updateDynamicResources(responseBody);
         return contact;
     }
@@ -107,7 +107,7 @@ public class Contact extends ApiResource implements Serializable {
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
-        Contact contact = ContactSerializer.fromString(responseBody);
+        Contact contact = ContactSerializer.fromResponse(response);
         LoginSerializer.updateDynamicResources(responseBody);
         return contact;
     }
@@ -118,7 +118,7 @@ public class Contact extends ApiResource implements Serializable {
                 "?" + EXTRA_FIELDS
         );
         Response response = request.send();
-        return ContactSerializer.fromString(response.getResponseBody());
+        return ContactSerializer.fromResponse(response);
     }
 
     public static ContactList byIds(String contactIds) throws OnePageException {
@@ -135,7 +135,7 @@ public class Contact extends ApiResource implements Serializable {
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
-        Contact contact = ContactSerializer.fromString(responseBody);
+        Contact contact = ContactSerializer.fromResponse(response);
         LoginSerializer.updateDynamicResources(responseBody);
         return contact;
     }
@@ -161,7 +161,7 @@ public class Contact extends ApiResource implements Serializable {
                 ClosedSalesSerializer.toJsonString(closeSalesCycle)
         );
         Response response = request.send();
-        return ContactSerializer.fromString(response.getResponseBody());
+        return ContactSerializer.fromResponse(response);
     }
 
     public DeleteResult delete() throws OnePageException { // TODO: throw APIException
@@ -177,7 +177,7 @@ public class Contact extends ApiResource implements Serializable {
         Request request = new DeleteRequest(addIdToEndpoint(CONTACTS_ENDPOINT, this.id), "?undo=1");
         Response response = request.send();
         String responseBody = response.getResponseBody();
-        Contact contact = ContactSerializer.fromString(responseBody);
+        Contact contact = ContactSerializer.fromResponse(response);
         LoginSerializer.updateDynamicResources(responseBody);
         return contact;
     }
@@ -185,13 +185,13 @@ public class Contact extends ApiResource implements Serializable {
     public Contact starContact() throws OnePageException {
         Request request = new PutRequest(subEndpoint(BaseSerializer.STAR_TAG));
         Response response = request.send();
-        return ContactSerializer.fromString(response.getResponseBody());
+        return ContactSerializer.fromResponse(response);
     }
 
     public Contact unStarContact() throws OnePageException {
         Request request = new PutRequest(subEndpoint(BaseSerializer.UNSTAR_TAG));
         Response response = request.send();
-        return ContactSerializer.fromString(response.getResponseBody());
+        return ContactSerializer.fromResponse(response);
     }
 
     public Contact split(String newCompanyName) throws OnePageException {
@@ -202,7 +202,7 @@ public class Contact extends ApiResource implements Serializable {
         );
         Response response = request.send();
         String responseBody = response.getResponseBody();
-        Contact contact = ContactSerializer.fromString(responseBody);
+        Contact contact = ContactSerializer.fromResponse(response);
         LoginSerializer.updateDynamicResources(responseBody);
         return contact;
     }
