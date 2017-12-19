@@ -5,7 +5,7 @@ import com.onepagecrm.models.Countries;
 import com.onepagecrm.models.internal.Country;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 16/02/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 16/02/2016.
  */
 public class CountryFabricatorTest extends BaseTest {
 
@@ -16,7 +16,6 @@ public class CountryFabricatorTest extends BaseTest {
         assertEquals("+353", country.getPrefix());
     }
 
-    @SuppressWarnings("ForLoopReplaceableByForEach")
     public void testList_allCountriesValid() {
         Countries countries = CountryFabricator.list();
         assertEquals("Should be 250 contacts", countries.size(), 250);

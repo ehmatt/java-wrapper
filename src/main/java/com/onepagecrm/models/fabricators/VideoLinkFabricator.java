@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
  */
-@SuppressWarnings({"WeakerAccess", "unused"})
+@SuppressWarnings("unused")
 public class VideoLinkFabricator extends BaseFabricator {
 
     private static final Logger LOG = Logger.getLogger(VideoLinkFabricator.class.getName());

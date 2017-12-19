@@ -1,16 +1,17 @@
 package com.onepagecrm.models.fabricators;
 
 import com.onepagecrm.OnePageCRM;
-import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.internal.FileUtilities;
 import com.onepagecrm.models.serializers.ContactListSerializer;
+import com.onepagecrm.net.Response;
 
 import java.util.logging.Logger;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class ContactFabricator extends BaseFabricator {
@@ -99,15 +100,15 @@ public class ContactFabricator extends BaseFabricator {
     private static ContactList fromPath(String fileName) {
         ContactList contacts = new ContactList();
         String path = OnePageCRM.ASSET_PATH + fileName;
-        String response = FileUtilities.getResourceContents(path);
-        if (response != null) {
-            try {
-                contacts = ContactListSerializer.fromString(response);
-            } catch (OnePageException e) {
-                LOG.severe("Problem creating contact list from JSON file.");
-                LOG.severe(e.toString());
-            }
+        String body = FileUtilities.getResourceContents(path);
+        Response response = Response.okay(body);
+        try {
+            contacts = ContactListSerializer.fromResponse(response);
+        } catch (APIException e) {
+            LOG.severe("Problem creating contact list from JSON file.");
+            LOG.severe(e.toString());
         }
+
         return contacts;
     }
 }

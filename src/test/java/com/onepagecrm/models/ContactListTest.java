@@ -25,8 +25,6 @@ public class ContactListTest extends BaseTest {
      * <li>Contacts with phone numbers</li>
      * <li>Contacts without phone numbers</li>
      * <li>ArrayList of these Contacts</li>
-     *
-     * @throws Exception
      */
     @Override
     protected void setUp() throws Exception {

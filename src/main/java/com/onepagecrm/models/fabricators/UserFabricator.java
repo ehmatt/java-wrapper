@@ -6,6 +6,7 @@ import com.onepagecrm.models.Account;
 import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.FileUtilities;
 import com.onepagecrm.models.serializers.LoginSerializer;
+import com.onepagecrm.net.Response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,14 +46,13 @@ public class UserFabricator extends BaseFabricator {
     private static User loggedUser() {
         User loggedUser = new User();
         String path = OnePageCRM.ASSET_PATH + "login.json";
-        String response = FileUtilities.getResourceContents(path);
-        if (response != null) {
-            try {
-                loggedUser = LoginSerializer.fromString(response);
-            } catch (OnePageException e) {
-                LOG.severe("Problem creating user object from JSON file.");
-                LOG.severe(e.toString());
-            }
+        String body = FileUtilities.getResourceContents(path);
+        Response response = Response.okay(body);
+        try {
+            loggedUser = LoginSerializer.fromResponse(response);
+        } catch (OnePageException e) {
+            LOG.severe("Problem creating user object from JSON file.");
+            LOG.severe(e.toString());
         }
         return loggedUser;
     }

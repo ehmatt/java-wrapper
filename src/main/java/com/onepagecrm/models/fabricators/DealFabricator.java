@@ -6,6 +6,7 @@ import com.onepagecrm.models.Deal;
 import com.onepagecrm.models.DealList;
 import com.onepagecrm.models.internal.FileUtilities;
 import com.onepagecrm.models.serializers.DealListSerializer;
+import com.onepagecrm.net.Response;
 
 import java.util.logging.Logger;
 
@@ -53,14 +54,13 @@ public class DealFabricator extends BaseFabricator {
         // Create a list of Deals.
         DealList deals = new DealList();
         String path = OnePageCRM.ASSET_PATH + "deals.json";
-        String response = FileUtilities.getResourceContents(path);
-        if (response != null) {
-            try {
-                deals = DealListSerializer.fromString(response);
-            } catch (OnePageException e) {
-                LOG.severe("Problem creating user object from JSON file.");
-                LOG.severe(e.toString());
-            }
+        String body = FileUtilities.getResourceContents(path);
+        Response response = Response.okay(body);
+        try {
+            deals = DealListSerializer.fromResponse(response);
+        } catch (OnePageException e) {
+            LOG.severe("Problem creating user object from JSON file.");
+            LOG.severe(e.toString());
         }
         return deals;
     }

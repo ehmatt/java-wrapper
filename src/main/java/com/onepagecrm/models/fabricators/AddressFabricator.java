@@ -3,7 +3,7 @@ package com.onepagecrm.models.fabricators;
 import com.onepagecrm.models.Address;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 16/02/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 16/02/2016.
  */
 public class AddressFabricator extends BaseFabricator {
 

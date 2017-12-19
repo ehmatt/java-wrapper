@@ -8,8 +8,9 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 20/07/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 20/07/2016.
  */
+@SuppressWarnings("RedundantThrows")
 public class DateSerializerTest extends BaseTest {
 
     // Thu, 01 Jan 1970 00:00:00 UTC = 0

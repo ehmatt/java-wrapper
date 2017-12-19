@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
  */
 public class CallResultFabricator extends BaseFabricator {
 

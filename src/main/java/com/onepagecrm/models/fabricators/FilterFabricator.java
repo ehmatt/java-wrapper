@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
  */
+@SuppressWarnings("unused")
 public class FilterFabricator extends BaseFabricator {
 
     public static Filter single() {

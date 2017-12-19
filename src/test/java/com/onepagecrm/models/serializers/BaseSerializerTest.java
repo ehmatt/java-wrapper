@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 07/12/2015.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 07/12/2015.
  */
+@SuppressWarnings({"ConstantConditions", "MismatchedReadAndWriteOfArray"})
 public class BaseSerializerTest extends BaseTest {
 
     private List<String> stringList;
@@ -110,7 +111,6 @@ public class BaseSerializerTest extends BaseTest {
                 expected, actual);
     }
 
-    @SuppressWarnings({"MismatchedReadAndWriteOfArray", "ConstantConditions"})
     public void testToArrayOfStrings_Null() {
         String joinedString = null;
 

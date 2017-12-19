@@ -3,6 +3,7 @@ package com.onepagecrm.models;
 import com.onepagecrm.BaseTest;
 import com.onepagecrm.models.internal.Utilities;
 
+@SuppressWarnings("RedundantThrows")
 public class UtilitiesTest extends BaseTest {
 
     public void testRepeatedString() throws Exception {

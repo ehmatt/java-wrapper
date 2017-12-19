@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
+@SuppressWarnings({"ResultOfMethodCallIgnored", "RedundantThrows"})
 public class FileUtilitiesTest extends BaseTest {
 
     /**

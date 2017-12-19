@@ -1,7 +1,7 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.BaseTest;
-import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.internal.FileUtilities;
 import com.onepagecrm.models.internal.S3FileReference;
 
@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 02/10/2017.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "RedundantThrows"})
 public class AttachmentSerializerTest extends BaseTest {
 
     private static Logger LOG = Logger.getLogger(AttachmentSerializerTest.class.getName());
@@ -70,7 +70,7 @@ public class AttachmentSerializerTest extends BaseTest {
         }
 
         assertTrue("Exception is never thrown.", expectedFile == null && expectedException != null);
-        assertTrue("Exception is not of expected type.", expectedException instanceof OnePageException);
+        assertTrue("Exception is not of expected type.", expectedException instanceof APIException);
     }
 
     public void testUploadS3_ServerFailureXML() throws Exception {
@@ -81,12 +81,12 @@ public class AttachmentSerializerTest extends BaseTest {
         Exception expectedException = null;
 
         try {
-            expectedFile = S3FileReferenceSerializer.fromString(failureXml);
+            expectedFile = S3FileReferenceSerializer.fromString(failureXml); // TODO: change this to accept response object!?
         } catch (Exception e) {
             expectedException = e;
         }
 
         assertTrue("Exception is never thrown.", expectedFile == null && expectedException != null);
-        assertTrue("Exception is not of expected type.", expectedException instanceof OnePageException);
+        assertTrue("Exception is not of expected type.", expectedException instanceof APIException);
     }
 }

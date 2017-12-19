@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 15/02/2016.
  */
-@SuppressWarnings({"WeakerAccess", "unused"})
+@SuppressWarnings("unused")
 public class VideoTutorialFabricator extends BaseFabricator {
 
     private static final Logger LOG = Logger.getLogger(VideoTutorialFabricator.class.getName());
@@ -33,7 +33,7 @@ public class VideoTutorialFabricator extends BaseFabricator {
         VideoTutorial videoTutorial2 = new VideoTutorial().
                 setId("2").
                 setName("Video 2").
-                setVideoLinks(VideoLinkFabricator.singleItemList());;
+                setVideoLinks(VideoLinkFabricator.singleItemList());
         videoTutorialList.add(videoTutorial2);
 
         VideoTutorial videoTutorial3 = new VideoTutorial().

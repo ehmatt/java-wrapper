@@ -5,6 +5,7 @@ import com.onepagecrm.BaseTest;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 29/06/2017.
  */
+@SuppressWarnings("RedundantThrows")
 public class DealCalculationHelperTest extends BaseTest {
 
     public void testMargin() throws Exception {

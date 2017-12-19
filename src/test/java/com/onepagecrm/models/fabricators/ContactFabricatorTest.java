@@ -5,7 +5,7 @@ import com.onepagecrm.models.Contact;
 import com.onepagecrm.models.ContactList;
 
 /**
- * Created by Cillian Myles <cillian@onepagecrm.com> on 16/02/2016.
+ * @author Cillian Myles <cillian@onepagecrm.com> on 16/02/2016.
  */
 public class ContactFabricatorTest extends BaseTest {
 
@@ -20,14 +20,13 @@ public class ContactFabricatorTest extends BaseTest {
         assertNotNull("This field cannot be null.", fabricated.getCompanyName());
         assertNotNull("This field cannot be null.", fabricated.getJobTitle());
         assertNotNull("This field cannot be null.", fabricated.getBackground());
-        assertNotNull("This field cannot be null.", fabricated.isStarred());
+        assertNotNull("This field cannot be null.", fabricated.getStarred());
         assertNotNull("This field cannot be null.", fabricated.getAddress());
         assertNotNull("This field cannot be null.", fabricated.getPhones());
         assertNotNull("This field cannot be null.", fabricated.getEmails());
         assertNotNull("This field cannot be null.", fabricated.getUrls());
     }
 
-    @SuppressWarnings("ForLoopReplaceableByForEach")
     public void testList_allContactsValid() {
         ContactList contacts = ContactFabricator.list();
         assertEquals("Should be 10 contacts", 10, contacts.size());

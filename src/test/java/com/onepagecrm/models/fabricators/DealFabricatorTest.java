@@ -121,7 +121,6 @@ public class DealFabricatorTest extends BaseTest {
                 deal.getCommissionType() != null && deal.getCommissionType().equals(Commission.Type.ABSOLUTE));
     }
 
-    @SuppressWarnings("ForLoopReplaceableByForEach")
     public void testList_allDealsValid() {
         final int expectedAmount = 17;
         DealList deals = DealFabricator.list();
