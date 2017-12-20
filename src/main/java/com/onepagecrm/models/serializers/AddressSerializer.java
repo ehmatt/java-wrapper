@@ -89,7 +89,7 @@ public class AddressSerializer extends SerializableResource<Address> {
         if (address == null) return addressArray;
         List<Address> list = multipleResources();
         list.add(address);
-        return toJsonArray(list, false);
+        return toJsonArray(list);
     }
 
     public Address singleFromJsonArray(JSONArray addressArray) {
