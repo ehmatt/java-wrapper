@@ -13,11 +13,17 @@ import java.util.List;
 public abstract class BaseSerializable<T extends BaseResource>
         extends BaseSerializer implements Serializable<T> {
 
+    protected abstract T defaultSingle();
+
+    protected abstract List<T> defaultList();
+
     @Override
     public T fromJsonObject(JSONObject baseResourceObject) {
         if (baseResourceObject == null) return defaultSingle();
         return fromJsonObjectImpl(baseResourceObject);
     }
+
+    protected abstract T fromJsonObjectImpl(JSONObject baseResourceObject);
 
     @Override
     public List<T> fromJsonArray(JSONArray baseResourceArray) {
@@ -25,11 +31,15 @@ public abstract class BaseSerializable<T extends BaseResource>
         return fromJsonArrayImpl(baseResourceArray);
     }
 
+    protected abstract List<T> fromJsonArrayImpl(JSONArray baseResourceArray);
+
     @Override
     public JSONObject toJsonObject(T baseResource) {
         if (baseResource == null) return EMPTY_JSON_OBJECT;
         return toJsonObjectImpl(baseResource);
     }
+
+    protected abstract JSONObject toJsonObjectImpl(T baseResource);
 
     @Override
     public JSONArray toJsonArray(List<T> baseResourceList) {
@@ -38,6 +48,8 @@ public abstract class BaseSerializable<T extends BaseResource>
         }
         return toJsonArrayImpl(baseResourceList);
     }
+
+    protected abstract JSONArray toJsonArrayImpl(List<T> baseResourceList);
 
     @Override
     public String toJsonString(T baseResource) {

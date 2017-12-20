@@ -5,10 +5,9 @@ import com.onepagecrm.models.internal.PredefinedActionList;
 import com.onepagecrm.models.internal.Settings;
 import com.onepagecrm.models.internal.StreamCount;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class Account implements Serializable {
+public class Account extends BaseResource {
 
     public static final String USER_ID = "account_id";
 
@@ -35,6 +34,16 @@ public class Account implements Serializable {
 
     public Account() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "";
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return false;
     }
 
     public static List<User> getTeam() {
