@@ -55,6 +55,22 @@ public abstract class SerializableResource<T extends BaseResource> extends BaseS
     protected abstract JSONObject toJsonObjectImpl(@NotNull T resource);
 
     @Override
+    public JSONArray toJsonArray(List<T> resourceList) {
+        if (resourceList == null || resourceList.isEmpty()) {
+            return EMPTY_JSON_ARRAY;
+        }
+        return toJsonArrayImpl(resourceList);
+    }
+
+    protected JSONArray toJsonArrayImpl(@NotNull List<T> resourceList) {
+        JSONArray resourceArray = new JSONArray();
+        for (T item : resourceList) {
+            resourceArray.put(toJsonObject(item));
+        }
+        return resourceArray;
+    }
+
+    @Override
     public JSONArray toJsonArray(List<T> resourceList, boolean includeObjectKey) {
         if (resourceList == null || resourceList.isEmpty()) {
             return EMPTY_JSON_ARRAY;
@@ -76,6 +92,11 @@ public abstract class SerializableResource<T extends BaseResource> extends BaseS
     @Override
     public String toJsonString(T resource) {
         return toJsonObject(resource).toString();
+    }
+
+    @Override
+    public String toJsonString(List<T> resourceList) {
+        return toJsonArray(resourceList).toString();
     }
 
     @Override

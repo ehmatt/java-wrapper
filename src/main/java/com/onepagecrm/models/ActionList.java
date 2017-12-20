@@ -44,6 +44,6 @@ public class ActionList extends ResourceList<Action> implements Serializable {
 
     @Override
     public String toString() {
-        return ActionSerializer.getInstance().toJsonString(this.list, true);
+        return ActionSerializer.getInstance().toJsonString(this.list);
     }
 }
