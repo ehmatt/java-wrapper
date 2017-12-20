@@ -1,8 +1,8 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.APIException;
-import com.onepagecrm.models.serializers.impl.BaseSerializable;
 import com.onepagecrm.models.internal.Utilities;
+import com.onepagecrm.models.serializers.impl.BaseSerializable;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.Request;
 import org.json.JSONArray;
@@ -62,6 +62,7 @@ public class BaseSerializer {
     public static final String BCC_EMAIL_TAG = "bcc_email";
     public static final String SALES_TAG = "sales";
     public static final String ACCOUNT_TAG = "account";
+    public static final String ACCOUNTS_TAG = "accounts";
     public static final String SETTINGS_TAG = "settings";
 
     // CONTACT TAGS

@@ -13,13 +13,17 @@ import java.util.List;
 public abstract class BaseSerializable<T extends BaseResource>
         extends BaseSerializer implements Serializable<T> {
 
-    protected abstract T defaultSingle();
+    protected abstract T singleResource();
 
-    protected abstract List<T> defaultList();
+    protected abstract String singleTag();
+
+    protected abstract List<T> multipleResources();
+
+    protected abstract String multipleTag();
 
     @Override
     public T fromJsonObject(JSONObject baseResourceObject) {
-        if (baseResourceObject == null) return defaultSingle();
+        if (baseResourceObject == null) return singleResource();
         return fromJsonObjectImpl(baseResourceObject);
     }
 
@@ -27,12 +31,12 @@ public abstract class BaseSerializable<T extends BaseResource>
 
     @Override
     public List<T> fromJsonArray(JSONArray baseResourceArray) {
-        if (baseResourceArray == null) return defaultList();
+        if (baseResourceArray == null) return multipleResources();
         return fromJsonArrayImpl(baseResourceArray);
     }
 
     protected List<T> fromJsonArrayImpl(JSONArray baseResourceArray) {
-        List<T> list = defaultList();
+        List<T> list = multipleResources();
         for (int i = 0; i < baseResourceArray.length(); i++) {
             list.add(fromJsonObject(baseResourceArray.optJSONObject(i)));
         }

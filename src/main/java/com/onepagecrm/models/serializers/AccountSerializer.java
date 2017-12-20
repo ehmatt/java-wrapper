@@ -28,13 +28,23 @@ public class AccountSerializer extends BaseSerializable<Account> {
     // TODO - move stuff from UserSerializer here
 
     @Override
-    protected Account defaultSingle() {
+    protected Account singleResource() {
         return new Account();
     }
 
     @Override
-    protected List<Account> defaultList() {
+    protected String singleTag() {
+        return BaseSerializable.ACCOUNT_TAG;
+    }
+
+    @Override
+    protected List<Account> multipleResources() {
         return new ArrayList<>();
+    }
+
+    @Override
+    protected String multipleTag() {
+        return BaseSerializable.ACCOUNTS_TAG;
     }
 
     @Override
