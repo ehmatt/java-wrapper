@@ -3,10 +3,12 @@ package com.onepagecrm.models.serializers;
 import com.onepagecrm.models.Action;
 import com.onepagecrm.models.serializers.impl.APISerializable;
 import com.sun.istack.internal.NotNull;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -148,5 +150,17 @@ public class ActionSerializer extends APISerializable<Action> {
             }
         }
         return actionObject;
+    }
+
+    @Override
+    protected JSONArray toJsonArrayImpl(List<Action> actionList) {
+        JSONArray actionsArray = new JSONArray();
+        for (Action item : actionList) {
+            JSONObject outerObject = new JSONObject();
+            JSONObject actionObject = toJsonObject(item);
+            addJsonObject(actionObject, outerObject, ACTION_TAG);
+            actionsArray.put(outerObject);
+        }
+        return actionsArray;
     }
 }
