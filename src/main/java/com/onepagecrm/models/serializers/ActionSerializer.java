@@ -1,49 +1,51 @@
 package com.onepagecrm.models.serializers;
 
-import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.Action;
-import com.onepagecrm.net.Response;
-import org.json.JSONArray;
+import com.onepagecrm.models.serializers.impl.APISerializable;
+import com.sun.istack.internal.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 18/09/2016.
  */
-public class ActionSerializer extends BaseSerializer {
+public class ActionSerializer extends APISerializable<Action> {
 
     private static final Logger LOG = Logger.getLogger(ActionSerializer.class.getName());
 
-    private static Action DEFAULT = new Action();
+    private static volatile ActionSerializer instance;
 
-    public static Action fromResponse(Response response) throws APIException {
-        JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
-        return fromJsonObject(dataObject);
+    public static ActionSerializer getInstance() {
+        if (instance == null) {
+            synchronized (ActionSerializer.class) {
+                if (instance == null) {
+                    instance = new ActionSerializer();
+                }
+            }
+        }
+        return instance;
     }
 
-    // TODO - delete
-    public static Action fromString(String responseBody) throws APIException {
-        try {
-            String dataString = (String) BaseSerializer.fromString(responseBody);
-            JSONObject dataObject = new JSONObject(dataString);
-            return fromJsonObject(dataObject);
-
-        } catch (JSONException e) {
-            LOG.severe("Could not find action object tags");
-            LOG.severe(e.toString());
-            return new Action();
-        }
+    @Override
+    protected Action singleResource() {
+        return new Action();
     }
 
-    public static Action fromJsonObject(JSONObject actionObject) {
-        if (actionObject == null) {
-            return DEFAULT;
-        }
+    @Override
+    protected String singleTag() {
+        return BaseSerializer.ACTION_TAG;
+    }
+
+    @Override
+    protected String multipleTag() {
+        return BaseSerializer.ACTIONS_TAG;
+    }
+
+    @Override
+    protected Action fromJsonObjectImpl(@NotNull JSONObject actionObject) {
         Action action = new Action();
         String status = null;
         Date exactTime = null;
@@ -99,23 +101,13 @@ public class ActionSerializer extends BaseSerializer {
         } catch (JSONException e) {
             LOG.severe("Error parsing Action object");
             LOG.severe(e.toString());
-            return DEFAULT;
+            return singleResource();
         }
     }
 
-    public static List<Action> fromJsonArray(JSONArray actionsArray) {
-        List<Action> actions = new ArrayList<>();
-        if (actionsArray == null) return actions;
-        for (int i = 0; i < actionsArray.length(); i++) {
-            JSONObject actionObject = actionsArray.optJSONObject(i);
-            actions.add(fromJsonObject(actionObject));
-        }
-        return actions;
-    }
-
-    public static JSONObject toJsonObject(Action action) {
+    @Override
+    protected JSONObject toJsonObjectImpl(@NotNull Action action) {
         JSONObject actionObject = new JSONObject();
-        if (action == null) return actionObject;
         addJsonStringValue(action.getId(), actionObject, ID_TAG);
         addJsonStringValue(action.getContactId(), actionObject, CONTACT_ID_TAG);
         addJsonStringValue(action.getText(), actionObject, TEXT_TAG);
@@ -156,22 +148,5 @@ public class ActionSerializer extends BaseSerializer {
             }
         }
         return actionObject;
-    }
-
-    public static String toJsonString(Action action) {
-        return toJsonObject(action).toString();
-    }
-
-    public static JSONArray toJsonArray(List<Action> actions) {
-        JSONArray actionsArray = new JSONArray();
-        if (actions == null) return actionsArray;
-        for (Action action : actions) {
-            actionsArray.put(toJsonObject(action));
-        }
-        return actionsArray;
-    }
-
-    public static String toJsonString(List<Action> actions) {
-        return toJsonArray(actions).toString();
     }
 }

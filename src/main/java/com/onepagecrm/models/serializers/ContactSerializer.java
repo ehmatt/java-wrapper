@@ -182,19 +182,19 @@ public class ContactSerializer extends BaseSerializer {
             // Next Actions.
             if (contactsElementObject.has(NEXT_ACTIONS_TAG)) {
                 JSONArray nextActionsArray = contactsElementObject.getJSONArray(NEXT_ACTIONS_TAG);
-                List<Action> nextActions = ActionSerializer.fromJsonArray(nextActionsArray);
+                List<Action> nextActions = ActionSerializer.getInstance().fromJsonArray(nextActionsArray);
                 actions.addAll(nextActions);
             }
             // Next Action.
             if (contactsElementObject.has(NEXT_ACTION_TAG)) {
                 JSONObject nextActionObject = contactsElementObject.getJSONObject(NEXT_ACTION_TAG);
-                Action nextAction = ActionSerializer.fromJsonObject(nextActionObject);
+                Action nextAction = ActionSerializer.getInstance().fromJsonObject(nextActionObject);
                 contact.setNextAction(nextAction);
             }
             // Queued Actions.
             if (contactsElementObject.has(QUEUED_ACTIONS_TAG)) {
                 JSONArray queuedActionsArray = contactsElementObject.getJSONArray(QUEUED_ACTIONS_TAG);
-                List<Action> queuedActions = ActionSerializer.fromJsonArray(queuedActionsArray);
+                List<Action> queuedActions = ActionSerializer.getInstance().fromJsonArray(queuedActionsArray);
                 actions.addAll(queuedActions);
             }
             // Deals.

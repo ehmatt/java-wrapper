@@ -14,7 +14,7 @@ public class AccountSerializer extends BaseSerializable<Account> {
 
     private static volatile AccountSerializer instance;
 
-    public static AccountSerializer getsInstance() {
+    public static AccountSerializer getInstance() {
         if (instance == null) {
             synchronized (AccountSerializer.class) {
                 if (instance == null) {

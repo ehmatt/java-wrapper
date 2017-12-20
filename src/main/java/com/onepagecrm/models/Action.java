@@ -4,7 +4,6 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.Paginator;
 import com.onepagecrm.models.internal.PredefinedAction;
 import com.onepagecrm.models.internal.PredefinedActionList;
-import com.onepagecrm.models.serializers.ActionListSerializer;
 import com.onepagecrm.models.serializers.ActionSerializer;
 import com.onepagecrm.models.serializers.DateSerializer;
 import com.onepagecrm.models.serializers.PredefinedActionSerializer;
@@ -117,20 +116,20 @@ public class Action extends ApiResource implements Serializable {
         Request request = new PutRequest(
                 addActionIdToEndpoint(ACTIONS_ENDPOINT),
                 null,
-                ActionSerializer.toJsonString(this)
+                ActionSerializer.getInstance().toJsonString(this)
         );
         Response response = request.send();
-        return ActionSerializer.fromResponse(response);
+        return ActionSerializer.getInstance().single(response);
     }
 
     private Action create() throws OnePageException {
         Request request = new PostRequest(
                 ACTIONS_ENDPOINT,
                 null,
-                ActionSerializer.toJsonString(this)
+                ActionSerializer.getInstance().toJsonString(this)
         );
         Response response = request.send();
-        return ActionSerializer.fromResponse(response);
+        return ActionSerializer.getInstance().single(response);
     }
 
     public void delete() throws OnePageException {
@@ -142,20 +141,20 @@ public class Action extends ApiResource implements Serializable {
         Request request = new PutRequest(
                 MARK_COMPLETE_ENDPOINT.replace("{id}", this.getId()),
                 null,
-                ActionSerializer.toJsonString(this)
+                ActionSerializer.getInstance().toJsonString(this)
         );
         Response response = request.send();
-        return ActionSerializer.fromResponse(response);
+        return ActionSerializer.getInstance().single(response);
     }
 
     public Action undoCompletion() throws OnePageException {
         Request request = new PutRequest(
                 UNDO_COMPLETION_ENDPOINT.replace("{id}", this.getId()),
                 null,
-                ActionSerializer.toJsonString(this)
+                ActionSerializer.getInstance().toJsonString(this)
         );
         Response response = request.send();
-        return ActionSerializer.fromResponse(response);
+        return ActionSerializer.getInstance().single(response);
     }
 
     public static ActionList list(String assigneeId) throws OnePageException {
@@ -163,7 +162,7 @@ public class Action extends ApiResource implements Serializable {
         params.put("assignee_id", assigneeId);
         Request request = new GetRequest(ACTIONS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-        return new ActionList(ActionListSerializer.fromResponse(response));
+        return new ActionList(ActionSerializer.getInstance().list(response));
     }
 
     public static ActionList list(String assigneeId, Paginator paginator) throws OnePageException {
@@ -171,7 +170,7 @@ public class Action extends ApiResource implements Serializable {
         params.put("assignee_id", assigneeId);
         Request request = new GetRequest(ACTIONS_ENDPOINT, Query.fromParams(params));
         Response response = request.send();
-        return new ActionList(ActionListSerializer.fromResponse(response));
+        return new ActionList(ActionSerializer.getInstance().list(response));
     }
 
     public static PredefinedActionList listPredefined() throws OnePageException {
@@ -244,7 +243,7 @@ public class Action extends ApiResource implements Serializable {
 
     @Override
     public String toString() {
-        return ActionSerializer.toJsonString(this);
+        return ActionSerializer.getInstance().toJsonString(this);
     }
 
     @Override

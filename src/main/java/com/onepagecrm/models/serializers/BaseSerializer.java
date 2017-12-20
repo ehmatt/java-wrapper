@@ -28,7 +28,7 @@ public class BaseSerializer {
 
     static volatile BaseSerializer instance;
 
-    public static BaseSerializer getsInstance() {
+    public static BaseSerializer getInstance() {
         if (instance == null) {
             synchronized (BaseSerializable.class) {
                 if (instance == null) {
