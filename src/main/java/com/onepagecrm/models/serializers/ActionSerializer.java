@@ -1,7 +1,7 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.models.Action;
-import com.onepagecrm.models.serializers.impl.APISerializable;
+import com.onepagecrm.models.serializers.impl.SerializableAPI;
 import com.sun.istack.internal.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 18/09/2016.
  */
-public class ActionSerializer extends APISerializable<Action> {
+public class ActionSerializer extends SerializableAPI<Action> {
 
     private static final Logger LOG = Logger.getLogger(ActionSerializer.class.getName());
 

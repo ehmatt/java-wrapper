@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 20/12/2017.
  */
-public abstract class APISerializable<T extends ApiResource> extends BaseSerializable<T> {
+public abstract class SerializableAPI<T extends ApiResource> extends SerializableResource<T> {
 
     public T single(Response response) throws APIException {
         JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);

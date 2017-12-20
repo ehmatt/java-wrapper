@@ -1,10 +1,10 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.models.Address;
+import com.onepagecrm.models.serializers.impl.SerializableResource;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -13,17 +13,40 @@ import static com.onepagecrm.models.internal.Utilities.nullChecks;
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 18/09/2016.
  */
-@SuppressWarnings({"WeakerAccess", "unused"})
-public class AddressSerializer extends BaseSerializer {
+public class AddressSerializer extends SerializableResource<Address> {
 
     private static final Logger LOG = Logger.getLogger(AddressSerializer.class.getName());
 
-    private static Address DEFAULT = new Address();
+    private static volatile AddressSerializer instance;
 
-    public static Address fromJsonObject(JSONObject addressObject) {
-        if (addressObject == null) {
-            return DEFAULT;
+    public static AddressSerializer getInstance() {
+        if (instance == null) {
+            synchronized (AddressSerializer.class) {
+                if (instance == null) {
+                    instance = new AddressSerializer();
+                }
+            }
         }
+        return instance;
+    }
+
+    @Override
+    protected Address singleResource() {
+        return new Address();
+    }
+
+    @Override
+    protected String singleTag() {
+        return BaseSerializer.ADDRESS_TAG;
+    }
+
+    @Override
+    protected String multipleTag() {
+        return BaseSerializer.ADDRESS_LIST_TAG;
+    }
+
+    @Override
+    protected Address fromJsonObjectImpl(JSONObject addressObject) {
         Address address = new Address();
         try {
             if (addressObject.has(ADDRESS_TAG)) {
@@ -46,23 +69,13 @@ public class AddressSerializer extends BaseSerializer {
         } catch (Exception e) {
             LOG.severe("Error parsing Address object");
             LOG.severe(e.toString());
-            return DEFAULT;
+            return singleResource();
         }
     }
 
-    public static List<Address> fromJsonArray(JSONArray addressArray) {
-        List<Address> addresses = new ArrayList<>();
-        if (addressArray == null) return addresses;
-        for (int i = 0; i < addressArray.length(); i++) {
-            JSONObject addressObject = addressArray.optJSONObject(i);
-            addresses.add(fromJsonObject(addressObject));
-        }
-        return addresses;
-    }
-
-    public static JSONObject toJsonObject(Address address) {
+    @Override
+    protected JSONObject toJsonObjectImpl(Address address) {
         JSONObject addressObject = new JSONObject();
-        if (address == null) return addressObject;
         addJsonStringValue(address.getAddress(), addressObject, ADDRESS_TAG);
         addJsonStringValue(address.getCity(), addressObject, CITY_TAG);
         addJsonStringValue(address.getState(), addressObject, STATE_TAG);
@@ -71,33 +84,16 @@ public class AddressSerializer extends BaseSerializer {
         return addressObject;
     }
 
-    public static String toJsonString(Address address) {
-        return toJsonObject(address).toString();
-    }
-
-    public static JSONArray toJsonArray(List<Address> addresses) {
-        JSONArray addressArray = new JSONArray();
-        if (addresses == null) return addressArray;
-        for (Address address : addresses) {
-            addressArray.put(toJsonObject(address));
-        }
-        return addressArray;
-    }
-
-    public static String toJsonString(List<Address> addresses) {
-        return toJsonArray(addresses).toString();
-    }
-
-    public static JSONArray singleToJsonArray(Address address) {
+    public JSONArray singleToJsonArray(Address address) {
         JSONArray addressArray = new JSONArray();
         if (address == null) return addressArray;
-        List<Address> list = new ArrayList<>();
+        List<Address> list = multipleResources();
         list.add(address);
-        return toJsonArray(list);
+        return toJsonArray(list, false);
     }
 
-    public static Address singleFromJsonArray(JSONArray addressArray) {
+    public Address singleFromJsonArray(JSONArray addressArray) {
         List<Address> addresses = fromJsonArray(addressArray);
-        return !addresses.isEmpty() ? addresses.get(0) : DEFAULT;
+        return !addresses.isEmpty() ? addresses.get(0) : singleResource();
     }
 }

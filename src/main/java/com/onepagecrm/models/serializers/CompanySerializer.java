@@ -61,7 +61,7 @@ public class CompanySerializer extends BaseSerializer {
                 .setUrl(companyObject.optString(URL_TAG))
                 .setCompanyFields(CustomFieldSerializer.fromJsonArray(companyObject.optJSONArray(COMPANY_FIELDS_TAG),
                         CustomField.CF_TYPE_COMPANY))
-                .setAddress(AddressSerializer.fromJsonObject(companyObject.optJSONObject(ADDRESS_TAG)))
+                .setAddress(AddressSerializer.getInstance().fromJsonObject(companyObject.optJSONObject(ADDRESS_TAG)))
                 .setWonDealsCount(companyObject.optInt(WON_DEALS_COUNT_TAG))
                 .setTotalWonAmount(companyObject.optDouble(TOTAL_WON_AMOUNT_TAG, 0d))
                 .setPendingDealsCount(companyObject.optInt(PENDING_DEALS_COUNT_TAG))
@@ -110,8 +110,8 @@ public class CompanySerializer extends BaseSerializer {
         JSONArray companyFieldsArray = CustomFieldSerializer.toJsonArray(company.getCompanyFields());
         addJsonArray(companyFieldsArray, companyObject, COMPANY_FIELDS_TAG);
         // Address.
-        JSONObject addressArray = AddressSerializer.toJsonObject(company.getAddress());
-        addJsonObject(addressArray, companyObject, ADDRESS_TAG);
+        JSONObject addressObject = AddressSerializer.getInstance().toJsonObject(company.getAddress());
+        addJsonObject(addressObject, companyObject, ADDRESS_TAG);
         addJsonIntegerValue(company.getWonDealsCount(), companyObject, WON_DEALS_COUNT_TAG);
         addJsonDoubleValue(company.getTotalWonAmount(), companyObject, TOTAL_WON_AMOUNT_TAG);
         addJsonIntegerValue(company.getPendingDealsCount(), companyObject, PENDING_DEALS_COUNT_TAG);

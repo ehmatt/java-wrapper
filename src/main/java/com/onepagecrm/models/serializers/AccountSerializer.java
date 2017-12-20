@@ -1,16 +1,13 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.models.Account;
-import com.onepagecrm.models.serializers.impl.BaseSerializable;
+import com.onepagecrm.models.serializers.impl.SerializableResource;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Cillian Myles <cillian@onepagecrm.com> on 18/09/2016.
  */
-public class AccountSerializer extends BaseSerializable<Account> {
+public class AccountSerializer extends SerializableResource<Account> {
 
     private static volatile AccountSerializer instance;
 
@@ -34,17 +31,12 @@ public class AccountSerializer extends BaseSerializable<Account> {
 
     @Override
     protected String singleTag() {
-        return BaseSerializable.ACCOUNT_TAG;
-    }
-
-    @Override
-    protected List<Account> multipleResources() {
-        return new ArrayList<>();
+        return SerializableResource.ACCOUNT_TAG;
     }
 
     @Override
     protected String multipleTag() {
-        return BaseSerializable.ACCOUNTS_TAG;
+        return SerializableResource.ACCOUNTS_TAG;
     }
 
     @Override

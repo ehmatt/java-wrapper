@@ -2,7 +2,6 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.APIException;
 import com.onepagecrm.models.internal.Utilities;
-import com.onepagecrm.models.serializers.impl.BaseSerializable;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.Request;
 import org.json.JSONArray;
@@ -25,19 +24,6 @@ import java.util.logging.Logger;
 public class BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(BaseSerializer.class.getName());
-
-    static volatile BaseSerializer instance;
-
-    public static BaseSerializer getInstance() {
-        if (instance == null) {
-            synchronized (BaseSerializable.class) {
-                if (instance == null) {
-                    instance = new BaseSerializer();
-                }
-            }
-        }
-        return instance;
-    }
 
     // LOGIN TAGS
     public static final String LOGIN_TAG = "login";

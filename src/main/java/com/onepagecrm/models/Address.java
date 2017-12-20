@@ -20,7 +20,7 @@ public class Address extends BaseResource implements Serializable {
 
     @Override
     public String toString() {
-        return AddressSerializer.toJsonString(this);
+        return AddressSerializer.getInstance().toJsonString(this);
     }
 
     public boolean isValid() {

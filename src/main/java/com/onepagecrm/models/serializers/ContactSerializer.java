@@ -176,7 +176,7 @@ public class ContactSerializer extends BaseSerializer {
             // Address.
             if (contactObject.has(ADDRESS_LIST_TAG)) {
                 JSONArray addressArray = contactObject.getJSONArray(ADDRESS_LIST_TAG);
-                Address address = AddressSerializer.singleFromJsonArray(addressArray);
+                Address address = AddressSerializer.getInstance().singleFromJsonArray(addressArray);
                 contact.setAddress(address);
             }
             // Next Actions.
@@ -264,7 +264,7 @@ public class ContactSerializer extends BaseSerializer {
         JSONArray customFieldsArray = CustomFieldSerializer.toJsonArray(contact.getCustomFields());
         addJsonArray(customFieldsArray, contactObject, CUSTOM_FIELDS_TAG);
         // Address.
-        JSONArray addressArray = AddressSerializer.singleToJsonArray(contact.getAddress());
+        JSONArray addressArray = AddressSerializer.getInstance().singleToJsonArray(contact.getAddress());
         addJsonArray(addressArray, contactObject, ADDRESS_LIST_TAG);
         // Phones.
         JSONArray phonesArray = PhoneSerializer.toJsonArray(contact.getPhones());
