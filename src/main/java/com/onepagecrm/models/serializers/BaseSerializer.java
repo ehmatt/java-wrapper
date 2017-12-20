@@ -1,6 +1,7 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.APIException;
+import com.onepagecrm.models.serializers.impl.BaseSerializable;
 import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.net.Response;
 import com.onepagecrm.net.request.Request;
@@ -24,6 +25,19 @@ import java.util.logging.Logger;
 public class BaseSerializer {
 
     private static final Logger LOG = Logger.getLogger(BaseSerializer.class.getName());
+
+    static volatile BaseSerializer instance;
+
+    public static BaseSerializer getsInstance() {
+        if (instance == null) {
+            synchronized (BaseSerializable.class) {
+                if (instance == null) {
+                    instance = new BaseSerializer();
+                }
+            }
+        }
+        return instance;
+    }
 
     // LOGIN TAGS
     public static final String LOGIN_TAG = "login";
@@ -373,6 +387,19 @@ public class BaseSerializer {
     public static final String RESOLUTION_TAG = "resolution";
     public static final String VIDEO_NAME_TAG = "name";
 
+    /*
+     * Some static re-usable variables
+     */
+
+    public static final String[] EMPTY_STRING_ARRAY = {};
+
+    public static final String STRING_SEPARATOR = "__,__";
+
+    public static final JSONObject EMPTY_JSON_OBJECT = new JSONObject();
+
+    public static final JSONArray EMPTY_JSON_ARRAY = new JSONArray();
+
+
     /**
      * Method used to parse the base/start of response.
      *
@@ -560,8 +587,6 @@ public class BaseSerializer {
         return choices;
     }
 
-    public static String stringSeparator = "__,__";
-
     public static String toCommaSeparatedString(List<String> strings) {
         if (strings == null) return "";
         // Convert from list of strings to array of strings.
@@ -577,7 +602,7 @@ public class BaseSerializer {
             result += strings[i];
             // Do not append comma at the end of last element
             if (i < strings.length - 1) {
-                result += stringSeparator;
+                result += STRING_SEPARATOR;
             }
         }
         return result;
@@ -589,11 +614,9 @@ public class BaseSerializer {
         return Arrays.asList(array);
     }
 
-    public static final String[] EMPTY_STRING_ARRAY = {};
-
     public static String[] toArrayOfStrings(String string) {
         if (string == null) return EMPTY_STRING_ARRAY;
-        return string.split(stringSeparator);
+        return string.split(STRING_SEPARATOR);
     }
 
     /**
