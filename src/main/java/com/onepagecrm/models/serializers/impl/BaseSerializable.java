@@ -56,19 +56,22 @@ public abstract class BaseSerializable<T extends BaseResource>
     protected abstract JSONObject toJsonObjectImpl(@NotNull T baseResource);
 
     @Override
-    public JSONArray toJsonArray(List<T> baseResourceList) {
+    public JSONArray toJsonArray(List<T> baseResourceList, boolean includeObjectKey) {
         if (baseResourceList == null || baseResourceList.isEmpty()) {
             return EMPTY_JSON_ARRAY;
         }
-        return toJsonArrayImpl(baseResourceList);
+        return toJsonArrayImpl(baseResourceList, includeObjectKey);
     }
 
-    protected JSONArray toJsonArrayImpl(@NotNull List<T> baseResourceList) {
-        JSONArray baseResourceArray = new JSONArray();
+    protected JSONArray toJsonArrayImpl(@NotNull List<T> baseResourceList, boolean includeObjectKey) {
+        JSONArray resourceArray = new JSONArray();
         for (T item : baseResourceList) {
-            baseResourceArray.put(toJsonObject(item));
+            JSONObject outerObject = new JSONObject();
+            JSONObject innerObject = toJsonObject(item);
+            addJsonObject(innerObject, outerObject, singleTag());
+            resourceArray.put(includeObjectKey ? outerObject : innerObject);
         }
-        return baseResourceArray;
+        return resourceArray;
     }
 
     @Override
@@ -77,7 +80,7 @@ public abstract class BaseSerializable<T extends BaseResource>
     }
 
     @Override
-    public String toJsonString(List<T> baseResourceList) {
-        return toJsonArray(baseResourceList).toString();
+    public String toJsonString(List<T> baseResourceList, boolean includeObjectKey) {
+        return toJsonArray(baseResourceList, includeObjectKey).toString();
     }
 }

@@ -17,9 +17,9 @@ public interface Serializable<T extends BaseResource> {
 
     JSONObject toJsonObject(T baseResource);
 
-    JSONArray toJsonArray(List<T> baseResourceList);
+    JSONArray toJsonArray(List<T> baseResourceList, boolean includeObjectKey);
 
     String toJsonString(T baseResource);
 
-    String toJsonString(List<T> baseResourceList);
+    String toJsonString(List<T> baseResourceList, boolean includeObjectKey);
 }
