@@ -31,7 +31,13 @@ public abstract class BaseSerializable<T extends BaseResource>
         return fromJsonArrayImpl(baseResourceArray);
     }
 
-    protected abstract List<T> fromJsonArrayImpl(JSONArray baseResourceArray);
+    protected List<T> fromJsonArrayImpl(JSONArray baseResourceArray) {
+        List<T> list = defaultList();
+        for (int i = 0; i < baseResourceArray.length(); i++) {
+            list.add(fromJsonObject(baseResourceArray.optJSONObject(i)));
+        }
+        return list;
+    }
 
     @Override
     public JSONObject toJsonObject(T baseResource) {
@@ -49,7 +55,13 @@ public abstract class BaseSerializable<T extends BaseResource>
         return toJsonArrayImpl(baseResourceList);
     }
 
-    protected abstract JSONArray toJsonArrayImpl(List<T> baseResourceList);
+    protected JSONArray toJsonArrayImpl(List<T> baseResourceList) {
+        JSONArray baseResourceArray = new JSONArray();
+        for (T item : baseResourceList) {
+            baseResourceArray.put(toJsonObject(item));
+        }
+        return baseResourceArray;
+    }
 
     @Override
     public String toJsonString(T baseResource) {

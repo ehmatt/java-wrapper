@@ -2,7 +2,6 @@ package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.models.Account;
 import com.onepagecrm.models.serializers.impl.BaseSerializable;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -12,9 +11,6 @@ import java.util.List;
  * @author Cillian Myles <cillian@onepagecrm.com> on 18/09/2016.
  */
 public class AccountSerializer extends BaseSerializable<Account> {
-
-    private static Account DEFAULT_SINGLE = new Account();
-    private static List<Account> DEFAULT_LIST = new ArrayList<>();
 
     private static volatile AccountSerializer instance;
 
@@ -33,31 +29,21 @@ public class AccountSerializer extends BaseSerializable<Account> {
 
     @Override
     protected Account defaultSingle() {
-        return DEFAULT_SINGLE;
+        return new Account();
     }
 
     @Override
     protected List<Account> defaultList() {
-        return DEFAULT_LIST;
+        return new ArrayList<>();
     }
 
     @Override
-    protected Account fromJsonObjectImpl(JSONObject baseResourceObject) {
-        return null;
+    protected Account fromJsonObjectImpl(JSONObject accountObject) {
+        return new Account();
     }
 
     @Override
-    protected List<Account> fromJsonArrayImpl(JSONArray baseResourceArray) {
-        return null;
-    }
-
-    @Override
-    protected JSONObject toJsonObjectImpl(Account baseResource) {
-        return null;
-    }
-
-    @Override
-    protected JSONArray toJsonArrayImpl(List<Account> baseResourceList) {
-        return null;
+    protected JSONObject toJsonObjectImpl(Account account) {
+        return new JSONObject();
     }
 }
