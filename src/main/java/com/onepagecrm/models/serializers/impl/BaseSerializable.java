@@ -70,6 +70,6 @@ public abstract class BaseSerializable<T extends BaseResource>
 
     @Override
     public String toJsonString(List<T> baseResourceList) {
-        return toJsonArrayImpl(baseResourceList).toString();
+        return toJsonArray(baseResourceList).toString();
     }
 }
