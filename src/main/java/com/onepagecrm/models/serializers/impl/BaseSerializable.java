@@ -15,31 +15,37 @@ public abstract class BaseSerializable<T extends BaseResource>
 
     @Override
     public T fromJsonObject(JSONObject baseResourceObject) {
-        return null;
+        if (baseResourceObject == null) return defaultSingle();
+        return fromJsonObjectImpl(baseResourceObject);
     }
 
     @Override
     public List<T> fromJsonArray(JSONArray baseResourceArray) {
-        return null;
+        if (baseResourceArray == null) return defaultList();
+        return fromJsonArrayImpl(baseResourceArray);
     }
 
     @Override
     public JSONObject toJsonObject(T baseResource) {
-        return null;
+        if (baseResource == null) return EMPTY_JSON_OBJECT;
+        return toJsonObjectImpl(baseResource);
     }
 
     @Override
     public JSONArray toJsonArray(List<T> baseResourceList) {
-        return null;
+        if (baseResourceList == null || baseResourceList.isEmpty()) {
+            return EMPTY_JSON_ARRAY;
+        }
+        return toJsonArrayImpl(baseResourceList);
     }
 
     @Override
     public String toJsonString(T baseResource) {
-        return null;
+        return toJsonObject(baseResource).toString();
     }
 
     @Override
     public String toJsonString(List<T> baseResourceList) {
-        return null;
+        return toJsonArrayImpl(baseResourceList).toString();
     }
 }

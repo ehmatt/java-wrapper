@@ -11,13 +11,25 @@ import java.util.List;
  */
 public interface Serializable<T extends BaseResource> {
 
+    T defaultSingle();
+
+    List<T> defaultList();
+
     T fromJsonObject(JSONObject baseResourceObject);
+
+    T fromJsonObjectImpl(JSONObject baseResourceObject);
 
     List<T> fromJsonArray(JSONArray baseResourceArray);
 
+    List<T> fromJsonArrayImpl(JSONArray baseResourceArray);
+
     JSONObject toJsonObject(T baseResource);
 
+    JSONObject toJsonObjectImpl(T baseResource);
+
     JSONArray toJsonArray(List<T> baseResourceList);
+
+    JSONArray toJsonArrayImpl(List<T> baseResourceList);
 
     String toJsonString(T baseResource);
 
