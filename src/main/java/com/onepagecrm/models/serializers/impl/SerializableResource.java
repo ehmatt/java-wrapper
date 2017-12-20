@@ -25,7 +25,7 @@ public abstract class SerializableResource<T extends BaseResource> extends BaseS
     protected abstract String multipleTag();
 
     @Override
-    public T fromJsonObject(JSONObject resourceObject) {
+    public final T fromJsonObject(JSONObject resourceObject) {
         if (resourceObject == null) return singleResource();
         return fromJsonObjectImpl(resourceObject);
     }
@@ -33,7 +33,7 @@ public abstract class SerializableResource<T extends BaseResource> extends BaseS
     protected abstract T fromJsonObjectImpl(@NotNull JSONObject resourceObject);
 
     @Override
-    public List<T> fromJsonArray(JSONArray resourceArray) {
+    public final List<T> fromJsonArray(JSONArray resourceArray) {
         if (resourceArray == null) return multipleResources();
         return fromJsonArrayImpl(resourceArray);
     }
@@ -47,7 +47,7 @@ public abstract class SerializableResource<T extends BaseResource> extends BaseS
     }
 
     @Override
-    public JSONObject toJsonObject(T resource) {
+    public final JSONObject toJsonObject(T resource) {
         if (resource == null) return EMPTY_JSON_OBJECT;
         return toJsonObjectImpl(resource);
     }
@@ -55,7 +55,7 @@ public abstract class SerializableResource<T extends BaseResource> extends BaseS
     protected abstract JSONObject toJsonObjectImpl(@NotNull T resource);
 
     @Override
-    public JSONArray toJsonArray(List<T> resourceList) {
+    public final JSONArray toJsonArray(List<T> resourceList) {
         if (resourceList == null || resourceList.isEmpty()) {
             return EMPTY_JSON_ARRAY;
         }
@@ -71,7 +71,7 @@ public abstract class SerializableResource<T extends BaseResource> extends BaseS
     }
 
     @Override
-    public JSONArray toJsonArray(List<T> resourceList, boolean includeObjectKey) {
+    public final JSONArray toJsonArray(List<T> resourceList, boolean includeObjectKey) {
         if (resourceList == null || resourceList.isEmpty()) {
             return EMPTY_JSON_ARRAY;
         }
@@ -90,17 +90,17 @@ public abstract class SerializableResource<T extends BaseResource> extends BaseS
     }
 
     @Override
-    public String toJsonString(T resource) {
+    public final String toJsonString(T resource) {
         return toJsonObject(resource).toString();
     }
 
     @Override
-    public String toJsonString(List<T> resourceList) {
+    public final String toJsonString(List<T> resourceList) {
         return toJsonArray(resourceList).toString();
     }
 
     @Override
-    public String toJsonString(List<T> resourceList, boolean includeObjectKey) {
+    public final String toJsonString(List<T> resourceList, boolean includeObjectKey) {
         return toJsonArray(resourceList, includeObjectKey).toString();
     }
 }
