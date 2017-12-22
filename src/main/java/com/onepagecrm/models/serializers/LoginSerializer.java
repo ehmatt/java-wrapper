@@ -53,6 +53,7 @@ public class LoginSerializer extends BaseSerializer {
     }
 
     public static void updateLoginOnlyResources(String responseBody) {
+        addNewUserInfo(responseBody);
         addFiltersToAccount(responseBody);
         addSettingsToAccount(responseBody);
         addPredefinedActionsToAccount(responseBody);
@@ -151,6 +152,21 @@ public class LoginSerializer extends BaseSerializer {
     private static void addStatuses(JSONArray statusesArray) throws JSONException {
         List<Status> statuses = StatusSerializer.fromJsonArray(statusesArray);
         loggedInUser.getAccount().setStatuses(statuses);
+    }
+
+    private static void addNewUserInfo(String responseBody) {
+        JSONObject responseObject;
+        try {
+            responseObject = new JSONObject(responseBody);
+            if (responseObject.has(NEW_USER_TAG)) {
+                loggedInUser.setNewUser(responseObject.getBoolean(NEW_USER_TAG));
+            } else {
+                loggedInUser.setNewUser(false);
+            }
+        } catch (JSONException e) {
+            LOG.severe("Error parsing New User");
+            LOG.severe(e.toString());
+        }
     }
 
     private static void addLeadSourcesToAccount(String responseBody) {

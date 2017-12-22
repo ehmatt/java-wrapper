@@ -38,6 +38,7 @@ public class User extends ApiResource implements Serializable {
     private String lastName;
     private String photoUrl;
     private String countryCode;
+    public boolean newUser;
 
     private Integer allCount;
     private Integer streamCount;
@@ -454,6 +455,15 @@ public class User extends ApiResource implements Serializable {
 
     public User setCountryCode(String countryCode) {
         this.countryCode = countryCode;
+        return this;
+    }
+
+    public boolean isNewUser() {
+        return newUser;
+    }
+
+    public User setNewUser(boolean newUser) {
+        this.newUser = newUser;
         return this;
     }
 }
