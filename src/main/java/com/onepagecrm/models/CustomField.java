@@ -2,6 +2,9 @@ package com.onepagecrm.models;
 
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.internal.CustomFieldValue;
+import com.onepagecrm.models.serializers.CustomCompanyFieldSerializer;
+import com.onepagecrm.models.serializers.CustomContactFieldSerializer;
+import com.onepagecrm.models.serializers.CustomDealFieldSerializer;
 import com.onepagecrm.models.serializers.CustomFieldSerializer;
 import com.onepagecrm.net.ApiResource;
 import com.onepagecrm.net.Response;
@@ -48,7 +51,7 @@ public class CustomField extends ApiResource implements Serializable {
                 Query.fromParams(params)
         );
         Response response = request.send();
-        return CustomFieldSerializer.fromResponse(response, CF_TYPE_CONTACT);
+        return CustomContactFieldSerializer.getInstance().list(response);
     }
 
     public static List<CustomField> listCompanies() throws OnePageException {
@@ -59,7 +62,7 @@ public class CustomField extends ApiResource implements Serializable {
                 Query.fromParams(params)
         );
         Response response = request.send();
-        return CustomFieldSerializer.fromResponse(response, CF_TYPE_COMPANY);
+        return CustomCompanyFieldSerializer.getInstance().list(response);
     }
 
     public static List<CustomField> listDeals() throws OnePageException {
@@ -70,7 +73,7 @@ public class CustomField extends ApiResource implements Serializable {
                 Query.fromParams(params)
         );
         Response response = request.send();
-        return CustomFieldSerializer.fromResponse(response, CF_TYPE_DEAL);
+        return CustomDealFieldSerializer.getInstance().list(response);
     }
 
     public String save() throws OnePageException {
