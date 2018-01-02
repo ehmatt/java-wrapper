@@ -49,11 +49,6 @@ public class LoginDataSerializer extends BaseSerializer {
         addJsonBooleanValue(loginData.isFullResponse(), loginDataObject, FULL_RESPONSE_TAG);
         addJsonStringValue(loginData.getSamlResponse(), loginDataObject, SAML_RESPONSE_TAG);
         addJsonStringValue(loginData.getRelayState(), loginDataObject, RELAY_STATE_TAG);
-//        try {
-//            loginDataObject.put(RELAY_STATE_TAG, loginData.getRelayState());
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
         return loginDataObject;
     }
 
