@@ -21,18 +21,24 @@ public interface API {
         public static LoginData authenticate(String username, String password, boolean fullResponse) throws OnePageException {
             Request request = new LoginRequest(username, password, fullResponse);
             Response response = request.send();
-            return LoginDataSerializer.fromString(response.getResponseBody());
+            LoginData loginData = LoginDataSerializer.fromString(response.getResponseBody());
+            return loginData
+                    .setUsername(username)
+                    .setPassword(password)
+                    .setFullResponse(fullResponse);
         }
 
-        public static User login(String username, String password) throws OnePageException {
-            return login(username, password, false).getUser();
+        public static User login(LoginData loginData) throws OnePageException {
+            return login(loginData, false).getUser();
         }
 
-        public static StartupObject login(String username, String password, boolean fullResponse) throws OnePageException {
-            Request request = new LoginRequest(username, password, fullResponse);
+        public static StartupObject login(LoginData loginData, boolean fullResponse) throws OnePageException {
+            Request request = new LoginRequest(loginData.setFullResponse(fullResponse));
             Response response = request.send();
             return LoginSerializer.fromString(response.getResponseBody(), fullResponse);
         }
+
+        /* ... */
 
         public static User googleLogin(String authCode) throws OnePageException {
             Request request = new GoogleLoginRequest(authCode, true);

@@ -50,16 +50,12 @@ public class MSELoginDriver {
         LoginData loginData = API.Auth.authenticate(
                 prop.getProperty("username"),
                 prop.getProperty("password"),
-                false
-        );
+                false);
 
         LOG.info("LOGIN DATA: " + loginData);
 
         OnePageCRM.setCustomUrl(loginData.getEndpointUrl());
 
-        API.Auth.login(
-                prop.getProperty("username"),
-                prop.getProperty("password")
-        );
+        API.Auth.login(loginData, true);
     }
 }

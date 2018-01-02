@@ -40,4 +40,24 @@ public class LoginDataSerializer extends BaseSerializer {
                 .setSamlResponse(loginParamsObject.optString(SAML_RESPONSE_TAG))
                 .setRelayState(loginParamsObject.optString(RELAY_STATE_TAG));
     }
+
+    public static JSONObject toJsonObject(LoginData loginData) {
+        JSONObject loginDataObject = new JSONObject();
+        if (loginData == null) return loginDataObject;
+        addJsonStringValue(loginData.getUsername(), loginDataObject, LOGIN_TAG);
+        addJsonStringValue(loginData.getPassword(), loginDataObject, PASSWORD_TAG);
+        addJsonBooleanValue(loginData.isFullResponse(), loginDataObject, FULL_RESPONSE_TAG);
+        addJsonStringValue(loginData.getSamlResponse(), loginDataObject, SAML_RESPONSE_TAG);
+        addJsonStringValue(loginData.getRelayState(), loginDataObject, RELAY_STATE_TAG);
+//        try {
+//            loginDataObject.put(RELAY_STATE_TAG, loginData.getRelayState());
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+        return loginDataObject;
+    }
+
+    public static String toJsonString(LoginData loginData) {
+        return toJsonObject(loginData).toString();
+    }
 }
