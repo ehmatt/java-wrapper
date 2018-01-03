@@ -115,6 +115,7 @@ public abstract class Request {
     private static final Map<Integer, String> sServerNameMap = new HashMap<>();
 
     static {
+        sServerNameMap.put(AUTH_SERVER, AUTH_NAME);
         sServerNameMap.put(APP_SERVER, APP_NAME);
         sServerNameMap.put(DEV_SERVER, DEV_NAME);
         sServerNameMap.put(STAGING_SERVER, STAGING_NAME);
@@ -141,6 +142,7 @@ public abstract class Request {
     private static final Map<Integer, String> sServerUrlMap = new HashMap<>();
 
     static {
+        sServerUrlMap.put(AUTH_SERVER, AUTH_URL);
         sServerUrlMap.put(APP_SERVER, APP_URL);
         sServerUrlMap.put(DEV_SERVER, DEV_URL);
         sServerUrlMap.put(STAGING_SERVER, STAGING_URL);
@@ -167,6 +169,7 @@ public abstract class Request {
     private static final Map<String, Integer> sNameServerMap = new HashMap<>();
 
     static {
+        sNameServerMap.put(AUTH_NAME, AUTH_SERVER);
         sNameServerMap.put(APP_NAME, APP_SERVER);
         sNameServerMap.put(DEV_NAME, DEV_SERVER);
         sNameServerMap.put(STAGING_NAME, STAGING_SERVER);
