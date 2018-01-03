@@ -37,7 +37,7 @@ public class BasicAuthData extends AuthData {
      */
     public String calculateSignature() {
         if (OnePageCRM.DEBUG) {
-            LOG.info("*************************************");
+            LOG.info(Utilities.repeatedString("*", 40));
             LOG.info("--- AUTHENTICATION ---");
         }
         final String login = getUserId();

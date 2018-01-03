@@ -5,6 +5,7 @@ import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.StartupData;
 import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.LoginData;
+import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.net.API;
 import com.onepagecrm.net.request.Request;
 
@@ -60,6 +61,7 @@ public class MSELoginDriver {
 
         loginData.setFullResponse(false);
         User loggedUser = API.Auth.simpleLogin(loginData);
+        User bootstrapUser = API.Auth.bootstrap();
 
         loginData.setPassword("qwerty1"); // TODO: validate password incorrect here not failing!?
         loginData.setFullResponse(true);
@@ -68,8 +70,16 @@ public class MSELoginDriver {
         loginData.setFullResponse(true);
         StartupData startupDataOld = API.Auth.startup();
 
-        LOG.info("STARTUP DATA *1*: " + startupData);
-        LOG.info("STARTUP DATA *2*: " + startupDataOld);
-        LOG.info("STARTUP DATA EQUAL*: " + startupData.equals(startupDataOld));
+        LOG.info(Utilities.repeatedString("*", 40));
+        LOG.info("USER data *1*: " + loggedUser);
+        LOG.info("USER data *2*: " + bootstrapUser);
+        LOG.info("USER data equal: " + loggedUser.equals(bootstrapUser));
+
+        LOG.info(Utilities.repeatedString("*", 40));
+        LOG.info("STARTUP data *1*: " + startupData);
+        LOG.info("STARTUP data *2*: " + startupDataOld);
+        LOG.info("STARTUP data equal: " + startupData.equals(startupDataOld));
+
+        LOG.info(Utilities.repeatedString("*", 40));
     }
 }

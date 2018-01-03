@@ -3,6 +3,7 @@ package com.onepagecrm.net.request;
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.exceptions.TimeoutException;
+import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.models.serializers.BaseSerializer;
 import com.onepagecrm.net.Response;
 
@@ -289,7 +290,7 @@ public abstract class Request {
 
     private Response mockRequest() {
         Response mockResponse = new Response(0, "OK", "MOCKED REQUEST RESPONSE!");
-        LOG.info("*************************************");
+        LOG.info(Utilities.repeatedString("*", 40));
         LOG.info("--- REQUEST ---");
         LOG.info("Type: " + type);
         LOG.info("Url: " + getUrl(this.endpointUrl));
@@ -299,7 +300,7 @@ public abstract class Request {
         LOG.info("Code: " + mockResponse.getResponseCode());
         LOG.info("Message: " + mockResponse.getResponseMessage());
         LOG.info("Body: " + mockResponse.getResponseBody());
-        LOG.info("*************************************");
+        LOG.info(Utilities.repeatedString("*", 40));
         return mockResponse;
     }
 
@@ -405,7 +406,7 @@ public abstract class Request {
         connection.setRequestProperty(USER_AGENT_TAG, userAgent);
         connection.setRequestProperty(CONTENT_TYPE_TAG, CONTENT_TYPE);
 
-        LOG.info("*************************************");
+        LOG.info(Utilities.repeatedString("*", 40));
         LOG.info("--- REQUEST ---");
         LOG.info("Type: " + connection.getRequestMethod());
         LOG.info("Url: " + connection.getURL());
@@ -462,7 +463,7 @@ public abstract class Request {
         LOG.info("Code: " + response.getResponseCode());
         LOG.info("Message: " + response.getResponseMessage());
         LOG.info("Body: " + response.getResponseBody());
-        LOG.info("*************************************");
+        LOG.info(Utilities.repeatedString("*", 40));
     }
 
     private void getResponseCode() {
