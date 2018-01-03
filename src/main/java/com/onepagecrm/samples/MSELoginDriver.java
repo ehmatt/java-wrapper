@@ -61,6 +61,7 @@ public class MSELoginDriver {
         loginData.setFullResponse(false);
         User loggedUser = API.Auth.simpleLogin(loginData);
 
+        loginData.setPassword("qwerty1"); // TODO: validate password incorrect here not failing!?
         loginData.setFullResponse(true);
         StartupData startupData = API.Auth.startup(loginData);
 
