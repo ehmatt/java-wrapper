@@ -1,7 +1,15 @@
 package com.onepagecrm.models.serializers;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.*;
+import com.onepagecrm.models.Account;
+import com.onepagecrm.models.ContactList;
+import com.onepagecrm.models.DealList;
+import com.onepagecrm.models.Filter;
+import com.onepagecrm.models.LeadSource;
+import com.onepagecrm.models.StartupData;
+import com.onepagecrm.models.Status;
+import com.onepagecrm.models.Tag;
+import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.ContactsCount;
 import com.onepagecrm.models.internal.PredefinedAction;
 import com.onepagecrm.models.internal.PredefinedActionList;
@@ -26,7 +34,7 @@ public class LoginSerializer extends BaseSerializer {
         return getLoggedInUser(responseBody);
     }
 
-    public static StartupObject fromString(String responseBody, boolean fullResponse) throws OnePageException {
+    public static StartupData fromString(String responseBody, boolean fullResponse) throws OnePageException {
         User user = getLoggedInUser(responseBody);
         ContactList actionStream = null;
         ContactList contacts = null;
@@ -41,7 +49,7 @@ public class LoginSerializer extends BaseSerializer {
                 if (responseObject.has(CONTACT_DATA_TAG)) {
                     contacts = ContactListSerializer.fromJsonObject(responseObject.getJSONObject(CONTACT_DATA_TAG));
                 }
-                if(responseObject.has(DEAL_DATA_TAG)) {
+                if (responseObject.has(DEAL_DATA_TAG)) {
                     deals = DealListSerializer.fromJsonObject(responseObject.getJSONObject(DEAL_DATA_TAG));
                 }
             } catch (JSONException e) {
@@ -49,7 +57,7 @@ public class LoginSerializer extends BaseSerializer {
                 LOG.severe(e.toString());
             }
         }
-        return new StartupObject(user, actionStream, contacts, deals, fullResponse);
+        return new StartupData(null, user, actionStream, contacts, deals); // TODO: fix null
     }
 
     public static void updateLoginOnlyResources(String responseBody) {

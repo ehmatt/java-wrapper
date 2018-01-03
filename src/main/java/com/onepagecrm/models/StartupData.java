@@ -5,28 +5,39 @@ import java.io.Serializable;
 /**
  * Created by Nichollas on 27/10/17.
  */
-public class StartupObject implements Serializable {
+public class StartupData implements Serializable {
 
     private final boolean fullResponse;
+    private final String endpointUrl;
     private final User user;
     private final ContactList actionStream;
     private final ContactList contacts;
     private final DealList deals;
 
-    public StartupObject(User user, boolean fullResponse) {
-        this.fullResponse = fullResponse;
+    public StartupData(String endpointUrl, User user) {
+        this.fullResponse = false;
+        this.endpointUrl = endpointUrl;
         this.user = user;
-        actionStream = null;
-        contacts = null;
-        deals = null;
+        this.actionStream = null;
+        this.contacts = null;
+        this.deals = null;
     }
 
-    public StartupObject(User user, ContactList actionStream, ContactList contacts, DealList deals, boolean fullResponse) {
-        this.fullResponse = fullResponse;
+    public StartupData(String endpointUrl, User user, ContactList actionStream, ContactList contacts, DealList deals) {
+        this.fullResponse = true;
+        this.endpointUrl = endpointUrl;
         this.user = user;
         this.actionStream = actionStream;
         this.contacts = contacts;
         this.deals = deals;
+    }
+
+    public boolean isFullResponse() {
+        return fullResponse;
+    }
+
+    public String getEndpointUrl() {
+        return endpointUrl;
     }
 
     public User getUser() {
@@ -43,9 +54,5 @@ public class StartupObject implements Serializable {
 
     public DealList getDeals() {
         return deals;
-    }
-
-    public boolean isFullResponse() {
-        return fullResponse;
     }
 }

@@ -52,7 +52,7 @@ public class User extends ApiResource implements Serializable {
         return login(username, password, false).getUser();
     }
 
-    public static StartupObject login(String username, String password, boolean fullResponse) throws OnePageException {
+    public static StartupData login(String username, String password, boolean fullResponse) throws OnePageException {
         Request request = new LoginRequest(username, password, fullResponse);
         Response response = request.send();
         return LoginSerializer.fromString(response.getResponseBody(), fullResponse);
@@ -76,7 +76,7 @@ public class User extends ApiResource implements Serializable {
         return LoginSerializer.fromString(response.getResponseBody());
     }
 
-    public StartupObject startup() throws OnePageException {
+    public StartupData startup() throws OnePageException {
         Request request = new GetRequest(STARTUP_ENDPOINT);
         Response response = request.send();
         return LoginSerializer.fromString(response.getResponseBody(), true);

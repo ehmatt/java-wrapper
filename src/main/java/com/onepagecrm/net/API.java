@@ -1,7 +1,7 @@
 package com.onepagecrm.net;
 
 import com.onepagecrm.exceptions.OnePageException;
-import com.onepagecrm.models.StartupObject;
+import com.onepagecrm.models.StartupData;
 import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.LoginData;
 import com.onepagecrm.models.serializers.LoginDataSerializer;
@@ -32,7 +32,7 @@ public interface API {
             return login(loginData, false).getUser();
         }
 
-        public static StartupObject login(LoginData loginData, boolean fullResponse) throws OnePageException {
+        public static StartupData login(LoginData loginData, boolean fullResponse) throws OnePageException {
             Request request = new LoginRequest(loginData.setFullResponse(fullResponse));
             Response response = request.send();
             return LoginSerializer.fromString(response.getResponseBody(), fullResponse);
