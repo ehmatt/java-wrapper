@@ -33,37 +33,32 @@ public interface API {
                     .setFullResponse(fullResponse);
         }
 
-        public static StartupData startup(LoginData loginData) throws OnePageException {
+        public static StartupData login(LoginData loginData) throws OnePageException {
             Request request = new LoginRequest(loginData);
             Response response = request.send();
             return StartupDataSerializer.fromString(response.getResponseBody());
         }
 
-        public static StartupData startup() throws OnePageException {
-            Request request = new GetRequest(STARTUP_ENDPOINT);
-            Response response = request.send();
-            return StartupDataSerializer.fromString(response.getResponseBody());
-        }
-
-        public static com.onepagecrm.models.User login(LoginData loginData) throws OnePageException {
-            return startup(loginData.setFullResponse(false)).getUser();
-        }
-
         public static com.onepagecrm.models.User bootstrap() throws OnePageException {
-            return User.bootstrap();
+            Request request = new GetRequest(BOOTSTRAP_ENDPOINT);
+            Response response = request.send();
+            return LoginSerializer.fromString(response.getResponseBody());
+        }
+
+        public static com.onepagecrm.models.User googleLogin(String authCode) throws OnePageException {
+            Request request = new GoogleLoginRequest(authCode, true);
+            Response response = request.send();
+            return LoginSerializer.fromString(response.getResponseBody());
+        }
+
+        public static com.onepagecrm.models.User googleSignup(String authCode) throws OnePageException {
+            Request request = new GoogleLoginRequest(authCode, false);
+            Response response = request.send();
+            return LoginSerializer.fromString(response.getResponseBody());
         }
     }
 
     abstract class User {
-
-        public static com.onepagecrm.models.User login(String username, String password) throws OnePageException {
-            LoginData loginData = new LoginData().setUsername(username).setPassword(password);
-            return User.login(loginData);
-        }
-
-        public static com.onepagecrm.models.User login(LoginData loginData) throws OnePageException {
-            return Auth.startup(loginData.setFullResponse(false)).getUser();
-        }
 
         public static com.onepagecrm.models.User bootstrap() throws OnePageException {
             Request request = new GetRequest(BOOTSTRAP_ENDPOINT);
@@ -91,7 +86,9 @@ public interface API {
             LoginData loginData = Auth.authenticate(username, password, true);
             OnePageCRM.setServer(Request.CUSTOM_URL_SERVER);
             OnePageCRM.setCustomUrl(loginData.getEndpointUrl());
-            return Auth.startup(loginData);
+            loginData.setUsername(null);
+            loginData.setPassword(null);
+            return Auth.login(loginData);
         }
 
         public static StartupData startup() throws OnePageException {

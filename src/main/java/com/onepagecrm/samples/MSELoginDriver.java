@@ -3,10 +3,8 @@ package com.onepagecrm.samples;
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.StartupData;
-import com.onepagecrm.models.internal.LoginData;
 import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.net.API;
-import com.onepagecrm.net.request.Request;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -47,18 +45,18 @@ public class MSELoginDriver {
         }
 
         OnePageCRM.setDebug(true);
-        OnePageCRM.setServer(Request.AUTH_SERVER);
+//        OnePageCRM.setServer(Request.AUTH_SERVER);
 //        OnePageCRM.setCustomUrl("http://auth.devpc.onepagecrm.eu/api/v3/");
 
-        LoginData loginData = API.Auth.authenticate(
-                prop.getProperty("username"),
-                prop.getProperty("password"),
-                true);
+//        LoginData loginData = API.Auth.authenticate(
+//                prop.getProperty("username"),
+//                prop.getProperty("password"),
+//                true);
 
-        LOG.info("LOGIN data: " + loginData);
+//        LOG.info("LOGIN data: " + loginData);
 
-        OnePageCRM.setServer(Request.CUSTOM_URL_SERVER);
-        OnePageCRM.setCustomUrl(loginData.getEndpointUrl());
+//        OnePageCRM.setServer(Request.CUSTOM_URL_SERVER);
+//        OnePageCRM.setCustomUrl(loginData.getEndpointUrl());
 
 //        loginData.setFullResponse(false);
 //        User loginUser = API.Auth.login(loginData);
@@ -67,13 +65,13 @@ public class MSELoginDriver {
 //        loginData.setPassword(null); // TODO: validate password incorrect here not failing!?
 //        loginData.setUsername(null);
 //        loginData.setFullResponse(true);
-        StartupData startupData = API.Auth.startup(loginData);
-
-//        loginData.setFullResponse(true);
-        StartupData startupDataCmp = API.App.startup(
+        StartupData startupData = API.App.startup(
                 prop.getProperty("username"),
                 prop.getProperty("password")
         );
+
+//        loginData.setFullResponse(true);
+        StartupData startupDataCmp = API.App.startup();
 
 //        LOG.info(Utilities.repeatedString("*", 40));
 //        LOG.info("USER *1*: " + loginUser);
