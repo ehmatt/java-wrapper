@@ -27,6 +27,7 @@ public abstract class Request {
 
     protected static final Logger LOG = Logger.getLogger(Request.class.getName());
 
+    public static final int AUTH_SERVER = -1;
     public static final int APP_SERVER = 0;
     public static final int DEV_SERVER = 1;
     public static final int STAGING_SERVER = 2;
@@ -50,6 +51,7 @@ public abstract class Request {
     public static final int MOCK_REQUEST_SERVER = 22;
     public static final int CUSTOM_URL_SERVER = 23;
 
+    protected static final String AUTH_NAME = "AUTH";
     protected static final String APP_NAME = "APP";
     protected static final String DEV_NAME = "DEV";
     protected static final String STAGING_NAME = "STAGING";
@@ -72,6 +74,7 @@ public abstract class Request {
     protected static final String NETWORK_DEV_NAME = "NETWORK";
     protected static final String CUSTOM_NAME = "CUSTOM";
 
+    protected static final String AUTH_URL = "http://auth.devpc.onepagecrm.eu/api/v3/"; // TODO: update URL before going live
     protected static final String APP_URL = "https://app.onepagecrm.com/api/v3/";
     protected static final String DEV_URL = "http://dev.onepagecrm.com/api/v3/";
     protected static final String STAGING_URL = "http://staging.onepagecrm.com/api/v3/";
@@ -96,10 +99,12 @@ public abstract class Request {
 
     public static void setLocalDevUrl(String customUrl) {
         LOCAL_DEV_URL = customUrl;
+        sServerUrlMap.put(LOCAL_DEV_SERVER, LOCAL_DEV_URL);
     }
 
     public static void setNetworkDevUrl(String customUrl) {
         NETWORK_DEV_URL = customUrl;
+        sServerUrlMap.put(NETWORK_DEV_SERVER, NETWORK_DEV_URL);
     }
 
     public static void setCustomUrl(String customUrl) {

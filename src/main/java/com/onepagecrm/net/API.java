@@ -1,8 +1,8 @@
 package com.onepagecrm.net;
 
+import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.StartupData;
-import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.LoginData;
 import com.onepagecrm.models.serializers.LoginDataSerializer;
 import com.onepagecrm.models.serializers.LoginSerializer;
@@ -45,30 +45,59 @@ public interface API {
             return StartupDataSerializer.fromString(response.getResponseBody());
         }
 
-        public static User simpleLogin(LoginData loginData) throws OnePageException {
+        public static com.onepagecrm.models.User login(LoginData loginData) throws OnePageException {
             return startup(loginData.setFullResponse(false)).getUser();
         }
 
-        public static User bootstrap() throws OnePageException {
-            Request request = new GetRequest(BOOTSTRAP_ENDPOINT);
-            Response response = request.send();
-            String responseBody = response.getResponseBody();
-            StartupData startupData = StartupDataSerializer.fromString(responseBody);
-            return startupData.getUser();
+        public static com.onepagecrm.models.User bootstrap() throws OnePageException {
+            return User.bootstrap();
+        }
+    }
+
+    abstract class User {
+
+        public static com.onepagecrm.models.User login(String username, String password) throws OnePageException {
+            LoginData loginData = new LoginData().setUsername(username).setPassword(password);
+            return User.login(loginData);
         }
 
-        /* ... */
+        public static com.onepagecrm.models.User login(LoginData loginData) throws OnePageException {
+            return Auth.startup(loginData.setFullResponse(false)).getUser();
+        }
 
-        public static User googleLogin(String authCode) throws OnePageException {
+        public static com.onepagecrm.models.User bootstrap() throws OnePageException {
+            Request request = new GetRequest(BOOTSTRAP_ENDPOINT);
+            Response response = request.send();
+            return LoginSerializer.fromString(response.getResponseBody());
+        }
+
+        public static com.onepagecrm.models.User googleLogin(String authCode) throws OnePageException {
             Request request = new GoogleLoginRequest(authCode, true);
             Response response = request.send();
             return LoginSerializer.fromString(response.getResponseBody());
         }
 
-        public static User googleSignup(String authCode) throws OnePageException {
+        public static com.onepagecrm.models.User googleSignup(String authCode) throws OnePageException {
             Request request = new GoogleLoginRequest(authCode, false);
             Response response = request.send();
             return LoginSerializer.fromString(response.getResponseBody());
+        }
+    }
+
+    abstract class App {
+
+        public static StartupData startup(String username, String password) throws OnePageException {
+            OnePageCRM.setServer(Request.AUTH_SERVER);
+            LoginData loginData = Auth.authenticate(username, password, true);
+            OnePageCRM.setServer(Request.CUSTOM_URL_SERVER);
+            OnePageCRM.setCustomUrl(loginData.getEndpointUrl());
+            return Auth.startup(loginData);
+        }
+
+        public static StartupData startup() throws OnePageException {
+            Request request = new GetRequest(STARTUP_ENDPOINT);
+            Response response = request.send();
+            return StartupDataSerializer.fromString(response.getResponseBody());
         }
     }
 }

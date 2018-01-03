@@ -3,6 +3,7 @@ package com.onepagecrm.samples;
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.StartupData;
+import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.LoginData;
 import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.net.API;
@@ -59,9 +60,9 @@ public class MSELoginDriver {
 
         OnePageCRM.setCustomUrl(loginData.getEndpointUrl());
 
-//        loginData.setFullResponse(false);
-//        User loggedUser = API.Auth.simpleLogin(loginData);
-//        User bootstrapUser = API.Auth.bootstrap();
+        loginData.setFullResponse(false);
+        User loginUser = API.Auth.login(loginData);
+        User bootstrapUser = API.Auth.bootstrap();
 
         loginData.setPassword(null); // TODO: validate password incorrect here not failing!?
         loginData.setUsername(null);
@@ -71,10 +72,10 @@ public class MSELoginDriver {
         loginData.setFullResponse(true);
         StartupData startupDataOld = API.Auth.startup();
 
-//        LOG.info(Utilities.repeatedString("*", 40));
-//        LOG.info("USER *1*: " + loggedUser);
-//        LOG.info("USER *2*: " + bootstrapUser);
-//        LOG.info("USER equal: " + loggedUser.equals(bootstrapUser));
+        LOG.info(Utilities.repeatedString("*", 40));
+        LOG.info("USER *1*: " + loginUser);
+        LOG.info("USER *2*: " + bootstrapUser);
+        LOG.info("USER equal: " + loginUser.equals(bootstrapUser));
 
         LOG.info(Utilities.repeatedString("*", 40));
         LOG.info("STARTUP *1*: " + startupData);
