@@ -16,7 +16,7 @@ import com.onepagecrm.net.request.Request;
  */
 public interface API {
 
-    class Auth {
+    abstract class Auth {
 
         public static LoginData authenticate(String username, String password, boolean fullResponse) throws OnePageException {
             Request request = new LoginRequest(username, password, fullResponse);
