@@ -7,9 +7,13 @@ import com.onepagecrm.models.internal.LoginData;
 import com.onepagecrm.models.serializers.LoginDataSerializer;
 import com.onepagecrm.models.serializers.LoginSerializer;
 import com.onepagecrm.models.serializers.StartupDataSerializer;
+import com.onepagecrm.net.request.GetRequest;
 import com.onepagecrm.net.request.GoogleLoginRequest;
 import com.onepagecrm.net.request.LoginRequest;
 import com.onepagecrm.net.request.Request;
+
+import static com.onepagecrm.net.ApiResource.BOOTSTRAP_ENDPOINT;
+import static com.onepagecrm.net.ApiResource.STARTUP_ENDPOINT;
 
 /**
  * Created by Cillian Myles on 02/01/2018.
@@ -35,14 +39,22 @@ public interface API {
             return StartupDataSerializer.fromString(response.getResponseBody());
         }
 
+        public static StartupData startup() throws OnePageException {
+            Request request = new GetRequest(STARTUP_ENDPOINT);
+            Response response = request.send();
+            return StartupDataSerializer.fromString(response.getResponseBody());
+        }
+
         public static User simpleLogin(LoginData loginData) throws OnePageException {
             return startup(loginData.setFullResponse(false)).getUser();
         }
 
-        public static StartupData loginOld(LoginData loginData, boolean fullResponse) throws OnePageException {
-            Request request = new LoginRequest(loginData.setFullResponse(fullResponse));
+        public static User bootstrap() throws OnePageException {
+            Request request = new GetRequest(BOOTSTRAP_ENDPOINT);
             Response response = request.send();
-            return LoginSerializer.fromString(response.getResponseBody(), fullResponse);
+            String responseBody = response.getResponseBody();
+            StartupData startupData = StartupDataSerializer.fromString(responseBody);
+            return startupData.getUser();
         }
 
         /* ... */

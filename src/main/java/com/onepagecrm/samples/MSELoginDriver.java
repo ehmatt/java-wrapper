@@ -65,7 +65,7 @@ public class MSELoginDriver {
         StartupData startupData = API.Auth.startup(loginData);
 
         loginData.setFullResponse(true);
-        StartupData startupDataOld = API.Auth.loginOld(loginData, true);
+        StartupData startupDataOld = API.Auth.startup();
 
         LOG.info("STARTUP DATA *1*: " + startupData);
         LOG.info("STARTUP DATA *2*: " + startupDataOld);
