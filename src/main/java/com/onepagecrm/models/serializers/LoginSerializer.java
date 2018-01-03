@@ -57,7 +57,7 @@ public class LoginSerializer extends BaseSerializer {
                 LOG.severe(e.toString());
             }
         }
-        return new StartupData(null, user, actionStream, contacts, deals); // TODO: fix null
+        return new StartupData(null, user, actionStream, contacts, deals); // TODO: don't send null !?
     }
 
     public static void updateLoginOnlyResources(String responseBody) {
@@ -107,7 +107,7 @@ public class LoginSerializer extends BaseSerializer {
         return loginObject.toString();
     }
 
-    private static User getLoggedInUser(String responseBody) throws OnePageException {
+    public static User getLoggedInUser(String responseBody) throws OnePageException {
         String parsedResponse;
         OnePageException exception;
 

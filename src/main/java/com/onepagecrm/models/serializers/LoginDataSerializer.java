@@ -5,11 +5,15 @@ import com.onepagecrm.models.internal.LoginData;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.logging.Logger;
+
 /**
  * Created by Cillian Myles on 02/01/2018.
  * Copyright (c) 2018 OnePageCRM. All rights reserved.
  */
 public class LoginDataSerializer extends BaseSerializer {
+
+    private static final Logger LOG = Logger.getLogger(LoginDataSerializer.class.getSimpleName());
 
     private static final LoginData DEFAULT = new LoginData();
 
@@ -26,6 +30,8 @@ public class LoginDataSerializer extends BaseSerializer {
             return fromJsonObject(dataObject);
 
         } catch (JSONException e) {
+            LOG.severe("Error parsing login data JSON.");
+            LOG.severe(e.toString());
             e.printStackTrace();
             return DEFAULT;
         }

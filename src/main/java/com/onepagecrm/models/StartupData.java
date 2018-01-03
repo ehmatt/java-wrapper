@@ -2,6 +2,8 @@ package com.onepagecrm.models;
 
 import java.io.Serializable;
 
+import static com.onepagecrm.models.internal.Utilities.notNullOrEmpty;
+
 /**
  * Created by Nichollas on 27/10/17.
  */
@@ -30,6 +32,10 @@ public class StartupData implements Serializable {
         this.actionStream = actionStream;
         this.contacts = contacts;
         this.deals = deals;
+    }
+
+    public boolean isValid() {
+        return notNullOrEmpty(endpointUrl) && user != null;
     }
 
     public boolean isFullResponse() {
