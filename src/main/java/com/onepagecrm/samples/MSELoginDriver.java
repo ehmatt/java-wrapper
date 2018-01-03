@@ -3,7 +3,6 @@ package com.onepagecrm.samples;
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.StartupData;
-import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.LoginData;
 import com.onepagecrm.models.internal.Utilities;
 import com.onepagecrm.net.API;
@@ -47,6 +46,7 @@ public class MSELoginDriver {
             }
         }
 
+        OnePageCRM.setDebug(true);
         OnePageCRM.setServer(Request.CUSTOM_URL_SERVER);
         OnePageCRM.setCustomUrl("http://auth.devpc.onepagecrm.eu/api/v3/");
 
@@ -59,26 +59,27 @@ public class MSELoginDriver {
 
         OnePageCRM.setCustomUrl(loginData.getEndpointUrl());
 
-        loginData.setFullResponse(false);
-        User loggedUser = API.Auth.simpleLogin(loginData);
-        User bootstrapUser = API.Auth.bootstrap();
+//        loginData.setFullResponse(false);
+//        User loggedUser = API.Auth.simpleLogin(loginData);
+//        User bootstrapUser = API.Auth.bootstrap();
 
-        loginData.setPassword("qwerty1"); // TODO: validate password incorrect here not failing!?
+        loginData.setPassword(null); // TODO: validate password incorrect here not failing!?
+        loginData.setUsername(null);
         loginData.setFullResponse(true);
         StartupData startupData = API.Auth.startup(loginData);
 
         loginData.setFullResponse(true);
         StartupData startupDataOld = API.Auth.startup();
 
-        LOG.info(Utilities.repeatedString("*", 40));
-        LOG.info("USER data *1*: " + loggedUser);
-        LOG.info("USER data *2*: " + bootstrapUser);
-        LOG.info("USER data equal: " + loggedUser.equals(bootstrapUser));
+//        LOG.info(Utilities.repeatedString("*", 40));
+//        LOG.info("USER *1*: " + loggedUser);
+//        LOG.info("USER *2*: " + bootstrapUser);
+//        LOG.info("USER equal: " + loggedUser.equals(bootstrapUser));
 
         LOG.info(Utilities.repeatedString("*", 40));
-        LOG.info("STARTUP data *1*: " + startupData);
-        LOG.info("STARTUP data *2*: " + startupDataOld);
-        LOG.info("STARTUP data equal: " + startupData.equals(startupDataOld));
+        LOG.info("STARTUP *1*: " + startupData);
+        LOG.info("STARTUP *2*: " + startupDataOld);
+        LOG.info("STARTUP equal: " + startupData.equals(startupDataOld));
 
         LOG.info(Utilities.repeatedString("*", 40));
     }
