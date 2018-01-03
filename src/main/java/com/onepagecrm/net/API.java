@@ -6,6 +6,7 @@ import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.LoginData;
 import com.onepagecrm.models.serializers.LoginDataSerializer;
 import com.onepagecrm.models.serializers.LoginSerializer;
+import com.onepagecrm.models.serializers.StartupDataSerializer;
 import com.onepagecrm.net.request.GoogleLoginRequest;
 import com.onepagecrm.net.request.LoginRequest;
 import com.onepagecrm.net.request.Request;
@@ -28,11 +29,17 @@ public interface API {
                     .setFullResponse(fullResponse);
         }
 
-        public static User login(LoginData loginData) throws OnePageException {
-            return login(loginData, false).getUser();
+        public static StartupData startup(LoginData loginData) throws OnePageException {
+            Request request = new LoginRequest(loginData);
+            Response response = request.send();
+            return StartupDataSerializer.fromString(response.getResponseBody());
         }
 
-        public static StartupData login(LoginData loginData, boolean fullResponse) throws OnePageException {
+        public static User simpleLogin(LoginData loginData) throws OnePageException {
+            return startup(loginData.setFullResponse(false)).getUser();
+        }
+
+        public static StartupData loginOld(LoginData loginData, boolean fullResponse) throws OnePageException {
             Request request = new LoginRequest(loginData.setFullResponse(fullResponse));
             Response response = request.send();
             return LoginSerializer.fromString(response.getResponseBody(), fullResponse);

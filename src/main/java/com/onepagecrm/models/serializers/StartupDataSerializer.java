@@ -27,9 +27,8 @@ public class StartupDataSerializer extends BaseSerializer {
 
     public static StartupData fromString(String response) throws OnePageException {
         try {
-            String dataString = (String) BaseSerializer.fromString(response);
-            JSONObject dataObject = new JSONObject(dataString);
-            return fromJsonObject(dataObject);
+            JSONObject responseObject = new JSONObject(response);
+            return fromJsonObject(responseObject);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing startup data JSON.");
@@ -39,16 +38,19 @@ public class StartupDataSerializer extends BaseSerializer {
         }
     }
 
-    public static StartupData fromJsonObject(JSONObject dataObject) throws OnePageException {
-        if (dataObject == null) {
+    public static StartupData fromJsonObject(JSONObject responseObject) throws OnePageException {
+        if (responseObject == null) {
             return DEFAULT;
         }
 
-        User user = LoginSerializer.getLoggedInUser(dataObject.toString());
+        User user = LoginSerializer.getLoggedInUser(responseObject.toString());
         ContactList stream = null;
         ContactList contacts = null;
         DealList deals = null;
         boolean fullResponse = false;
+
+        JSONObject dataObject = responseObject.optJSONObject(DATA_TAG);
+        if (dataObject == null) dataObject = responseObject;
 
         if (dataObject.has(ACTION_STREAM_DATA_TAG)) {
             fullResponse = true;

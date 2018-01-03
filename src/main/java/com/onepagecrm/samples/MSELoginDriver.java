@@ -2,6 +2,8 @@ package com.onepagecrm.samples;
 
 import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
+import com.onepagecrm.models.StartupData;
+import com.onepagecrm.models.User;
 import com.onepagecrm.models.internal.LoginData;
 import com.onepagecrm.net.API;
 import com.onepagecrm.net.request.Request;
@@ -50,12 +52,23 @@ public class MSELoginDriver {
         LoginData loginData = API.Auth.authenticate(
                 prop.getProperty("username"),
                 prop.getProperty("password"),
-                false);
+                true);
 
         LOG.info("LOGIN DATA: " + loginData);
 
         OnePageCRM.setCustomUrl(loginData.getEndpointUrl());
 
-        API.Auth.login(loginData, true);
+        loginData.setFullResponse(false);
+        User loggedUser = API.Auth.simpleLogin(loginData);
+
+        loginData.setFullResponse(true);
+        StartupData startupData = API.Auth.startup(loginData);
+
+        loginData.setFullResponse(true);
+        StartupData startupDataOld = API.Auth.loginOld(loginData, true);
+
+        LOG.info("STARTUP DATA *1*: " + startupData);
+        LOG.info("STARTUP DATA *2*: " + startupDataOld);
+        LOG.info("STARTUP DATA EQUAL*: " + startupData.equals(startupDataOld));
     }
 }

@@ -24,10 +24,11 @@ public class LoginDataSerializer extends BaseSerializer {
 
     // TODO: delete
     public static LoginData fromString(String response) throws OnePageException {
-        //String dataString = (String) BaseSerializer.fromString(response);
         try {
-            JSONObject dataObject = new JSONObject(response);
-            return fromJsonObject(dataObject);
+            //String dataString = (String) BaseSerializer.fromString(response);
+            //JSONObject dataObject = new JSONObject(dataString);
+            JSONObject responseObject = new JSONObject(response);
+            return fromJsonObject(responseObject);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing login data JSON.");
