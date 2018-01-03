@@ -25,8 +25,23 @@ public class StartupDataSerializer extends BaseSerializer {
 //        return fromJsonObject(dataObject);
 //    }
 
+//    public static StartupData fromResponse(Response response) throws APIException {
+//        try {
+//            BaseSerializer.fromResponse(response); // Needed to throw errors.
+//            JSONObject responseObject = new JSONObject(response.getResponseBody());
+//            return fromJsonObject(responseObject);
+//
+//        } catch (JSONException e) {
+//            LOG.severe("Error parsing login data JSON.");
+//            LOG.severe(e.toString());
+//            e.printStackTrace();
+//            return DEFAULT;
+//        }
+//    }
+
     public static StartupData fromString(String response) throws OnePageException {
         try {
+            BaseSerializer.fromString(response); // Needed to throw errors.
             JSONObject responseObject = new JSONObject(response);
             return fromJsonObject(responseObject);
 
