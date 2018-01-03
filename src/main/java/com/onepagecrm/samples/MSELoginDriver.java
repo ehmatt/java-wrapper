@@ -44,45 +44,22 @@ public class MSELoginDriver {
             }
         }
 
+        // NOTICE: no need to set server.
+
         OnePageCRM.setDebug(true);
-//        OnePageCRM.setServer(Request.AUTH_SERVER);
-//        OnePageCRM.setCustomUrl("http://auth.devpc.onepagecrm.eu/api/v3/");
 
-//        LoginData loginData = API.Auth.authenticate(
-//                prop.getProperty("username"),
-//                prop.getProperty("password"),
-//                true);
-
-//        LOG.info("LOGIN data: " + loginData);
-
-//        OnePageCRM.setServer(Request.CUSTOM_URL_SERVER);
-//        OnePageCRM.setCustomUrl(loginData.getEndpointUrl());
-
-//        loginData.setFullResponse(false);
-//        User loginUser = API.Auth.login(loginData);
-//        User bootstrapUser = API.Auth.bootstrap();
-
-//        loginData.setPassword(null); // TODO: validate password incorrect here not failing!?
-//        loginData.setUsername(null);
-//        loginData.setFullResponse(true);
         StartupData startupData = API.App.startup(
                 prop.getProperty("username"),
                 prop.getProperty("password")
         );
 
-//        loginData.setFullResponse(true);
-        StartupData startupDataCmp = API.App.startup();
 
-//        LOG.info(Utilities.repeatedString("*", 40));
-//        LOG.info("USER *1*: " + loginUser);
-//        LOG.info("USER *2*: " + bootstrapUser);
-//        LOG.info("USER equal: " + loginUser.equals(bootstrapUser));
+        StartupData startupDataCmp = API.App.startup();
 
         LOG.info(Utilities.repeatedString("*", 40));
         LOG.info("STARTUP *1*: " + startupData);
         LOG.info("STARTUP *2*: " + startupDataCmp);
         LOG.info("STARTUP equal: " + startupData.equals(startupDataCmp));
-
         LOG.info(Utilities.repeatedString("*", 40));
     }
 }
