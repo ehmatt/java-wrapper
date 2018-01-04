@@ -36,11 +36,13 @@ public class LoginDataSerializer extends BaseSerializer {
 //        }
 //    }
 
-    // TODO: delete eventually (serializers refactor AND-686)
+    // TODO: delete eventually (serializers refactor AND-686).
     public static LoginData fromString(String response) throws OnePageException {
         try {
-            //String dataString = (String) BaseSerializer.fromString(response); // TODO: uncomment when status etc included
-            //JSONObject dataObject = new JSONObject(dataString); // TODO: uncomment when status etc included
+            //String dataString = (String) BaseSerializer.fromString(response);
+            //JSONObject dataObject = new JSONObject(dataString);
+            //return fromJsonObject(dataObject);
+            // TODO: swap to above few lines when status, message, data included in response.
             JSONObject responseObject = new JSONObject(response);
             return fromJsonObject(responseObject);
 
