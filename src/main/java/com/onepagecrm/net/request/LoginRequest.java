@@ -7,13 +7,23 @@ import com.onepagecrm.models.serializers.LoginDataSerializer;
 public class LoginRequest extends Request {
 
     public LoginRequest(String username, String password, boolean fullResponse) {
-        this(new LoginData()
+        init(new LoginData()
                 .setUsername(username)
                 .setPassword(password)
                 .setFullResponse(fullResponse));
     }
 
+    public LoginRequest(String username, String password) {
+        init(new LoginData()
+                .setUsername(username)
+                .setPassword(password));
+    }
+
     public LoginRequest(LoginData loginData) {
+        init(loginData);
+    }
+
+    private void init(LoginData loginData) {
         setType();
         setEndpointUrl(BaseSerializer.LOGIN_TAG);
         this.requestBody = LoginDataSerializer.toJsonString(loginData);

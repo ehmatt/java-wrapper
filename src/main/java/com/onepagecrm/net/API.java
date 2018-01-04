@@ -23,14 +23,11 @@ public interface API {
 
     abstract class Auth {
 
-        public static LoginData authenticate(String username, String password, boolean fullResponse) throws OnePageException {
-            Request request = new LoginRequest(username, password, fullResponse);
+        public static LoginData authenticate(String username, String password) throws OnePageException {
+            Request request = new LoginRequest(username, password);
             Response response = request.send();
-            LoginData loginData = LoginDataSerializer.fromString(response.getResponseBody());
-            return loginData
-                    .setUsername(username)
-                    .setPassword(password)
-                    .setFullResponse(fullResponse);
+            final String responseBody = response.getResponseBody();
+            return LoginDataSerializer.fromString(responseBody);
         }
 
         public static StartupData login(LoginData loginData) throws OnePageException {
@@ -83,12 +80,10 @@ public interface API {
 
         public static StartupData startup(String username, String password) throws OnePageException {
             OnePageCRM.setServer(Request.AUTH_SERVER);
-            LoginData loginData = Auth.authenticate(username, password, true);
+            LoginData loginData = Auth.authenticate(username, password);
             OnePageCRM.setServer(Request.CUSTOM_URL_SERVER);
             OnePageCRM.setCustomUrl(loginData.getEndpointUrl());
-            loginData.setUsername(null);
-            loginData.setPassword(null);
-            return Auth.login(loginData);
+            return Auth.login(loginData.setFullResponse(true));
         }
 
         public static StartupData startup() throws OnePageException {
