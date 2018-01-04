@@ -21,6 +21,8 @@ public class StartupDataSerializer extends BaseSerializer {
 
     private final static StartupData DEFAULT = new StartupData(null, null);
 
+    // Below commented methods for being merged with serializers refactor project (AND-686).
+
 //    public static StartupData fromResponse(Response response) throws APIException {
 //        JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
 //        return fromJsonObject(dataObject);

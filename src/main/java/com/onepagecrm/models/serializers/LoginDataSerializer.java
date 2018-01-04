@@ -17,6 +17,8 @@ public class LoginDataSerializer extends BaseSerializer {
 
     private static final LoginData DEFAULT = new LoginData();
 
+    // Below commented methods for being merged with serializers refactor project (AND-686).
+
 //    public static LoginData fromResponse(Response response) throws APIException {
 //        JSONObject dataObject = (JSONObject) BaseSerializer.fromResponse(response);
 //        return fromJsonObject(dataObject);
