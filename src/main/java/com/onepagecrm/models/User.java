@@ -47,6 +47,8 @@ public class User extends ApiResource implements Serializable {
 
     private Sales sales;
 
+    /* Auth-related API methods */
+
     public static User login(String username, String password) throws OnePageException {
         return API.Auth.login(username, password);
     }
@@ -70,6 +72,8 @@ public class User extends ApiResource implements Serializable {
     public User bootstrap() throws OnePageException {
         return API.Auth.bootstrap();
     }
+
+    /* Other API methods (TO BE MOVED OUT to API.Namespace eventually) */
 
     public ContactList actionStream() throws OnePageException {
         return getContacts(ACTION_STREAM_ENDPOINT, Query.queryDefault());

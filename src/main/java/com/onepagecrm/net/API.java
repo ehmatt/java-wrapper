@@ -31,11 +31,11 @@ public interface API {
         }
 
         public static com.onepagecrm.models.User login(String username, String password) throws OnePageException {
-            return User.login(username, password);
+            return API.User.login(username, password);
         }
 
         public static com.onepagecrm.models.User bootstrap() throws OnePageException {
-            return User.bootstrap();
+            return API.User.bootstrap();
         }
 
         public static StartupData startup(LoginData loginData) throws OnePageException {
@@ -89,11 +89,11 @@ public interface API {
         }
 
         public static StartupData startup() throws OnePageException {
-            return Auth.startup();
+            return API.Auth.startup();
         }
 
         public static StartupData fullRefresh() throws OnePageException {
-            return Auth.startup();
+            return API.Auth.startup();
         }
     }
 }
