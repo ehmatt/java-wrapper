@@ -1,5 +1,6 @@
 package com.onepagecrm.models.serializers;
 
+import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.Account;
 import com.onepagecrm.models.ContactList;
@@ -57,7 +58,7 @@ public class LoginSerializer extends BaseSerializer {
                 LOG.severe(e.toString());
             }
         }
-        return new StartupData(null, user, actionStream, contacts, deals); // TODO: don't send null !?
+        return new StartupData(OnePageCRM.getEndpointUrl(), user, actionStream, contacts, deals);
     }
 
     public static void updateLoginOnlyResources(String responseBody) {

@@ -1,5 +1,6 @@
 package com.onepagecrm.models.serializers;
 
+import com.onepagecrm.OnePageCRM;
 import com.onepagecrm.exceptions.OnePageException;
 import com.onepagecrm.models.ContactList;
 import com.onepagecrm.models.DealList;
@@ -80,8 +81,10 @@ public class StartupDataSerializer extends BaseSerializer {
             deals = DealListSerializer.fromJsonObject(dataObject.optJSONObject(DEAL_DATA_TAG));
         }
 
+        final String endpointUrl = OnePageCRM.getEndpointUrl();
+
         return !fullResponse ?
-                new StartupData(null, user) :
-                new StartupData(null, user, stream, contacts, deals);  // TODO: don't send null !?
+                new StartupData(endpointUrl, user) :
+                new StartupData(endpointUrl, user, stream, contacts, deals);
     }
 }

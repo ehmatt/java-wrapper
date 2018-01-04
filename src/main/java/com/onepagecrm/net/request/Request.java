@@ -193,23 +193,6 @@ public abstract class Request {
         sNameServerMap.put(CUSTOM_NAME, CUSTOM_URL_SERVER);
     }
 
-    public static boolean validServerId(int id) {
-        return sServerUrlMap.get(id) != null;
-    }
-
-    public static String getServerName(int serverId) {
-        return getServerName(serverId, APP_NAME);
-    }
-
-    public static String getServerName(int serverId, String defaultName) {
-        final String safeDefault = sNameServerMap.get(defaultName) != null ? defaultName : APP_NAME;
-        if (serverId < APP_SERVER || serverId > CUSTOM_URL_SERVER) {
-            return safeDefault;
-        }
-        final String matched = sServerNameMap.get(serverId);
-        return matched != null ? matched : safeDefault;
-    }
-
     public static int getServerId(String name) {
         return getServerId(name, APP_SERVER);
     }
@@ -220,6 +203,36 @@ public abstract class Request {
             return safeDefault;
         }
         final Integer matched = sNameServerMap.get(name);
+        return matched != null ? matched : safeDefault;
+    }
+
+    public static boolean validServerId(int id) {
+        return sServerUrlMap.get(id) != null;
+    }
+
+    public static String getServerName(int serverId) {
+        return getServerName(serverId, APP_NAME);
+    }
+
+    public static String getServerName(int serverId, String defaultName) {
+        final String safeDefault = sNameServerMap.get(defaultName) != null ? defaultName : APP_NAME;
+        if (serverId < AUTH_SERVER || serverId > CUSTOM_URL_SERVER) {
+            return safeDefault;
+        }
+        final String matched = sServerNameMap.get(serverId);
+        return matched != null ? matched : safeDefault;
+    }
+
+    public static String getServerUrl(int serverId) {
+        return getServerUrl(serverId, APP_URL);
+    }
+
+    public static String getServerUrl(int serverId, String defaultUrl) {
+        final String safeDefault = sServerUrlMap.containsValue(defaultUrl) ? defaultUrl : APP_URL;
+        if (serverId < AUTH_SERVER || serverId > CUSTOM_URL_SERVER) {
+            return safeDefault;
+        }
+        final String matched = sServerUrlMap.get(serverId);
         return matched != null ? matched : safeDefault;
     }
 
