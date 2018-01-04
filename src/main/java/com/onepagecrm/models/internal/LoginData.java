@@ -20,6 +20,12 @@ public class LoginData extends BaseResource {
     private String samlResponse;
     private String relayState;
 
+    public LoginData(String username, String password, boolean fullResponse) {
+        this.username = username;
+        this.password = password;
+        this.fullResponse = fullResponse;
+    }
+
     public LoginData() {
 
     }

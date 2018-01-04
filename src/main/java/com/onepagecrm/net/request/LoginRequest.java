@@ -7,16 +7,11 @@ import com.onepagecrm.models.serializers.LoginDataSerializer;
 public class LoginRequest extends Request {
 
     public LoginRequest(String username, String password, boolean fullResponse) {
-        init(new LoginData()
-                .setUsername(username)
-                .setPassword(password)
-                .setFullResponse(fullResponse));
+        init(new LoginData(username, password, fullResponse));
     }
 
     public LoginRequest(String username, String password) {
-        init(new LoginData()
-                .setUsername(username)
-                .setPassword(password));
+        init(new LoginData(username, password, false));
     }
 
     public LoginRequest(LoginData loginData) {
