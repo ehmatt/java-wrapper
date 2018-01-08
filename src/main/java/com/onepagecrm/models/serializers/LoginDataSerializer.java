@@ -24,29 +24,12 @@ public class LoginDataSerializer extends BaseSerializer {
 //        return fromJsonObject(dataObject);
 //    }
 
-//    public static LoginData fromResponse(Response response) throws APIException {
-//        try {
-//            BaseSerializer.fromResponse(response); // Needed to throw errors.
-//            JSONObject responseObject = new JSONObject(response.getResponseBody());
-//            return fromJsonObject(responseObject);
-//
-//        } catch (JSONException e) {
-//            LOG.severe("Error parsing login data JSON.");
-//            LOG.severe(e.toString());
-//            e.printStackTrace();
-//            return DEFAULT;
-//        }
-//    }
-
     // TODO: delete eventually (serializers refactor AND-686).
     public static LoginData fromString(String response) throws OnePageException {
         try {
-            //String dataString = (String) BaseSerializer.fromString(response);
-            //JSONObject dataObject = new JSONObject(dataString);
-            //return fromJsonObject(dataObject);
-            // TODO: swap to above few lines when status, message, data included in response.
-            JSONObject responseObject = new JSONObject(response);
-            return fromJsonObject(responseObject);
+            String dataString = (String) BaseSerializer.fromString(response);
+            JSONObject dataObject = new JSONObject(dataString);
+            return fromJsonObject(dataObject);
 
         } catch (JSONException e) {
             LOG.severe("Error parsing login data JSON.");
