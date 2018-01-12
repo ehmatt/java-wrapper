@@ -74,7 +74,7 @@ public abstract class Request {
     protected static final String NETWORK_DEV_NAME = "NETWORK";
     protected static final String CUSTOM_NAME = "CUSTOM";
 
-    protected static final String AUTH_URL = "http://auth.devpc.onepagecrm.eu/api/v3/"; // TODO: update URL before going live
+    protected static final String AUTH_URL = "http://auth.mse.onepagecrm.eu/api/v3/"; // TODO: update URL before going live
     protected static final String APP_URL = "https://app.onepagecrm.com/api/v3/";
     protected static final String DEV_URL = "http://dev.onepagecrm.com/api/v3/";
     protected static final String STAGING_URL = "http://staging.onepagecrm.com/api/v3/";
